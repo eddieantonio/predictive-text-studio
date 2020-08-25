@@ -8,7 +8,7 @@ For developers
 
 You will need:
 
- 1. [Node.JS 12+][https://nodejs.org/en/]
+ 1. [Node.JS 12+](https://nodejs.org/en/)
  2. [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
 
 After cloning this repository, you can install the rest of the
