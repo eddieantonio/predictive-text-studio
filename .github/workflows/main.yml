@@ -12,4 +12,4 @@ jobs:
         with:
           build: yarn run build
           start: yarn start
-          wait-on: 'https://localhost:5000'
+          wait-on: 'http://localhost:5000'
