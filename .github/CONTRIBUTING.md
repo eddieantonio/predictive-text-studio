@@ -33,13 +33,21 @@ Run this to build all the files
 
     yarn run build
 
-### Start the development server
+### Start the development environment
 
-Run this to start the development server
+To start development, run the following:
 
-    yarn start
+    yarn run dev
 
-You will now be able to see the website at <http://localhost:5000/>.
+This does a few things:
+
+ 1. Starts `rollup` in "watch mode"
+ 2. Does an initial build of all of the JavaScript
+ 3. Starts [LiveReload](http://livereload.com/) (you need to install the
+    LiveReload extension for your browser for this to work).
+
+Once the first build has finished, you will be able to see the website
+at <http://localhost:5000/>.
 
 ### Run the end-to-end tests interactively
 
