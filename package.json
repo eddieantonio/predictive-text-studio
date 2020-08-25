@@ -1,0 +1,22 @@
+{
+  "name": "predictive-text-studio",
+  "version": "2020-9-1-alpha",
+  "description": "Create predictive text for YOUR language",
+  "main": "index.js",
+  "repository": "git@github.com:predictive-text/predictive-text-studio.git",
+  "author": "Eddie Antonio Santos <easantos@ualberta.ca>",
+  "license": "isc",
+  "private": false,
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "rollup": "^2.26.5",
+    "rollup-plugin-livereload": "^1.3.0",
+    "rollup-plugin-svelte": "^5.2.3",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.24.1"
+  }
+}

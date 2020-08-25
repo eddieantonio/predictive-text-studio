@@ -1,0 +1,25 @@
+# Generated files
+public/dist.js
+
+# Source maps
+*.js.map
+
+# Dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage tools
+coverage/
+*.lcov
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+.yarn/
