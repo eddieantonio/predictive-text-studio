@@ -9,6 +9,7 @@
   "private": false,
   "scripts": {
     "build": "rollup -c",
+    "dev": "rollup -c -w",
     "cy": "cypress open",
     "start": "sirv public"
   },
