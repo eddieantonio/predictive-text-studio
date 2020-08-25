@@ -1,15 +1,18 @@
-import svelte from 'rollup-plugin-svelte';
-import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
+import resolve from '@rollup/plugin-node-resolve';
+import svelte from 'rollup-plugin-svelte';
+import sveltePreprocess from 'svelte-preprocess';
+import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 
-
+//////////////////////////////// Environment /////////////////////////////////
 const production = !process.env.ROLLUP_WATCH;
 const watchMode = !production;
 
+/////////////////////////////// Configuration ////////////////////////////////
 export default {
-  input: 'src/main.js',
+  input: 'src/main.ts',
   output: {
     sourcemap: true,
     format: 'iife',
@@ -19,12 +22,16 @@ export default {
   plugins: [
     svelte({
       dev: !production,
+      preprocess: sveltePreprocess(),
     }),
 
     resolve({
       dedupe: ['svelte'],
     }),
     commonjs(),
+    typescript({
+      sourceMap: watchMode === true
+    }),
 
     // Start the server when run as:
     //    rollup -c -w
