@@ -23,3 +23,7 @@ coverage/
 *.tsbuildinfo
 
 .yarn/
+
+# Cypress stuff
+cypress/screenshots/
+cypress/videos/
