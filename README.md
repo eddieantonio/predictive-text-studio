@@ -24,5 +24,5 @@ Now you can compile the Svelte/TypeScript using the following command:
 License
 -------
 
-Copyright © 2020 Eddie Antonio Santos. Licensed under the MIT License.
+Copyright © 2020 Eddie Antonio Santos. Licensed under the ISC License.
 See `LICENSE` for details.
