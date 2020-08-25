@@ -1,15 +1,27 @@
 name: End-to-End tests
 on: [push]
 jobs:
-  build-and-test:
+
+  cypress-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: 📥 Checkout
         uses: actions/checkout@v2
-
-      - name: Cypress tests
+      - name: 🖥 Cypress tests
         uses: cypress-io/github-action@v2
         with:
           build: yarn run build
           start: yarn start
           wait-on: 'http://localhost:5000'
+
+  quality-assurance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v2
+      - name: 🏗 Install NodeJS 12.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: 🩺 Svelte Check
+        run: yarn run validate
