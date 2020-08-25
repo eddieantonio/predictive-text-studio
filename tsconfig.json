@@ -6,6 +6,10 @@
   "exclude": [
     "node_modules/*",
     "public/*"
-  ]
+  ],
+  "compilerOptions": {
+    "importHelpers": true,
+    "strict": true
+  }
 }
 
