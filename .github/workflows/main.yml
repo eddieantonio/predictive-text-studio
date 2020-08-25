@@ -5,9 +5,9 @@ jobs:
   cypress-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout
+      - name: 📥  Checkout
         uses: actions/checkout@v2
-      - name: 🖥 Cypress tests
+      - name: 🌲  Cypress tests
         uses: cypress-io/github-action@v2
         with:
           build: yarn run build
@@ -17,11 +17,13 @@ jobs:
   quality-assurance:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout
+      - name: 📥  Checkout
         uses: actions/checkout@v2
-      - name: 🏗 Install NodeJS 12.0
+      - name: 🛠1️⃣  Install NodeJS 12.0
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: 🩺 Svelte Check
+      - name: 🛠1️⃣  Install npm dependencies
+        run: yarn install
+      - name: 🗿  Svelte Check
         run: yarn run validate
