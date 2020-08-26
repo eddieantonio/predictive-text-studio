@@ -7,4 +7,10 @@ const app = new App({
   }
 });
 
+// Just to ensure the web worker... works
+let w = new Worker('worker.js');
+w.onmessage = function (event) {
+  console.log(event.data);
+}
+
 export default app;

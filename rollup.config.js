@@ -11,7 +11,8 @@ const production = !process.env.ROLLUP_WATCH;
 const watchMode = !production;
 
 /////////////////////////////// Configuration ////////////////////////////////
-export default {
+
+const appConfiguration = {
   input: 'src/app/main.ts',
   output: {
     sourcemap: true,
@@ -48,7 +49,32 @@ export default {
   watch: {
     clearScreen: false
   },
+}
+
+const workerConfiguration = {
+  input: 'src/worker/main.ts',
+  output: {
+    sourcemap: true,
+    format: 'iife',
+    name: 'worker',
+    file: 'public/worker.js',
+  },
+  plugins: [
+    typescript({
+      tsconfig: 'src/worker/tsconfig.json',
+    }),
+    resolve(),
+    commonjs(),
+
+    // Minify in production
+    production && terser()
+  ],
 };
+
+export default [
+  workerConfiguration, appConfiguration
+];
+
 
 /**
  * Livereloading server; uses `sirv-cli`

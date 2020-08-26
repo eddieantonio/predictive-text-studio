@@ -1,0 +1,9 @@
+{
+  "include": [
+    "**/*"
+  ],
+  "compilerOptions": {
+    "lib": ["ES5", "ES6", "WebWorker"],
+    "strict": true,
+  }
+}
