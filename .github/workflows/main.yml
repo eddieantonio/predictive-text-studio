@@ -1,20 +1,8 @@
-name: End-to-End tests
+name: Run tests
 on: [push]
 jobs:
 
-  cypress-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥  Checkout
-        uses: actions/checkout@v2
-      - name: 🌲  Cypress tests
-        uses: cypress-io/github-action@v2
-        with:
-          build: yarn run build
-          start: yarn start
-          wait-on: 'http://localhost:5000'
-
-  quality-assurance:
+  "Unit tests":
     runs-on: ubuntu-latest
     steps:
       - name: 📥  Checkout
@@ -27,3 +15,17 @@ jobs:
         run: yarn install
       - name: 🗿  Svelte Check
         run: yarn run validate
+      - name: 🚀  Ava tests
+        run: yarn run test
+
+  "End-to-end tests":
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥  Checkout
+        uses: actions/checkout@v2
+      - name: 🌲  Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn run build
+          start: yarn start
+          wait-on: 'http://localhost:5000'
