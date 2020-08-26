@@ -12,12 +12,12 @@ const watchMode = !production;
 
 /////////////////////////////// Configuration ////////////////////////////////
 export default {
-  input: 'src/main.ts',
+  input: 'src/app/main.ts',
   output: {
     sourcemap: true,
     format: 'iife',
     name: 'app',
-    file: 'public/dist.js',
+    file: 'public/app.js',
   },
   plugins: [
     svelte({
