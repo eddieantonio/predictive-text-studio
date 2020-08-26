@@ -61,7 +61,7 @@ const workerConfiguration = {
   },
   plugins: [
     typescript({
-      tsconfig: 'src/worker/tsconfig.json',
+      tsconfig: './tsconfig.json',
     }),
     resolve(),
     commonjs(),

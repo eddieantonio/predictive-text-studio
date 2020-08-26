@@ -1,6 +1,7 @@
 {
   "include": [
-    "**/*"
+    "src/worker/**/*",
+    "test.ts"
   ],
   "compilerOptions": {
     "lib": ["ES5", "ES6", "WebWorker"],
