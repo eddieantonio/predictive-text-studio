@@ -30,7 +30,8 @@ export default {
     }),
     commonjs(),
     typescript({
-      sourceMap: watchMode === true
+      tsconfig: 'src/app/tsconfig.json',
+      sourceMap: watchMode === true,
     }),
 
     // Start the server when run as:
