@@ -3,8 +3,15 @@
     "src/worker/**/*",
     "test.ts"
   ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
     "lib": ["ES5", "ES6", "WebWorker"],
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@worker/*": ["src/worker/*"]
+    }
   }
 }
