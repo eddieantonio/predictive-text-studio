@@ -5,6 +5,7 @@
   ],
   "compilerOptions": {
     "importHelpers": true,
-    "strict": true
+    "strict": true,
+    "sourceMap": true
   }
 }

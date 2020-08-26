@@ -15,7 +15,7 @@ const watchMode = !production;
 const appConfiguration = {
   input: 'src/app/main.ts',
   output: {
-    sourcemap: true,
+    sourcemap: watchMode === true,
     format: 'iife',
     name: 'app',
     file: 'public/app.js',
