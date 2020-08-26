@@ -1,6 +1,6 @@
 {
   "name": "predictive-text-studio",
-  "version": "2020-9-1-alpha",
+  "version": "2020.9.1-alpha",
   "description": "Create predictive text for YOUR language",
   "main": "index.js",
   "repository": "git@github.com:predictive-text/predictive-text-studio.git",
