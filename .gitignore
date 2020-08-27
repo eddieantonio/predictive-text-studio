@@ -1,5 +1,6 @@
-# Generated files
+# Compiled files:
 public/app.js
+public/worker.js
 
 # Source maps
 *.js.map
