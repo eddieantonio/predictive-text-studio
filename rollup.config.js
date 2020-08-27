@@ -1,10 +1,12 @@
-import commonjs from '@rollup/plugin-commonjs';
-import livereload from 'rollup-plugin-livereload';
-import resolve from '@rollup/plugin-node-resolve';
-import svelte from 'rollup-plugin-svelte';
-import sveltePreprocess from 'svelte-preprocess';
-import typescript from '@rollup/plugin-typescript';
-import { terser } from 'rollup-plugin-terser';
+import commonjs from "@rollup/plugin-commonjs";
+import livereload from "rollup-plugin-livereload";
+import resolve from "@rollup/plugin-node-resolve";
+import svelte from "rollup-plugin-svelte";
+import sveltePreprocess from "svelte-preprocess";
+import typescript from "@rollup/plugin-typescript";
+import { terser } from "rollup-plugin-terser";
+
+import * as child_process from "child_process";
 
 //////////////////////////////// Environment /////////////////////////////////
 const production = !process.env.ROLLUP_WATCH;
@@ -13,12 +15,12 @@ const watchMode = !production;
 /////////////////////////////// Configuration ////////////////////////////////
 
 const appConfiguration = {
-  input: 'src/app/main.ts',
+  input: "src/app/main.ts",
   output: {
     sourcemap: watchMode === true,
-    format: 'iife',
-    name: 'app',
-    file: 'public/app.js',
+    format: "iife",
+    name: "app",
+    file: "public/app.js",
   },
   plugins: [
     svelte({
@@ -27,11 +29,11 @@ const appConfiguration = {
     }),
 
     resolve({
-      dedupe: ['svelte'],
+      dedupe: ["svelte"],
     }),
     commonjs(),
     typescript({
-      tsconfig: 'src/app/tsconfig.json',
+      tsconfig: "src/app/tsconfig.json",
       sourceMap: watchMode === true,
     }),
 
@@ -41,40 +43,37 @@ const appConfiguration = {
     watchMode && serve(),
 
     // Refreshes the browser when anything in "public" has changed:
-    watchMode && livereload('public'),
+    watchMode && livereload("public"),
 
     // Minify in production
-    production && terser()
+    production && terser(),
   ],
   watch: {
-    clearScreen: false
+    clearScreen: false,
   },
-}
+};
 
 const workerConfiguration = {
-  input: 'src/worker/main.ts',
+  input: "src/worker/main.ts",
   output: {
     sourcemap: true,
-    format: 'iife',
-    name: 'worker',
-    file: 'public/worker.js',
+    format: "iife",
+    name: "worker",
+    file: "public/worker.js",
   },
   plugins: [
     typescript({
-      tsconfig: './tsconfig.json',
+      tsconfig: "./tsconfig.json",
     }),
     resolve(),
     commonjs(),
 
     // Minify in production
-    production && terser()
+    production && terser(),
   ],
 };
 
-export default [
-  workerConfiguration, appConfiguration
-];
-
+export default [workerConfiguration, appConfiguration];
 
 /**
  * Livereloading server; uses `sirv-cli`
@@ -91,13 +90,17 @@ function serve() {
     writeBundle() {
       if (server) return;
       // runs sirv --dev (ignores cache headers)
-      server = require('child_process').spawn('yarn', ['run', 'start', '--dev'], {
-        stdio: [/*stdin */ 'ignore', /* stdout */ 'inherit', /* stderr */ 'inherit'],
-        shell: true
+      server = child_process.spawn("yarn", ["run", "start", "--dev"], {
+        stdio: [
+          /*stdin */ "ignore",
+          /* stdout */ "inherit",
+          /* stderr */ "inherit",
+        ],
+        shell: true,
       });
 
-      process.on('SIGTERM', stopServer);
-      process.on('exit', stopServer);
-    }
+      process.on("SIGTERM", stopServer);
+      process.on("exit", stopServer);
+    },
   };
 }
