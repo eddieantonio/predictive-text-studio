@@ -14,7 +14,7 @@ jobs:
       - name: 🛠 2️⃣   Install npm dependencies
         run: yarn install
       - name: 🧶  Lint
-        run: yarn run validate
+        run: yarn run lint
       - name: 🗿  Svelte Check
         run: yarn run validate
       - name: 🚀  Ava tests
