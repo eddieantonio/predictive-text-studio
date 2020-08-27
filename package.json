@@ -9,11 +9,12 @@
   "private": false,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
     "cy": "cypress open",
+    "dev": "rollup -c -w",
+    "lint": "eslint src/ test/",
     "start": "sirv public",
-    "validate": "svelte-check",
-    "test": "ava"
+    "test": "ava",
+    "validate": "svelte-check"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.0.0",

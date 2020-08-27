@@ -13,6 +13,8 @@ jobs:
           node-version: 12
       - name: 🛠 2️⃣   Install npm dependencies
         run: yarn install
+      - name: 🧶  Lint
+        run: yarn run validate
       - name: 🗿  Svelte Check
         run: yarn run validate
       - name: 🚀  Ava tests
