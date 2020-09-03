@@ -16,6 +16,27 @@ project.
 [code of conduct]: ./CODE_OF_CONDUCT.md
 
 
+Table of contents
+-----------------
+
+- [How the branches work](#how-the-branches-work)
+- [Setting up your development environment](#setting-up-your-development-environment)
+  * [Install](#install)
+  * [Build](#build)
+  * [Start the development environment](#start-the-development-environment)
+  * [Run the end-to-end tests interactively](#run-the-end-to-end-tests-interactively)
+- [For CANOSP Participants](#for-canosp-participants)
+  * [Choose a card](#choose-a-card)
+  * [Assign yourself to the issue associated with the card](#assign-yourself-to-the-issue-associated-with-the-card)
+  * [Create a new branch for the issue](#create-a-new-branch-for-the-issue)
+    + [Branch prefixes](#branch-prefixes)
+  * [Resolve the issue!](#resolve-the-issue)
+    + [Fixing a bug](#fixing-a-bug)
+    + [Adding a new feature](#adding-a-new-feature)
+  * [Create a pull request](#create-a-pull-request)
+  * [Inform the team on Slack](#inform-the-team-on-slack)
+
+
 How the branches work
 ---------------------
 
@@ -152,7 +173,7 @@ that old, merged branch:
 I will use the following **prefixes** for my **branch names**, and I suggest you
 do the same:
 
- - `doc/` — adds or modifies documentation
+ - `docs/` — adds or modifies documentation
  - `feat/` — implements a new feature
  - `fix/` — fixes a bug
  - `build/` — changes to `package.json`, `tsconfig.json`, `rollup.config.js`, etc.
