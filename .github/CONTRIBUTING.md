@@ -91,6 +91,7 @@ contribute to the project:
  3. Create a new branch that addresses the issue in the selected card
  4. Resolve the issue!
  5. Create a pull request that [resolves][pr-keyword] the issue
+ 6. Inform the team on Slack!
 
 [Task board]: https://github.com/eddieantonio/predictive-text-studio/projects/1
 [pr-keyword]: https://docs.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
@@ -188,8 +189,7 @@ guidelines of the tasks you should be doing in certain scenarios:
    memory requirement**. Either way, improvements should be done AFTER
    the basics of the feature are done!
 
-
-#### Create a pull request
+### Create a pull request
 
 > **Note**: if you want to be REALLY awesome, create a [draft pull request][]
 > even before your changes are ready. This helps us keep up-to-date with
@@ -207,3 +207,23 @@ first push:
 
 Typically, your first `git push`  will print a link from GitHub that you can click
 to create a new pull request.
+
+![Pushing your branch for the first time](../docs/img/contributing-04-git-push.png)
+
+Now write an informative message about your changes. **Make sure it
+references which issue it will resolve**!
+
+**PROTIP**: use a [keyword][pr-keyword] such as **resolves**, **fixes**, or **closes**
+to automatically close the issue as soon as the PR is merged!
+
+![Creating a pull request](../docs/img/contributing-05-pull-request.png)
+
+[draft pull request]: https://github.blog/2019-02-14-introducing-draft-pull-requests/
+
+### Inform the team on Slack
+
+Make a post on the `#predictive-text-studio` channel on the CANOSP
+Slack! Link to your PR, maybe write a witty comment, and wait for your
+PR to be reviewed!
+
+![Post on Slack](../docs/img/contributing-06-slack.png)
