@@ -30,7 +30,7 @@ Table of contents
   * [Assign yourself to the issue associated with the card](#assign-yourself-to-the-issue-associated-with-the-card)
   * [Create a new branch for the issue](#create-a-new-branch-for-the-issue)
     + [Branch prefixes](#branch-prefixes)
-  * [Resolve the issue!](#resolve-the-issue-)
+  * [Resolve the issue!](#resolve-the-issue)
     + [Fixing a bug](#fixing-a-bug)
     + [Adding a new feature](#adding-a-new-feature)
   * [Create a pull request](#create-a-pull-request)
