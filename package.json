@@ -48,6 +48,9 @@
     "typescript": "^3.9"
   },
   "ava": {
+    "files": [
+      "test/**.ts"
+    ],
     "extensions": [
       "ts"
     ],
