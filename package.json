@@ -37,7 +37,7 @@
     "svelte": "3.24.1",
     "svelte-check": "1.0.23",
     "ts-node": "9.0.0",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "3.9.0"
   },
   "dependencies": {
     "@rollup/plugin-typescript": "^5.0.2",
