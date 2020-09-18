@@ -4,4 +4,5 @@
 
 <main role="application">
   <h1> Welcome to {name}!</h1>
+  <p>Hi, my name is Xuechun!</p>
 </main>
