@@ -5,6 +5,7 @@ describe("Landing Page", () => {
   });
 
   describe("Input file", () => {
+    // TODO: Improve the test case whenever the application is able to parse xlfx file
     it("should be able to upload a file", () => {
       cy.get("[data-testid=input-file]").attachFile({
         filePath: "../fixtures/users.json",
