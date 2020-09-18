@@ -1,5 +1,6 @@
 <script lang="ts">
   export let name: string;
+
 </script>
 
 <main role="application">
@@ -7,4 +8,5 @@
 
   <p> Hi my name is Eddie! </p>
   <p>Pranav</p>
+  <h2>Ian</h2>
 </main>
