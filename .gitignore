@@ -28,3 +28,4 @@ coverage/
 # Cypress stuff
 cypress/screenshots/
 cypress/videos/
+.DS_Store
