@@ -43,6 +43,7 @@
     "typescript": "^3.9"
   },
   "dependencies": {
+    "@eddieantonio/lexical-model-compiler": "14.0.0-alpha.7",
     "read-excel-file": "^4.0.7",
     "tslib": "^2.0.1"
   },
