@@ -97,10 +97,14 @@
       <h1>Predictive Text Studio</h1>
     </div>
     <div class="languages__container--actions">
-      <button on:click={() => handleClick('information')} class="selected">
+      <button
+        on:click={() => handleClick('information')}
+        class={selectedButton === 'information' ? 'selected' : 'deselected'}>
         Information
       </button>
-      <button on:click={() => handleClick('sources')} class="deselected">
+      <button
+        on:click={() => handleClick('sources')}
+        class={selectedButton === 'sources' ? 'selected' : 'deselected'}>
         Sources
       </button>
       <button on:click={handleDownload} class="download"> Download </button>
