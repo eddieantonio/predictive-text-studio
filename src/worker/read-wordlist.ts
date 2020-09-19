@@ -1,10 +1,10 @@
-import readXlsxFile from "read-excel-file/node";
+import readXlsxFile from "read-excel-file";
 
-export function returnWordlist(ExcelFile: Buffer):  Array<[string, number]> {
+export function returnWordlist(ExcelFile: Buffer):  Promise<Array<[string, number]>> {
     let wordlist: Array<[string, number]> = [];
-    readXlsxFile(ExcelFile).then((rows: any) => {
-        wordlist.push(rows);
+    
+    return readXlsxFile(ExcelFile).then((rows: any) => {
+        wordlist = wordlist.concat(rows);
+        return wordlist;
     })
-    console.log(wordlist);
-    return wordlist;
 }
