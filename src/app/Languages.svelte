@@ -14,6 +14,52 @@
   };
 </script>
 
+<style>
+  .languages__sidebar {
+    width: 10%;
+  }
+
+  .languages__container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .languages__container--header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .languages__container--header h1 {
+    font-family: Cabin, sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+  }
+
+  .languages__container--buttons {
+    display: flex;
+    flex-direction: row;
+    font-family: Cabin, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .languages__container--buttons-selected {
+    border: 1px solid #bdbdbd;
+    background-color: #ffffff;
+  }
+
+  .languages__container--buttons-selected {
+    background-color: #f1f1f1;
+  }
+
+  .languages__container--buttons-download {
+    margin-left: 30px;
+    background-color: #0099ff;
+    color: #ffffff;
+  }
+</style>
+
 <main>
   <div class="languages__sidebar">
     <!-- <Projects {... projectList}> -->
