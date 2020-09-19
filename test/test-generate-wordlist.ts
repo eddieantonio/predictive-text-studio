@@ -1,9 +1,14 @@
 import test from "ava";
 
+/**
+ * Note: this test the library — not the code in this repo.
+ * TODO: test how the compiler works from **within** the worker.
+ */
+
 import {
   compileModelFromLexicalModelSource,
   WordListFromArray,
-} from "@eddieantonio/lexical-model-compiler";
+} from "@predictive-text-studio/lexical-model-compiler";
 
 test("it should generate source code", (t) => {
   // Invoke the compiler:
