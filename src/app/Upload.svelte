@@ -1,12 +1,11 @@
 <script lang="ts">
+  const UPLOAD_INPUT_ID = "upload-input";
+
   let onDraggedOver = false;
   let files = new Map<String, File>();
 
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
-
-    // Prevent default behavior (Prevent file from being opened)
-    event.preventDefault();
 
     if (event.dataTransfer == null) {
       return;
@@ -30,55 +29,74 @@
     alert("File(s) dropped: " + files.size);
   };
 
-  const handleDragOver = (event: DragEvent) => {
+  const handleDragOver = () => {
     onDraggedOver = true;
-
-    // Prevent default behavior (Prevent file from being opened)
-    event.preventDefault();
   };
 
-  const handleDragLeave = (event: DragEvent) => {
+  const handleDragLeave = () => {
     onDraggedOver = false;
-    // Prevent default behavior (Prevent file from being opened)
-    event.preventDefault();
+  };
+
+  const handleChange = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    if (input !== null && input.files) {
+      for (let file of input.files) {
+        files.set(file.name, file);
+        alert(file.name);
+      }
+    }
   };
 </script>
 
 <style>
   .upload-zone {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 40%;
-    height: 400px;
-    background-color: rgb(97, 230, 186);
-  }
-
-  .inner-border {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    margin: 1em;
-    height: calc(100% - 2em);
-    width: calc(100% - 2em);
-    background-color: rgb(34, 153, 113);
-    border: 0.2em dashed rgb(17, 119, 85);
-    color: white;
+    padding: 5%;
+    width: 20%;
+    min-width: 200px;
+    border: 3px dashed #cdd5dc;
+    border-radius: 5px;
   }
 
   .drag-over {
-    background-color: rgb(97, 230, 186);
-    border: 0.3em dashed white;
+    border-color: #b3dbe7;
+    background-color: #e8f8ff;
+  }
+
+  input {
+    display: none;
+  }
+
+  .upload-btn {
+    margin: 0 auto;
+    color: #6fbbd4;
+    font-weight: bold;
+  }
+
+  .upload-btn:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  img {
+    width: 2em;
+    color: #6fbbd4;
+    padding-bottom: 1em;
   }
 </style>
 
 <div
   class="upload-zone"
-  on:drop={handleDrop}
-  on:dragover={handleDragOver}
-  on:dragleave={handleDragLeave}>
-  <div class='inner-border' class:drag-over={onDraggedOver}>
-    <p>Drag file to upload ...</p>
-  </div>
+  class:drag-over={onDraggedOver}
+  on:drop|preventDefault={handleDrop}
+  on:dragover|preventDefault={handleDragOver}
+  on:dragleave|preventDefault={handleDragLeave}>
+  <img role="presentation" src="icons/upload-solid.svg" alt="" />
+  <span>Drag and drop here</span>
+  <span>or</span>
+  <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
+  <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
 </div>
