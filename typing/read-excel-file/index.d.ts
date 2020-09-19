@@ -1,0 +1,1 @@
+export default function readXlsxFile(input: any): Promise<Array<unknown>>;
