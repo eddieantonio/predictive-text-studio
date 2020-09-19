@@ -78,7 +78,7 @@
   on:drop={handleDrop}
   on:dragover={handleDragOver}
   on:dragleave={handleDragLeave}>
-  <div class={onDraggedOver ? 'inner-border drag-over' : 'inner-border'}>
+  <div class='inner-border' class:drag-over={onDraggedOver}>
     <p>Drag file to upload ...</p>
   </div>
 </div>
