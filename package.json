@@ -11,8 +11,9 @@
     "build": "rollup -c",
     "cy": "cypress open",
     "dev": "rollup -c -w",
-    "fix": "eslint --fix '{src,test}/**/*.{js,ts}'",
-    "lint": "eslint '{src,test}/**/*.{js,ts}'",
+    "lint": "eslint '{src,test,cypress}/**/*.ts'",
+    "lint:fix": "eslint --fix '{src,test,cypress}/**/*.ts'",
+    "prettier": "prettier --write '{src,test,cypress}/**/*.ts'",
     "start": "sirv public",
     "test": "ava",
     "validate": "svelte-check"
@@ -42,6 +43,7 @@
   "dependencies": {
     "@rollup/plugin-typescript": "^5.0.2",
     "@tsconfig/svelte": "^1.0.10",
+    "husky": "^4.3.0",
     "read-excel-file": "^4.0.7",
     "svelte-preprocess": "^4.1.1",
     "tslib": "^2.0.1",
@@ -58,5 +60,10 @@
       "ts-node/register",
       "tsconfig-paths/register"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint:fix && yarn run prettier"
+    }
   }
 }
