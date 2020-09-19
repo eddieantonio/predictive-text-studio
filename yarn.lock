@@ -74,21 +74,6 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@eddieantonio/lexical-model-compiler@14.0.0-alpha.10":
-  version "14.0.0-alpha.10"
-  resolved "https://npm.pkg.github.com/download/@eddieantonio/lexical-model-compiler/14.0.0-alpha.10/1f755dbe1e1ebabed3868ec4ee354479fdbcfb0ed2e7bc811f880abf556d3c9f#968ed761f2f3861b808f76e1643b348f86e3c373"
-  integrity sha512-gc66DF7O6s0AzXbrQ/UBSP092vLqdKcGuRmjZz0XFNzfWMMokVKi8cPMISnAvrkdHz1RCKLyMlRw25NN23Qq6w==
-  dependencies:
-    "@eddieantonio/models-types" "^14.0.0-alpha.10"
-    commander "^3.0.0"
-    typescript "^3.8.3"
-    xml2js "^0.4.19"
-
-"@eddieantonio/models-types@^14.0.0-alpha.10":
-  version "14.0.0-alpha.10"
-  resolved "https://npm.pkg.github.com/download/@eddieantonio/models-types/14.0.0-alpha.10/a5b5eae5163ca7170bc3a31c8eb533d587930384ec4419ea64aed23743ab2099#b542825aa4a3414e901417e09b802938548a77be"
-  integrity sha512-0gPqcDy1/x8BzlUDVBIc6MQ66idIPKrhgecVz2vTcHbniLS5/G0amHv3wfyaRyIxorVw9WXQaa+P+r2EaDqxOg==
-
 "@emmetio/extract-abbreviation@0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@emmetio/extract-abbreviation/-/extract-abbreviation-0.1.6.tgz#e4a9856c1057f0aff7d443b8536477c243abe28c"
@@ -119,6 +104,21 @@
   version "1.0.0-next.11"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.11.tgz#aeb16f50649a91af79dbe36574b66d0f9e4d9f71"
   integrity sha512-3NsZsJIA/22P3QUyrEDNA2D133H4j224twJrdipXN38dpnIOzAbUDtOwkcJ5pXmn75w7LSQDjA4tO9dm1XlqlA==
+
+"@predictive-text-studio/lexical-model-compiler@^14.0.0-alpha.0":
+  version "14.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@predictive-text-studio/lexical-model-compiler/-/lexical-model-compiler-14.0.0-alpha.0.tgz#fd42ca46265be7a633f83a32ce6c92475db46f46"
+  integrity sha512-TeYWezMtXo6X91RgpMJYemzSDzYvfIYwp1B7ni3uvsuny7NvEHZ9qkwn5zS8o7LsNU76ZDVYkn/Sq0AqTyKYXA==
+  dependencies:
+    "@predictive-text-studio/models-types" "^14.0.0-alpha.0"
+    commander "^3.0.0"
+    typescript "^3.8.3"
+    xml2js "^0.4.19"
+
+"@predictive-text-studio/models-types@^14.0.0-alpha.0":
+  version "14.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@predictive-text-studio/models-types/-/models-types-14.0.0-alpha.0.tgz#9f3f6534b273f6800c408db05205197b853ecf0b"
+  integrity sha512-EmEAxc6iwoBnjXs/XxCCCmP9trEmviTLA7OWgfqYzRoFWMUWxbE7NhjcBPaTG4iEXJ49QkEmmgRmNFDw/MB9+g==
 
 "@rollup/plugin-commonjs@^15.0.0":
   version "15.0.0"
