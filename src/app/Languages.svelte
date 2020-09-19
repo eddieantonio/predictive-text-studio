@@ -36,27 +36,53 @@
     font-size: 30px;
   }
 
-  .languages__container--buttons {
+  .languages__container--actions {
     display: flex;
     flex-direction: row;
+  }
+
+  button {
+    padding: 10px 20px;
+    margin: 0px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
     font-family: Cabin, sans-serif;
     font-size: 15px;
     font-weight: bold;
+    transition-duration: 0.2s;
   }
 
-  .languages__container--buttons-selected {
+  button:hover {
+    cursor: pointer;
+  }
+
+  .selected {
     border: 1px solid #bdbdbd;
     background-color: #ffffff;
   }
 
-  .languages__container--buttons-selected {
+  .selected:hover {
     background-color: #f1f1f1;
   }
 
-  .languages__container--buttons-download {
+  .deselected {
+    border: none;
+    background-color: #f1f1f1;
+  }
+
+  .deselected:hover {
+    background-color: #c5c5c5;
+  }
+
+  .download {
     margin-left: 30px;
+    border: none;
     background-color: #0099ff;
     color: #ffffff;
+  }
+
+  .download:hover {
+    background-color: #006db6;
   }
 </style>
 
@@ -67,25 +93,17 @@
 
   <div class="languages__container">
     <div class="languages__container--header">
-      <img src="../assets/keyman_logo.png" alt="Keyman Logo" />
+      <img src="./assets/keyman_logo.png" alt="Keyman Logo" />
       <h1>Predictive Text Studio</h1>
     </div>
-    <div class="languages__container--buttons">
-      <button
-        on:click={() => handleClick('information')}
-        class="languages__container--buttons-selected">
+    <div class="languages__container--actions">
+      <button on:click={() => handleClick('information')} class="selected">
         Information
       </button>
-      <button
-        on:click={() => handleClick('sources')}
-        class="languages__container--buttons-deselected">
+      <button on:click={() => handleClick('sources')} class="deselected">
         Sources
       </button>
-      <button
-        on:click={handleDownload}
-        class="languages__container--buttons-download">
-        Download
-      </button>
+      <button on:click={handleDownload} class="download"> Download </button>
     </div>
     <div class="languages__container--content">
       {#if selectedButton === 'information'}

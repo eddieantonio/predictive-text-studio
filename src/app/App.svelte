@@ -8,7 +8,6 @@
 </script>
 
 <main>
- 
   <Router {url}>
     <nav>
       <Link to="/">Landing</Link>
