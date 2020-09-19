@@ -74,20 +74,20 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@eddieantonio/lexical-model-compiler@14.0.0-alpha.7":
-  version "14.0.0-alpha.7"
-  resolved "https://npm.pkg.github.com/download/@eddieantonio/lexical-model-compiler/14.0.0-alpha.7/cb6a47c4b2ebc3e84f9ab92f25c13157892668158f91cef1ce29428087c1eecf#212d0d9ee5f872a0421f75b8708aaa424687d220"
-  integrity sha512-k1dV09ozRFCTCHeQpNmlnlb2avHUsMLXQUjZv4RcbrqWmG//j4q1gP7DtVnK4FJGCv2vnJUkwFClacYg6o410w==
+"@eddieantonio/lexical-model-compiler@14.0.0-alpha.10":
+  version "14.0.0-alpha.10"
+  resolved "https://npm.pkg.github.com/download/@eddieantonio/lexical-model-compiler/14.0.0-alpha.10/1f755dbe1e1ebabed3868ec4ee354479fdbcfb0ed2e7bc811f880abf556d3c9f#968ed761f2f3861b808f76e1643b348f86e3c373"
+  integrity sha512-gc66DF7O6s0AzXbrQ/UBSP092vLqdKcGuRmjZz0XFNzfWMMokVKi8cPMISnAvrkdHz1RCKLyMlRw25NN23Qq6w==
   dependencies:
-    "@eddieantonio/models-types" "^14.0.0-alpha.7"
+    "@eddieantonio/models-types" "^14.0.0-alpha.10"
     commander "^3.0.0"
     typescript "^3.8.3"
     xml2js "^0.4.19"
 
-"@eddieantonio/models-types@^14.0.0-alpha.7":
-  version "14.0.0-alpha.7"
-  resolved "https://npm.pkg.github.com/download/@eddieantonio/models-types/14.0.0-alpha.7/dbe702d0bd9eafcd97f0cf64b681c900bdfd616f9e61373891af53fccf1923bb#3769d4bc8a777a3568838146da5eb4f8d41aa619"
-  integrity sha512-Izs2KkSNeByKNY8XLnB5XutWzCJE9n0a9w8kWT7/mbpgJqcyVqWXLAdj6eZdQ7UqG0QkxS+0yuvj0aj6F4nJEQ==
+"@eddieantonio/models-types@^14.0.0-alpha.10":
+  version "14.0.0-alpha.10"
+  resolved "https://npm.pkg.github.com/download/@eddieantonio/models-types/14.0.0-alpha.10/a5b5eae5163ca7170bc3a31c8eb533d587930384ec4419ea64aed23743ab2099#b542825aa4a3414e901417e09b802938548a77be"
+  integrity sha512-0gPqcDy1/x8BzlUDVBIc6MQ66idIPKrhgecVz2vTcHbniLS5/G0amHv3wfyaRyIxorVw9WXQaa+P+r2EaDqxOg==
 
 "@emmetio/extract-abbreviation@0.1.6":
   version "0.1.6"
