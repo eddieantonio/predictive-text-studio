@@ -3,12 +3,12 @@
     selectedButton: "information",
   };
 
-  const handleClick = (buttonName: string) => {
+  const handleClick = (buttonName: string): void => {
     buttonProperties.selectedButton = buttonName;
     console.log(buttonName + " button selected");
   };
 
-  const handleDownload = () => {
+  const handleDownload = (): void => {
     console.log("Download button clicked");
   };
 </script>
