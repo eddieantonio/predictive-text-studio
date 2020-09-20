@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: 12
       - name: 🛠 2️⃣   Install npm dependencies
-        run: yarn install
+        run: yarn --frozen-lockfile
       - name: 🧶  Lint
         run: yarn run lint
       - name: 🗿  Svelte Check
