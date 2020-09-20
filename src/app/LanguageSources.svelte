@@ -3,6 +3,11 @@
 </script>
 
 <style>
+  .language__sources {
+    border-radius: 20px;
+    padding: 5px;
+  }
+
   th {
     text-align: left;
     background-color: #b6b6b6;
@@ -29,7 +34,7 @@
   }
 </style>
 
-<div>
+<div class="language__sources">
   <table>
     <tr>
       <th>Name</th>
@@ -52,4 +57,5 @@
       </tr>
     {/each}
   </table>
+  <button>Add Source</button>
 </div>

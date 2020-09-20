@@ -1,6 +1,7 @@
 <script lang="ts">
   import LanguageInfo from "./LanguageInfo.svelte";
   import LanguageSources from "./LanguageSources.svelte";
+  import Sidebar from "./Components/Sidebar.svelte";
 
   export let selectedButton: string = "information";
 
@@ -34,6 +35,25 @@
     ],
   };
 
+  export let languages: object[] = [
+    {
+      id: "1",
+      name: "Kwakwala",
+    },
+    {
+      id: "2",
+      name: "A",
+    },
+    {
+      id: "3",
+      name: "S",
+    },
+    {
+      id: "4",
+      name: "P",
+    },
+  ];
+
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
     console.log(buttonName + " button selected");
@@ -45,6 +65,12 @@
 </script>
 
 <style>
+  .languages {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+
   .languages__sidebar {
     width: 10%;
   }
@@ -116,35 +142,42 @@
   }
 </style>
 
+<!-- 
+  TODO:
+  1. Add JSDoc Notation to functions
+  2. Create/refactor button component
+  3. Use variable names for colors and fonts
+  4. Finish sidebar / language avatar components
+ -->
 <main>
-  <div class="languages__sidebar">
-    <!-- <Projects {... projectList}> -->
-  </div>
+  <div class="languages">
+    <!-- <Sidebar class="languages__sidebar" {...languages} /> -->
 
-  <div class="languages__container">
-    <div class="languages__container--header">
-      <img src="./assets/keyman_logo.png" alt="Keyman Logo" />
-      <h1>Predictive Text Studio</h1>
-    </div>
-    <div class="languages__container--actions">
-      <button
-        on:click={() => handleClick('information')}
-        class={selectedButton === 'information' ? 'selected' : 'deselected'}>
-        Information
-      </button>
-      <button
-        on:click={() => handleClick('sources')}
-        class={selectedButton === 'sources' ? 'selected' : 'deselected'}>
-        Sources
-      </button>
-      <button on:click={handleDownload} class="download"> Download </button>
-    </div>
-    <div class="languages__container--content">
-      {#if selectedButton === 'information'}
-        <LanguageInfo properties={languageInformation.properties} />
-      {:else if selectedButton === 'sources'}
-        <LanguageSources sources={languageInformation.sources} />
-      {/if}
+    <div class="languages__container">
+      <div class="languages__container--header">
+        <img src="./assets/keyman_logo.png" alt="Keyman Logo" />
+        <h1>Predictive Text Studio</h1>
+      </div>
+      <div class="languages__container--actions">
+        <button
+          on:click={() => handleClick('information')}
+          class={selectedButton === 'information' ? 'selected' : 'deselected'}>
+          Information
+        </button>
+        <button
+          on:click={() => handleClick('sources')}
+          class={selectedButton === 'sources' ? 'selected' : 'deselected'}>
+          Sources
+        </button>
+        <button on:click={handleDownload} class="download"> Download </button>
+      </div>
+      <div class="languages__container--content">
+        {#if selectedButton === 'information'}
+          <LanguageInfo properties={languageInformation.properties} />
+        {:else if selectedButton === 'sources'}
+          <LanguageSources sources={languageInformation.sources} />
+        {/if}
+      </div>
     </div>
   </div>
 </main>
