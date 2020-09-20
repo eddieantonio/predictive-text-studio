@@ -1,5 +1,5 @@
 import test from "ava";
-import JSZip = require("jszip");
+import * as JSZip from "jszip";
 
 import { generateZip } from "@worker/generate-zip";
 
