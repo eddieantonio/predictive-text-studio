@@ -5,7 +5,6 @@
 
 <style>
   .language__info {
-    margin-top: 50px;
     display: flex;
     flex-direction: row;
   }

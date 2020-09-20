@@ -4,6 +4,7 @@
   import Sidebar from "./Components/Sidebar.svelte";
 
   export let selectedButton: string = "information";
+  export let selectedLanguage: string = "Kwakwala";
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation: object = {
@@ -68,20 +69,24 @@
   .languages {
     display: flex;
     flex-direction: row;
+    width: 100%;
     height: 100%;
+    font-family: Cabin, sans-serif;
   }
 
   .languages__sidebar {
-    width: 10%;
+    width: 75px;
   }
 
   .languages__container {
-    width: 90%;
+    margin-left: 75px;
     display: flex;
     flex-direction: column;
   }
 
   .languages__container--header {
+    margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
   }
@@ -95,6 +100,10 @@
   .languages__container--actions {
     display: flex;
     flex-direction: row;
+  }
+
+  .languages__container--content {
+    margin-top: 25px;
   }
 
   button {
@@ -140,6 +149,11 @@
   .download:hover {
     background-color: #006db6;
   }
+
+  img {
+    width: 200px;
+    height: auto;
+  }
 </style>
 
 <!-- 
@@ -147,15 +161,18 @@
   1. Add JSDoc Notation to functions
   2. Create/refactor button component
   3. Use variable names for colors and fonts
-  4. Finish sidebar / language avatar components
  -->
 <main>
   <div class="languages">
-    <!-- <Sidebar class="languages__sidebar" {...languages} /> -->
+    <div class="languages__sidebar">
+      <Sidebar {languages} {selectedLanguage} />
+    </div>
 
     <div class="languages__container">
       <div class="languages__container--header">
-        <img src="./assets/keyman_logo.png" alt="Keyman Logo" />
+        <img
+          src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
+          alt="Keyman Logo" />
         <h1>Predictive Text Studio</h1>
       </div>
       <div class="languages__container--actions">

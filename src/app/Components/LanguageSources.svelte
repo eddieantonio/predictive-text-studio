@@ -16,8 +16,7 @@
 
   table {
     border-collapse: collapse;
-    margin-top: 50px;
-    width: 75%;
+    width: 1400px;
   }
 
   tr {

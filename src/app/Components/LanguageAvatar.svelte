@@ -1,5 +1,48 @@
 <script lang="ts">
   export let name: string;
+  export let selectedLanguage: string;
+
+  export let isSelected: boolean = name === selectedLanguage;
+  export let className: string = "avatar";
+  if (isSelected) {
+    className = className + " selected";
+  }
+
+  const handleClick = (languageName: string): void => {
+    console.log(languageName + " button selected");
+  };
 </script>
 
-<p>{name}</p>
+<style>
+  .avatar {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    margin-top: 40px;
+    font-family: Cabin, sans-serif;
+    font-size: 20px;
+  }
+
+  .avatar:hover {
+    cursor: pointer;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .selected {
+    background-color: #0099ff;
+    color: #fff;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<div
+  class={className}
+  on:click={() => {
+    handleClick(name);
+  }}>
+  {name.substring(0, 1)}
+</div>
