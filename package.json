@@ -44,6 +44,8 @@
   "dependencies": {
     "@rollup/plugin-typescript": "^5.0.2",
     "@tsconfig/svelte": "^1.0.10",
+    "install": "^0.13.0",
+    "jszip": "^3.5.0",
     "read-excel-file": "^4.0.7",
     "svelte-preprocess": "^4.1.1",
     "tslib": "^2.0.1",
