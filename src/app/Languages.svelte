@@ -4,6 +4,36 @@
 
   export let selectedButton: string = "information";
 
+  // Mock language data object - this would be read from localstorage/db
+  export let languageInformation: object = {
+    word_count: "74231",
+    properties: {
+      name: "Kwakwala",
+      author: "Rae Anne",
+      dictionary_name: "Kwakwala",
+      copyright: "Rae Anne 2020",
+      keyboard_image:
+        "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg",
+    },
+    sources: [
+      {
+        name: "dictionary.xlsx",
+        size: "78112",
+        type: "excel",
+      },
+      {
+        name: "Kinship Terms",
+        size: "32",
+        type: "direct entry",
+      },
+      {
+        name: "secondary_dictionary.xlsx",
+        size: "198",
+        type: "excel",
+      },
+    ],
+  };
+
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
     console.log(buttonName + " button selected");
@@ -111,9 +141,9 @@
     </div>
     <div class="languages__container--content">
       {#if selectedButton === 'information'}
-        <LanguageInfo />
+        <LanguageInfo properties={languageInformation.properties} />
       {:else if selectedButton === 'sources'}
-        <LanguageSources />
+        <LanguageSources sources={languageInformation.sources} />
       {/if}
     </div>
   </div>
