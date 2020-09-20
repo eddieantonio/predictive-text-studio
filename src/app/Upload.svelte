@@ -57,22 +57,27 @@
     padding: 5%;
     width: 20%;
     min-width: 200px;
-    border: 3px dashed #cdd5dc;
+    border: 3px dashed var(--gray-light);
     border-radius: 5px;
   }
 
   .drag-over {
-    border-color: #b3dbe7;
-    background-color: #e8f8ff;
+    border-color: var(--blue);
+    background-color: var(--blue-light);
   }
 
   input {
     display: none;
   }
 
+  span {
+    font-weight: bold;
+    color: var(--gray);
+  }
+
   .upload-btn {
     margin: 0 auto;
-    color: #6fbbd4;
+    color: var(--blue);
     font-weight: bold;
   }
 
@@ -83,7 +88,7 @@
 
   img {
     width: 2em;
-    color: #6fbbd4;
+    color: var(--blue);
     padding-bottom: 1em;
   }
 </style>
