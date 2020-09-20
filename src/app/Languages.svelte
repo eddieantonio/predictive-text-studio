@@ -1,6 +1,6 @@
 <script lang="ts">
-  import LanguageInfo from "./LanguageInfo.svelte";
-  import LanguageSources from "./LanguageSources.svelte";
+  import LanguageInfo from "./Components/LanguageInfo.svelte";
+  import LanguageSources from "./Components/LanguageSources.svelte";
   import Sidebar from "./Components/Sidebar.svelte";
 
   export let selectedButton: string = "information";

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import InputField from "./Components/InputField.svelte";
+  import InputField from "./InputField.svelte";
   export let properties;
 </script>
 
