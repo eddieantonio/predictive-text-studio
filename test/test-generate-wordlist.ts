@@ -25,8 +25,9 @@ test("it should generate source code", (t) => {
   // it will compile to a JavaScript function!
   t.regex(code, /\bfunction\b/);
 
-  t.notThrows(function () {
-    // We should be able to eval that function and get its code:
+  t.notThrows(() => {
+    // Get the JavaScript engine to parse the code, but do not **execute** it!
+    // We just want to check that it's syntactically valid 😅
     new Function(code);
   }, "could not eval model code");
 });
