@@ -1,4 +1,14 @@
 /**
+ * @file temporary-create-model.ts
+ *
+ * Implements an example of transfering files to the worker thread and waiting
+ * for it to come back.
+ *
+ * Since this is TEMPORARY, it should be refactored, taken apart, reassembled,
+ * and/or rewritten.
+ */
+
+/**
  * Asks the worker thread to compile a model.
  */
 export function compileModel(
