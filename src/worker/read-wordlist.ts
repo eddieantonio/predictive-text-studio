@@ -1,4 +1,5 @@
 import * as XLSX from "xlsx";
+import * as ExcelJS from "exceljs";
 
 /**
  * A pair of a word and its count (how many times it has occurred in some
@@ -11,6 +12,12 @@ type WordAndCount = [string, number];
  * unigram language model (can provide current word completion, autocorrection).
  */
 type WordList = WordAndCount[];
+
+export async function readExcel(
+  excelFile: ArrayBuffer | Uint8Array
+): Promise<WordList> {
+  throw new Error("not implemented");
+}
 
 /**
  * Read an .xlsx file from an ArrayBuffer.
