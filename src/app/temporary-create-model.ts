@@ -11,29 +11,38 @@
 /**
  * Asks the worker thread to compile a model.
  */
-export function compileModel(
+export async function compileModel(
   dictionarySources: Map<string, File>
 ): Promise<string> {
   const worker = new Worker("worker.js");
 
-  const files: { [filename: string]: string } = {};
+  const files: { [filename: string]: ArrayBuffer } = {};
+  const transferredBinaries: ArrayBuffer[] = [];
+
   for (const [filename, file] of dictionarySources) {
-    files[filename] = URL.createObjectURL(file);
+    const byteArray = await file.arrayBuffer();
+    transferredBinaries.push(byteArray);
+    files[filename] = byteArray;
   }
 
-  worker.postMessage({
-    method: "compile",
-    modelID: {
-      author: "nobody",
-      language: "en",
-      tag: "example",
-    },
-    files,
-  });
-
-  return new Promise((resolve) => {
+  const promisedCode: Promise<string> = new Promise((resolve) => {
     worker.onmessage = function (ev) {
       resolve(ev.data as string);
     };
   });
+
+  worker.postMessage(
+    {
+      method: "compile",
+      modelID: {
+        author: "nobody",
+        language: "en",
+        tag: "example",
+      },
+      files,
+    },
+    transferredBinaries
+  );
+
+  return await promisedCode;
 }
