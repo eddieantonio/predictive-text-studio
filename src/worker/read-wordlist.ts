@@ -24,15 +24,11 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   const [topLeftCell, bottomRightCell] = dimensions(spreadsheet);
   ensureUnderstandableSpreadsheet(topLeftCell, bottomRightCell);
 
-  const numberOfWords = asNonNegativeInteger(bottomRightCell.substring(1));
   const wordlist: WordList = [];
+  const numberOfWords = asNonNegativeInteger(bottomRightCell.substring(1));
+
   for (let rowNumber = 0; rowNumber < numberOfWords; rowNumber++) {
-    const wordCell: XLSX.CellObject | undefined =
-      spreadsheet[XLSX.utils.encode_cell({ c: 0, r: rowNumber })];
-    if (!wordCell) {
-      continue;
-    }
-    const word = (wordCell.v || "").toString();
+    const word = extractWord(spreadsheet, rowNumber);
     if (!word) {
       continue;
     }
@@ -69,6 +65,21 @@ function ensureUnderstandableSpreadsheet(
       "I don't understand spreadsheets with more than two columns"
     );
   }
+}
+
+/**
+ * Extracts the word from the first column, given the (zero-indexed) row
+ * number.
+ */
+function extractWord(spreadsheet: XLSX.WorkSheet, row: number): string | null {
+  const wordCell: XLSX.CellObject | undefined =
+    spreadsheet[XLSX.utils.encode_cell({ c: 0, r: row })];
+
+  if (!wordCell) {
+    return null;
+  }
+
+  return (wordCell.v || "").toString();
 }
 
 function dimensions(sheet: XLSX.WorkSheet): [string, string] {
