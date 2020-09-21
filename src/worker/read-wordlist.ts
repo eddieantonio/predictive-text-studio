@@ -1,5 +1,5 @@
 import * as XLSX from "xlsx";
-import * as ExcelJS from "exceljs";
+import * as Excel from "exceljs";
 
 /**
  * A pair of a word and its count (how many times it has occurred in some
@@ -16,7 +16,32 @@ type WordList = WordAndCount[];
 export async function readExcel(
   excelFile: ArrayBuffer | Uint8Array
 ): Promise<WordList> {
-  throw new Error("not implemented");
+  const workbook = new Excel.Workbook();
+  await workbook.xlsx.load(excelFile);
+
+  /* We're making the following assumptions:
+   *
+   *  * The first worksheet contains the wordlist
+   *  * The first column of the first sheet contains the words
+   *  * the second column of the first sheet MAY contain the counts
+   */
+
+  const worksheet = workbook.worksheets[0];
+  if (worksheet.columnCount < 1) {
+    throw new Error(
+      `cannot understand worksheet with ${worksheet.columnCount} columns`
+    );
+  }
+
+  const wordlist: WordList = [];
+
+  worksheet.eachRow((row) => {
+    const word = row.getCell(0).text || "";
+    const count = asNonNegativeInteger(row.getCell(1).text || 1);
+    wordlist.push([word, count]);
+  });
+
+  return wordlist;
 }
 
 /**
