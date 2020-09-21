@@ -46,12 +46,13 @@
     "typescript": "^3.9"
   },
   "dependencies": {
+    "@predictive-text-studio/lexical-model-compiler": "^14.0.0-alpha.0",
     "@rollup/plugin-typescript": "^5.0.2",
     "@tsconfig/svelte": "^1.0.10",
     "jszip": "^3.5.0",
-    "@predictive-text-studio/lexical-model-compiler": "^14.0.0-alpha.0",
     "read-excel-file": "^4.0.7",
-    "tslib": "^2.0.1"
+    "tslib": "^2.0.1",
+    "xlsx": "^0.16.7"
   },
   "ava": {
     "files": [
