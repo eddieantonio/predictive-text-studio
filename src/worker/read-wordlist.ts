@@ -21,12 +21,7 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   const firstSheetName = workbook.SheetNames[0];
   const spreadsheet = workbook.Sheets[firstSheetName];
 
-  const dimensions = spreadsheet["!ref"]?.split(":");
-  if (!dimensions) {
-    throw new Error("cannot get dimensions of worksheet");
-  }
-
-  const [topLeftCell, bottomRightCell] = dimensions;
+  const [topLeftCell, bottomRightCell] = dimensions(spreadsheet);
   if (topLeftCell[0] !== "A") {
     throw new Error(
       "I don't understand spreadsheets that start at a column other than A"
@@ -37,6 +32,7 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
       "I don't understand spreadsheets with more than two columns"
     );
   }
+
   const numberOfWords = Number(bottomRightCell.substring(1));
   if (numberOfWords < 0 || Number.isNaN(numberOfWords)) {
     throw new Error(`Don't understand rows from ${bottomRightCell}`);
@@ -67,4 +63,17 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   }
 
   return wordlist;
+}
+
+function dimensions(sheet: XLSX.WorkSheet): [string, string] {
+  const dimensions = sheet["!ref"]?.split(":");
+  if (!dimensions) {
+    throw new Error("worksheet has no dimensions");
+  }
+
+  if (dimensions.length === 2) {
+    return dimensions as [string, string];
+  }
+
+  throw new Error(`I don't understand dimensions: ${dimensions}`);
 }
