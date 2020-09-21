@@ -36,8 +36,8 @@ export async function readExcel(
   const wordlist: WordList = [];
 
   worksheet.eachRow((row) => {
-    const word = row.getCell(0).text || "";
-    const count = asNonNegativeInteger(row.getCell(1).text || 1);
+    const word = row.getCell(1).text || "";
+    const count = asNonNegativeInteger(row.getCell(2).text || 1);
     wordlist.push([word, count]);
   });
 
