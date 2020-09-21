@@ -1,12 +1,19 @@
 <script lang="ts">
+  /**
+   * NOTE: while we wait for more UI work to finish, this is a god class (or,
+   * uh, god component).
+   *
+   * Refactoring is necessary!
+   */
+
   const UPLOAD_INPUT_ID = "upload-input";
 
+  /** Whether the user is currently dragging something over this component: */
   let onDraggedOver = false;
-  let files = new Map<String, File>();
+  /** List of files to upload. */
+  let files = new Map<string, File>();
 
-  /**
-   * TODO: this MUST be moved to a new file (bad coupling).
-   */
+  /* TODO: this MUST be moved to a new file (bad coupling).  */
   let generatedCode: string | null = null;
 
   const handleDrop = (event: DragEvent) => {
@@ -21,17 +28,16 @@
         if (item.kind === "file") {
           const file = item.getAsFile();
           if (file !== null) {
-            files.set(file.name, file);
+            uploadFile(file);
           }
         }
       }
     } else {
       // Use DataTransfer interface to access the file(s)
       for (let file of event.dataTransfer.files) {
-        files.set(file.name, file);
+        uploadFile(file);
       }
     }
-    alert("File(s) dropped: " + files.size);
   };
 
   const handleDragOver = () => {
@@ -46,11 +52,17 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
-        files.set(file.name, file);
-        alert(file.name);
+        uploadFile(file);
       }
     }
   };
+
+  function uploadFile(file: File) {
+    files.set(file.name, file);
+    /* Useless assignment so that Svelte picks it up: */
+    // See: https://svelte.dev/tutorial/updating-arrays-and-objects
+    files = files;
+  }
 </script>
 
 <style>
@@ -104,12 +116,22 @@
   on:drop|preventDefault={handleDrop}
   on:dragover|preventDefault={handleDragOver}
   on:dragleave|preventDefault={handleDragLeave}>
-  <img role="presentation" src="icons/upload-solid.svg" alt="" />
+  <img role="presentation" src="icons/upload-solid.svg" alt=""
+/>
   <span>Drag and drop here</span>
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
-  <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
+  <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} data-cy="upload-file" />
 </div>
+
+<!--
+  TODO: remove this once https://github.com/eddieantonio/predictive-text-studio/pull/58 is merged.
+-->
+{#if files.size > 0}
+<button data-cy="download-kmp">
+  Download .kmp file
+</button>
+{/if}
 
 <!--
   TODO: remove this once https://github.com/eddieantonio/predictive-text-studio/pull/58 is merged.
