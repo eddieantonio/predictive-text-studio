@@ -1,14 +1,7 @@
-import readXlsxFile from "read-excel-file";
 import * as XLSX from "xlsx";
 
 type WordAndCount = [string, number];
 type WordList = WordAndCount[];
-
-export function readExcel(
-  excelFile: ArrayBuffer | Uint8Array
-): Promise<WordList> {
-  return Promise.resolve(readExcelSync(excelFile));
-}
 
 export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   const data = new Uint8Array(excelFile);
@@ -62,13 +55,4 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   }
 
   return wordlist;
-}
-
-export function returnWordlist(ExcelFile: Buffer): Promise<[string, number][]> {
-  let wordlist: [string, number][] = [];
-
-  return readXlsxFile(ExcelFile).then((rows: unknown[]) => {
-    wordlist = wordlist.concat(rows as [string, number][]);
-    return wordlist;
-  });
 }
