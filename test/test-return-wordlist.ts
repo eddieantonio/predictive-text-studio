@@ -2,7 +2,7 @@ import test from "ava";
 import * as fs from "fs";
 import * as path from "path";
 
-import { readExcelSync } from "@worker/read-wordlist";
+import { readExcel } from "@worker/read-wordlist";
 
 const exampleExcelFilePath = path.join(__dirname, "ExampleWordlist.xlsx");
 const exampleWordlist = [
@@ -18,9 +18,9 @@ const exampleWordlist = [
   ["I", 1884],
 ];
 
-test("it should return a wordlist given an Excel file", (t) => {
+test("it should return a wordlist given an Excel file", async (t) => {
   t.deepEqual(
-    readExcelSync(fs.readFileSync(exampleExcelFilePath)),
+    await readExcel(fs.readFileSync(exampleExcelFilePath)),
     exampleWordlist
   );
 });
