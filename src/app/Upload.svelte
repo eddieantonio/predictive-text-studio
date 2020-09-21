@@ -5,6 +5,7 @@
    *
    * Refactoring is necessary!
    */
+  import { compileModel } from "./temporary-create-model";
 
   const UPLOAD_INPUT_ID = "upload-input";
 
@@ -63,6 +64,15 @@
     // See: https://svelte.dev/tutorial/updating-arrays-and-objects
     files = files;
   }
+
+  /**
+   */
+  function workInProgressCreateModel() {
+    compileModel(files).then((sourceCode: string) => {
+      generatedCode = sourceCode;
+    })
+  }
+
 </script>
 
 <style>
@@ -128,7 +138,7 @@
   TODO: remove this once https://github.com/eddieantonio/predictive-text-studio/pull/58 is merged.
 -->
 {#if files.size > 0}
-<button data-cy="download-kmp">
+<button data-cy="download-kmp" on:click={workInProgressCreateModel}>
   Download .kmp file
 </button>
 {/if}
