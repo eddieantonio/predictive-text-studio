@@ -4,6 +4,11 @@
   let onDraggedOver = false;
   let files = new Map<String, File>();
 
+  /**
+   * TODO: this MUST be moved to a new file (bad coupling).
+   */
+  let generatedCode: string | null = null;
+
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
 
@@ -105,3 +110,10 @@
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
 </div>
+
+<!--
+  TODO: remove this once https://github.com/eddieantonio/predictive-text-studio/pull/58 is merged.
+-->
+{#if generatedCode}
+  <pre><code>{generatedCode}</code></pre>
+{/if}
