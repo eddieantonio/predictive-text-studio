@@ -50,6 +50,7 @@
     "@tsconfig/svelte": "^1.0.10",
     "jszip": "^3.5.0",
     "@predictive-text-studio/lexical-model-compiler": "^14.0.0-alpha.0",
+    "dexie": "^3.0.2",
     "read-excel-file": "^4.0.7",
     "tslib": "^2.0.1"
   },
