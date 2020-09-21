@@ -49,7 +49,7 @@
     "@predictive-text-studio/lexical-model-compiler": "^14.0.0-alpha.0",
     "@rollup/plugin-typescript": "^5.0.2",
     "@tsconfig/svelte": "^1.0.10",
-    "exceljs": "^4.1.1",
+    "exceljs": "~3.5.0",
     "jszip": "^3.5.0",
     "tslib": "^2.0.1",
     "xlsx": "^0.16.7"
