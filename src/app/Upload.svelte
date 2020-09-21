@@ -17,6 +17,7 @@
           const file = item.getAsFile();
           if (file !== null) {
             files.set(file.name, file);
+            saveToIndexedDB(file.name, file);
           }
         }
       }
@@ -24,9 +25,9 @@
       // Use DataTransfer interface to access the file(s)
       for (let file of event.dataTransfer.files) {
         files.set(file.name, file);
+        saveToIndexedDB(file.name, file);
       }
     }
-    alert("File(s) dropped: " + files.size);
   };
 
   const handleDragOver = () => {
@@ -42,9 +43,17 @@
     if (input !== null && input.files) {
       for (let file of input.files) {
         files.set(file.name, file);
-        alert(file.name);
+        saveToIndexedDB(file.name, file);
       }
     }
+  };
+
+  const saveToIndexedDB = (name: string, file: File) => {
+    const worker = new Worker("worker.js");
+    worker.postMessage({ name, file });
+    worker.onmessage = () => {
+      worker.terminate();
+    };
   };
 </script>
 
