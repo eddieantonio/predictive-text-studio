@@ -74,6 +74,18 @@ const workerConfiguration = {
     // Minify in production
     production && terser(),
   ],
+  onwarn(warning, defaultHandler) {
+    // Ignore a warning about exceljs (false positive)
+    const str = warning.toString();
+    if (
+      /Use of eval is strongly discouraged/.test(str) &&
+      /exceljs[.]min[.]js/.test(warning.id)
+    ) {
+      return;
+    }
+
+    defaultHandler(warning);
+  },
 };
 
 export default [workerConfiguration, appConfiguration];
