@@ -22,16 +22,7 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   const spreadsheet = workbook.Sheets[firstSheetName];
 
   const [topLeftCell, bottomRightCell] = dimensions(spreadsheet);
-  if (topLeftCell[0] !== "A") {
-    throw new Error(
-      "I don't understand spreadsheets that start at a column other than A"
-    );
-  }
-  if (bottomRightCell[0] !== "B") {
-    throw new Error(
-      "I don't understand spreadsheets with more than two columns"
-    );
-  }
+  ensureUnderstandableSpreadsheet(topLeftCell, bottomRightCell);
 
   const numberOfWords = asNonNegativeInteger(bottomRightCell.substring(1));
   const wordlist: WordList = [];
@@ -59,6 +50,25 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   }
 
   return wordlist;
+}
+
+/**
+ * Throws an error if we can't understand the spreadsheet.
+ */
+function ensureUnderstandableSpreadsheet(
+  topLeftCell: string,
+  bottomRightCell: string
+): void {
+  if (topLeftCell[0] !== "A") {
+    throw new Error(
+      "I don't understand spreadsheets that start at a column other than A"
+    );
+  }
+  if (bottomRightCell[0] !== "B") {
+    throw new Error(
+      "I don't understand spreadsheets with more than two columns"
+    );
+  }
 }
 
 function dimensions(sheet: XLSX.WorkSheet): [string, string] {
