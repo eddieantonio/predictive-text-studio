@@ -33,11 +33,7 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
     );
   }
 
-  const numberOfWords = Number(bottomRightCell.substring(1));
-  if (numberOfWords < 0 || Number.isNaN(numberOfWords)) {
-    throw new Error(`Don't understand rows from ${bottomRightCell}`);
-  }
-
+  const numberOfWords = asNonNegativeInteger(bottomRightCell.substring(1));
   const wordlist: WordList = [];
   for (let rowNumber = 0; rowNumber < numberOfWords; rowNumber++) {
     const wordCell: XLSX.CellObject | undefined =
@@ -76,4 +72,17 @@ function dimensions(sheet: XLSX.WorkSheet): [string, string] {
   }
 
   throw new Error(`I don't understand dimensions: ${dimensions}`);
+}
+
+/**
+ * Returns a non-negative integer, or throws an error.
+ */
+function asNonNegativeInteger(x: unknown): number {
+  const n = Number(x) | 0;
+
+  if (Number.isNaN(n) || !Number.isFinite(n) || n < 0) {
+    throw new Error(`Cannot coerce ${x} into non-negative integer`);
+  }
+
+  return n;
 }
