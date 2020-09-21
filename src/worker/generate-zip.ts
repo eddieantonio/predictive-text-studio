@@ -10,5 +10,10 @@ export function generateZip(zip: JSZip): Promise<Buffer> {
 type FileList = { [filename: string]: string };
 
 export function createZipWithFiles(files: FileList): Promise<ArrayBuffer> {
-  return Promise.reject(new Error("not implemented"));
+  const zip = new JSZip();
+  for (const [filename, contents] of Object.entries(files)) {
+    zip.file(filename, contents);
+  }
+
+  return zip.generateAsync({ type: "arraybuffer" });
 }
