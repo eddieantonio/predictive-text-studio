@@ -60,6 +60,10 @@ export function readExcel(
   return Promise.resolve(wordlist);
 }
 
+export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
+  throw new Error("Not implemented");
+}
+
 export function returnWordlist(ExcelFile: Buffer): Promise<[string, number][]> {
   let wordlist: [string, number][] = [];
 
