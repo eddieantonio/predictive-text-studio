@@ -1,11 +1,7 @@
 import * as JSZip from "jszip";
 
-export function generateZip(zip: JSZip): Promise<Buffer> {
-  return zip.generateAsync({ type: "nodebuffer" });
-}
-
 /**
- * Given a list of filenames and string contents, generates a ZIP file.
+ * A list of filenames and their contents as a string.
  */
 type FileList = { [filename: string]: string };
 
