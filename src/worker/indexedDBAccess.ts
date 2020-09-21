@@ -5,25 +5,25 @@ const VERSION = 1;
 
 /**
  * files Table Scehma
- * +-------+
- * | id    |
- * +-------+
- * | name  |
- * +-------+
- * | file  |
- * +-------+
+ * +------------------+
+ * | id (primary key) |
+ * +------------------+
+ * | name             |
+ * +------------------+
+ * | file             |
+ * +------------------+
  */
 const FILES_TABLE_NAME = "files";
 const FILES_TABLE_SCHEMA = "++id, name, file";
 
-interface IFile {
+interface StoredFile {
   id?: number;
   name: string;
   file: File;
 }
 
 class IndexDBAccess extends Dexie {
-  files: Dexie.Table<IFile, number>;
+  files: Dexie.Table<StoredFile, number>;
 
   constructor() {
     super(DB_NAME);

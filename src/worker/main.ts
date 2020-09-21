@@ -1,12 +1,12 @@
 import indexedDB from "./indexedDBAccess";
 
-export interface ISaveFileEventPayload {
+export interface SaveFileEventPayload {
   name: string;
   file: File;
 }
 
 const handleSaveFileEvent = (event: MessageEvent) => {
-  const payload = event.data as ISaveFileEventPayload;
+  const payload = event.data as SaveFileEventPayload;
   indexedDB
     .saveFile(payload.name, payload.file)
     .then(() => {
@@ -18,15 +18,3 @@ const handleSaveFileEvent = (event: MessageEvent) => {
 };
 
 onmessage = handleSaveFileEvent;
-
-// onmessage = (event: MessageEvent) => {
-//   const payload = event.data as ISaveFileEventPayload;
-//   indexedDB
-//     .saveFile(payload.name, payload.file)
-//     .then(() => {
-//       postMessage("Save Success");
-//     })
-//     .catch(() => {
-//       postMessage("Save Failed");
-//     });
-// };
