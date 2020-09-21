@@ -32,15 +32,7 @@ export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
     if (!word) {
       continue;
     }
-
-    const countCell: XLSX.CellObject | undefined =
-      spreadsheet[XLSX.utils.encode_cell({ c: 1, r: rowNumber })];
-    let count = countCell?.t === "n" ? Number(countCell.v) : 1;
-
-    if (count < 0 || Number.isNaN(count)) {
-      // TODO: issue a warning to the user
-      count = 1;
-    }
+    const count = extractCount(spreadsheet, rowNumber);
 
     wordlist.push([word, count]);
   }
@@ -80,6 +72,18 @@ function extractWord(spreadsheet: XLSX.WorkSheet, row: number): string | null {
   }
 
   return (wordCell.v || "").toString();
+}
+
+/**
+ * Extracts the word count from the second column, given the (zero-indexed)
+ * row number.
+ */
+function extractCount(spreadsheet: XLSX.WorkSheet, row: number): number {
+  const countCell: XLSX.CellObject | undefined =
+    spreadsheet[XLSX.utils.encode_cell({ c: 1, r: row })];
+  const count = countCell?.t === "n" ? Number(countCell.v) : 1;
+
+  return asNonNegativeInteger(count);
 }
 
 function dimensions(sheet: XLSX.WorkSheet): [string, string] {
