@@ -65,7 +65,7 @@ const workerConfiguration = {
     typescript({
       tsconfig: "./tsconfig.json",
     }),
-    resolve(),
+    resolve({ browser: true }),
     commonjs(),
 
     // Minify in production
