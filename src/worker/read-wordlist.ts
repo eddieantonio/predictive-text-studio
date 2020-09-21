@@ -7,6 +7,10 @@ type WordList = WordAndCount[];
 export function readExcel(
   excelFile: ArrayBuffer | Uint8Array
 ): Promise<WordList> {
+  return Promise.resolve(readExcelSync(excelFile));
+}
+
+export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   const data = new Uint8Array(excelFile);
   const workbook = XLSX.read(data, { type: "array" });
   const firstSheetName = workbook.SheetNames[0];
@@ -57,11 +61,7 @@ export function readExcel(
     wordlist.push([word, count]);
   }
 
-  return Promise.resolve(wordlist);
-}
-
-export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
-  throw new Error("Not implemented");
+  return wordlist;
 }
 
 export function returnWordlist(ExcelFile: Buffer): Promise<[string, number][]> {
