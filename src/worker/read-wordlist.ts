@@ -1,8 +1,20 @@
 import * as XLSX from "xlsx";
 
+/**
+ * A pair of a word and its count (how many times it has occurred in some
+ * collection of text).
+ */
 type WordAndCount = [string, number];
+
+/**
+ * A collection of words and their counts. This list can be used to create a
+ * unigram language model (can provide current word completion, autocorrection).
+ */
 type WordList = WordAndCount[];
 
+/**
+ * Read an .xlsx file from an ArrayBuffer.
+ */
 export function readExcelSync(excelFile: ArrayBuffer | Uint8Array): WordList {
   const data = new Uint8Array(excelFile);
   const workbook = XLSX.read(data, { type: "array" });
