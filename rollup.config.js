@@ -65,7 +65,10 @@ const workerConfiguration = {
     typescript({
       tsconfig: "./tsconfig.json",
     }),
-    resolve({ browser: true }),
+    resolve({
+      browser: true,
+      dedupe: ["jszip"],
+    }),
     commonjs(),
 
     // Minify in production
