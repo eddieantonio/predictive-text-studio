@@ -1,5 +1,7 @@
 import { readExcel } from "./read-wordlist";
-import indexedDB from "./indexedDBAccess";
+import IndexDBAccess from "./indexedDBAccess";
+
+const indexedDB = new IndexDBAccess();
 
 // Print the function's name (even though that's self-evident) just to get the
 // linter and Rollup to acknowledge that readExcelSync() is used.

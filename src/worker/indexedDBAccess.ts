@@ -1,4 +1,4 @@
-import Dexie from "dexie";
+import Dexie, { DexieOptions } from "dexie";
 
 const DB_NAME = "dictionary_sources";
 const VERSION = 1;
@@ -22,22 +22,19 @@ interface StoredFile {
   file: File;
 }
 
-class IndexDBAccess extends Dexie {
+export default class IndexDBAccess extends Dexie {
   files: Dexie.Table<StoredFile, number>;
 
-  constructor() {
-    super(DB_NAME);
+  constructor(options?: DexieOptions) {
+    super(DB_NAME, options);
     this.version(VERSION).stores({ files: FILES_TABLE_SCHEMA });
     this.files = this.table(FILES_TABLE_NAME);
   }
 
-  saveFile(name: string, file: File) {
-    return indexedDB.transaction("readwrite", indexedDB.files, async () => {
-      await indexedDB.files.where("name").equals(name).delete();
-      await indexedDB.files.put({ name, file });
+  saveFile(name: string, file: File): Promise<void> {
+    return this.transaction("readwrite", this.files, async () => {
+      await this.files.where("name").equals(name).delete();
+      await this.files.put({ name, file });
     });
   }
 }
-
-const indexedDB = new IndexDBAccess();
-export default indexedDB;
