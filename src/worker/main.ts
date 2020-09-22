@@ -12,16 +12,17 @@ export interface SaveFileEventPayload {
   file: File;
 }
 
-const handleSaveFileEvent = (event: MessageEvent) => {
+const handleSaveFileEvent = async (event: MessageEvent) => {
   const payload = event.data as SaveFileEventPayload;
-  storage
-    .saveFile(payload.name, payload.file)
-    .then(() => {
-      postMessage("Save Success");
-    })
-    .catch(() => {
-      postMessage("Save Failed");
-    });
+
+  try {
+    await storage.saveFile(payload.name, await payload.file.arrayBuffer());
+  } catch (e) {
+    postMessage("Save Failed");
+    return;
+  }
+
+  postMessage("Save Success");
 };
 
 onmessage = handleSaveFileEvent;
