@@ -12,7 +12,7 @@
     "baseUrl": ".",
     "paths": {
       "@worker/*": ["src/worker/*"],
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*", "types/*"]
     }
   }
 }
