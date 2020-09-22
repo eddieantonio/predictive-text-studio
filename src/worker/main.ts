@@ -1,5 +1,5 @@
 import { readExcel } from "./read-wordlist";
-import IndexDBAccess from "./indexedDBAccess";
+import IndexDBAccess from "./storage";
 
 const indexedDB = new IndexDBAccess();
 
