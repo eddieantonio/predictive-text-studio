@@ -4,7 +4,11 @@ import * as path from "path";
 
 import { readExcel } from "@worker/read-wordlist";
 
-const exampleExcelFilePath = path.join(__dirname, "ExampleWordlist.xlsx");
+const exampleExcelFilePath = path.join(
+  __dirname,
+  "fixtures",
+  "ExampleWordlist.xlsx"
+);
 const exampleWordlist = [
   ["TŦE", 13644],
   ["E", 9134],
