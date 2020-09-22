@@ -5,6 +5,7 @@ import svelte from "rollup-plugin-svelte";
 import sveltePreprocess from "svelte-preprocess";
 import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
+import json from "@rollup/plugin-json";
 
 import * as child_process from "child_process";
 
@@ -35,6 +36,9 @@ const appConfiguration = {
     typescript({
       tsconfig: "src/app/tsconfig.json",
       sourceMap: watchMode === true,
+    }),
+    json({
+      compact: true,
     }),
 
     // Start the server when run as:

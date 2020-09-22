@@ -1,5 +1,6 @@
 <script lang="ts">
   import Upload from "./Upload.svelte";
+  import BCP47Tag from "./BCP47Tag.svelte";
   export let name: string;
 
   let files: any;
@@ -39,6 +40,7 @@
 <main role="application">
   <h1>Welcome to {name}!</h1>
   <Upload />
+  <BCP47Tag />
 
   <p>Hi, my name is Xuechun!</p>
   <p>Hi my name is Eddie!</p>
