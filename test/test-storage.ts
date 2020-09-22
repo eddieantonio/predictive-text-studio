@@ -1,8 +1,6 @@
 import test from "ava";
-// @ts-ignore
 import * as indexedDB from "fake-indexeddb";
-// @ts-ignore
-import * as IDBKeyRange from "fake-indexeddb";
+import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import IndexDBAccess from "@worker/indexedDBAccess";
 
