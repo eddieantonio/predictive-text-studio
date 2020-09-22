@@ -1,14 +1,11 @@
 import test from "ava";
 import * as fs from "fs";
-import * as path from "path";
 
 import { readExcel } from "@worker/read-wordlist";
 
-const exampleExcelFilePath = path.join(
-  __dirname,
-  "fixtures",
-  "ExampleWordlist.xlsx"
-);
+import { pathToFixture } from "./helpers";
+
+const exampleExcelFilePath = pathToFixture("ExampleWordlist.xlsx");
 const exampleWordlist = [
   ["TŦE", 13644],
   ["E", 9134],
