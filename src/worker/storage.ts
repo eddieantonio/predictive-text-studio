@@ -19,7 +19,7 @@ const FILES_TABLE_SCHEMA = "++id, name, file";
 interface StoredFile {
   id?: number;
   name: string;
-  file: File;
+  contents: ArrayBuffer;
 }
 
 export class PredictiveTextStudioDexie extends Dexie {
@@ -39,10 +39,10 @@ export default class Storage {
     this.db = db || new PredictiveTextStudioDexie();
   }
 
-  saveFile(name: string, file: File): Promise<void> {
+  saveFile(name: string, contents: ArrayBuffer): Promise<void> {
     return this.db.transaction("readwrite", this.db.files, async () => {
       await this.db.files.where("name").equals(name).delete();
-      await this.db.files.put({ name, file });
+      await this.db.files.put({ name, contents });
     });
   }
 }
