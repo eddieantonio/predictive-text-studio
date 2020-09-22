@@ -1,6 +1,6 @@
 <script lang="ts">
   export let name: string;
-  export let selectedLanguage: string;
+  export let selectedLanguage: string = "";
 
   export let isSelected: boolean = name === selectedLanguage;
   export let className: string = "avatar";
@@ -8,6 +8,14 @@
     className = className + " selected";
   }
 
+  /**
+   * Handles the click when a language is selected from the sidebar.
+   * Should change the selected language variable and change content in the Languages component.
+   * TODO: Replace stub
+   *
+   * @param {string} languageName - A the name of the language selected.
+   * @return {void}
+   */
   const handleClick = (languageName: string): void => {
     console.log(languageName + " button selected");
   };

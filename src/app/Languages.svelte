@@ -7,7 +7,7 @@
   export let selectedLanguage: string = "Kwakwala";
 
   // Mock language data object - this would be read from localstorage/db
-  export let languageInformation: object = {
+  export let languageInformation: any = {
     word_count: "74231",
     properties: {
       name: "Kwakwala",
@@ -55,11 +55,24 @@
     },
   ];
 
+  /**
+   * Handles the click when a content button (Information/Sources) is pressed
+   * Changes the selected button variable
+   *
+   * @param {string} buttonName - Name of the button that was selected
+   * @return {void}
+   */
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
     console.log(buttonName + " button selected");
   };
 
+  /**
+   * Handles the click when the download language button is pressed. Should download a .kmp file.
+   * TODO: Replace stub
+   *
+   * @return {void}
+   */
   const handleDownload = (): void => {
     console.log("Download button clicked");
   };
