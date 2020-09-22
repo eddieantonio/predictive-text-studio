@@ -22,7 +22,7 @@ interface StoredFile {
   file: File;
 }
 
-export default class IndexDBAccess extends Dexie {
+export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredFile, number>;
 
   constructor(options?: DexieOptions) {

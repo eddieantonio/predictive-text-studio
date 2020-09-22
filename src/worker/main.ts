@@ -1,7 +1,7 @@
 import { readExcel } from "./read-wordlist";
-import IndexDBAccess from "./storage";
+import { PredictiveTextStudioDexie } from "./storage";
 
-const indexedDB = new IndexDBAccess();
+const db = new PredictiveTextStudioDexie();
 
 // Print the function's name (even though that's self-evident) just to get the
 // linter and Rollup to acknowledge that readExcelSync() is used.
@@ -14,8 +14,7 @@ export interface SaveFileEventPayload {
 
 const handleSaveFileEvent = (event: MessageEvent) => {
   const payload = event.data as SaveFileEventPayload;
-  indexedDB
-    .saveFile(payload.name, payload.file)
+  db.saveFile(payload.name, payload.file)
     .then(() => {
       postMessage("Save Success");
     })
