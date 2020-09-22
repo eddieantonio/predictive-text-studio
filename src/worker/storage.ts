@@ -30,11 +30,19 @@ export class PredictiveTextStudioDexie extends Dexie {
     this.version(VERSION).stores({ files: FILES_TABLE_SCHEMA });
     this.files = this.table(FILES_TABLE_NAME);
   }
+}
+
+export default class Storage {
+  private db: PredictiveTextStudioDexie;
+
+  constructor(db?: PredictiveTextStudioDexie) {
+    this.db = db || new PredictiveTextStudioDexie();
+  }
 
   saveFile(name: string, file: File): Promise<void> {
-    return this.transaction("readwrite", this.files, async () => {
-      await this.files.where("name").equals(name).delete();
-      await this.files.put({ name, file });
+    return this.db.transaction("readwrite", this.db.files, async () => {
+      await this.db.files.where("name").equals(name).delete();
+      await this.db.files.put({ name, file });
     });
   }
 }
