@@ -1,6 +1,6 @@
 <script lang="ts">
   import InputField from "./InputField.svelte";
-  export let properties;
+  export let properties: any;
 </script>
 
 <style>
@@ -45,7 +45,11 @@
       id="dictionaryName"
       value={properties.dictionary_name}
       subtext="Model ID: raeanne.kwk.kwakwala" />
-    <InputField label="Copyright" id="copyright" value={properties.copyright} />
+    <InputField
+      label="Copyright"
+      id="copyright"
+      value={properties.copyright}
+      subtext="" />
   </div>
   <div class="language__info-right">
     <h3>Keyboard Preview</h3>

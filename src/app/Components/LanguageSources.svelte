@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let sources: object[];
+  export let sources: any[];
 </script>
 
 <style>

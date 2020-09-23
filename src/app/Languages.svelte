@@ -171,9 +171,8 @@
 
 <!-- 
   TODO:
-  1. Add JSDoc Notation to functions
-  2. Create/refactor button component
-  3. Use variable names for colors and fonts
+  1. Create/refactor button component
+  2. Use variable names for colors and fonts
  -->
 <main>
   <div class="languages">
