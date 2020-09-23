@@ -1,7 +1,6 @@
 <script lang="ts">
   import Upload from "./Upload.svelte";
   import BCP47Tag from "./BCP47Tag.svelte";
-  import DownloadButton from './DownloadButton.svelte';
   export let name: string;
 
   let files: any;
@@ -48,6 +47,4 @@
   <p>Pranav</p>
   <h2>Ian</h2>
   <input type="file" data-testid="input-file" bind:files />
-
-  <DownloadButton />
 </main>
