@@ -15,18 +15,13 @@
    * @return {void}
    */
   const createStyles = (): void => {
-    className = "";
-    if (isOutlined) {
-      className += " outlined";
-    }
-
     className += color;
+    className += " " + size;
+    isOutlined && (className += " outlined");
+    hasDropShadow && (className += " shadow");
   };
 
-  // If the color or outlined props are passed in, create custom styles. Else the default (grey, false) values will be used for the button.
-  if (color || isOutlined) {
-    createStyles();
-  }
+  createStyles();
 </script>
 
 <style>
@@ -88,6 +83,10 @@
 
   .blue.outline:hover {
     background-color: #f1f1f1;
+  }
+
+  .shadow {
+    box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.15);
   }
 </style>
 
