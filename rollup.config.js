@@ -6,6 +6,7 @@ import sveltePreprocess from "svelte-preprocess";
 import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
 import json from "@rollup/plugin-json";
+import postcss from "rollup-plugin-postcss";
 
 import * as child_process from "child_process";
 
@@ -17,6 +18,7 @@ const watchMode = !production;
 
 const appConfiguration = {
   input: "src/app/main.ts",
+
   output: {
     sourcemap: watchMode === true,
     format: "iife",
@@ -24,6 +26,7 @@ const appConfiguration = {
     file: "public/app.js",
   },
   plugins: [
+    postcss(),
     svelte({
       dev: !production,
       preprocess: sveltePreprocess(),
