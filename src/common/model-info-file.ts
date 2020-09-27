@@ -1,36 +1,37 @@
 /**
  * Interfaces derived from the keyman documentation: https://help.keyman.com/developer/cloud/model_info/1.0/
+ * Modified from: https://github.com/keymanapp/keyman/blob/master/developer/js/source/lexical-model-compiler/model-info-file.ts
  */
-export interface ModelInfo {
+export interface ModelInfoFile {
   id?: string;
   name?: string;
   authorName?: string;
   authorEmail?: string;
   description?: string;
-  license: string;
-  languages?: string[];
+  license: "mit";
+  languages: string[];
   lastModifiedDate?: string;
-  links?: ModelLinkInfo[];
+  links?: ModelInfoFileLink[];
   packageFilename?: string;
   packageFileSize?: number;
   jsFilename?: string;
   jsFileSize?: number;
   isRTL?: boolean;
-  packageIncludes?: string;
+  packageIncludes?: string[]; //['fonts'] or []
   version?: string;
   minKeymanVersion?: string;
   helpLink?: string;
   sourcePath?: string;
-  related?: ModelRelatedInfo;
+  related?: ModelInfoFileRelated[];
 }
 
-export interface ModelLinkInfo {
+interface ModelInfoFileLink {
   name: string;
   url: string;
 }
 
-export interface ModelRelatedInfo {
-  deprecates?: boolean;
-  deprecatedBy?: boolean;
+interface ModelInfoFileRelated {
+  deprecates?: string;
+  deprecatedBy?: string;
   note?: string;
 }
