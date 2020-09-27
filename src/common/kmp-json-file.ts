@@ -1,8 +1,11 @@
 /**
  * Interfaces derived from the keyman documentation: https://help.keyman.com/developer/11.0/reference/file-types/metadata
- * Copied from: https://github.com/keymanapp/keyman/blob/master/developer/js/source/lexical-model-compiler/model-info-file.ts
+ * Copied from: https://github.com/keymanapp/keyman/blob/7e73eb7cf1608af42fec2abfd8d514212f77eaee/developer/js/source/package-compiler/kmp-json-file.ts
  */
 export interface KmpJsonFile {
+  /**
+   * What system is this KMP intended for, and what system created it?
+   */
   system: KmpJsonFileSystem;
   options: KmpJsonFileOptions;
   info?: KmpJsonFileInfo;
@@ -13,8 +16,20 @@ export interface KmpJsonFile {
   strings?: string[];
 }
 
+/**
+ * > The System object is used by Keyman Desktop to install keyboards
+ * Source: https://help.keyman.com/developer/12.0/reference/file-types/metadata
+ */
 export interface KmpJsonFileSystem {
+  /**
+   * > The version of Keyman Developer used to create the package file.
+   * See here for valid version numbers: https://help.keyman.com/developer/version-history/
+   */
   keymanDeveloperVersion: string;
+  /**
+   * What version of the Keyman KMP spec are we targetting?
+   * Note: version 12 is the minimum safe version.
+   */
   fileVersion: string;
 }
 
@@ -27,7 +42,7 @@ export interface KmpJsonFileOptions {
   msiOptions?: string;
 }
 
-interface KmpJsonFileInfo {
+export interface KmpJsonFileInfo {
   website?: KmpJsonFileInfoItem;
   version?: KmpJsonFileInfoItem;
   name?: KmpJsonFileInfoItem;
@@ -52,11 +67,27 @@ interface KmpJsonFileLexicalModel {
   languages: KmpJsonFileLanguage[];
 }
 
+/**
+ * Describes the language supported by this lexical model.
+ */
 interface KmpJsonFileLanguage {
+  /**
+   * A freeform string describing the language. Community members may not use
+   * the same term to describe their language as what's written on the web.
+   * E.g., "str" stands for "Straits Salish" but the W̱SÁNEĆ community calls
+   * their language "SENĆOŦEN".
+   */
   name: string;
+  /**
+   * The BCP-47 tag of this lexical model. It **MUST** match with an existing
+   * Keyman keyboard.
+   */
   id: string;
 }
 
+/**
+ * [unused] Only useful for packages that install a keyboard.
+ */
 interface KmpJsonFileKeyboard {
   name: string;
   id: string;
@@ -67,12 +98,20 @@ interface KmpJsonFileKeyboard {
   languages?: KmpJsonFileLanguage[];
 }
 
+/**
+ * [unused] Only useful for keyboard/font packages intended for Keyman for
+ * Windows.
+ */
 interface KmpJsonFileStartMenu {
   folder?: string;
   addUninstallEntry?: boolean;
   items?: KmpJsonFileStartMenuItem[];
 }
 
+/**
+ * [unused] Only useful for keyboard/font packages intended for Keyman for
+ * Windows.
+ */
 interface KmpJsonFileStartMenuItem {
   name: string;
   filename: string;
