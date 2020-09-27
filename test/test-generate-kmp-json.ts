@@ -3,7 +3,14 @@ import { generateKmpJson } from "@worker/generate-kmp-json";
 import { KmpJsonFile } from "@common/kmp-json-file";
 
 test("it should generate a complete JSON file given nothing", async (t) => {
-  const kmpJson = generateKmpJson({});
+  const kmpJson = generateKmpJson({
+    languages: [
+      {
+        name: "SENĆOŦEN",
+        id: "str-Latn",
+      },
+    ],
+  });
 
   const parsed: unknown = JSON.parse(kmpJson);
   t.assert(typeof parsed == "object" && parsed != null);

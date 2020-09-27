@@ -1,7 +1,9 @@
 import {
   KmpJsonFile,
   KmpJsonFileSystem,
+  KmpJsonFileOptions,
   KmpJsonFileInfo,
+  RelevantKmpOptions,
 } from "@common/kmp-json-file";
 
 /**
@@ -21,35 +23,53 @@ const fakeKmpSystem: KmpJsonFileSystem = {
   fileVersion: "12.0",
 };
 
-const unknownAuthor: KmpJsonFileInfo = {
-  author: {
-    description: "<unknown>",
-    url: "mailto:nobody@example.com",
-  },
-  copyright: {
-    description: "© 2020. All rights reserved.",
-  },
-  name: {
-    description: "Unknown Dictionary",
-  },
-  version: {
-    description: "1.0.0",
-  },
+const fakeKmpOptions: KmpJsonFileOptions = {
+  /* This option is not applicable to lexical models, but it's REQUIRED,
+   * so jsut set it to false! */
+  followKeyboardVersion: false,
 };
+
+/**
+ * The default model version. This also happens to be the minimum model
+ * version that the Keyman team will publish.
+ */
+const defaultVersion = "1.0.0";
 
 /**
  * Given some metadata of a kmp.json file, this fills out the rest of the
  * details, and generates an appropriate kmp.json file.
  */
-export function generateKmpJson(partialKMPJSON: Partial<KmpJsonFile>): string {
+export function generateKmpJson(options: RelevantKmpOptions): string {
+  if (options.languages.length < 1) {
+    throw new Error("Must provide at least one language");
+  }
+
+  const primaryLanguageName = options.languages[0].name;
+  const primaryLanguageID = options.languages[0].id;
+  const authorName = options.authorName || "Unknown Author";
+  const authorEmail = options.authorEmail || "nobody@example.com";
+
+  const currentYear = new Date().getFullYear();
+
   const kmpJson: KmpJsonFile = {
-    system: partialKMPJSON.system || fakeKmpSystem,
-    options: partialKMPJSON.options || {
-      /* This option is not applicable to lexical models, but it's REQUIRED,
-       * so jsut set it to false! */
-      followKeyboardVersion: false,
+    system: fakeKmpSystem,
+    options: fakeKmpOptions,
+    info: {
+      author: {
+        description: authorName,
+        url: `mailto:${authorEmail}`,
+      },
+      copyright: {
+        description: options.copyright || `© ${currentYear} ${authorName}.`,
+      },
+      name: {
+        description:
+          options.modelUserReadableName || `${primaryLanguageName} dictionary`,
+      },
+      version: {
+        description: options.version || defaultVersion,
+      },
     },
-    info: partialKMPJSON.info || unknownAuthor,
   };
 
   return JSON.stringify(kmpJson);

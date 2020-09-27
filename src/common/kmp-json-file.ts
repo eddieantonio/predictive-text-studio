@@ -1,4 +1,45 @@
 /**
+ * These are options that a user of Predictive Text Studio would actually
+ * implement.
+ */
+export interface RelevantKmpOptions {
+  /**
+   * The languages supported by this lexical model.
+   */
+  languages: KmpJsonFileLanguage[];
+  /**
+   * Author ID, required part of the model ID. If unset, "example" is used.
+   */
+  authorID?: string;
+  /**
+   * Model "unique" tag. If unset, the BPC-47 language subtag is used.
+   */
+  modelTag?: string;
+
+  /**
+   * The author's name or the organization they represent.
+   */
+  authorName?: string;
+  /**
+   * The contact email.
+   */
+  authorEmail?: string;
+  /**
+   * The name shown to users.
+   */
+  modelUserReadableName?: string;
+  /**
+   * The model's copyright string.
+   */
+  copyright?: string;
+
+  /**
+   * The model version. The first released version **MUST** be 1.0.0.
+   */
+  version?: string;
+}
+
+/**
  * Interfaces derived from the keyman documentation: https://help.keyman.com/developer/11.0/reference/file-types/metadata
  * Copied from: https://github.com/keymanapp/keyman/blob/7e73eb7cf1608af42fec2abfd8d514212f77eaee/developer/js/source/package-compiler/kmp-json-file.ts
  */
@@ -38,7 +79,13 @@ export interface KmpJsonFileOptions {
   readmeFile?: string;
   graphicFile?: string;
   executeProgram?: string;
+  /**
+   * [unused] Name of the Microsoft Installer file for Windows.
+   */
   msiFilename?: string;
+  /**
+   * [unused] Microsoft Windows Installer file... stuff, idk.
+   */
   msiOptions?: string;
 }
 
