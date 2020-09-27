@@ -40,7 +40,7 @@ export interface RelevantKmpOptions {
 }
 
 /**
- * Interfaces derived from the keyman documentation: https://help.keyman.com/developer/11.0/reference/file-types/metadata
+ * Interfaces derived from the keyman documentation: https://help.keyman.com/developer/12.0/reference/file-types/metadata
  * Copied from: https://github.com/keymanapp/keyman/blob/7e73eb7cf1608af42fec2abfd8d514212f77eaee/developer/js/source/package-compiler/kmp-json-file.ts
  */
 export interface KmpJsonFile {
@@ -74,10 +74,28 @@ export interface KmpJsonFileSystem {
   fileVersion: string;
 }
 
+/**
+ * > The Options object is used by Keyman Desktop to install keyboards
+ * Copy-pasted from: https://help.keyman.com/developer/12.0/reference/file-types/metadata#obj-options
+ */
 export interface KmpJsonFileOptions {
+  /**
+   * Whether the package has the same version as the keyboard. Always false
+   * for lexical models.
+   */
   followKeyboardVersion: boolean;
+  /**
+   * > The file for the keyboard package documentation
+   */
   readmeFile?: string;
+  /**
+   * [unused] Windows-only.
+   * > The image associated with the keyboard package.
+   */
   graphicFile?: string;
+  /**
+   * [unused] Windows-only.
+   */
   executeProgram?: string;
   /**
    * [unused] Name of the Microsoft Installer file for Windows.
@@ -89,11 +107,30 @@ export interface KmpJsonFileOptions {
   msiOptions?: string;
 }
 
+/**
+ * > [...] describes the Keyman package
+ * Copy-pasted from: https://help.keyman.com/developer/12.0/reference/file-types/metadata#obj-info
+ */
 export interface KmpJsonFileInfo {
+  /**
+   * > The Keyman package name
+   */
+  name: KmpJsonFileInfoItem;
+  /**
+   * > The version number of the package in dotted number format.
+   */
+  version: KmpJsonFileInfoItem;
+  /**
+   * > Description and URL for additional Keyboard package documentation
+   */
   website?: KmpJsonFileInfoItem;
-  version?: KmpJsonFileInfoItem;
-  name?: KmpJsonFileInfoItem;
+  /**
+   * > Copyright information
+   */
   copyright?: KmpJsonFileInfoItem;
+  /**
+   * > The Keyman package author and email address
+   */
   author?: KmpJsonFileInfoItem;
 }
 
@@ -102,23 +139,66 @@ interface KmpJsonFileInfoItem {
   url?: string;
 }
 
+/**
+ * Describes a file in the .kmp package to be installed. This includes the
+ * .model.ts file and any .htm (HTML) documentation.
+ */
 interface KmpJsonFileContentFile {
   /**
-   * Should be a valid file name.
+   * A valid filename, with extension.
    */
   name: string;
+  /**
+   * A short explanation of the file.
+   */
   description: string;
   /**
    * So this is dumb. This _is_ a non-negative integer, but it has to be
    * converted to string first ¯\_(ツ)_/¯
    */
   copyLocation: string;
-  fileType: ".model.js";
+  /**
+   * File types that Keyman supports in a KMP package.
+   *
+   * Lexical model KMPs should only contain:
+   *  - model.js (mandatory)
+   *  - .htm (e.g., readme.htm and welcome.htm)
+   *
+   * ..in addition to kmp.json, which is implied, and thus, not included in the
+   * files array.
+   */
+  fileType: ".model.js" | ".htm";
 }
 
+/**
+ * > [...] describes an individual model in the Keyman package. A package
+ * > cannot contain both lexical models and keyboards.
+ *
+ * Copy-pasted from: https://help.keyman.com/developer/12.0/reference/file-types/metadata#obj-lexicalModel
+ */
 interface KmpJsonFileLexicalModel {
+  /**
+   * User-readable name of the model. It should contain the word "Dictionary",
+   * as end users are not expected to know what "lexical model" means.
+   */
   name: string;
+  /**
+   * The model ID. Must match the filename.
+   */
   id: string;
+  /**
+   * > true if the model targets a right-to-left script. false if absent.
+   */
+  rtl?: boolean;
+  /**
+   * > version number of the model in dotted number format.
+   * NOTE: I don't think any lexical model declares this????
+   */
+  version?: string;
+  /**
+   * > An array of Language objects linked to the model.
+   * These MUST match an existing Keyman keyboard!
+   */
   languages: KmpJsonFileLanguage[];
 }
 
