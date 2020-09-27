@@ -91,6 +91,13 @@ export function generateKmpJson(options: Readonly<RelevantKmpOptions>): string {
         fileType: ".model.js",
       },
     ],
+    lexicalModels: [
+      {
+        name: `${primaryLanguageName} dictionary`,
+        id: modelID,
+        languages: options.languages,
+      },
+    ],
   };
 
   return JSON.stringify(kmpJson);
