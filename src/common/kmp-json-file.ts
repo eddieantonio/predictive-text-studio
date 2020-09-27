@@ -103,9 +103,17 @@ interface KmpJsonFileInfoItem {
 }
 
 interface KmpJsonFileContentFile {
+  /**
+   * Should be a valid file name.
+   */
   name: string;
   description: string;
-  copyLocation?: number;
+  /**
+   * So this is dumb. This _is_ a non-negative integer, but it has to be
+   * converted to string first ¯\_(ツ)_/¯
+   */
+  copyLocation: string;
+  fileType: ".model.js";
 }
 
 interface KmpJsonFileLexicalModel {

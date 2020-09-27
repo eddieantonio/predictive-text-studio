@@ -19,5 +19,13 @@ test("it should generate a complete JSON file given nothing", async (t) => {
   t.assert(typeof kmp["system"] == "object" && kmp["system"] != null);
   t.assert(typeof kmp["options"] == "object" && kmp["options"] != null);
   t.assert(typeof kmp["info"] == "object" && kmp["info"] != null);
-  // TODO: test for files
+
+  // Now make sure we have files!
+  t.assert(typeof kmp["files"] == "object" && kmp["files"] != null);
+  const files = kmp.files as NonNullable<typeof kmp.files>;
+  t.is(files.length, 1);
+  const lmFile = files[0];
+  t.is(lmFile.name, "example.str.str.model.js");
+  t.is(lmFile.copyLocation, "0");
+  t.is(lmFile.fileType, ".model.js");
 });
