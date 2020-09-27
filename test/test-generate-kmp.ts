@@ -3,9 +3,9 @@ import test from "ava";
 import * as fs from "fs";
 
 const modelID = "nrc.en.mtnt";
-const path = "test/fixtures/nrc.en.mtnt.model/";
-const contentModelJs = fs.readFileSync(path + modelID + ".model.js", "utf8");
-const contentKmpJson = fs.readFileSync(path + "kmp.json", "utf8");
+const contentModelJs = "(function() {'use strict'}())";
+const contentKmpJson =
+  '{"name": "English dictionary (MTNT)", "id": "nrc.en.mtnt","languages": [{"name": "English","id": "en"}]}';
 
 test("it should generate a kmp file", async (t) => {
   const kmp = await generateKmp(modelID, contentModelJs, contentKmpJson);
