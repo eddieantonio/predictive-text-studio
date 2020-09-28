@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { WorkerManager } from "./worker-manager";
+
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
-  let files = new Map<String, File>();
 
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
@@ -16,16 +17,16 @@
         if (item.kind === "file") {
           const file = item.getAsFile();
           if (file !== null) {
-            files.set(file.name, file);
-            saveToIndexedDB(file.name, file);
+            //TODO: Handle error
+            WorkerManager.saveToIndexedDB(file.name, file, () => {});
           }
         }
       }
     } else {
       // Use DataTransfer interface to access the file(s)
       for (let file of event.dataTransfer.files) {
-        files.set(file.name, file);
-        saveToIndexedDB(file.name, file);
+        //TODO: Handle error
+        WorkerManager.saveToIndexedDB(file.name, file, () => {});
       }
     }
   };
@@ -42,18 +43,10 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
-        files.set(file.name, file);
-        saveToIndexedDB(file.name, file);
+        //TODO: Handle error
+        WorkerManager.saveToIndexedDB(file.name, file, () => {});
       }
     }
-  };
-
-  const saveToIndexedDB = (name: string, file: File) => {
-    const worker = new Worker("worker.js");
-    worker.postMessage({ name, file });
-    worker.onmessage = () => {
-      worker.terminate();
-    };
   };
 </script>
 
