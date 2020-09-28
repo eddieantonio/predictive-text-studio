@@ -6,7 +6,7 @@ import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { WordList } from "@common/types";
 
-import { exampleWordlist } from "./fixtures";
+import { exampleWordlist } from "../fixtures";
 
 /**
  * Every test will have access to:

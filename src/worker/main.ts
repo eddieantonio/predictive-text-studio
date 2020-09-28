@@ -1,25 +1,11 @@
-import { readExcel } from "./read-wordlist";
-import { SaveFileEventPayload } from "@common/events";
-import Storage from "./storage";
-import { linkStorageToKmp } from "./link-storage-to-kmp";
+import { expose } from "comlink";
+import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
+import { PredictiveTextStudioWorkerImpl } from "./predictive-text-studio-worker-impl";
 
 /* Load the official JSZip web distribution bundle.  */
 importScripts("jszip.min.js");
 
-const storage = new Storage();
+const worker: PredictiveTextStudioWorker = new PredictiveTextStudioWorkerImpl();
 
-const handleSaveFileEvent = async (event: MessageEvent) => {
-  const payload = event.data as SaveFileEventPayload;
-
-  try {
-    const wordlist = await readExcel(await payload.file.arrayBuffer());
-    await storage.saveFile(payload.name, wordlist);
-  } catch (e) {
-    postMessage("Save Failed");
-    return;
-  }
-
-  postMessage(await linkStorageToKmp(storage));
-};
-
-onmessage = handleSaveFileEvent;
+// Expose worker functionalities via Comlink API
+expose(worker);

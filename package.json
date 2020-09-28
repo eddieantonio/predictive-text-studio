@@ -25,6 +25,7 @@
     "@rollup/plugin-typescript": "^5.0.2",
     "@tsconfig/svelte": "^1.0.10",
     "@types/bcp-47": "^1.0.0",
+    "@types/sinon": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
     "ava": "^3.12.1",
@@ -40,6 +41,7 @@
     "rollup-plugin-livereload": "^1.3.0",
     "rollup-plugin-svelte": "^5.2.3",
     "rollup-plugin-terser": "^7.0.0",
+    "sinon": "^9.1.0",
     "sirv-cli": "^1.0.6",
     "svelte": "^3.24.1",
     "svelte-check": "^1.0.23",
@@ -51,10 +53,11 @@
   "dependencies": {
     "@predictive-text-studio/lexical-model-compiler": "^14.0.0-alpha.0",
     "bcp-47": "^1.0.7",
+    "comlink": "^4.3.0",
     "dexie": "^3.0.2",
     "exceljs": "~3.5.0",
     "jszip": "^3.5.0",
-    "svelte-routing": "1.4.2",
+    "svelte-routing": "^1.4.2",
     "tslib": "^2.0.1"
   },
   "ava": {
