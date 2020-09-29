@@ -1,12 +1,15 @@
 import test from "ava";
-import * as indexedDB from "fake-indexeddb";
+import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { pathToFixture, loadContentsAsArrayBuffer } from "./helpers";
 
 test("storing a file", async (t) => {
-  const db = new PredictiveTextStudioDexie({ indexedDB, IDBKeyRange });
+  const db = new PredictiveTextStudioDexie({
+    indexedDB: new FDBFactory(),
+    IDBKeyRange,
+  });
   const storage = new Storage(db);
   const filename = "ExampleWordlist.xlsx";
 
@@ -19,7 +22,10 @@ test("storing a file", async (t) => {
 });
 
 test("retrieving all files", async (t) => {
-  const db = new PredictiveTextStudioDexie({ indexedDB, IDBKeyRange });
+  const db = new PredictiveTextStudioDexie({
+    indexedDB: new FDBFactory(),
+    IDBKeyRange,
+  });
   const storage = new Storage(db);
   const filename = "ExampleWordlist.xlsx";
   const file = loadContentsAsArrayBuffer(pathToFixture(filename));
