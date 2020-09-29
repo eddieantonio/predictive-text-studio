@@ -39,10 +39,21 @@ export default class Storage {
     this.db = db || new PredictiveTextStudioDexie();
   }
 
+  /**
+   * Saves a wordlist source file to storage.
+   */
   saveFile(name: string, contents: ArrayBuffer): Promise<void> {
     return this.db.transaction("readwrite", this.db.files, async () => {
       await this.db.files.where("name").equals(name).delete();
       await this.db.files.put({ name, contents });
     });
+  }
+
+  /**
+   * Retrieves every file in the database as a list of {name, contents}
+   * objects.
+   */
+  async fetchAllFiles(): Promise<[]> {
+    return [];
   }
 }
