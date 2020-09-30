@@ -1,4 +1,9 @@
+import { generateKmpJson } from "./generate-kmp-json";
 import { createZipWithFiles } from "./generate-zip";
+import {
+  compileModelFromLexicalModelSource,
+  WordListFromArray,
+} from "@predictive-text-studio/lexical-model-compiler";
 
 /**
  * Give file information and create a kmp file for the dictionary
@@ -11,13 +16,26 @@ import { createZipWithFiles } from "./generate-zip";
  * @param modelInfo
  */
 export async function generateKmp(
-  modelID: string,
-  compiledModelCode: string,
-  modelInfo: string
+  langName: string,
+  bcp47Tag: string,
+  sources: WordListFromArray[],
+  modelId: string 
 ): Promise<ArrayBuffer> {
+
+  
+  let kmpJsonFile = generateKmpJson({ languages: [{name: langName, id: bcp47Tag}] })
+  let modelFile = compileModelFromLexicalModelSource({format: "trie-1.0",
+  sources: sources})
+
   const kmpFile = createZipWithFiles({
-    [`${modelID}.model.js`]: compiledModelCode,
-    "kmp.json": modelInfo,
+    [`${modelId}.model.js`]: modelFile,
+    "kmp.json": kmpJsonFile,
   });
   return kmpFile;
+}
+
+export function saveAsKmp(data: ArrayBuffer, fileName: string) {
+  let blob = new Blob([data], {type: "application/octet-stream"});
+  fileName = fileName + '.kmp'
+  //let url = window.URL.createObjectURL(blob);
 }

@@ -1,13 +1,18 @@
+import { WordListFromArray } from "@predictive-text-studio/lexical-model-compiler";
 import { generateKmp } from "@worker/generate-kmp";
 import test from "ava";
 import * as fs from "fs";
 
+const langName = "English";
+const bcp47Tag = "en";
+const sources = [new WordListFromArray("wordlist.xlsx", [
+  ["TŦE", 13644],
+  ["E", 9134],
+  ["SEN", 4816],
+])]
 const modelID = "nrc.en.mtnt";
-const contentModelJs = "(function() {'use strict'}())";
-const contentKmpJson =
-  '{"name": "English dictionary (MTNT)", "id": "nrc.en.mtnt","languages": [{"name": "English","id": "en"}]}';
 
 test("it should generate a kmp file", async (t) => {
-  const kmp = await generateKmp(modelID, contentModelJs, contentKmpJson);
+  const kmp = await generateKmp(langName, bcp47Tag, sources, modelID);
   t.assert(kmp.byteLength > 0);
 });
