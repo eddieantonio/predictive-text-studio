@@ -44,4 +44,8 @@ test("retrieving all files", async (t) => {
 
   const files = await storage.fetchAllFiles();
   t.is(files.length, 1);
+
+  const file = files[0];
+  t.is(file.name, filename);
+  t.deepEqual(file.wordlist, exampleWordlist);
 });
