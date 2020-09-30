@@ -74,6 +74,9 @@ const workerConfiguration = {
       dedupe: ["jszip"],
     }),
     commonjs(),
+    json({
+      compact: true,
+    }),
 
     // Minify in production
     production && terser(),

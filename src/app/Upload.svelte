@@ -3,6 +3,7 @@
 
   let onDraggedOver = false;
   let files = new Map<String, File>();
+  let downloadURL = "";
 
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
@@ -51,7 +52,11 @@
   const saveToIndexedDB = (name: string, file: File) => {
     const worker = new Worker("worker.js");
     worker.postMessage({ name, file });
-    worker.onmessage = () => {
+    worker.onmessage = (event: MessageEvent) => {
+      const kmpFile = event.data as ArrayBuffer;
+      const blob = new Blob([kmpFile], {type: "application/octet-stream"})
+      downloadURL = URL.createObjectURL(blob)
+
       worker.terminate();
     };
   };
@@ -113,4 +118,5 @@
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
+  <a href={downloadURL} download="Example.kmp" > Download KMP Package </a>
 </div>

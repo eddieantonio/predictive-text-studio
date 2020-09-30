@@ -35,9 +35,3 @@ export async function generateKmp(
   });
   return kmpFile;
 }
-
-export function saveAsKmp(data: ArrayBuffer, fileName: string) {
-  const blob = new Blob([data], { type: "application/octet-stream" });
-  fileName = fileName + ".kmp";
-  //let url = window.URL.createObjectURL(blob);
-}
