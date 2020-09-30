@@ -12,7 +12,8 @@ const handleSaveFileEvent = async (event: MessageEvent) => {
   const payload = event.data as SaveFileEventPayload;
 
   try {
-    await storage.saveFile(payload.name, await payload.file.arrayBuffer());
+    const wordlist = await readExcel(await payload.file.arrayBuffer());
+    await storage.saveFile(payload.name, wordlist);
   } catch (e) {
     postMessage("Save Failed");
     return;

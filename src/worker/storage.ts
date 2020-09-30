@@ -2,20 +2,7 @@ import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
 
 const DB_NAME = "dictionary_sources";
-const VERSION = 1;
-
-/**
- * files Table Scehma
- * +------------------+
- * | id (primary key) |
- * +------------------+
- * | name             |
- * +------------------+
- * | file             |
- * +------------------+
- */
-const FILES_TABLE_NAME = "files";
-const FILES_TABLE_SCHEMA = "++id, name, file";
+const SCHEMA_VERSION = 1;
 
 interface StoredFile {
   id?: number;
@@ -27,17 +14,36 @@ interface StoredFile {
  * A word list.
  */
 interface StoredWordList {
+  id?: number;
+  /**
+   * Typically the filename of the uploaded dictionary source.
+   */
   name: string;
+  /**
+   * The actual contents of said file.
+   */
   wordlist: WordList;
 }
 
 export class PredictiveTextStudioDexie extends Dexie {
-  files: Dexie.Table<StoredFile, number>;
+  files: Dexie.Table<StoredWordList, number>;
 
   constructor(options?: DexieOptions) {
     super(DB_NAME, options);
-    this.version(VERSION).stores({ files: FILES_TABLE_SCHEMA });
-    this.files = this.table(FILES_TABLE_NAME);
+    this.version(SCHEMA_VERSION).stores({
+      /**
+       * files Table Scehma
+       * +------------------+
+       * | id (primary key) |
+       * +------------------+
+       * | name             |
+       * +------------------+
+       * | wordlist         |
+       * +------------------+
+       */
+      files: "++id, name, wordlist",
+    });
+    this.files = this.table("files");
   }
 }
 
@@ -51,10 +57,10 @@ export default class Storage {
   /**
    * Saves a wordlist source file to storage.
    */
-  saveFile(name: string, contents: ArrayBuffer): Promise<void> {
+  saveFile(name: string, wordlist: WordList): Promise<void> {
     return this.db.transaction("readwrite", this.db.files, async () => {
       await this.db.files.where("name").equals(name).delete();
-      await this.db.files.put({ name, contents });
+      await this.db.files.put({ name, wordlist });
     });
   }
 
@@ -64,6 +70,6 @@ export default class Storage {
    */
   async fetchAllFiles(): Promise<StoredWordList[]> {
     const array = await this.db.files.toArray();
-    return array as unknown as StoredWordList[];
+    return (array as unknown) as StoredWordList[];
   }
 }
