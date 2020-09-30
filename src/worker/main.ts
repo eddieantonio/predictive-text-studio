@@ -2,6 +2,9 @@ import { readExcel } from "./read-wordlist";
 import { SaveFileEventPayload } from "@common/events";
 import Storage from "./storage";
 
+/* Load the official JSZip web distribution bundle.  */
+importScripts("jszip.min.js");
+
 const storage = new Storage();
 
 const handleSaveFileEvent = async (event: MessageEvent) => {

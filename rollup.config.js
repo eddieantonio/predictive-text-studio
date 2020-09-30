@@ -8,6 +8,8 @@ import { terser } from "rollup-plugin-terser";
 import json from "@rollup/plugin-json";
 
 import * as child_process from "child_process";
+import * as fs from "fs";
+import * as path from "path";
 
 //////////////////////////////// Environment /////////////////////////////////
 const production = !process.env.ROLLUP_WATCH;
@@ -75,6 +77,8 @@ const workerConfiguration = {
     }),
     commonjs(),
 
+    copyJSZipBundle(),
+
     // Minify in production
     production && terser(),
   ],
@@ -120,6 +124,28 @@ function serve() {
 
       process.on("SIGTERM", stopServer);
       process.on("exit", stopServer);
+    },
+  };
+}
+
+/**
+ * Rollup plugin that copies jszip.min.js from node_modules to be a SIBLING of
+ * the desired bundle.
+ */
+function copyJSZipBundle() {
+  return {
+    name: "copy-jszip-bundle",
+    generateBundle(options) {
+      const parentDir = path.dirname(path.resolve(options.file));
+      const destination = path.join(parentDir, "jszip.min.js");
+      const source = path.join(
+        __dirname,
+        "node_modules",
+        "jszip",
+        "dist",
+        "jszip.min.js"
+      );
+      fs.copyFileSync(source, destination);
     },
   };
 }
