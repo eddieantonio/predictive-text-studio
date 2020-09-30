@@ -1,8 +1,4 @@
 {
-  "include": [
-    "src/worker/**/*",
-    "test/*"
-  ],
   "exclude": [
     "node_modules"
   ],
