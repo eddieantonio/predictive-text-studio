@@ -2,7 +2,6 @@ import { WordListFromArray } from "@predictive-text-studio/lexical-model-compile
 import { generateKmp } from "@worker/generate-kmp";
 
 import test from "ava";
-import * as fs from "fs";
 import JSZip = require("jszip");
 
 const langName = "English";
@@ -24,8 +23,7 @@ test("it should generate a kmp file", async (t) => {
   const zip = await new_zip.loadAsync(kmp);
   const isKmpExist = zip.file("kmp.json");
   const isModelExist = zip.file("nrc.en.mtnt.model.js");
-  
-  t.assert(isKmpExist != null)
-  t.assert(isModelExist != null)
-});
 
+  t.assert(isKmpExist != null);
+  t.assert(isModelExist != null);
+});

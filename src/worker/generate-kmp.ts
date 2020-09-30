@@ -19,13 +19,15 @@ export async function generateKmp(
   langName: string,
   bcp47Tag: string,
   sources: WordListFromArray[],
-  modelId: string 
+  modelId: string
 ): Promise<ArrayBuffer> {
-
-  
-  let kmpJsonFile = generateKmpJson({ languages: [{name: langName, id: bcp47Tag}] })
-  let modelFile = compileModelFromLexicalModelSource({format: "trie-1.0",
-  sources: sources})
+  const kmpJsonFile = generateKmpJson({
+    languages: [{ name: langName, id: bcp47Tag }],
+  });
+  const modelFile = compileModelFromLexicalModelSource({
+    format: "trie-1.0",
+    sources: sources,
+  });
 
   const kmpFile = createZipWithFiles({
     [`${modelId}.model.js`]: modelFile,
@@ -35,7 +37,7 @@ export async function generateKmp(
 }
 
 export function saveAsKmp(data: ArrayBuffer, fileName: string) {
-  let blob = new Blob([data], {type: "application/octet-stream"});
-  fileName = fileName + '.kmp'
+  const blob = new Blob([data], { type: "application/octet-stream" });
+  fileName = fileName + ".kmp";
   //let url = window.URL.createObjectURL(blob);
 }
