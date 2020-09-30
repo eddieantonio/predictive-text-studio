@@ -1,4 +1,5 @@
 import Dexie, { DexieOptions } from "dexie";
+import { WordList } from "@common/types";
 
 const DB_NAME = "dictionary_sources";
 const VERSION = 1;
@@ -20,6 +21,14 @@ interface StoredFile {
   id?: number;
   name: string;
   contents: ArrayBuffer;
+}
+
+/**
+ * A word list.
+ */
+interface StoredWordList {
+  name: string;
+  wordlist: WordList;
 }
 
 export class PredictiveTextStudioDexie extends Dexie {
@@ -53,7 +62,8 @@ export default class Storage {
    * Retrieves every file in the database as a list of {name, contents}
    * objects.
    */
-  async fetchAllFiles(): Promise<[]> {
-    return [];
+  async fetchAllFiles(): Promise<StoredWordList[]> {
+    const array = await this.db.files.toArray();
+    return array as unknown as StoredWordList[];
   }
 }
