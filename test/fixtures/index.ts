@@ -1,0 +1,21 @@
+import type { WordList } from "@common/types";
+
+/**
+ * Top 10 words from Timothy Montler's SENĆOŦEN wordlist.
+ *
+ * This **should** match what's in ExampleWordlist.xlsx!
+ *
+ * https://github.com/keymanapp/lexical-models/tree/825b383744fd7b1218345eb72569967ea5f62454/release/nrc/nrc.str.sencoten
+ */
+export const exampleWordlist: WordList = [
+  ["TŦE", 13644],
+  ["E", 9134],
+  ["SEN", 4816],
+  ["Ȼ", 3479],
+  ["SW̱", 2621],
+  ["NIȽ", 2314],
+  ["U¸", 2298],
+  ["I¸", 1988],
+  ["ȻSE", 1925],
+  ["I", 1884],
+];

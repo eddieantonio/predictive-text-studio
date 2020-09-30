@@ -3,20 +3,8 @@ import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
-import type { WordList } from "@common/types";
 
-const exampleWordlist: WordList = [
-  ["TŦE", 13644],
-  ["E", 9134],
-  ["SEN", 4816],
-  ["Ȼ", 3479],
-  ["SW̱", 2621],
-  ["NIȽ", 2314],
-  ["U¸", 2298],
-  ["I¸", 1988],
-  ["ȻSE", 1925],
-  ["I", 1884],
-];
+import { exampleWordlist } from "./fixtures";
 
 test("storing a file", async (t) => {
   const db = new PredictiveTextStudioDexie({
