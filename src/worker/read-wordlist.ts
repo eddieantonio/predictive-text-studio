@@ -1,16 +1,6 @@
 import * as Excel from "exceljs";
 
-/**
- * A pair of a word and its count (how many times it has occurred in some
- * collection of text).
- */
-type WordAndCount = [string, number];
-
-/**
- * A collection of words and their counts. This list can be used to create a
- * unigram language model (can provide current word completion, autocorrection).
- */
-type WordList = WordAndCount[];
+import { WordList } from "@common/types";
 
 export async function readExcel(
   excelFile: ArrayBuffer | Uint8Array
