@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { beforeUpdate } from "svelte";
+
   // props
-  let color: string = "grey"; // optional
-  let isOutlined: boolean = false; // optional
-  let hasDropShadow: boolean = false; // optional
-  let size: string = "medium"; // optional
+  export let color: string = "grey"; // optional
+  export let isOutlined: boolean = false; // optional
+  export let hasDropShadow: boolean = false; // optional
+  export let size: string = "medium"; // optional
   export let text: string = ""; // required
   export let callbackFunction: any = null; // required
 
@@ -17,11 +19,13 @@
   const createStyles = (): void => {
     className += color;
     className += " " + size;
-    isOutlined && (className += " outlined");
+    isOutlined && (className += " outline");
     hasDropShadow && (className += " shadow");
   };
 
-  createStyles();
+  beforeUpdate(async () => {
+    createStyles();
+  });
 </script>
 
 <style>
@@ -52,7 +56,8 @@
   }
 
   .grey {
-    background-color: #bdbdbd;
+    background-color: #f1f1f1;
+    border-width: 0px;
   }
 
   .grey:hover {
@@ -70,6 +75,8 @@
 
   .blue {
     background-color: #0099ff;
+    border-width: 0px;
+    color: #fff;
   }
 
   .blue:hover {

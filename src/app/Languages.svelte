@@ -2,6 +2,7 @@
   import LanguageInfo from "./Components/LanguageInfo.svelte";
   import LanguageSources from "./Components/LanguageSources.svelte";
   import Sidebar from "./Components/Sidebar.svelte";
+  import Button from "./Components/Button.svelte";
 
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
@@ -188,17 +189,34 @@
         <h1>Predictive Text Studio</h1>
       </div>
       <div class="languages__container--actions">
-        <button
+        <!-- <button
           on:click={() => handleClick('information')}
           class={selectedButton === 'information' ? 'selected' : 'deselected'}>
           Information
-        </button>
-        <button
+        </button> -->
+        <Button
+          color={"grey"}
+          isOutlined={(selectedButton === 'information')}
+          text="Information"
+          callbackFunction={() => handleClick('information')}
+        />
+        <!-- <button
           on:click={() => handleClick('sources')}
           class={selectedButton === 'sources' ? 'selected' : 'deselected'}>
           Sources
-        </button>
-        <button on:click={handleDownload} class="download"> Download </button>
+        </button> -->
+        <Button
+          color="grey"
+          isOutlined={(selectedButton === 'sources')}
+          text="Sources"
+          callbackFunction={()=> handleClick('sources')}
+        />
+        <!-- <button on:click={handleDownload} class="download"> Download </button> -->
+        <Button
+          color="blue"
+          text="Download"
+          callbackFunction={handleDownload}
+        />
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
