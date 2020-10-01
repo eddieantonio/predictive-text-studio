@@ -69,7 +69,6 @@ export default class Storage {
    * objects.
    */
   async fetchAllFiles(): Promise<StoredWordList[]> {
-    const array = await this.db.files.toArray();
-    return (array as unknown) as StoredWordList[];
+    return this.db.files.toArray();
   }
 }
