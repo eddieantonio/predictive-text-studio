@@ -1,6 +1,8 @@
 # Compiled files:
 public/app.js
 public/worker.js
+# Copied files
+public/jszip.min.js
 
 # Source maps
 *.js.map
