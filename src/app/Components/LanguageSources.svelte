@@ -11,6 +11,26 @@
   const handleAddSource = (): void => {
     console.log("Add source button clicked");
   };
+
+  /**
+   * Handles the click when the edit button is pressed.
+   * TODO: Replace stub
+   *
+   * @return {void}
+   */
+  const handleEdit = (): void => {
+    console.log("Edit button clicked");
+  };
+
+  /**
+   * Handles the click when the delete button is pressed.
+   * TODO: Replace stub
+   *
+   * @return {void}
+   */
+  const handleDelete = (): void => {
+    console.log("Delete button clicked");
+  };
 </script>
 
 <style>
@@ -43,6 +63,7 @@
 
   td {
     padding: 10px 0px 10px 20px;
+    color: #5e5e5e;
   }
 
   th:first-of-type {
@@ -86,8 +107,8 @@
         <td>{source.type}</td>
         <td>
           <div class="table__row--actions">
-            <p>Edit</p>
-            <p>Delete</p>
+            <p on:click={handleEdit}>Edit</p>
+            <p on:click={handleDelete}>Delete</p>
           </div>
         </td>
       </tr>
