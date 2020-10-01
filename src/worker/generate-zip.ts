@@ -36,12 +36,30 @@ export function createZipWithFiles(files: FileList): Promise<ArrayBuffer> {
 function createJSZip(): JSZip {
   let Constructor: typeof JSZip;
 
-  if (typeof self != "undefined" && (self as { JSZip?: JSZip }).JSZip) {
+  if (typeof self !== "undefined" && jsZipIsDefinedWithin(self)) {
     // Within the WebWorker:
-    Constructor = ((self as unknown) as { JSZip: JSZip }).JSZip;
+    Constructor = self.JSZip;
   } else {
     // Within Node.js (Ava unit tests, probably)
     Constructor = require("jszip");
   }
   return new Constructor();
+}
+
+type WorkerGlobalScopeWithJSZip = WorkerGlobalScope & { JSZip: typeof JSZip };
+
+/**
+ * This **type guard** returns true when the global scope seems to have the
+ * JSZip constructor defined.
+ *
+ * When used in an `if ()` condition, then the scope within the if-block
+ * **definitely** has a global called JSZip!
+ *
+ * See: https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards
+ */
+function jsZipIsDefinedWithin(
+  scope: WorkerGlobalScope
+): scope is WorkerGlobalScopeWithJSZip {
+  const augmentedScope = scope as Partial<WorkerGlobalScopeWithJSZip>;
+  return typeof augmentedScope.JSZip === "function";
 }
