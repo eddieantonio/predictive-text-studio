@@ -52,7 +52,7 @@
   }
 
   .large {
-    padding: 20px 40px;
+    padding: 10px 60px;
   }
 
   .grey {
@@ -86,6 +86,7 @@
   .blue.outline {
     border: 1px solid #0099ff;
     background-color: #ffffff;
+    color: #0099ff;
   }
 
   .blue.outline:hover {

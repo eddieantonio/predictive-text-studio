@@ -1,5 +1,16 @@
 <script lang="ts">
+  import Button from "./Button.svelte";
   export let sources: any[];
+
+  /**
+   * Handles the click when the add source button is pressed. Should show another section where user can upload file or open direct entry.
+   * TODO: Replace stub
+   *
+   * @return {void}
+   */
+  const handleAddSource = (): void => {
+    console.log("Add source button clicked");
+  };
 </script>
 
 <style>
@@ -56,5 +67,10 @@
       </tr>
     {/each}
   </table>
-  <button>Add Source</button>
+  <Button
+    color="blue"
+    isOutlined={true}
+    text="Add Source"
+    size="large"
+    callbackFunction={handleAddSource} />
 </div>
