@@ -34,8 +34,7 @@ test.beforeEach((t) => {
 });
 
 test("storing a file", async (t) => {
-  const db = t.context.db;
-  const storage = t.context.storage;
+  const { db, storage } = t.context;
 
   // At first, there's nothing in the DB:
   t.is(await db.files.count(), 0);
@@ -46,10 +45,10 @@ test("storing a file", async (t) => {
 });
 
 test("retrieving one file with .fetchAllFiles()", async (t) => {
-  const storage = t.context.storage;
-  const filename = "ExampleWordlist.xlsx";
+  const { storage } = t.context;
 
-  // Let's store ExampleWordlist!
+  // Let's store a file that we will later try to fetch:
+  const filename = "ExampleWordlist.xlsx";
   await storage.saveFile(filename, exampleWordlist);
 
   // We should find that it has been stored:
@@ -62,7 +61,7 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
 });
 
 test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
-  const storage = t.context.storage;
+  const { storage } = t.context;
 
   const sources = [
     { name: "ExampleWordlist.xlsx", wordlist: exampleWordlist },
