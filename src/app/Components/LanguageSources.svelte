@@ -25,18 +25,37 @@
 
   th {
     text-align: left;
-    background-color: #b6b6b6;
-    padding: 20px 20px 20px 5px;
+    background-color: #f1f1f1;
+    padding: 20px 0px 20px 20px;
   }
 
   table {
     border-collapse: collapse;
     width: 1400px;
-    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    box-shadow: 0px 25px 40px 0px rgba(0, 0, 0, 0.1);
   }
 
   tr {
-    border-bottom: 1pt solid black;
+    border-bottom: 1pt solid #f1f1f1;
+  }
+
+  td {
+    padding: 10px 0px 10px 20px;
+  }
+
+  th:first-of-type {
+    border-top-left-radius: 10px;
+  }
+  th:last-of-type {
+    border-top-right-radius: 10px;
+  }
+  tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+  }
+  tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
   }
 
   .table__row--actions {
@@ -51,12 +70,14 @@
 
 <div class="language__sources">
   <table>
-    <tr>
-      <th>Name</th>
-      <th>Size</th>
-      <th>Type</th>
-      <th>Actions</th>
-    </tr>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
 
     {#each sources as source}
       <tr>
