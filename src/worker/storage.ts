@@ -68,8 +68,7 @@ export default class Storage {
    * Retrieves every file in the database as a list of {name, contents}
    * objects.
    */
-  async fetchAllFiles(): Promise<StoredWordList[]> {
-    const array = await this.db.files.toArray();
-    return (array as unknown) as StoredWordList[];
+  fetchAllFiles(): Promise<StoredWordList[]> {
+    return this.db.files.toArray();
   }
 }
