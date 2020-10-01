@@ -5,10 +5,34 @@
   export let subtext: string;
 </script>
 
+<style>
+  .label {
+    font-family: "Cabin", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  input {
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+  }
+
+  .subtext {
+    font-family: "Roboto Mono", monospace;
+    color: #a4a4a4;
+    font-size: 12px;
+  }
+</style>
+
 <div class="input">
-  <h3>{label}</h3>
+  <p class:label>{label}</p>
   <input type="text" {id} {value} />
   {#if subtext}
-    <p>{subtext}</p>
+    <p class:subtext>{subtext}</p>
   {/if}
 </div>

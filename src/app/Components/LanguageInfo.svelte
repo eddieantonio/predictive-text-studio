@@ -22,6 +22,12 @@
     order: 2;
   }
 
+  .label {
+    font-family: "Cabin", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
   img {
     width: auto;
     height: 200px;
@@ -52,7 +58,7 @@
       subtext="" />
   </div>
   <div class="language__info-right">
-    <h3>Keyboard Preview</h3>
+    <p class="label">Keyboard Preview</p>
     <img src={properties.keyboard_image} alt="An iOS keyboard in english" />
   </div>
 </div>
