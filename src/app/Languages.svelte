@@ -56,6 +56,12 @@
     },
   ];
 
+  // In case we want word count to be dynamic
+  // let languageWordCount: int = 0;
+  // languageInformation.sources.map((source) => {
+  //   languageWordCount += Number(source.size);
+  // });
+
   /**
    * Handles the click when a content button (Information/Sources) is pressed
    * Changes the selected button variable
@@ -216,6 +222,7 @@
           color="blue"
           text="Download"
           callbackFunction={handleDownload}
+          subtext={languageInformation.word_count += " words"}
         />
       </div>
       <div class="languages__container--content">

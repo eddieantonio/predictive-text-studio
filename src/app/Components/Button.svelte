@@ -102,12 +102,21 @@
     font-family: "Roboto Mono", monospace;
     color: #a4a4a4;
     font-size: 12px;
+    margin-top: 5px;
+  }
+
+  .button-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
 
 {#if text && callbackFunction}
-  <button on:click={callbackFunction} class={className}> {text} </button>
-  {#if subtext}
-    <p class:subtext>{subtext}</p>
-  {/if}
+  <div class="button-layout">
+    <button on:click={callbackFunction} class={className}> {text} </button>
+    {#if subtext}
+      <p class:subtext>{subtext}</p>
+    {/if}
+  </div>
 {/if}
