@@ -106,7 +106,7 @@
     padding-bottom: 1em;
   }
 
-  .download.download--disabled {
+  .download-link.download-link--disabled {
     color: #666;
     cursor: not-allowed;
   }
@@ -126,7 +126,7 @@
   <a
     href={downloadURL ? downloadURL : "#"}
     download="Example.kmp"
-    class="download"
-    class:download--disabled={downloadURL == ""}
+    class="download-link"
+    class:download-link--disabled={downloadURL == ""}
   > Download KMP Package </a>
 </div>
