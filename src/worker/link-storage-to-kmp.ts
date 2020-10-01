@@ -4,7 +4,9 @@ import Storage from "./storage";
 import { generateSourcesFromStorage } from "./generate-sources-from-storage";
 
 export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
-  let sources: WordListFromArray[] = await generateSourcesFromStorage(storage);
+  const sources: WordListFromArray[] = await generateSourcesFromStorage(
+    storage
+  );
 
   //hardcode for now
   const langName = "English";

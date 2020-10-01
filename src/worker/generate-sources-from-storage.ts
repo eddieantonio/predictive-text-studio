@@ -5,7 +5,7 @@ export async function generateSourcesFromStorage(
   storage: Storage
 ): Promise<WordListFromArray[]> {
   const sourcesFromDB = await storage.fetchAllFiles();
-  let sources: WordListFromArray[] = [];
+  const sources: WordListFromArray[] = [];
   for (const { name, wordlist } of sourcesFromDB) {
     sources.push(new WordListFromArray(name, wordlist));
   }
