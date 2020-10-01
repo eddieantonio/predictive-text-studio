@@ -105,6 +105,11 @@
     color: var(--blue);
     padding-bottom: 1em;
   }
+
+  .download.download--disabled {
+    color: #666;
+    cursor: not-allowed;
+  }
 </style>
 
 <div
@@ -118,5 +123,10 @@
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
-  <a href={downloadURL} download="Example.kmp" > Download KMP Package </a>
+  <a
+    href={downloadURL ? downloadURL : "#"}
+    download="Example.kmp"
+    class="download"
+    class:download--disabled={downloadURL == ""}
+  > Download KMP Package </a>
 </div>
