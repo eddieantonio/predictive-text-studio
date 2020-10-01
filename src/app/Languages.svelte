@@ -86,6 +86,11 @@
 </script>
 
 <style>
+  main {
+    height: 100vh;
+    margin: -8px;
+  }
+
   .languages {
     display: flex;
     flex-direction: row;
@@ -124,50 +129,6 @@
 
   .languages__container--content {
     margin-top: 25px;
-  }
-
-  button {
-    padding: 10px 20px;
-    margin: 0px 10px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    font-family: Cabin, sans-serif;
-    font-size: 15px;
-    font-weight: bold;
-    transition-duration: 0.2s;
-  }
-
-  button:hover {
-    cursor: pointer;
-  }
-
-  .selected {
-    border: 1px solid #bdbdbd;
-    background-color: #ffffff;
-  }
-
-  .selected:hover {
-    background-color: #f1f1f1;
-  }
-
-  .deselected {
-    border: none;
-    background-color: #f1f1f1;
-  }
-
-  .deselected:hover {
-    background-color: #c5c5c5;
-  }
-
-  .download {
-    margin-left: 30px;
-    border: none;
-    background-color: #0099ff;
-    color: #ffffff;
-  }
-
-  .download:hover {
-    background-color: #006db6;
   }
 
   img {
