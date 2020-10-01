@@ -17,6 +17,10 @@
   .language__sources {
     border-radius: 20px;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   th {
@@ -28,6 +32,7 @@
   table {
     border-collapse: collapse;
     width: 1400px;
+    margin-bottom: 30px;
   }
 
   tr {
