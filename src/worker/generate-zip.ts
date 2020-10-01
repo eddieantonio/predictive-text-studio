@@ -24,6 +24,10 @@ export function createZipWithFiles(files: FileList): Promise<ArrayBuffer> {
   return zip.generateAsync({ type: "arraybuffer" });
 }
 
+////////////////////////////////// Helpers ///////////////////////////////////
+
+type JSZipConstructor = new () => JSZip;
+
 /**
  * This pile of hacks tries to load the JSZip library, whether in Node.JS or
  * in the WebWorker context.
@@ -34,7 +38,7 @@ export function createZipWithFiles(files: FileList): Promise<ArrayBuffer> {
  * In Node.JS, you require() it like any other module.
  */
 function createJSZip(): JSZip {
-  let Constructor: typeof JSZip;
+  let Constructor: JSZipConstructor;
 
   if (typeof self !== "undefined" && jsZipIsDefinedWithin(self)) {
     // Within the WebWorker:
@@ -46,7 +50,9 @@ function createJSZip(): JSZip {
   return new Constructor();
 }
 
-type WorkerGlobalScopeWithJSZip = WorkerGlobalScope & { JSZip: typeof JSZip };
+type WorkerGlobalScopeWithJSZip = WorkerGlobalScope & {
+  JSZip: JSZipConstructor;
+};
 
 /**
  * This **type guard** returns true when the global scope seems to have the
