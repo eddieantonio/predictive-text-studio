@@ -12,6 +12,10 @@
     font-size: 14px;
   }
 
+  .input_field {
+    margin-bottom: 20px;
+  }
+
   input {
     font-family: "Roboto", sans-serif;
     font-size: 18px;
@@ -19,7 +23,6 @@
     border-radius: 10px;
     border-width: 1px;
     border-color: rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
   }
 
   .subtext {
@@ -29,7 +32,7 @@
   }
 </style>
 
-<div class="input">
+<div class="input_field">
   <p class:label>{label}</p>
   <input type="text" {id} {value} />
   {#if subtext}

@@ -7,6 +7,7 @@
   export let hasDropShadow: boolean = false; // optional
   export let size: string = "medium"; // optional
   export let text: string = ""; // required
+  export let subtext: string = ""; // optional
   export let callbackFunction: any = null; // required
 
   export let className: string = "";
@@ -96,8 +97,17 @@
   .shadow {
     box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.15);
   }
+
+  .subtext {
+    font-family: "Roboto Mono", monospace;
+    color: #a4a4a4;
+    font-size: 12px;
+  }
 </style>
 
 {#if text && callbackFunction}
   <button on:click={callbackFunction} class={className}> {text} </button>
+  {#if subtext}
+    <p class:subtext>{subtext}</p>
+  {/if}
 {/if}
