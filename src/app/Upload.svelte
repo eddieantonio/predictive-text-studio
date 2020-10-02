@@ -3,7 +3,7 @@
 
   let onDraggedOver = false;
   let files = new Map<String, File>();
-  let downloadURL = "";
+  let downloadUrl = "";
 
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
