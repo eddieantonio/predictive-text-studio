@@ -106,7 +106,12 @@
     padding-bottom: 1em;
   }
 
-  .download-link.download-link--disabled {
+  .download-link {
+    display: block;
+    margin-top: 1.5em;
+  }
+
+  .download-link--disabled {
     color: #666;
     cursor: not-allowed;
   }
