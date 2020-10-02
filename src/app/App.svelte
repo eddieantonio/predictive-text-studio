@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { Router, Route, Link } from "svelte-routing";
   import LandingPage from "./pages/LandingPage.svelte";
   import Testing from "./pages/Testing.svelte";
