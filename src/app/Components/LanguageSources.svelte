@@ -45,7 +45,7 @@
 
   th {
     text-align: left;
-    background-color: #f1f1f1;
+    background-color: var(--lite-white);
     padding: 20px 0px 20px 20px;
   }
 
@@ -58,12 +58,12 @@
   }
 
   tr {
-    border-bottom: 1pt solid #f1f1f1;
+    border-bottom: 1pt solid var(--lite-white);
   }
 
   td {
     padding: 10px 0px 10px 20px;
-    color: #5e5e5e;
+    color: var(--gray-dark);
   }
 
   th:first-of-type {

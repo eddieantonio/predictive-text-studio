@@ -57,41 +57,41 @@
   }
 
   .grey {
-    background-color: #f1f1f1;
+    background-color: var(--lite-white);
     border-width: 0px;
   }
 
   .grey:hover {
-    background-color: #c5c5c5;
+    background-color: var(--gray-hover);
   }
 
   .grey.outline {
-    border: 1px solid #bdbdbd;
-    background-color: #ffffff;
+    border: 1px solid var(--gray-hover);
+    background-color: var(--white);
   }
 
   .grey.outline:hover {
-    background-color: #f1f1f1;
+    background-color: var(--lite-white);
   }
 
   .blue {
-    background-color: #0099ff;
+    background-color: var(--primary-blue);
     border-width: 0px;
-    color: #fff;
+    color: var(--white);
   }
 
   .blue:hover {
-    background-color: #006db6;
+    background-color: var(--dark-blue);
   }
 
   .blue.outline {
-    border: 1px solid #0099ff;
-    background-color: #ffffff;
-    color: #0099ff;
+    border: 1px solid var(--primary-blue);
+    background-color: var(--white);
+    color: var(--primary-blue);
   }
 
   .blue.outline:hover {
-    background-color: #f1f1f1;
+    background-color: var(--lite-white);
   }
 
   .shadow {
@@ -99,10 +99,10 @@
   }
 
   .subtext {
-    font-family: "Roboto Mono", monospace;
-    color: #a4a4a4;
+    font-family: var(--mono-font), monospace;
+    color: var(--gray);
     font-size: 12px;
-    margin-top: 5px;
+    margin-top: 10px;
   }
 
   .button-layout {

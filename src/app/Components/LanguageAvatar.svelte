@@ -26,7 +26,7 @@
     width: 50px;
     height: 50px;
     display: flex;
-    background-color: #fff;
+    background-color: var(--white);
     align-items: center;
     justify-content: center;
     border-radius: 100%;
@@ -41,8 +41,8 @@
   }
 
   .selected {
-    background-color: #0099ff;
-    color: #fff;
+    background-color: var(--primary-blue);
+    color: var(--white);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
   }
 </style>

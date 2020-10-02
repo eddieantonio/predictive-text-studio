@@ -8,7 +8,7 @@
   export let selectedLanguage: string = "Kwakwala";
 
   // Mock language data object - this would be read from localstorage/db
-  export let languageInformation: any = {
+  export let languageInformation = {
     word_count: "74231",
     properties: {
       name: "Kwakwala",

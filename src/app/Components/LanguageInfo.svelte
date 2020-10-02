@@ -1,6 +1,6 @@
 <script lang="ts">
   import InputField from "./InputField.svelte";
-  export let properties: any;
+  export let properties: any; // TODO: I am not sure what type to change it to from any
 </script>
 
 <style>
@@ -23,7 +23,7 @@
   }
 
   .label {
-    font-family: "Cabin", sans-serif;
+    font-family: var(--main-font), sans-serif;
     font-weight: bold;
     font-size: 14px;
   }

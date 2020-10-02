@@ -7,7 +7,7 @@
 
 <style>
   .label {
-    font-family: "Cabin", sans-serif;
+    font-family: var(--main-font), sans-serif;
     font-weight: bold;
     font-size: 14px;
   }
@@ -17,7 +17,7 @@
   }
 
   input {
-    font-family: "Roboto", sans-serif;
+    font-family: var(--secondary-font), sans-serif;
     font-size: 18px;
     padding: 10px;
     border-radius: 10px;
@@ -26,8 +26,8 @@
   }
 
   .subtext {
-    font-family: "Roboto Mono", monospace;
-    color: #a4a4a4;
+    font-family: var(--mono-font), monospace;
+    color: var(--gray);
     font-size: 12px;
   }
 </style>
