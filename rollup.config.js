@@ -27,7 +27,6 @@ const appConfiguration = {
   },
   plugins: [
     svelte({
-      hydratable: true,
       dev: !production,
       preprocess: sveltePreprocess(),
     }),
