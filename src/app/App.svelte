@@ -11,7 +11,7 @@
   <Router {url}>
     <div>
       <Route path="/" component={LandingPage} />
-      <Route path="about" component={Testing} />
+      <Route path="testing" component={Testing} />
     </div>
   </Router>
 </main>
