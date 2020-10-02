@@ -33,15 +33,20 @@
     margin-top: 40px;
     font-family: Cabin, sans-serif;
     font-size: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+    border: 3px solid var(--white);
   }
 
   .avatar:hover {
     cursor: pointer;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--primary-blue);
   }
 
   .selected {
     background-color: var(--primary-blue);
+    border: 0px;
     color: var(--white);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
   }
