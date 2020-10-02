@@ -55,7 +55,7 @@
     worker.onmessage = (event: MessageEvent) => {
       const kmpFile = event.data as ArrayBuffer;
       const blob = new Blob([kmpFile], {type: "application/octet-stream"})
-      downloadURL = URL.createObjectURL(blob)
+      downloadUrl = URL.createObjectURL(blob)
 
       worker.terminate();
     };
@@ -129,9 +129,9 @@
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
   <a
-    href={downloadURL ? downloadURL : "#"}
+    href={downloadUrl ? downloadUrl : "#"}
     download="Example.kmp"
     class="download-link"
-    class:download-link--disabled={downloadURL == ""}
+    class:download-link--disabled={downloadUrl == ""}
   > Download KMP Package </a>
 </div>
