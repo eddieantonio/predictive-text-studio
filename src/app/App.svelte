@@ -1,10 +1,10 @@
 <script>
-  import { Router, Route, Link } from "svelte-routing";
+  import { Router, Route } from "svelte-routing";
   import LandingPage from "./pages/LandingPage.svelte";
   import Testing from "./pages/Testing.svelte";
 
   // Used for SSR. A falsy value is ignored by the Router.
-  const url = "";
+  export let url = "";
 </script>
 
 <main role="application">
