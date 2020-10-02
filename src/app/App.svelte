@@ -7,11 +7,9 @@
   export let url = "";
 </script>
 
-<main role="application">
+<main>
   <Router {url}>
-    <div>
-      <Route path="/" component={LandingPage} />
-      <Route path="testing" component={Testing} />
-    </div>
+    <Route path="/" component={LandingPage} />
+    <Route path="testing" component={Testing} />
   </Router>
 </main>
