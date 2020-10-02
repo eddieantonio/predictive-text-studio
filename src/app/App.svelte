@@ -17,6 +17,7 @@
     --orange-light: #FBC88F;
     --gray: #888888;
     --gray-light: #D6D6D6;
+    --gray-medium-dark: #666666;
 
     /* Font stack */
     /* Custom fonts downloaded from Google Fonts -- see public/index.html */

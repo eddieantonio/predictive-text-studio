@@ -112,7 +112,7 @@
   }
 
   .download-link--disabled {
-    color: #666;
+    color: var(--gray-medium-dark);
     cursor: not-allowed;
   }
 </style>
