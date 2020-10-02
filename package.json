@@ -14,7 +14,7 @@
     "lint": "eslint '{src,test,cypress}/**/*.ts'",
     "lint:fix": "eslint --fix '{src,test,cypress}/**/*.ts'",
     "prettier": "prettier --write '{src,test,cypress}/**/*.ts'",
-    "start": "sirv public",
+    "start": "sirv public -s",
     "test": "ava",
     "validate": "svelte-check"
   },
