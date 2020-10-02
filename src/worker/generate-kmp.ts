@@ -24,6 +24,9 @@ export async function generateKmp(
 ): Promise<ArrayBuffer> {
   const kmpJsonFile = generateKmpJson({
     languages: [{ name: langName, id: bcp47Tag }],
+    // TODO: change generateKmpJson() to accept a modelID argument instead of splitting it here:
+    authorID: modelId.split(".")[0],
+    modelTag: modelId.split(".")[2],
   });
   const modelFile = compileModelFromLexicalModelSource({
     format: "trie-1.0",
