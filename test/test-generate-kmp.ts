@@ -13,10 +13,10 @@ const sources = [
     ["SEN", 4816],
   ]),
 ];
-const modelID = "nrc.en.mtnt";
+const modelId = "nrc.en.mtnt";
 
 test("it should generate a kmp file", async (t) => {
-  const kmp = await generateKmp(langName, bcp47Tag, sources, modelID);
+  const kmp = await generateKmp(langName, bcp47Tag, sources, modelId);
   t.assert(kmp.byteLength > 0);
 
   const new_zip = new JSZip();
