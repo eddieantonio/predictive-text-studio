@@ -1,8 +1,8 @@
 <script lang="ts">
-  import LanguageInfo from "./Components/LanguageInfo.svelte";
-  import LanguageSources from "./Components/LanguageSources.svelte";
-  import Sidebar from "./Components/Sidebar.svelte";
-  import Button from "./Components/Button.svelte";
+  import LanguageInfo from "../Components/LanguageInfo.svelte";
+  import LanguageSources from "../Components/LanguageSources.svelte";
+  import Sidebar from "../Components/Sidebar.svelte";
+  import Button from "../Components/Button.svelte";
 
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
