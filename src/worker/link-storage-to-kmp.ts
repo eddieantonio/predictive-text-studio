@@ -1,13 +1,13 @@
 import { WordListFromArray } from "@predictive-text-studio/lexical-model-compiler";
 import { generateKmp } from "./generate-kmp";
 import Storage from "./storage";
+import { generateSourcesFromStorage } from "./generate-sources-from-storage";
 
 export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
-  const sourcesFromDB = await storage.fetchAllFiles();
-  const sources: WordListFromArray[] = [];
-  for (const { name, wordlist } of sourcesFromDB) {
-    sources.push(new WordListFromArray(name, wordlist));
-  }
+  const sources: WordListFromArray[] = await generateSourcesFromStorage(
+    storage
+  );
+
   //hardcode for now
   const langName = "English";
   const bcp47Tag = "en";
