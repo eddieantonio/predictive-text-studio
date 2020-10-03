@@ -1,6 +1,7 @@
 import { readExcel } from "./read-wordlist";
 import { SaveFileEventPayload } from "@common/events";
 import Storage from "./storage";
+import { linkStorageToKmp } from "./link-storage-to-kmp";
 
 /* Load the official JSZip web distribution bundle.  */
 importScripts("jszip.min.js");
@@ -18,7 +19,7 @@ const handleSaveFileEvent = async (event: MessageEvent) => {
     return;
   }
 
-  postMessage("Save Success");
+  postMessage(await linkStorageToKmp(storage));
 };
 
 onmessage = handleSaveFileEvent;

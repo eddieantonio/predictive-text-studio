@@ -76,6 +76,9 @@ const workerConfiguration = {
       dedupe: ["jszip"],
     }),
     commonjs(),
+    json({
+      compact: true,
+    }),
 
     copyJSZipBundle(),
 
