@@ -1,4 +1,5 @@
-import test from "ava";
+import anyTest, { TestInterface } from "ava";
+
 import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
@@ -7,30 +8,50 @@ import { WordList } from "@common/types";
 
 import { exampleWordlist } from "./fixtures";
 
-test("storing a file", async (t) => {
+/**
+ * Every test will have access to:
+ *
+ *  - an empty database
+ *  - a Storage instance attached to the empty database
+ *
+ * See: https://github.com/avajs/ava/blob/fd4da2f280679eb5fdb903bac17b2cb4431773b6/docs/recipes/typescript.md#typing-tcontext
+ */
+const test = anyTest as TestInterface<{
+  db: PredictiveTextStudioDexie;
+  storage: Storage;
+}>;
+
+/**
+ * Create a new, empty database, and configured storage for each test case.
+ */
+test.beforeEach((t) => {
   const db = new PredictiveTextStudioDexie({
     indexedDB: new FDBFactory(),
     IDBKeyRange,
   });
-  const storage = new Storage(db);
-  const filename = "ExampleWordlist.xlsx";
+  t.context.db = db;
+  t.context.storage = new Storage(db);
+});
 
+test("storing a file", async (t) => {
+  const { db, storage } = t.context;
+
+  // At first, there's nothing in the DB:
   t.is(await db.files.count(), 0);
 
-  await storage.saveFile(filename, exampleWordlist);
-
+  await storage.saveFile("ExampleWordlist.xlsx", exampleWordlist);
+  // Now there's one file in the DB!
   t.is(await db.files.count(), 1);
 });
 
 test("retrieving one file with .fetchAllFiles()", async (t) => {
-  const db = new PredictiveTextStudioDexie({
-    indexedDB: new FDBFactory(),
-    IDBKeyRange,
-  });
-  const storage = new Storage(db);
+  const { storage } = t.context;
+
+  // Let's store a file that we will later try to fetch:
   const filename = "ExampleWordlist.xlsx";
   await storage.saveFile(filename, exampleWordlist);
 
+  // We should find that it has been stored:
   const files = await storage.fetchAllFiles();
   t.is(files.length, 1);
 
@@ -40,11 +61,7 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
 });
 
 test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
-  const db = new PredictiveTextStudioDexie({
-    indexedDB: new FDBFactory(),
-    IDBKeyRange,
-  });
-  const storage = new Storage(db);
+  const { storage } = t.context;
 
   const sources = [
     { name: "ExampleWordlist.xlsx", wordlist: exampleWordlist },

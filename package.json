@@ -14,7 +14,7 @@
     "lint": "eslint '{src,test,cypress}/**/*.ts'",
     "lint:fix": "eslint --fix '{src,test,cypress}/**/*.ts'",
     "prettier": "prettier --write '{src,test,cypress}/**/*.ts'",
-    "start": "sirv public",
+    "start": "sirv public -s",
     "test": "ava",
     "validate": "svelte-check"
   },
@@ -54,6 +54,7 @@
     "dexie": "^3.0.2",
     "exceljs": "~3.5.0",
     "jszip": "^3.5.0",
+    "svelte-routing": "1.4.2",
     "tslib": "^2.0.1"
   },
   "ava": {
