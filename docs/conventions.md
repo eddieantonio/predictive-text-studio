@@ -26,11 +26,99 @@ function fetchJSON() {
 ```
 
 
+General: Always delete commented-out code
+-----------------------------------------
+
+Commented-out code should never be committed to `production`. If there
+is some reason for keeping around the code that was commented out, **use
+git history**
+
+### How to delete code, but keep it in history
+
+If you need to comment out some code, make sure your working copy is
+clean.
+
+    $ git status
+    On branch production
+    Your branch is up to date with 'origin/production'.
+
+    nothing to commit, working tree clean
+
+Then, **delete the code** 🔥🔥🔥.
+
+Next, write a commit with the keyword `remove` Let's say we
+just deleted code that implemented an old algorithm for felincating
+bjorndingers. Write a message like:
+
+    git commit -am "remove: old algorithm for felincating bjorndingers"
+
+
+### What if I need that code back?
+
+You probably don't. But just in case you do, you can find the commit
+that deleted that code using **git log** and **git revert**.
+
+#### Find the SHA of the commit that deleted the code
+
+First use `git log` to find the commit with that `remove` keyword. You
+can get a list of all commits with `remove` in the message with the following
+command:
+
+    git log --grep="remove"
+
+```
+commit 1e0698367b9b7ef2aae56b9af0073cb051a4192b
+Merge: 9728a42 7ff662f
+Author: Eddie Antonio Santos <easantos@ualberta.ca>
+Date:   Mon Sep 28 15:49:27 2020 -0600
+
+    remove: custom BCP-47 types
+
+commit e7dfbf98d9d45f0e194d6b9162cfe91ae892a02e
+Author: Eddie Antonio Santos <easantos@ualberta.ca>
+Date:   Mon Sep 28 15:00:13 2020 -0600
+
+    remove: old algorithm for felincating bjorndingers
+```
+
+I like to use a more compact display, so I add the `--oneline` argument:
+
+    git log --oneline --grep="remove"
+
+```
+1e06983 remove: custom bcp-47 types
+e7dfbf9 remove: old algorithm for felincating bjorndingers
+```
+
+There are probably too many results to sift through manually, so you can
+add extra keywords by providing `--all-match` and one or more
+`--grep="KEYWORD"` arguments. In this example, I seem to recall that
+I removed some code that involved bjorndingers somehow, so I use the
+following command:
+
+    git log --oneline --all-match --grep="remove" --grep="bjorndinger"
+
+```
+e7dfbf9 remove: old algorithm for felincating bjorndingers
+```
+
+The hexadecimal number to the left is the **git SHA** of the commit that
+removed the code we're interested in. Copy this number. So in this case,
+I want to copy  `e7dfbf9`.
+
+#### Use `git revert` to undo the delete
+
+Now, using the commit SHA, use `git revert` to undo the delete:
+
+    git revert e7dfbf9
+
+This creates a **new commit** undoing the delete.
+
+
 CSS: ordering declarations in CSS rulesets
 ------------------------------------------
 
 Try to stick to the following order of grouping of declarations in CSS:
-
 
 ```css
 div {
@@ -52,7 +140,7 @@ div {
     /* Anything to do with color */
     color: var(--blue);
     background-color: hsl(340deg 10% 50% / 80%);
-    border: 1px solid
+    border: 1px solid var(--blue);
     box-shadow: 1px 1px 2px rgb(0 0 0 / 20%);
 
     /* Text & Typography */
@@ -76,7 +164,7 @@ pseudo-element selectors, due to its effect on these elements:
 ::before, ::after {
     content: " ";
 
-    /* everythiong else... */
+    /* everything else... */
 }
 ```
 
@@ -123,7 +211,7 @@ article {
 ```
 
 
-### Converting between px and `rem`
+### Converting between `px` and `rem`
 
 Since we _want_ the size of a `rem` to change, but often tools produce
 units in px, use the following guideline to convert between the two:
