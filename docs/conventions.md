@@ -139,7 +139,7 @@ div {
     z-index: 20;
 
     /* Display & Box model */
-    display: flex;
+    display: inline-block;
     box-sizing: border-box; /* let width and height INCLUDE the border and padding */
     width: 20ch;
     max-height: .5vh;
@@ -149,20 +149,19 @@ div {
 
     /* Anything to do with color */
     color: var(--blue);
-    background-color: hsl(340deg 10% 50% / 80%);
+    background-color: hsl(var(--blue-hue) 20% 50% / 80%);
     border: 1px solid var(--blue);
-    box-shadow: 1px 1px 2px rgb(0 0 0 / 20%);
+    box-shadow: 1px 1px 6px 2px rgb(0 0 0 / 20%);
 
     /* Text & Typography */
     font-family: var(--main-font);
     line-height: 1.25;
-    text-align: start;
+    text-align: end;
     text-transform: uppercase;
 
     /* Misc */
     transition: transform 1s;
-    transform: rotate(2deg);
-    overflow: none;
+    overflow: hidden;
 }
 ```
 
