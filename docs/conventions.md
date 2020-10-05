@@ -31,12 +31,12 @@ General: Always delete commented-out code
 
 Commented-out code should never be committed to `production`. If there
 is some reason for keeping around the code that was commented out, **use
-git history**
+git** instead.
 
 ### How to delete code, but keep it in history
 
-If you need to comment out some code, make sure your working copy is
-clean.
+If you need to comment out some code, make sure your **working copy is
+clean**.
 
     $ git status
     On branch production
@@ -44,7 +44,7 @@ clean.
 
     nothing to commit, working tree clean
 
-Then, **delete the code** 🔥🔥🔥.
+Then, **delete the code** 🔥🔥🔥
 
 Next, write a commit with the keyword `remove` Let's say we
 just deleted code that implemented an old algorithm for felincating
@@ -90,10 +90,10 @@ I like to use a more compact display, so I add the `--oneline` argument:
 e7dfbf9 remove: old algorithm for felincating bjorndingers
 ```
 
-There are probably too many results to sift through manually, so you can
+There are probably too many commits to sift through manually, so you can
 add extra keywords by providing `--all-match` and one or more
 `--grep="KEYWORD"` arguments. In this example, I seem to recall that
-I removed some code that involved bjorndingers somehow, so I use the
+I removed some code that involved “bjorndingers” somehow, so I use the
 following command:
 
     git log --oneline --all-match --grep="remove" --grep="bjorndinger"
@@ -114,6 +114,16 @@ Now, using the commit SHA, use `git revert` to undo the delete:
 
 This creates a **new commit** undoing the delete.
 
+### Sources
+
+I'm not the only one who says you should just delete commented-out code.
+See here:
+
+ - https://kentcdodds.com/blog/please-dont-commit-commented-out-code
+ - https://markhneedham.com/blog/2009/01/17/the-danger-of-commenting-out-code/
+ - https://softwareengineering.stackexchange.com/a/190222/284069
+ - https://softwareengineering.stackexchange.com/a/213685/284069
+
 
 CSS: ordering declarations in CSS rulesets
 ------------------------------------------
@@ -130,7 +140,7 @@ div {
 
     /* Display & Box model */
     display: flex;
-    box-sizing: border-box; /* width INCLUDES the border and padding */
+    box-sizing: border-box; /* let width and height INCLUDE the border and padding */
     width: 20ch;
     max-height: .5vh;
     padding: .75rem .5rem;
@@ -178,20 +188,19 @@ These guidelines have been adapted from the following sources:
  - https://9elements.com/css-rule-order/
 
 
-CSS: for positioning, prefer `rem` to `px`
----------------------------------------
+CSS: prefer `rem` to `px` for positioning
+-----------------------------------------
 
-The `rem` unit or **:root em** is relative to the size of 1em for the
+The `rem` unit or **`:root` em** is relative to the size of 1em for the
 root element of the document (i.e., the `<html>` element)
-([mdn][rem-mdn], [csswg][rem-csswg]),
+[[[mdn][rem-mdn], [csswg][rem-csswg]].
 
 The advantage of using `rem`s over `px` is that [we can scale the
 _entire site_ by scaling the `:root` font-size][css-tricks-rems]. We can even scale the
 entire site using media queries (breakpoints) to scale the site for
-different display sizes.
-
-This also allows the user's custom stylesheets and assistive
-technologies the ability to scale the entire site as well.
+different display sizes. This also allows the **user's custom
+style sheets** and **assistive technologies** the ability to scale the
+entire site as desired.
 
 Use `rem`s for setting **margin** and non-text positioning:
 
@@ -214,14 +223,15 @@ article {
 ### Converting between `px` and `rem`
 
 Since we _want_ the size of a `rem` to change, but often tools produce
-units in px, use the following guideline to convert between the two:
+units in `px`, use the following **guideline** to convert between the
+two:
 
 > `16px == 1rem`
 
 The entire point of `rem` is that it can change, and there is exactly
 one place to change it, but this conversion guideline stems from a few
-sources ([1][standardista-rem], [2][font-sizing-with-rem],
-[3][rem-converter]). There is also [a converter][rem-converter].
+sources [[1][standardista-rem], [2][font-sizing-with-rem],
+[3][rem-converter]]. There is also [a converter][rem-converter].
 
 ### Fun fact
 
@@ -236,10 +246,10 @@ sources ([1][standardista-rem], [2][font-sizing-with-rem],
 [standardista-rem]: http://www.standardista.com/px-to-rem-conversion-if-root-font-size-is-16px/
 
 
-CSS: for font-size, prefer `em` to `px`
----------------------------------------
+CSS: prefer `em` to `px` for font size
+--------------------------------------
 
-`em` are scaled according to the **current** font-size.
+[`em` are scaled according to the **current** `font-size`][csswg-em].
 
 So if you are styling a `<small>` element, you want it to be small
 _relative to its surrounding text_.
@@ -260,6 +270,8 @@ small {
 
 See also this [CSS tricks article][css-tricks-rems].
 
+[csswg-em]: https://drafts.csswg.org/css-values-3/#em
+
 
 CSS: omit the unit from zero
 ----------------------------
@@ -267,11 +279,13 @@ CSS: omit the unit from zero
 If you set something to `0px`,  `0em`, `0rem`, etc., omit the unit.
 
 ```css
-.good {
+/* good */
+button {
     border: 0;
 }
 
-.bad {
+/* bad */
+button {
     border: 0px;
 }
 ```
