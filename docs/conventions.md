@@ -192,7 +192,7 @@ CSS: prefer `rem` to `px` for positioning
 
 The `rem` unit or **`:root` em** is relative to the size of 1em for the
 root element of the document (i.e., the `<html>` element)
-[[[mdn][rem-mdn], [csswg][rem-csswg]].
+[[mdn][rem-mdn], [csswg][rem-csswg]].
 
 The advantage of using `rem`s over `px` is that [we can scale the
 _entire site_ by scaling the `:root` font-size][css-tricks-rems]. We can even scale the
@@ -225,7 +225,7 @@ Since we _want_ the size of a `rem` to change, but often tools produce
 units in `px`, use the following **guideline** to convert between the
 two:
 
-> `16px == 1rem`
+    16px == 1rem
 
 The entire point of `rem` is that it can change, and there is exactly
 one place to change it, but this conversion guideline stems from a few
@@ -275,7 +275,7 @@ See also this [CSS tricks article][css-tricks-rems].
 CSS: omit the unit from zero
 ----------------------------
 
-If you set something to `0px`,  `0em`, `0rem`, etc., omit the unit.
+If you set something to `0px`,  `0em`, `0rem`, `0%`, etc., **omit the unit**.
 
 ```css
 /* good */
