@@ -3,8 +3,8 @@ Conventions and best practices
 
 Here are the **conventions** followed by this project.
 
-General: Names with acronyms and initialisms in camelCase
----------------------------------------------------------
+General: Keep capitals intact in names with acronyms and initialisms in camelCase
+---------------------------------------------------------------------------------
 
 For variables that embed acronyms and initialisms such as
 
@@ -12,17 +12,24 @@ For variables that embed acronyms and initialisms such as
  - XML
  - HTTP
  - JSON
- - etc.
+ - _etc._
 
-When it appears in the middle of an identifier, **only capitalize the first letter**:
+When it appears in the middle of an identifier, **capitalize all letters**:
 
 ```javascript
 // good
-function fetchJson() {
-}
-// bad
 function fetchJSON() {
 }
+
+// bad
+function fetchJson() {
+}
+
+// good
+let modelID;
+
+// bad
+var modelId;
 ```
 
 
