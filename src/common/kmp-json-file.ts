@@ -41,7 +41,7 @@ export interface RelevantKmpOptions {
    * The model Id.
    * keyman will create a model Id for every models, derived from "organization, name of language, modelname"
    */
-  modelId?: string;
+  modelID?: string;
 }
 
 /**
