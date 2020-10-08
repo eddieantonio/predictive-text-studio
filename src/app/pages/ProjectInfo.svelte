@@ -146,44 +146,42 @@
   1. Create/refactor button component
   2. Use variable names for colors and fonts
  -->
-<main>
-  <div class="languages">
-    <div class="languages__sidebar">
-      <Sidebar {languages} {selectedLanguage} />
+<main class="languages">
+  <div class="languages__sidebar">
+    <Sidebar {languages} {selectedLanguage} />
+  </div>
+
+  <div class="languages__container">
+    <header class="languages__container--header">
+      <img
+        src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
+        alt="Keyman" />
+      <h1>Predictive Text Studio</h1>
+    </header>
+
+    <div class="languages__container--actions">
+      <Button
+        color="grey"
+        isOutlined={(selectedButton === 'information')}
+        onClick={() => handleClick('information')}
+      >Information</Button>
+      <Button
+        color="grey"
+        isOutlined={(selectedButton === 'sources')}
+        onClick={()=> handleClick('sources')}
+      >Sources</Button>
+      <Button
+        color="blue"
+        onClick={handleDownload}
+        subtext={languageInformation.wordCount.toString() + " words"}
+      >Download</Button>
     </div>
-
-    <div class="languages__container">
-      <header class="languages__container--header">
-        <img
-          src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
-          alt="Keyman" />
-        <h1>Predictive Text Studio</h1>
-      </header>
-
-      <div class="languages__container--actions">
-        <Button
-          color="grey"
-          isOutlined={(selectedButton === 'information')}
-          onClick={() => handleClick('information')}
-        >Information</Button>
-        <Button
-          color="grey"
-          isOutlined={(selectedButton === 'sources')}
-          onClick={()=> handleClick('sources')}
-        >Sources</Button>
-        <Button
-          color="blue"
-          onClick={handleDownload}
-          subtext={languageInformation.wordCount.toString() + " words"}
-        >Download</Button>
-      </div>
-      <div class="languages__container--content">
-        {#if selectedButton === 'information'}
-          <LanguageInfo properties={languageInformation.properties} />
-        {:else if selectedButton === 'sources'}
-          <LanguageSources sources={languageInformation.sources} />
-        {/if}
-      </div>
+    <div class="languages__container--content">
+      {#if selectedButton === 'information'}
+        <LanguageInfo properties={languageInformation.properties} />
+      {:else if selectedButton === 'sources'}
+        <LanguageSources sources={languageInformation.sources} />
+      {/if}
     </div>
   </div>
 </main>
