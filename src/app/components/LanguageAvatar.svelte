@@ -7,7 +7,7 @@
 
   /**
    * Returns the first letter / character of the language.
-   * TODO: Replace with a method that handles non-abstract cases
+   * TODO: Replace with a method that handles abstract cases
    *
    * @return {String} - the first character of the language name
    */

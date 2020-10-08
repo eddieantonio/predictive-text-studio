@@ -8,24 +8,6 @@
   export let size: string = "medium"; // optional
   export let subtext: string = ""; // optional
   export let onClick: (ev: MouseEvent) => void;
-
-  export let className: string = "";
-
-  /**
-   * Creates the class name for the button if the styling props are passed
-   *
-   * @return {void}
-   */
-  const createStyles = (): void => {
-    className += color;
-    className += " " + size;
-    isOutlined && (className += " outline");
-    hasDropShadow && (className += " shadow");
-  };
-
-  beforeUpdate(() => {
-    createStyles();
-  });
 </script>
 
 <style>
