@@ -8,7 +8,7 @@
   export let size: string = "medium"; // optional
   export let text: string = ""; // required
   export let subtext: string = ""; // optional
-  export let callbackFunction: any = null; // required
+  export let onClick: (ev: MouseEvent) => void;
 
   export let className: string = "";
 
