@@ -6,6 +6,7 @@
 const routes = {
   landingPage: "/",
   projectInfo: "/project/info",
+  projectSources: "/project/sources",
 };
 
 export default routes;
