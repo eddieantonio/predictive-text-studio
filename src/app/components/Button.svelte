@@ -8,20 +8,28 @@
   export let size: string = "medium"; // optional
   export let subtext: string = ""; // optional
   export let onClick: (ev: MouseEvent) => void;
+  export let href: string = "";
 </script>
 
 <style>
-  button {
+  a, button {
     margin: 0px 10px;
     border-radius: 10px;
     text-transform: uppercase;
     font-family: Cabin, sans-serif;
-    font-size: 15px;
+    font-size: 1em;
     font-weight: bold;
     transition-duration: 0.2s;
   }
 
-  button:hover {
+  a {
+    text-decoration: none;
+  }
+  a:link, a:visited {
+    color: var(--black);
+  }
+
+  a:hover, button:hover {
     cursor: pointer;
   }
 
@@ -94,11 +102,22 @@
 </style>
 
 <div class="button-layout">
-  <button
-    class="{color} {size}"
-    class:shadow={hasDropShadow}
-    class:outline={isOutlined}
-    on:click={onClick}><slot /></button>
+  {#if href}
+    <a 
+      href={href}
+      class="{color} {size}"
+      class:shadow={hasDropShadow}
+      class:outline={isOutlined}
+    ><slot /></a>
+  {:else}
+    <button
+      class="{color} {size}"
+      class:shadow={hasDropShadow}
+      class:outline={isOutlined}
+      on:click={onClick}
+    ><slot /></button>
+  {/if}
+
   {#if subtext}
     <p class="subtext">{subtext}</p>
   {/if}
