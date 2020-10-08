@@ -1,6 +1,6 @@
 <script lang="ts">
-  import LanguageInfo from "../Components/LanguageInfo.svelte";
-  import LanguageSources from "../Components/LanguageSources.svelte";
+  import LanguageInfo from "../components/LanguageInfo.svelte";
+  import LanguageSources from "../components/LanguageSources.svelte";
   import Sidebar from "../Components/Sidebar.svelte";
   import Button from "../Components/Button.svelte";
 
@@ -159,21 +159,18 @@
         <Button
           color={"grey"}
           isOutlined={(selectedButton === 'information')}
-          text="Information"
-          callbackFunction={() => handleClick('information')}
-        />
+          onClick={() => handleClick('information')}
+        >Information</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
-          text="Sources"
-          callbackFunction={()=> handleClick('sources')}
-        />
+          onClick={()=> handleClick('sources')}
+        >Sources</Button>
         <Button
           color="blue"
-          text="Download"
-          callbackFunction={handleDownload}
+          onClick={handleDownload}
           subtext={languageInformation.word_count += " words"}
-        />
+        >Download</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
