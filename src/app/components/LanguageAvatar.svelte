@@ -6,12 +6,14 @@
   let className: string = "avatar";
 
   /**
-   * Returns the first letter / character of the language.
-   * TODO: Replace with a method that handles abstract cases
+   * Returns the first letter / character of the language name.
    *
-   * @return {String} - the first character of the language name
+   * TODO: Handle non-BMP cases like "𐐆" for "𐐆𐑍𐑀𐑊𐐮𐑇" ("English" in the Deseret alphabet)
+   * TODO: Handle multiple character grapheme clusters like "k̓"
+   *
+   * @return {string} - the first character of the language name
    */
-  const getLanguageShorthand = (): String => {
+  function getLanguageShorthand(): string {
     return name.substring(0, 1);
   };
 
