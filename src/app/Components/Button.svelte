@@ -6,9 +6,8 @@
   export let isOutlined: boolean = false; // optional
   export let hasDropShadow: boolean = false; // optional
   export let size: string = "medium"; // optional
-  export let text: string = ""; // required
   export let subtext: string = ""; // optional
-  export let callbackFunction: any = null; // required
+  export let onClick: (ev: MouseEvent) => void;
 
   export let className: string = "";
 
@@ -24,7 +23,7 @@
     hasDropShadow && (className += " shadow");
   };
 
-  beforeUpdate(async () => {
+  beforeUpdate(() => {
     createStyles();
   });
 </script>
@@ -112,11 +111,13 @@
   }
 </style>
 
-{#if text && callbackFunction}
-  <div class="button-layout">
-    <button on:click={callbackFunction} class={className}> {text} </button>
-    {#if subtext}
-      <p class:subtext>{subtext}</p>
-    {/if}
-  </div>
-{/if}
+<div class="button-layout">
+  <button
+    class="{color} {size}"
+    class:shadow={hasDropShadow}
+    class:outline={isOutlined}
+    on:click={onClick}><slot /></button>
+  {#if subtext}
+    <p class="subtext">{subtext}</p>
+  {/if}
+</div>
