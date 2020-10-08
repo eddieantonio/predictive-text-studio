@@ -24,7 +24,7 @@
     hasDropShadow && (className += " shadow");
   };
 
-  beforeUpdate(async () => {
+  beforeUpdate(() => {
     createStyles();
   });
 </script>
