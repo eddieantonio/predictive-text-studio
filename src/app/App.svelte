@@ -9,10 +9,6 @@
 
 <main>
   <Router {url}>
-    <!-- <nav>
-      <Link to="/">Landing</Link>
-      <Link to="languages">Languages</Link>
-    </nav> -->
     <Route path="/" component={LandingPage} />
     <Route path="languages" component={Languages} />
   </Router>
