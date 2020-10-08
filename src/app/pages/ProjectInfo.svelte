@@ -103,7 +103,7 @@
     font-family: Cabin, sans-serif;
   }
 
-  .languages__sidebar {
+  :global(.languages__sidebar) {
     width: 75px;
   }
 
@@ -147,9 +147,7 @@
   2. Use variable names for colors and fonts
  -->
 <main class="languages">
-  <div class="languages__sidebar">
-    <Sidebar {languages} {selectedLanguage} />
-  </div>
+  <Sidebar {languages} {selectedLanguage} class="languages__sidebar" />
 
   <div class="languages__container">
     <header class="languages__container--header">
