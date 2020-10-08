@@ -156,29 +156,18 @@
         <h1>Predictive Text Studio</h1>
       </div>
       <div class="languages__container--actions">
-        <!-- <button
-          on:click={() => handleClick('information')}
-          class={selectedButton === 'information' ? 'selected' : 'deselected'}>
-          Information
-        </button> -->
         <Button
           color={"grey"}
           isOutlined={(selectedButton === 'information')}
           text="Information"
           callbackFunction={() => handleClick('information')}
         />
-        <!-- <button
-          on:click={() => handleClick('sources')}
-          class={selectedButton === 'sources' ? 'selected' : 'deselected'}>
-          Sources
-        </button> -->
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           text="Sources"
           callbackFunction={()=> handleClick('sources')}
         />
-        <!-- <button on:click={handleDownload} class="download"> Download </button> -->
         <Button
           color="blue"
           text="Download"
