@@ -28,7 +28,7 @@
     justify-content: center;
     border-radius: 100%;
     margin-top: 40px;
-    font-family: Cabin, sans-serif;
+    font-family: var(--main-font), sans-serif;
     font-size: 20px;
     box-sizing: border-box;
     transition: border-color 0.2s ease;
