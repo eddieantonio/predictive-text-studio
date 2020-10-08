@@ -1,6 +1,8 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
   import BCP47Tag from "../components//BCP47Tag.svelte";
+
+  import routes from "../routes";
 </script>
 
 <svelte:head>
@@ -23,7 +25,7 @@
 
   <section id="get-started" class="quick-start">
     <!-- TODO: should not use hard coded URL! -->
-    <form action="/languages">
+    <form action={routes.projectInfo}>
       <fieldset>
         <legend> Step 1: Select your language </legend>
         <BCP47Tag />
