@@ -153,15 +153,16 @@
     </div>
 
     <div class="languages__container">
-      <div class="languages__container--header">
+      <header class="languages__container--header">
         <img
           src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
-          alt="Keyman Logo" />
+          alt="Keyman" />
         <h1>Predictive Text Studio</h1>
-      </div>
+      </header>
+
       <div class="languages__container--actions">
         <Button
-          color={"grey"}
+          color="grey"
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
         >Information</Button>
@@ -173,7 +174,7 @@
         <Button
           color="blue"
           onClick={handleDownload}
-          subtext={languageInformation.wordCount.toString().concat(" words")}
+          subtext={languageInformation.wordCount.toString() + " words"}
         >Download</Button>
       </div>
       <div class="languages__container--content">
