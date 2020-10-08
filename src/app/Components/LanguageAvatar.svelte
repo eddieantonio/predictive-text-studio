@@ -6,6 +6,16 @@
   let className: string = "avatar";
 
   /**
+   * Returns the first letter / character of the language.
+   * TODO: Replace with a method that handles non-abstract cases
+   *
+   * @return {String} - the first character of the language name
+   */
+  const getLanguageShorthand = (): String => {
+    return name.substring(0, 1);
+  };
+
+  /**
    * Handles the click when a language is selected from the sidebar.
    * Should change the selected language variable and change content in the Languages component.
    * TODO: Replace stub
@@ -55,5 +65,5 @@
   on:click={() => {
     handleClick(name);
   }}>
-  {name.substring(0, 1)}
+  {getLanguageShorthand()}
 </div>
