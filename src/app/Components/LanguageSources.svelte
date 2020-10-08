@@ -1,6 +1,12 @@
 <script lang="ts">
   import Button from "./Button.svelte";
-  export let sources: any[];
+  interface DictionarySource {
+    name: string;
+    size: number;
+    type: string;
+  }
+
+  export let sources: DictionarySource[];
 
   /**
    * Handles the click when the add source button is pressed. Should show another section where user can upload file or open direct entry.
