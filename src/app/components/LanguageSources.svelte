@@ -93,6 +93,12 @@
   .table__row--actions p {
     margin-left: 10px;
   }
+  
+  .btn--inline {
+    border: 0;
+    background-color: transparent;
+    font-size: 1em;
+  }
 </style>
 
 <div class="language__sources">
@@ -113,8 +119,8 @@
         <td>{source.type}</td>
         <td>
           <div class="table__row--actions">
-            <p on:click={handleEdit}>Edit</p>
-            <p on:click={handleDelete}>Delete</p>
+            <button class="btn--inline" on:click={handleEdit}>Edit</button>
+            <button class="btn--inline" on:click={handleDelete}>Delete</button>
           </div>
         </td>
       </tr>
