@@ -66,12 +66,6 @@
     },
   ];
 
-  // In case we want word count to be dynamic
-  // let languageWordCount: int = 0;
-  // languageInformation.sources.map((source) => {
-  //   languageWordCount += Number(source.size);
-  // });
-
   /**
    * Handles the click when a content button (Information/Sources) is pressed
    * Changes the selected button variable
@@ -147,7 +141,7 @@
   }
 </style>
 
-<!-- 
+<!--
   TODO:
   1. Create/refactor button component
   2. Use variable names for colors and fonts
