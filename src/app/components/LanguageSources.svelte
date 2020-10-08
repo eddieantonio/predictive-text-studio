@@ -85,18 +85,25 @@
     border-bottom-right-radius: 10px;
   }
 
-  .table__row--actions {
+  .actions {
     display: flex;
     flex-direction: row;
+    align-content: flex-start;
   }
 
-  .table__row--actions p {
-    margin-left: 10px;
+  .actions__action:not(:first-of-type) {
+    /* this should be `gap`, but there isn't enough support at the moment
+     * https://caniuse.com/flexbox-gap 😭😭😭 */
+    margin-left: 1.5ch;
   }
   
   .btn--inline {
+    display: inline;
+    padding: 0;
+
     border: 0;
     background-color: transparent;
+
     font-size: 1em;
   }
 </style>
@@ -117,11 +124,9 @@
         <td>{source.name}</td>
         <td>{source.size}</td>
         <td>{source.type}</td>
-        <td>
-          <div class="table__row--actions">
-            <button class="btn--inline" on:click={handleEdit}>Edit</button>
-            <button class="btn--inline" on:click={handleDelete}>Delete</button>
-          </div>
+        <td class="table__row--actions actions">
+          <button class="actions__action btn--inline" on:click={handleEdit}>Edit</button>
+          <button class="actions__action btn--inline" on:click={handleDelete}>Delete</button>
         </td>
       </tr>
     {/each}
