@@ -1,15 +1,20 @@
 <script lang="ts">
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
-  import Sidebar from "../Components/Sidebar.svelte";
-  import Button from "../Components/Button.svelte";
+  import Sidebar from "../components/Sidebar.svelte";
+  import Button from "../components/Button.svelte";
 
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
-    word_count: "74231",
+    get wordCount(): number {
+      return languageInformation.sources.reduce(
+        (sum, source) => sum + Number(source.size),
+        0
+      );
+    },
     properties: {
       name: "Kwakwala",
       author: "Rae Anne",
@@ -21,37 +26,42 @@
     sources: [
       {
         name: "dictionary.xlsx",
-        size: "78112",
+        size: 78112,
         type: "excel",
       },
       {
         name: "Kinship Terms",
-        size: "32",
+        size: 32,
         type: "direct entry",
       },
       {
         name: "secondary_dictionary.xlsx",
-        size: "198",
+        size: 198,
         type: "excel",
       },
     ],
   };
 
-  export let languages: object[] = [
+  interface LanguageProject {
+    id: number;
+    name: string;
+  }
+
+  export let languages: LanguageProject[] = [
     {
-      id: "1",
+      id: 1,
       name: "Kwakwala",
     },
     {
-      id: "2",
+      id: 2,
       name: "A",
     },
     {
-      id: "3",
+      id: 3,
       name: "S",
     },
     {
-      id: "4",
+      id: 4,
       name: "P",
     },
   ];
@@ -169,7 +179,7 @@
         <Button
           color="blue"
           onClick={handleDownload}
-          subtext={languageInformation.word_count += " words"}
+          subtext={languageInformation.wordCount.toString().concat(" words")}
         >Download</Button>
       </div>
       <div class="languages__container--content">
