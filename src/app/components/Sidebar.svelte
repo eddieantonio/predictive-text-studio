@@ -16,8 +16,8 @@
   }
 </style>
 
-<div class="sidebar">
+<nav class="sidebar">
   {#each languages as language}
     <LanguageAvatar name={language.name} {selectedLanguage} />
   {/each}
-</div>
+</nav>
