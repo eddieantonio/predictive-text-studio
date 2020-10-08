@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { Router, Route } from "svelte-routing";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
+  import routes from "../routes";
 
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
@@ -104,7 +106,7 @@
   }
 
   :global(.languages__sidebar) {
-    width: 75px;
+    min-width: 75px;
   }
 
   .languages__container {
@@ -157,29 +159,33 @@
       <h1>Predictive Text Studio</h1>
     </header>
 
-    <div class="languages__container--actions">
+    <nav class="languages__container--actions">
       <Button
+        href={routes.projectInfo}
         color="grey"
         isOutlined={(selectedButton === 'information')}
-        onClick={() => handleClick('information')}
       >Information</Button>
       <Button
+        href={routes.projectSources}
         color="grey"
         isOutlined={(selectedButton === 'sources')}
-        onClick={()=> handleClick('sources')}
       >Sources</Button>
       <Button
         color="blue"
         onClick={handleDownload}
         subtext={languageInformation.wordCount.toString() + " words"}
       >Download</Button>
-    </div>
+    </nav>
+
     <div class="languages__container--content">
-      {#if selectedButton === 'information'}
-        <LanguageInfo properties={languageInformation.properties} />
-      {:else if selectedButton === 'sources'}
-        <LanguageSources sources={languageInformation.sources} />
-      {/if}
+      <Router>
+        <Route path="info">
+          <LanguageInfo properties={languageInformation.properties} />
+        </Route>
+        <Route path="sources">
+          <LanguageSources sources={languageInformation.sources} />
+        </Route>
+      </Router>
     </div>
   </div>
 </main>

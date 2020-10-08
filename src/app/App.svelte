@@ -9,6 +9,6 @@
 </script>
 
 <Router {url}>
+  <Route path="project/*" component={ProjectInfo} />
   <Route path={routes.landingPage} component={LandingPage} />
-  <Route path={routes.projectInfo} component={ProjectInfo} />
 </Router>
