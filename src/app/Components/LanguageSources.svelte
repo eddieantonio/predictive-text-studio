@@ -114,10 +114,7 @@
       </tr>
     {/each}
   </table>
-  <Button
-    color="blue"
-    isOutlined={true}
-    text="Add Source"
-    size="large"
-    callbackFunction={handleAddSource} />
+  <Button color="blue" isOutlined size="large" onClick={handleAddSource}>
+    Add Source
+  </Button>
 </div>
