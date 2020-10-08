@@ -2,11 +2,8 @@
   export let name: string;
   export let selectedLanguage: string = "";
 
-  export let isSelected: boolean = name === selectedLanguage;
-  export let className: string = "avatar";
-  if (isSelected) {
-    className = className + " selected";
-  }
+  let selected: boolean = name === selectedLanguage;
+  let className: string = "avatar";
 
   /**
    * Handles the click when a language is selected from the sidebar.
@@ -54,6 +51,7 @@
 
 <div
   class={className}
+  class:selected
   on:click={() => {
     handleClick(name);
   }}>
