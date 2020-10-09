@@ -1,4 +1,5 @@
 <script lang="ts">
+  import DownloadKMP from './DownloadKMP.svelte';
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
@@ -105,16 +106,6 @@
     color: var(--blue);
     padding-bottom: 1em;
   }
-
-  .download-link {
-    display: block;
-    margin-top: 1.5em;
-  }
-
-  .download-link--disabled {
-    color: var(--gray-medium-dark);
-    cursor: not-allowed;
-  }
 </style>
 
 <div
@@ -128,10 +119,5 @@
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
-  <a
-    href={downloadUrl ? downloadUrl : "#"}
-    download="Example.kmp"
-    class="download-link"
-    class:download-link--disabled={downloadUrl == ""}
-  > Download KMP Package </a>
+  <DownloadKMP {downloadUrl}/>
 </div>
