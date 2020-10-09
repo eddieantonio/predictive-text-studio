@@ -32,3 +32,21 @@ h1, h2, h3, h4, h5, h6 {
 pre, code, samp {
   font-family: var(--mono-font), monospace;
 }
+
+/**
+ * .button Block
+ *
+ * Can be applied to either a <button> or <a> element.
+ */
+.button {
+  margin: 0 .625em;
+  border-radius: .625rem;
+
+  font-family: var(--main-font), sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  transition-duration: 0.2s;
+  cursor: pointer;
+}

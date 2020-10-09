@@ -11,20 +11,6 @@
 </script>
 
 <style>
-  button {
-    margin: 0px 10px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    font-family: Cabin, sans-serif;
-    font-size: 15px;
-    font-weight: bold;
-    transition-duration: 0.2s;
-  }
-
-  button:hover {
-    cursor: pointer;
-  }
-
   .small {
     padding: 5px 10px;
   }
@@ -95,7 +81,7 @@
 
 <div class="button-layout">
   <button
-    class="{color} {size}"
+    class="button {color} {size}"
     class:shadow={hasDropShadow}
     class:outline={isOutlined}
     on:click={onClick}><slot /></button>
