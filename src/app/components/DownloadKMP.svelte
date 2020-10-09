@@ -14,12 +14,9 @@
     }
 </style>
 
-<div>
-    <a
-        href={downloadUrl ? downloadUrl : "#"}
-        download="Example.kmp"
-        class="download-link"
-        class:download-link--disabled={downloadUrl == ""}
-    > Download KMP Package </a>
-</div>
-  
+<a
+    href={downloadUrl ? downloadUrl : "#"}
+    download="Example.kmp"
+    class="download-link"
+    class:download-link--disabled={downloadUrl == ""}
+> Download KMP Package </a>
