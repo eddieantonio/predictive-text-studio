@@ -13,7 +13,7 @@
 
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
-    const fileList:File[] = [];
+    let fileList:File[] = [];
 
     if (event.dataTransfer == null) {
       return;
@@ -30,9 +30,7 @@
       }
     } else {
       // Use DataTransfer interface to access the file(s)
-      for (let file of event.dataTransfer.files) {
-        fileList.push(file);
-      }
+      fileList = Array.from(event.dataTransfer.files)
     }
     for (let file of fileList) {
       setFile(file);
