@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let downloadUrl: string;
+    export let downloadURL: string;
 </script>
 
 <style>
@@ -15,8 +15,8 @@
 </style>
 
 <a
-    href={downloadUrl ? downloadUrl : "#"}
+    href={downloadURL ? downloadURL : "#"}
     download="Example.kmp"
     class="download-link"
-    class:download-link--disabled={downloadUrl == ""}
+    class:download-link--disabled={downloadURL == ""}
 > Download KMP Package </a>
