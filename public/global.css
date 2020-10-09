@@ -52,7 +52,9 @@ pre, code, samp {
   cursor: pointer;
 }
 
-.button--grey {
+.button--grey,
+.button--blue.button--outline:hover,
+.button--grey.button--outline:hover {
   background-color: var(--lite-white);
 }
 
@@ -63,10 +65,6 @@ pre, code, samp {
 .button--grey.button--outline {
   border-color: var(--gray-hover);
   background-color: var(--white);
-}
-
-.button--grey.button--outline:hover {
-  background-color: var(--lite-white);
 }
 
 .button--blue {
@@ -82,8 +80,4 @@ pre, code, samp {
   border-color: var(--primary-blue);
   background-color: var(--white);
   color: var(--primary-blue);
-}
-
-.button--blue.button--outline:hover {
-  background-color: var(--lite-white);
 }
