@@ -50,3 +50,41 @@ pre, code, samp {
   transition-duration: 0.2s;
   cursor: pointer;
 }
+
+.button--grey {
+  background-color: var(--lite-white);
+  border-width: 0px;
+}
+
+.button--grey:hover {
+  background-color: var(--gray-hover);
+}
+
+.button--grey.outline {
+  border: 1px solid var(--gray-hover);
+  background-color: var(--white);
+}
+
+.button--grey.outline:hover {
+  background-color: var(--lite-white);
+}
+
+.button--blue {
+  background-color: var(--primary-blue);
+  border-width: 0px;
+  color: var(--white);
+}
+
+.button--blue:hover {
+  background-color: var(--dark-blue);
+}
+
+.button--blue.outline {
+  border: 1px solid var(--primary-blue);
+  background-color: var(--white);
+  color: var(--primary-blue);
+}
+
+.button--blue.outline:hover {
+  background-color: var(--lite-white);
+}
