@@ -54,6 +54,7 @@ pre, code, samp {
 
 .button--grey,
 .button--blue.button--outline:hover,
+.button--primary.button--outline:hover,
 .button--grey.button--outline:hover {
   background-color: var(--lite-white);
 }
@@ -67,16 +68,19 @@ pre, code, samp {
   background-color: var(--white);
 }
 
-.button--blue {
+.button--blue,
+.button--primary {
   background-color: var(--primary-blue);
   color: var(--white);
 }
 
-.button--blue:hover {
+.button--blue:hover,
+.button--primary:hover {
   background-color: var(--dark-blue);
 }
 
-.button--blue.button--outline {
+.button--blue.button--outline,
+.button--primary.button--outline {
   border-color: var(--primary-blue);
   background-color: var(--white);
   color: var(--primary-blue);
