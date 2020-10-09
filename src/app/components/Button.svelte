@@ -23,11 +23,6 @@
     padding: 10px 60px;
   }
 
-
-  .shadow {
-    box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.15);
-  }
-
   .subtext {
     font-family: var(--mono-font), monospace;
     color: var(--gray);
@@ -45,7 +40,7 @@
 <div class="button-layout">
   <button
     class="button button--{color} {size}"
-    class:shadow={hasDropShadow}
+    class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
     on:click={onClick}><slot /></button>
   {#if subtext}

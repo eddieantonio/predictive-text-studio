@@ -81,3 +81,7 @@ pre, code, samp {
   background-color: var(--white);
   color: var(--primary-blue);
 }
+
+.button--shadow {
+  box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.15);
+}
