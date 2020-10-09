@@ -40,6 +40,7 @@ pre, code, samp {
  */
 .button {
   margin: 0 .625em;
+  border: 1px solid transparent;
   border-radius: .625rem;
 
   font-family: var(--main-font), sans-serif;
@@ -53,7 +54,6 @@ pre, code, samp {
 
 .button--grey {
   background-color: var(--lite-white);
-  border-width: 0px;
 }
 
 .button--grey:hover {
@@ -61,7 +61,7 @@ pre, code, samp {
 }
 
 .button--grey.outline {
-  border: 1px solid var(--gray-hover);
+  border-color: var(--gray-hover);
   background-color: var(--white);
 }
 
@@ -71,7 +71,6 @@ pre, code, samp {
 
 .button--blue {
   background-color: var(--primary-blue);
-  border-width: 0px;
   color: var(--white);
 }
 
@@ -80,7 +79,7 @@ pre, code, samp {
 }
 
 .button--blue.outline {
-  border: 1px solid var(--primary-blue);
+  border-color: var(--primary-blue);
   background-color: var(--white);
   color: var(--primary-blue);
 }
