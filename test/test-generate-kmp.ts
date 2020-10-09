@@ -29,5 +29,4 @@ test("it should generate a kmp file", async (t) => {
   t.assert(isModelExist != null);
 
   //The modelID parameter determines the filename of the model.js file in the .kmp archive
-  
 });
