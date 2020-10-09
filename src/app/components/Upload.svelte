@@ -11,6 +11,20 @@
     saveToIndexedDB(file.name, file);
   }
 
+  function fileFromDataTransferItem(items: DataTransferItemList): File[] {
+    const fileList: File[] = [];
+    for (let item of items) {
+      // If dropped items aren't files, reject them
+      if (item.kind === "file") {
+        const file = item.getAsFile();
+        if (file !== null) {
+          fileList.push(file);
+        }
+      }
+    }
+    return fileList;
+  }
+
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
     let fileList:File[] = [];
@@ -19,15 +33,7 @@
       return;
     } else if (event.dataTransfer.items) {
       // Use DataTransferItemList interface to access the file(s)
-      for (let item of event.dataTransfer.items) {
-        // If dropped items aren't files, reject them
-        if (item.kind === "file") {
-          const file = item.getAsFile();
-          if (file !== null) {
-            fileList.push(file);
-          }
-        }
-      }
+      fileList = fileFromDataTransferItem(event.dataTransfer.items);
     } else {
       // Use DataTransfer interface to access the file(s)
       fileList = Array.from(event.dataTransfer.files)
