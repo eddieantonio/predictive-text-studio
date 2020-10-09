@@ -6,6 +6,11 @@
   let files = new Map<String, File>();
   let downloadURL = "";
 
+  function setFile(file: File) {
+    files.set(file.name, file);
+    saveToIndexedDB(file.name, file);
+  }
+
   const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
 
@@ -18,16 +23,14 @@
         if (item.kind === "file") {
           const file = item.getAsFile();
           if (file !== null) {
-            files.set(file.name, file);
-            saveToIndexedDB(file.name, file);
+            setFile(file);
           }
         }
       }
     } else {
       // Use DataTransfer interface to access the file(s)
       for (let file of event.dataTransfer.files) {
-        files.set(file.name, file);
-        saveToIndexedDB(file.name, file);
+        setFile(file);
       }
     }
   };
@@ -44,8 +47,7 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
-        files.set(file.name, file);
-        saveToIndexedDB(file.name, file);
+        setFile(file);
       }
     }
   };
