@@ -104,7 +104,7 @@
   }
 
   .languages__sidebar {
-    width: 75px;
+    min-width: 75px;
   }
 
   .languages__container {
