@@ -60,12 +60,12 @@ pre, code, samp {
   background-color: var(--gray-hover);
 }
 
-.button--grey.outline {
+.button--grey.button--outline {
   border-color: var(--gray-hover);
   background-color: var(--white);
 }
 
-.button--grey.outline:hover {
+.button--grey.button--outline:hover {
   background-color: var(--lite-white);
 }
 
@@ -78,12 +78,12 @@ pre, code, samp {
   background-color: var(--dark-blue);
 }
 
-.button--blue.outline {
+.button--blue.button--outline {
   border-color: var(--primary-blue);
   background-color: var(--white);
   color: var(--primary-blue);
 }
 
-.button--blue.outline:hover {
+.button--blue.button--outline:hover {
   background-color: var(--lite-white);
 }

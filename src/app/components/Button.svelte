@@ -46,7 +46,7 @@
   <button
     class="button button--{color} {size}"
     class:shadow={hasDropShadow}
-    class:outline={isOutlined}
+    class:button--outline={isOutlined}
     on:click={onClick}><slot /></button>
   {#if subtext}
     <p class="subtext">{subtext}</p>
