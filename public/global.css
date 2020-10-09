@@ -42,21 +42,27 @@ pre, code, samp {
  * Can be applied to either a <button> or <a> element.
  */
 .button {
+  display: inline-block;
   margin: 0 .625em;
   padding: .625rem 1.25rem; /* button--medium size */
   border: 1px solid transparent;
   border-radius: .625rem;
 
-  font-family: var(--main-font), sans-serif;
-  font-size: 1em;
-  font-weight: bold;
+  font: bold 1em var(--main-font), sans-serif;
   text-transform: uppercase;
+  text-decoration: none;
 
   color: var(--default-text-color);
   background-color: var(--lite-white); /* button--grey */
 
   transition-duration: 0.2s;
   cursor: pointer;
+}
+
+/* make <a> .button have a focus ring like <button> elements. */
+a.button:focus {
+  outline: .5rem auto var(--primary-blue);
+  outline-color: -webkit-focus-ring-color;
 }
 
 .button--blue.button--outline:hover,
