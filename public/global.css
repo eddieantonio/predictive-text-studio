@@ -14,6 +14,9 @@
   --white: #ffffff;
   --primary-blue: #0099ff;
   --dark-blue: #0876c0;
+
+  --default-text-color: #000;
+
   /* Font stack */
   /* Custom fonts downloaded from Google Fonts -- see public/index.html */
   --main-font: "Cabin";
@@ -40,6 +43,7 @@ pre, code, samp {
  */
 .button {
   margin: 0 .625em;
+  padding: .625rem 1.25rem; /* button--medium size */
   border: 1px solid transparent;
   border-radius: .625rem;
 
@@ -48,11 +52,13 @@ pre, code, samp {
   font-weight: bold;
   text-transform: uppercase;
 
+  color: var(--default-text-color);
+  background-color: var(--lite-white); /* button--grey */
+
   transition-duration: 0.2s;
   cursor: pointer;
 }
 
-.button--grey,
 .button--blue.button--outline:hover,
 .button--primary.button--outline:hover,
 .button--grey.button--outline:hover {
@@ -92,10 +98,6 @@ pre, code, samp {
 
 .button--small {
   padding: .3125rem .625rem;
-}
-
-.button--medium {
-  padding: .625rem 1.25rem;
 }
 
 .button--large {
