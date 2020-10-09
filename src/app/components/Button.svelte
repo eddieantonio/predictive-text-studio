@@ -11,18 +11,6 @@
 </script>
 
 <style>
-  .small {
-    padding: 5px 10px;
-  }
-
-  .medium {
-    padding: 10px 20px;
-  }
-
-  .large {
-    padding: 10px 60px;
-  }
-
   .subtext {
     font-family: var(--mono-font), monospace;
     color: var(--gray);
@@ -39,7 +27,7 @@
 
 <div class="button-layout">
   <button
-    class="button button--{color} {size}"
+    class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
     on:click={onClick}><slot /></button>
