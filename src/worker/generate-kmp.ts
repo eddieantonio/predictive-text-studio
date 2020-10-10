@@ -14,7 +14,7 @@ import {
  * @param langName
  * @param bcp47Tag
  * @param sources
- * @param modelId
+ * @param modelID
  */
 export async function generateKmp(
   langName: string,

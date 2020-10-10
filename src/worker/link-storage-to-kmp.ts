@@ -11,9 +11,9 @@ export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
   //hardcode for now
   const langName = "English";
   const bcp47Tag = "en";
-  const modelId = "nrc.en.mtnt";
+  const modelID = "nrc.en.mtnt";
 
-  const kmpFile = await generateKmp(langName, bcp47Tag, sources, modelId);
+  const kmpFile = await generateKmp(langName, bcp47Tag, sources, modelID);
 
   return kmpFile;
 }

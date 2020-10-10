@@ -3,7 +3,6 @@ import { generateKmp } from "@worker/generate-kmp";
 
 import test from "ava";
 import JSZip = require("jszip");
-import * as fs from "fs";
 
 const langName = "English";
 const bcp47Tag = "en";
