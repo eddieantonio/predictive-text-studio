@@ -71,14 +71,15 @@
     margin: auto;
     min-width: 20em;
     max-width: var(--quick-start-max-width);
-
-    text-align: center;
   }
 
   .quick-start__step {
+    margin: 0 0 1rem;
     border: 0;
+    padding: 0;
 
     font-size: 1.25em;
+    line-height: 1.5;
   }
 
   .quick-start__submit {
