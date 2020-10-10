@@ -18,7 +18,7 @@
   <section id="explanation">
     <!-- TODO: figure that explains the flow -->
 
-    <a href="#get-started" class="button button--primary">Get started</a>
+    <a href="#get-started" class="button button--primary button--shadow">Get started</a>
   </section>
 
   <section id="get-started" class="quick-start">
@@ -34,13 +34,12 @@
         <Upload />
       </fieldset>
 
-      <button type="submit"> Upload </button>
+      <button class="button button--primary button--shadow" type="submit"> Upload </button>
     </form>
   </section>
 
   <footer>
     <p><small> © 2020 <a href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">
-      Eddie Antonio Santos and contributors
-    </a>.</small></p>
+      Eddie Antonio Santos and contributors</a>.</small></p>
   </footer>
 </main>
