@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { readExcel } from "@worker/read-wordlist";
 
 import { pathToFixture } from "./helpers";
-import { exampleWordlist } from "../fixtures";
+import { exampleWordlist } from "./fixtures";
 
 const exampleExcelFilePath = pathToFixture("ExampleWordlist.xlsx");
 
