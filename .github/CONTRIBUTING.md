@@ -156,7 +156,7 @@ are going to resolve.
 
     git switch --create NAME-OF-YOUR-NEW-BRANCH
 
-Try to name the branch something indicative of what it will attempts to
+Try to name the branch something indicative of what it will attempt to
 resolve!
 
 **Optional**: delete your old branch. If you were working on something
