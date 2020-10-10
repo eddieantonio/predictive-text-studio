@@ -69,7 +69,6 @@
     align-items: center;
     justify-content: center;
     padding: 5%;
-    width: 20%;
     min-width: 200px;
     border: 3px dashed var(--gray-light);
     border-radius: 5px;
