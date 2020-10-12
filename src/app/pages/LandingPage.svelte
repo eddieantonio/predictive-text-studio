@@ -111,8 +111,10 @@
 </style>
 
 <svelte:head>
-  <title> Welcome to Predictive Text Studio </title>
-  <meta name="description" content="Add prediction and autocorrect to your language">
+  <title>Welcome to Predictive Text Studio</title>
+  <meta
+    name="description"
+    content="Add prediction and autocorrect to your language" />
 </svelte:head>
 
 <main>
@@ -122,7 +124,14 @@
       <div class="masthead__copy">
         <p class="masthead__brand" role="doc-subtitle">Keyman</p>
         <h1 class="masthead__title">Predictive Text Studio</h1>
-        <p class="masthead__description"> Add <strong>prediction</strong> and <strong>autocorrect</strong> to your language </p>
+
+        <p class="masthead__description">
+          Add
+          <strong>prediction</strong>
+          and
+          <strong>autocorrect</strong>
+          to your language
+        </p>
       </div>
 
       <img class="masthead__img" src="/assets/texting.svg" alt="" role="presentation">
@@ -154,6 +163,11 @@
 </main>
 
 <footer class="footer">
-  <p class="footer__copyright"><small> © 2020 <a href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">
-    Eddie Antonio Santos and contributors</a>.</small></p>
+  <p class="footer__copyright">
+    <small>
+      © 2020
+      <a
+        href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">
+        Eddie Antonio Santos and contributors</a>.</small>
+  </p>
 </footer>

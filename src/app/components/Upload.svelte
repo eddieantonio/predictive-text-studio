@@ -1,8 +1,9 @@
 <script lang="ts">
+  import worker from "../spawn-worker";
+
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
-  let files = new Map<String, File>();
   let downloadUrl = "";
 
   const handleDrop = (event: DragEvent) => {
@@ -17,16 +18,16 @@
         if (item.kind === "file") {
           const file = item.getAsFile();
           if (file !== null) {
-            files.set(file.name, file);
-            saveToIndexedDB(file.name, file);
+            //TODO: Handle error
+            worker.saveFile(file.name, file);
           }
         }
       }
     } else {
       // Use DataTransfer interface to access the file(s)
       for (let file of event.dataTransfer.files) {
-        files.set(file.name, file);
-        saveToIndexedDB(file.name, file);
+        //TODO: Handle error
+        worker.saveFile(file.name, file);
       }
     }
   };
@@ -43,22 +44,10 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
-        files.set(file.name, file);
-        saveToIndexedDB(file.name, file);
+        //TODO: Handle error
+        worker.saveFile(file.name, file);
       }
     }
-  };
-
-  const saveToIndexedDB = (name: string, file: File) => {
-    const worker = new Worker("worker.js");
-    worker.postMessage({ name, file });
-    worker.onmessage = (event: MessageEvent) => {
-      const kmpFile = event.data as ArrayBuffer;
-      const blob = new Blob([kmpFile], {type: "application/octet-stream"})
-      downloadUrl = URL.createObjectURL(blob)
-
-      worker.terminate();
-    };
   };
 </script>
 
@@ -128,9 +117,10 @@
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
   <a
-    href={downloadUrl ? downloadUrl : "#"}
+    href={downloadUrl ? downloadUrl : '#'}
     download="Example.kmp"
     class="download-link"
-    class:download-link--disabled={downloadUrl == ""}
-  > Download KMP Package </a>
+    class:download-link--disabled={downloadUrl == ''}>
+    Download KMP Package
+  </a>
 </div>
