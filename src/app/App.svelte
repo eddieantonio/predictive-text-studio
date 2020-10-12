@@ -1,5 +1,5 @@
 <script>
-  import { Router, Route, Link } from "svelte-routing";
+  import { Router, Route } from "svelte-routing";
   import LandingPage from "./pages/LandingPage.svelte";
   import Languages from "./pages/Languages.svelte";
 

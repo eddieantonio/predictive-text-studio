@@ -96,7 +96,7 @@
      * https://caniuse.com/flexbox-gap 😭😭😭 */
     margin-left: 1.5ch;
   }
-  
+
   .btn--inline {
     display: inline;
     padding: 0;
@@ -125,8 +125,12 @@
         <td>{source.size}</td>
         <td>{source.type}</td>
         <td class="table__row--actions actions">
-          <button class="actions__action btn--inline" on:click={handleEdit}>Edit</button>
-          <button class="actions__action btn--inline" on:click={handleDelete}>Delete</button>
+          <button
+            class="actions__action btn--inline"
+            on:click={handleEdit}>Edit</button>
+          <button
+            class="actions__action btn--inline"
+            on:click={handleDelete}>Delete</button>
         </td>
       </tr>
     {/each}
