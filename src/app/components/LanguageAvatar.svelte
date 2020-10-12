@@ -15,7 +15,7 @@
    */
   function getLanguageShorthand(): string {
     return name.substring(0, 1);
-  };
+  }
 
   /**
    * Handles the click when a language is selected from the sidebar.

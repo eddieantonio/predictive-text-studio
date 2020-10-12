@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title> Welcome to Predictive Text Studio </title>
+  <title>Welcome to Predictive Text Studio</title>
 </svelte:head>
 
 <main>
@@ -12,7 +12,13 @@
     <p role="doc-subtitle">Keyman</p>
     <h1>Predictive Text Studio</h1>
 
-    <p> Add <strong>prediction</strong> and <strong>autocorrect</strong> to your language </p>
+    <p>
+      Add
+      <strong>prediction</strong>
+      and
+      <strong>autocorrect</strong>
+      to your language
+    </p>
   </header>
 
   <section id="explanation">
@@ -39,7 +45,12 @@
   </section>
 
   <footer>
-    <p><small> © 2020 <a href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">
-      Eddie Antonio Santos and contributors</a>.</small></p>
+    <p>
+      <small>
+        © 2020
+        <a
+          href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">
+          Eddie Antonio Santos and contributors</a>.</small>
+    </p>
   </footer>
 </main>
