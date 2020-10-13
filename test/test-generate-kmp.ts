@@ -32,5 +32,5 @@ test("it should generate a kmp file", async (t) => {
     isKmpExist.async("string").then(function (data) {
       t.assert(data.includes(modelID) == true);
     });
-  };
+  }
 });
