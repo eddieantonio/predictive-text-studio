@@ -30,14 +30,20 @@
   }
 
   .masthead {
+    --wave-height: 215px;
+    --masthead-content-height: 20rem;
+    --masthead-background-color: #09f;
+
     width: 100vw;
+    padding-bottom: var(--wave-height);
 
     color: var(--white);
     background-position: bottom center;
-    background-image: url(assets/wave.svg);
     background-repeat: no-repeat;
-    background-size: cover;
-    padding-bottom: 4rem;
+    background-image: url(assets/wave.svg),
+                      linear-gradient(180deg, var(--masthead-background-color) 0%,
+                                              var(--masthead-background-color) var(--masthead-content-height),
+                                              rgba(255,255,255,0) var(--masthead-content-height));
   }
 
   .masthead__content {
