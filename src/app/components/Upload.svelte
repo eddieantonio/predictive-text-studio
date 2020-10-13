@@ -1,6 +1,6 @@
 <script lang="ts">
   import worker from "../spawn-worker";
-  import DownloadKMP from './DownloadKMP.svelte';
+  import DownloadKMP from "./DownloadKMP.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
@@ -21,13 +21,13 @@
   }
 
   function createURL(kmpFile: ArrayBuffer): string {
-    const blob = new Blob([kmpFile], {type: "application/octet-stream"})
-    return URL.createObjectURL(blob)
-  };
+    const blob = new Blob([kmpFile], { type: "application/octet-stream" });
+    return URL.createObjectURL(blob);
+  }
 
   const handleDrop = async (event: DragEvent) => {
     onDraggedOver = false;
-    let fileList:File[] = [];
+    let fileList: File[] = [];
 
     if (event.dataTransfer == null) {
       return;
@@ -36,7 +36,7 @@
       fileList = fileFromDataTransferItem(event.dataTransfer.items);
     } else {
       // Use DataTransfer interface to access the file(s)
-      fileList = Array.from(event.dataTransfer.files)
+      fileList = Array.from(event.dataTransfer.files);
     }
     for (let file of fileList) {
       //TODO: Handle error
@@ -121,5 +121,5 @@
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
-  <DownloadKMP {downloadURL}/>
+  <DownloadKMP {downloadURL} />
 </div>
