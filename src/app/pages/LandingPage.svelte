@@ -1,6 +1,6 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
-  import BCP47Tag from "../components//BCP47Tag.svelte";
+  import BCP47Tag from "../components/BCP47Tag.svelte";
 </script>
 
 <style>
@@ -117,6 +117,12 @@
     margin: auto;
     max-width: var(--body-max-width);
   }
+
+  .block {
+    display: block;
+
+    margin: 1rem auto 2rem;
+  }
 </style>
 
 <svelte:head>
@@ -142,15 +148,16 @@
           to your language
         </p>
       </div>
-
       <img class="masthead__img" src="/assets/texting.svg" alt="" role="presentation">
     </div>
   </header>
 
   <section class="explanation" id="explanation">
     <!-- TODO: figure that explains the flow -->
-
-    <a href="#get-started" class="button button--primary button--shadow button--large">Get started</a>
+    <a href="#get-started">
+      <span class="button button--primary button--shadow button--large">Get started</span>
+      <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
+    </a>
   </section>
 
   <section id="get-started" class="quick-start">
