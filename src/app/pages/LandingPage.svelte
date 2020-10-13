@@ -30,7 +30,7 @@
   }
 
   .masthead {
-    --wave-height: 215px;
+    --wave-height: 322px;
     --masthead-content-height: 20rem;
     --masthead-background-color: #09f;
 
@@ -41,9 +41,12 @@
     background-position: bottom center;
     background-repeat: no-repeat;
     background-image: url(assets/wave.svg),
-                      linear-gradient(180deg, var(--masthead-background-color) 0%,
-                                              var(--masthead-background-color) var(--masthead-content-height),
-                                              rgba(255,255,255,0) var(--masthead-content-height));
+      linear-gradient(
+        180deg,
+        var(--masthead-background-color) 0%,
+        var(--masthead-background-color) var(--masthead-content-height),
+        rgba(255, 255, 255, 0) var(--masthead-content-height)
+      );
   }
 
   .masthead__content {
