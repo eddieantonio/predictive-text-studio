@@ -13,7 +13,7 @@ interface StoredFile {
 /**
  * A word list.
  */
-interface StoredWordList {
+export interface StoredWordList {
   id?: number;
   /**
    * Typically the filename of the uploaded dictionary source.

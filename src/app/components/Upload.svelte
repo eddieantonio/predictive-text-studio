@@ -1,15 +1,10 @@
 <script lang="ts">
+  import worker from "../spawn-worker";
   import DownloadKMP from './DownloadKMP.svelte';
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
-  let files = new Map<String, File>();
   let downloadURL = "";
-
-  function setFile(file: File) {
-    files.set(file.name, file);
-    saveToIndexedDB(file.name, file);
-  }
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -25,7 +20,12 @@
     return fileList;
   }
 
-  const handleDrop = (event: DragEvent) => {
+  function createURL(kmpFile: ArrayBuffer): string {
+    const blob = new Blob([kmpFile], {type: "application/octet-stream"})
+    return URL.createObjectURL(blob)
+  };
+
+  const handleDrop = async (event: DragEvent) => {
     onDraggedOver = false;
     let fileList:File[] = [];
 
@@ -39,7 +39,9 @@
       fileList = Array.from(event.dataTransfer.files)
     }
     for (let file of fileList) {
-      setFile(file);
+      //TODO: Handle error
+      const kmpFile = await worker.saveFile(file.name, file);
+      downloadURL = createURL(kmpFile);
     }
   };
 
@@ -51,25 +53,15 @@
     onDraggedOver = false;
   };
 
-  const handleChange = (event: Event) => {
+  const handleChange = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
-        setFile(file);
+        //TODO: Handle error
+        const kmpFile = await worker.saveFile(file.name, file);
+        downloadURL = createURL(kmpFile);
       }
     }
-  };
-
-  const saveToIndexedDB = (name: string, file: File) => {
-    const worker = new Worker("worker.js");
-    worker.postMessage({ name, file });
-    worker.onmessage = (event: MessageEvent) => {
-      const kmpFile = event.data as ArrayBuffer;
-      const blob = new Blob([kmpFile], {type: "application/octet-stream"})
-      downloadURL = URL.createObjectURL(blob)
-
-      worker.terminate();
-    };
   };
 </script>
 

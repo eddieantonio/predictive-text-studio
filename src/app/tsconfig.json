@@ -1,11 +1,17 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "include": [
+    "../common/**/*",
     "**/*"
   ],
   "compilerOptions": {
     "importHelpers": true,
     "strict": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@common/*": ["../common/*"],
+      "*": ["node_modules/*", "types/*"]
+    }
   }
 }

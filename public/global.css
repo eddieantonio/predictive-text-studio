@@ -7,11 +7,20 @@
   --orange: #f18407;
   --orange-light: #fbc88f;
   --gray: #888888;
+  --gray-hover: #c5c5c5;
   --gray-light: #d6d6d6;
+  --gray-dark: #454545;
+  --lite-white: #f1f1f1;
+  --white: #ffffff;
+  --primary-blue: #0099ff;
+  --dark-blue: #0876c0;
+
+  --default-text-color: #000;
 
   /* Font stack */
   /* Custom fonts downloaded from Google Fonts -- see public/index.html */
   --main-font: "Cabin";
+  --secondary-font: "Roboto";
   --mono-font: "Roboto Mono";
 }
 
@@ -25,4 +34,76 @@ h1, h2, h3, h4, h5, h6 {
 
 pre, code, samp {
   font-family: var(--mono-font), monospace;
+}
+
+/**
+ * .button Block
+ *
+ * Can be applied to either a <button> or <a> element.
+ */
+.button {
+  display: inline-block;
+  margin: 0 .625em;
+  padding: .625rem 1.25rem; /* button--medium size */
+  border: 1px solid transparent;
+  border-radius: .625rem;
+
+  font: bold 1em var(--main-font), sans-serif;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  color: var(--default-text-color);
+  background-color: var(--lite-white); /* button--grey */
+
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
+
+/* make <a> .button have a focus ring like <button> elements. */
+a.button:focus {
+  outline: .5rem auto var(--primary-blue);
+  outline-color: -webkit-focus-ring-color;
+}
+
+.button--grey:hover {
+  background-color: var(--gray-hover);
+}
+
+.button--grey.button--outline {
+  border-color: var(--gray-hover);
+  background-color: var(--white);
+}
+
+.button--blue,
+.button--primary {
+  background-color: var(--primary-blue);
+  color: var(--white);
+}
+
+.button--blue:hover,
+.button--primary:hover {
+  background-color: var(--dark-blue);
+}
+
+.button--blue.button--outline,
+.button--primary.button--outline {
+  border-color: var(--primary-blue);
+  background-color: var(--white);
+  color: var(--primary-blue);
+}
+
+.button--outline:hover {
+  background-color: var(--lite-white);
+}
+
+.button--shadow {
+  box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.15);
+}
+
+.button--small {
+  padding: .3125rem .625rem;
+}
+
+.button--large {
+  padding: .625rem 3.75rem;
 }
