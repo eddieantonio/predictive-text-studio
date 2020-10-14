@@ -72,10 +72,11 @@
     align-items: center;
     justify-content: center;
     padding: 5%;
-    width: 20%;
     min-width: 200px;
     border: 3px dashed var(--gray-light);
     border-radius: 5px;
+
+    line-height: 1.2;
   }
 
   .drag-over {
@@ -87,15 +88,9 @@
     display: none;
   }
 
-  span {
-    font-weight: bold;
-    color: var(--gray);
-  }
-
   .upload-btn {
     margin: 0 auto;
-    color: var(--blue);
-    font-weight: bold;
+    color: var(--primary-blue);
   }
 
   .upload-btn:hover {
