@@ -1,34 +1,47 @@
 <script lang="ts">
   import worker from "../spawn-worker";
-
+  import DownloadKMP from "./DownloadKMP.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
-  let downloadUrl = "";
+  let downloadURL = "";
 
-  const handleDrop = (event: DragEvent) => {
+  function fileFromDataTransferItem(items: DataTransferItemList): File[] {
+    const fileList: File[] = [];
+    for (let item of items) {
+      // If dropped items aren't files, reject them
+      if (item.kind === "file") {
+        const file = item.getAsFile();
+        if (file !== null) {
+          fileList.push(file);
+        }
+      }
+    }
+    return fileList;
+  }
+
+  function createURL(kmpFile: ArrayBuffer): string {
+    const blob = new Blob([kmpFile], { type: "application/octet-stream" });
+    return URL.createObjectURL(blob);
+  }
+
+  const handleDrop = async (event: DragEvent) => {
     onDraggedOver = false;
+    let fileList: File[] = [];
 
     if (event.dataTransfer == null) {
       return;
     } else if (event.dataTransfer.items) {
       // Use DataTransferItemList interface to access the file(s)
-      for (let item of event.dataTransfer.items) {
-        // If dropped items aren't files, reject them
-        if (item.kind === "file") {
-          const file = item.getAsFile();
-          if (file !== null) {
-            //TODO: Handle error
-            worker.saveFile(file.name, file);
-          }
-        }
-      }
+      fileList = fileFromDataTransferItem(event.dataTransfer.items);
     } else {
       // Use DataTransfer interface to access the file(s)
-      for (let file of event.dataTransfer.files) {
-        //TODO: Handle error
-        worker.saveFile(file.name, file);
-      }
+      fileList = Array.from(event.dataTransfer.files);
+    }
+    for (let file of fileList) {
+      //TODO: Handle error
+      const kmpFile = await worker.saveFile(file.name, file);
+      downloadURL = createURL(kmpFile);
     }
   };
 
@@ -40,12 +53,13 @@
     onDraggedOver = false;
   };
 
-  const handleChange = (event: Event) => {
+  const handleChange = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
         //TODO: Handle error
-        worker.saveFile(file.name, file);
+        const kmpFile = await worker.saveFile(file.name, file);
+        downloadURL = createURL(kmpFile);
       }
     }
   };
@@ -89,19 +103,6 @@
     color: var(--blue);
     padding-bottom: 1em;
   }
-
-  .download-link {
-    display: block;
-    margin-top: 1.5em;
-  }
-
-  .download-link--disabled {
-    color: var(--gray-medium-dark);
-    cursor: not-allowed;
-
-    opacity: 25%;
-    text-decoration: none;
-  }
 </style>
 
 <div
@@ -115,11 +116,5 @@
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
-  <a
-    href={downloadUrl ? downloadUrl : '#'}
-    download="Example.kmp"
-    class="download-link"
-    class:download-link--disabled={downloadUrl == ''}>
-    Download KMP Package
-  </a>
+  <DownloadKMP {downloadURL} />
 </div>
