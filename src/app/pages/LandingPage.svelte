@@ -85,6 +85,15 @@
     font-size: 1.25em;
   }
 
+  .masthead__image {
+    /* giving an explict width and height allows the layout engine to allocate
+     * the right amount of space while the image loads */
+    width: 23.5625rem;
+    height: 18.5rem;
+
+    animation: descend 1s;
+  }
+
   .explanation {
     margin: 2rem;
 
@@ -138,6 +147,13 @@
 
     margin: 1rem auto 2rem;
   }
+
+  @keyframes descend {
+    0% {
+      opacity: 20%;
+      transform: translate3d(0, -100%, 0);
+    }
+  }
 </style>
 
 <svelte:head>
@@ -165,7 +181,7 @@
           to your language
         </p>
       </div>
-      <img class="masthead__img" src="/assets/texting.svg" alt="" role="presentation">
+      <img class="masthead__image" src="/assets/texting.svg" alt="" role="presentation">
     </div>
   </header>
 
