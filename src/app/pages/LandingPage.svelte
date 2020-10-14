@@ -34,7 +34,9 @@
     --wave-height: 322px;
     --masthead-space-top: 3rem;
     --masthead-content-height: 20rem;
-    --masthead-solid-color-height: calc(var(--masthead-space-top) + var(--masthead-content-height));
+    --masthead-solid-color-height: calc(
+      var(--masthead-space-top) + var(--masthead-content-height)
+    );
     --masthead-background-color: #09f;
 
     width: 100vw;
@@ -65,13 +67,22 @@
   }
 
   .masthead__brand {
+    display: block;
+    height: 2rem;
+    margin-bottom: 2rem;
+
+    /* fallback font styles in case the image doesn't load */
     font-weight: bold;
     color: var(--black, #111);
   }
 
-  .masthead__title,
+  .masthead__title {
+    font-size: 2.5em;
+    font-weight: 700;
+  }
+
   .masthead__description {
-    font-weight: 400;
+    font-size: 1.25em;
   }
 
   .explanation {
@@ -141,9 +152,8 @@
     <!-- wrapper div required to do margin: auto; trick -->
     <div class="masthead__content">
       <div class="masthead__copy">
-        <p class="masthead__brand" role="doc-subtitle">Keyman</p>
         <h1 class="masthead__title">
-
+          <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
           Predictive Text Studio
         </h1>
 
