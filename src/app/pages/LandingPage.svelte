@@ -30,11 +30,15 @@
   }
 
   .masthead {
+    /* These hacky variables are here */
     --wave-height: 322px;
+    --masthead-space-top: 3rem;
     --masthead-content-height: 20rem;
+    --masthead-solid-color-height: calc(var(--masthead-space-top) + var(--masthead-content-height));
     --masthead-background-color: #09f;
 
     width: 100vw;
+    padding-top: var(--masthead-space-top);
     padding-bottom: var(--wave-height);
 
     color: var(--white);
@@ -42,10 +46,10 @@
     background-repeat: no-repeat;
     background-image: url(assets/wave.svg),
       linear-gradient(
-        180deg,
-        var(--masthead-background-color) 0%,
-        var(--masthead-background-color) var(--masthead-content-height),
-        rgba(255, 255, 255, 0) var(--masthead-content-height)
+        to bottom,
+        var(--masthead-background-color) 0,
+        var(--masthead-background-color) var(--masthead-solid-color-height),
+        rgba(255, 255, 255, 0) var(--masthead-solid-color-height)
       );
   }
 
@@ -77,17 +81,17 @@
   }
 
   .quick-start {
-    margin: auto;
+    margin: 9rem auto;
     min-width: 20em;
     max-width: var(--quick-start-max-width);
   }
 
   .quick-start__step {
-    margin: 0 0 1rem;
+    margin: 0 0 2rem;
     border: 0;
     padding: 0;
 
-    font-size: 1.25em;
+    font-size: 1.5em;
     line-height: 1.5;
   }
 
@@ -138,7 +142,10 @@
     <div class="masthead__content">
       <div class="masthead__copy">
         <p class="masthead__brand" role="doc-subtitle">Keyman</p>
-        <h1 class="masthead__title">Predictive Text Studio</h1>
+        <h1 class="masthead__title">
+
+          Predictive Text Studio
+        </h1>
 
         <p class="masthead__description">
           Add
