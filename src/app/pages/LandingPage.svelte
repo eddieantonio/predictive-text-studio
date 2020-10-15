@@ -195,7 +195,7 @@
 
   <section id="get-started" class="quick-start">
     <!-- TODO: should not use hard coded URL! -->
-    <form action="/languages">
+    <form action="/languages" data-cy="quick-start">
       <fieldset class="quick-start__step">
         <legend> Step 1: Select your language </legend>
         <BCP47Tag />

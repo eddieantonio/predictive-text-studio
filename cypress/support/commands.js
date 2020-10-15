@@ -23,3 +23,17 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+//
+Cypress.Commands.add("allowUnlimitedDownloadsToFolder", (folderName) => {
+  // Allow downloads in Chromium-based browsers without prompts:
+  // Adapted from: https://github.com/cypress-io/cypress-example-recipes/blob/0b2ded6d7f099bb6e9e637fb45b1560879424bd5/examples/testing-dom__download/cypress/integration/spec.js#L12-L23
+  if (Cypress.browser.name !== "firefox") {
+    cy.wrap(
+      Cypress.automation("remote:debugger:protocol", {
+        command: "Page.setDownloadBehavior",
+        params: { behavior: "allow", downloadPath: folderName },
+      }),
+      { log: false }
+    );
+  }
+});
