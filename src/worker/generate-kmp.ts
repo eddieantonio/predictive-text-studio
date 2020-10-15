@@ -14,19 +14,17 @@ import {
  * @param langName
  * @param bcp47Tag
  * @param sources
- * @param modelId
+ * @param modelID
  */
 export async function generateKmp(
   langName: string,
   bcp47Tag: string,
   sources: WordListFromArray[],
-  modelId: string
+  modelID: string
 ): Promise<ArrayBuffer> {
   const kmpJsonFile = generateKmpJson({
     languages: [{ name: langName, id: bcp47Tag }],
-    // TODO: change generateKmpJson() to accept a modelID argument instead of splitting it here:
-    authorID: modelId.split(".")[0],
-    modelTag: modelId.split(".")[2],
+    modelID: modelID,
   });
   const modelFile = compileModelFromLexicalModelSource({
     format: "trie-1.0",
@@ -34,7 +32,7 @@ export async function generateKmp(
   });
 
   const kmpFile = createZipWithFiles({
-    [`${modelId}.model.js`]: modelFile,
+    [`${modelID}.model.js`]: modelFile,
     "kmp.json": kmpJsonFile,
   });
   return kmpFile;

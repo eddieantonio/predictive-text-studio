@@ -64,7 +64,8 @@ export function generateKmpJson(options: Readonly<RelevantKmpOptions>): string {
   const modelTag = options.modelTag || primaryLanguageISO639;
 
   const authorID = options.authorID || generateAuthorID(options.authorName);
-  const modelID = `${authorID}.${primaryLanguageISO639}.${modelTag}`;
+  const modelID =
+    options.modelID || `${authorID}.${primaryLanguageISO639}.${modelTag}`;
   const modelFilename = `${modelID}.model.js`;
 
   const currentYear = new Date().getFullYear();
