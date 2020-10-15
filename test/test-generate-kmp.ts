@@ -44,8 +44,7 @@ test("The modelID should determines the filename of the model.js file in kmp arc
     const data = await kmpFile.async("string");
     const content = JSON.parse(data);
     t.assert(content.files[0].name == `${modelID2}.model.js`);
-  }
-  else {
+  } else {
     t.fail("could not load kmp.json from KMP archive");
   }
 });
