@@ -2,9 +2,13 @@ import "cypress-file-upload";
 
 const path = require("path");
 
-const downloadFolder = "cypress/downloads";
-
 describe("Upload from the the landing page", function () {
+  let downloadFolder;
+
+  before(() => {
+    downloadFolder = Cypress.env("downloadFolder");
+  });
+
   beforeEach(() => {
     cy.task("clearDownloads");
 
@@ -24,6 +28,7 @@ describe("Upload from the the landing page", function () {
   it("should find a button to press to upload a file", function () {
     cy.visit("/");
 
+    console.log(downloadFolder);
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
     cy.get("[data-cy=quick-start]")
