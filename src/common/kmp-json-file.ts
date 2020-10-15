@@ -37,6 +37,8 @@ export interface RelevantKmpOptions {
   version?: string;
   /**
    * The model Id.
+   * Keyman automatically generates a model ID, given all the information already filled out.
+   * User can also provide a model ID.
    */
   modelID?: string;
 }
