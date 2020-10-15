@@ -3,7 +3,6 @@ import { generateKmp } from "@worker/generate-kmp";
 
 import test from "ava";
 import JSZip = require("jszip");
-import { createSandbox } from "sinon";
 
 const langName = "English";
 const bcp47Tag = "en";
@@ -34,17 +33,17 @@ const modelID2 = "national_research_council_canada.str.sencoten";
 test("The modelID should determines the filename of the model.js file in kmp archive", async (t) => {
   const kmp = await generateKmp(langName, bcp47Tag, sources, modelID2);
   const new_zip = new JSZip();
-  const zip = await new_zip.loadAsync(kmp); 
+  const zip = await new_zip.loadAsync(kmp);
   const kmpFile = zip.file("kmp.json");
   const modelFile = zip.file(modelID2 + ".model.js");
 
   t.assert(kmpFile != null);
   t.assert(modelFile != null);
-  
+
   if (kmpFile) {
     await kmpFile.async("string").then(function success(data) {
       const content = JSON.parse(data);
-      t.assert(content.files[0].name == (modelID2 + ".model.js"));
+      t.assert(content.files[0].name == modelID2 + ".model.js");
     });
   }
-})
+});
