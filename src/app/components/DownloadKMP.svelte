@@ -21,6 +21,8 @@
   href={downloadURL ? downloadURL : '#'}
   download="Example.kmp"
   class="download-link"
-  class:download-link--disabled={downloadURL == ''}>
+  class:download-link--disabled={downloadURL == ''}
+  data-cy="download-kmp"
+  data-download-state={downloadURL ? 'ready' : 'disabled'}>
   Download KMP Package
 </a>

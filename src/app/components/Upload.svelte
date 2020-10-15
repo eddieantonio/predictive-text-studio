@@ -115,6 +115,10 @@
   <span>Drag and drop here</span>
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
-  <input id={UPLOAD_INPUT_ID} type="file" on:change={handleChange} />
+  <input
+    id={UPLOAD_INPUT_ID}
+    type="file"
+    on:change={handleChange}
+    data-cy="upload-spreadsheet" />
   <DownloadKMP {downloadURL} />
 </div>
