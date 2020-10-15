@@ -15,7 +15,6 @@ export interface RelevantKmpOptions {
    * Model "unique" tag. If unset, the BPC-47 language subtag is used.
    */
   modelTag?: string;
-
   /**
    * The author's name or the organization they represent.
    */
@@ -32,14 +31,12 @@ export interface RelevantKmpOptions {
    * The model's copyright string.
    */
   copyright?: string;
-
   /**
    * The model version. The first released version **MUST** be 1.0.0.
    */
   version?: string;
   /**
    * The model Id.
-   * keyman will create a model Id for every models, derived from "organization, name of language, modelname"
    */
   modelID?: string;
 }

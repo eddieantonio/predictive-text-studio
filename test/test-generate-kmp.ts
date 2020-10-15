@@ -3,6 +3,7 @@ import { generateKmp } from "@worker/generate-kmp";
 
 import test from "ava";
 import JSZip = require("jszip");
+import { createSandbox } from "sinon";
 
 const langName = "English";
 const bcp47Tag = "en";
@@ -22,15 +23,28 @@ test("it should generate a kmp file", async (t) => {
   const new_zip = new JSZip();
   const zip = await new_zip.loadAsync(kmp);
   const isKmpExist = zip.file("kmp.json");
-  const isModelExist = zip.file("nrc.en.mtnt.model.js");
+  const isModelExist = zip.file(modelID + ".model.js");
 
   t.assert(isKmpExist != null);
   t.assert(isModelExist != null);
+});
 
-  //The modelID parameter determines the filename of the model.js file in the .kmp archive
-  if (isKmpExist) {
-    isKmpExist.async("string").then(function (data) {
-      t.assert(data.includes(modelID) == true);
+const modelID2 = "national_research_council_canada.str.sencoten";
+
+test("The modelID should determines the filename of the model.js file in kmp archive", async (t) => {
+  const kmp = await generateKmp(langName, bcp47Tag, sources, modelID2);
+  const new_zip = new JSZip();
+  const zip = await new_zip.loadAsync(kmp); 
+  const kmpFile = zip.file("kmp.json");
+  const modelFile = zip.file(modelID2 + ".model.js");
+
+  t.assert(kmpFile != null);
+  t.assert(modelFile != null);
+  
+  if (kmpFile) {
+    await kmpFile.async("string").then(function success(data) {
+      const content = JSON.parse(data);
+      t.assert(content.files[0].name == (modelID2 + ".model.js"));
     });
   }
-});
+})
