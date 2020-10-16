@@ -1,3 +1,4 @@
+import { KeymanApi } from "./keyman/keyman-api.service";
 import { readExcel } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import {
@@ -11,8 +12,9 @@ export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
   private storage: Storage;
 
-  constructor(storage = new Storage()) {
+  constructor(storage = new Storage(), private keymanApi = new KeymanApi()) {
     this.storage = storage;
+    this.hitAPI();
   }
 
   async saveFile(name: string, file: File): Promise<ArrayBuffer> {
@@ -34,5 +36,13 @@ export class PredictiveTextStudioWorkerImpl
       });
       return code;
     }
+  }
+
+  async hitAPI() {
+    await this.keymanApi.getKeyboard().then((aa) => {
+      console.log(aa);
+    });
+    // const a = this.keymanLanguage.getLanguages();
+    // console.log(a);
   }
 }
