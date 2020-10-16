@@ -1,35 +1,23 @@
-import { openDB, DBSchema, IDBPDatabase } from "idb";
-interface KeymanDB extends DBSchema {
-  "favourite-number": {
-    key: string;
-    value: string;
-  };
-}
+import { openDB, IDBPDatabase } from "idb";
+import { KeymanDB } from "./keyman.modal";
+
 export class KeymanStorage {
-  storeName = "keymanStore";
+  /**
+   * IndexedDB name
+   */
+  dbName = "keymanDB";
   db: Promise<IDBPDatabase<KeymanDB>>;
+
   constructor() {
-    this.db = openDB<KeymanDB>("db1", 1, {
+    // Initialize IndexedDB
+    this.db = openDB<KeymanDB>(this.dbName, 1, {
       upgrade(db) {
-        db.createObjectStore("favourite-number");
+        db.createObjectStore("keymanLanguages");
       },
     });
   }
-  async addData() {
-    (await this.db).add("favourite-number", "a", "a");
+
+  async addLanguageData(bcp47: string, language: string): Promise<void> {
+    (await this.db).add("keymanLanguages", language, bcp47);
   }
 }
-// export function demo1www() {
-//   openDB("db1", 1, {
-//     upgrade(db) {
-//       db.createObjectStore("store1");
-//       db.createObjectStore("store2");
-//     },
-//   });
-//   openDB("db2", 1, {
-//     upgrade(db) {
-//       db.createObjectStore("store3", { keyPath: "id" });
-//       db.createObjectStore("store4", { autoIncrement: true });
-//     },
-//   });
-// }

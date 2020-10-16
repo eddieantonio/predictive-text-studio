@@ -10,4 +10,8 @@ export interface PredictiveTextStudioWorker {
    * Compile the lexical model using files in the IndexedDB
    */
   compileModel(): Promise<string>;
+  /**
+   * Fetch languages data from keyman api and save into IndexedDB
+   */
+  getLanguageData(): Promise<void>;
 }
