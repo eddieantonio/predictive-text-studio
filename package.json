@@ -57,6 +57,7 @@
     "comlink": "^4.3.0",
     "dexie": "^3.0.2",
     "exceljs": "~3.5.0",
+    "idb": "^5.0.7",
     "jszip": "^3.5.0",
     "svelte-routing": "^1.4.2",
     "tslib": "^2.0.1"

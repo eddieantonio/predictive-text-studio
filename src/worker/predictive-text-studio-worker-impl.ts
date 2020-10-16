@@ -1,3 +1,4 @@
+import { KeymanStorage } from "./keyman/keyman-storage";
 import { KeymanApi } from "./keyman/keyman-api.service";
 import { readExcel } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
@@ -7,14 +8,22 @@ import {
 } from "@predictive-text-studio/lexical-model-compiler";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
-
+import { openDB } from "idb";
 export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
   private storage: Storage;
+  private indexDbs: any;
 
-  constructor(storage = new Storage(), private keymanApi = new KeymanApi()) {
+  constructor(
+    storage = new Storage(),
+    private keymanApi = new KeymanApi(),
+    private keymanStorage = new KeymanStorage()
+  ) {
     this.storage = storage;
     this.hitAPI();
+    this.keymanStorage;
+    this.keymanStorage.addData();
+    //addToStore1("hello bye", "world");
   }
 
   async saveFile(name: string, file: File): Promise<ArrayBuffer> {
@@ -41,8 +50,7 @@ export class PredictiveTextStudioWorkerImpl
   async hitAPI() {
     await this.keymanApi.getKeyboard().then((aa) => {
       console.log(aa);
+      //addToStore1("hello", "testing");
     });
-    // const a = this.keymanLanguage.getLanguages();
-    // console.log(a);
   }
 }
