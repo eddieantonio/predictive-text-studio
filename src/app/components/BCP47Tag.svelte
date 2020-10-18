@@ -9,12 +9,11 @@
   $: schema = bcp47Parser.parse(bcp47Tag);
   $: invalidTag = bcp47Tag !== "" && schema.language === null;
   $: {
-  if (!invalidTag) {
-    console.log("has valid tag in bcp47Tag", bcp47Tag);
-    worker.updateBCP47Tag(bcp47Tag);
+    if (!invalidTag) {
+      console.log("has valid tag in bcp47Tag", bcp47Tag);
+      worker.updateBCP47Tag(bcp47Tag);
+    }
   }
-}
-
 </script>
 
 <style>

@@ -37,6 +37,6 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   updateBCP47Tag(bcp47Tag: string): Promise<void> {
-   return this.storage.updateBCP47Tag(bcp47Tag);
+    return this.storage.updateBCP47Tag(bcp47Tag);
   }
 }

@@ -59,7 +59,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * | bcp47Tag         |
        * +------------------+
        */
-      packageInfo: "++id, bcp47Tag"
+      packageInfo: "++id, bcp47Tag",
     });
     this.files = this.table("files");
     this.packageInfo = this.table("packageInfo");
@@ -92,12 +92,12 @@ export default class Storage {
   }
   /**
    * Update bcp47 tag to database
-   * @param bcp47Tag 
+   * @param bcp47Tag
    */
   updateBCP47Tag(bcp47Tag: string): Promise<void> {
     return this.db.transaction("readwrite", this.db.packageInfo, async () => {
-      await this.db.packageInfo.put({bcp47Tag, id: 0});
-    })
+      await this.db.packageInfo.put({ bcp47Tag, id: 0 });
+    });
   }
   /**
    * Retrieves packageInfo in the database
