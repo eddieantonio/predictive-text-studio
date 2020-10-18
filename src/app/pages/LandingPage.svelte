@@ -31,9 +31,9 @@
 
   .masthead {
     /* These hacky variables are here */
-    --wave-height: 322px;
+    --wave-height: 232px;
     --masthead-space-top: 3rem;
-    --masthead-content-height: 20rem;
+    --masthead-content-height: 14rem;
     --masthead-solid-color-height: calc(
       var(--masthead-space-top) + var(--masthead-content-height)
     );
@@ -98,6 +98,19 @@
     margin: 2rem;
 
     text-align: center;
+  }
+
+  .workflow {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+    font-weight: bold;
+  }
+
+  .workflow__arrow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .quick-start {
@@ -186,10 +199,28 @@
   </header>
 
   <section class="explanation" id="explanation">
-    <!-- TODO: figure that explains the flow -->
+    <div class="workflow">
+      <img src="assets/workflow-spreadsheet.svg" alt="" role="presentation" />
+
+      <div class="workflow__arrow">
+        Predictive Text Studio
+        <img
+          src="assets/workflow-arrow.svg"
+          alt=""
+          role="presentation"
+          class="block" />
+      </div>
+
+      <img src="assets/workflow-keyboard.svg" alt="" role="presentation" />
+    </div>
     <a href="#get-started">
-      <span class="button button--primary button--shadow button--large">Get started</span>
-      <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
+      <span class="button button--primary button--shadow button--large">Get
+        started</span>
+      <img
+        src="assets/down-arrow.svg"
+        alt=""
+        role="presentation"
+        class="block" />
     </a>
   </section>
 
