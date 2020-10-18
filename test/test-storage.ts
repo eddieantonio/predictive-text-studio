@@ -88,3 +88,24 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
     return a.name > b.name ? 1 : -1;
   }
 });
+
+test("update the bcp47 tag to database", async (t) => {
+  const { db, storage } = t.context;
+  // At first, nothing in the DB
+  t.is(await db.packageInfo.count(), 0);
+  await storage.updateBCP47Tag("en");
+  // Now there's one file in the DB!
+  t.is(await db.packageInfo.count(), 1);
+});
+
+test("retrieve bcp47tag from the database", async (t) => {
+  const { storage } = t.context;
+  await storage.updateBCP47Tag("en");
+  const maybePackageInfo = await storage.fetchPackageInfo();
+  if (maybePackageInfo != undefined) {
+    const bcp47Tag = maybePackageInfo.bcp47Tag;
+    t.is(bcp47Tag, "en");
+  } else {
+    t.fail("packageInfo is undefined.");
+  }
+});
