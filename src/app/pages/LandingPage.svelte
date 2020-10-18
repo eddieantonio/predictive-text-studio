@@ -31,9 +31,9 @@
 
   .masthead {
     /* These hacky variables are here */
-    --wave-height: 322px;
-    --masthead-space-top: 3rem;
-    --masthead-content-height: 20rem;
+    --wave-height: 222px;
+    --masthead-space-top: 1rem;
+    --masthead-content-height: 13rem;
     --masthead-solid-color-height: calc(
       var(--masthead-space-top) + var(--masthead-content-height)
     );
