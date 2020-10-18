@@ -31,15 +31,16 @@
 
   .masthead {
     /* These hacky variables are here */
-    --wave-height: 232px;
+    --wave-height: 322px;
     --masthead-space-top: 3rem;
-    --masthead-content-height: 14rem;
+    --masthead-content-height: 20rem;
     --masthead-solid-color-height: calc(
       var(--masthead-space-top) + var(--masthead-content-height)
     );
     --masthead-background-color: #09f;
 
     width: 100vw;
+    max-width: 100%;
     padding-top: var(--masthead-space-top);
     padding-bottom: var(--wave-height);
 
@@ -59,6 +60,7 @@
     display: flex;
     width: 80vw;
     max-width: var(--body-max-width);
+    min-width: 600px;
     margin: auto;
 
     flex-flow: row nowrap;
@@ -100,17 +102,28 @@
     text-align: center;
   }
 
-  .workflow {
+  .explanation__workflow {
     display: flex;
     justify-content: center;
     margin-bottom: 2em;
     font-weight: bold;
   }
 
-  .workflow__arrow {
+  .explanation__workflow__transform {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 10vw;
+    min-width: 180px;
+  }
+
+  .explanation__workflow__transform__arrow {
+    padding-top: 20px;
+  }
+
+  .explanation__workflow__image {
+    width: 16vw;
+    min-width: 200px;
   }
 
   .quick-start {
@@ -199,19 +212,27 @@
   </header>
 
   <section class="explanation" id="explanation">
-    <div class="workflow">
-      <img src="assets/workflow-spreadsheet.svg" alt="" role="presentation" />
+    <div class="explanation__workflow">
+      <img
+        src="assets/workflow-spreadsheet.svg"
+        alt=""
+        role="presentation"
+        class="explanation__workflow__image" />
 
-      <div class="workflow__arrow">
+      <div class="explanation__workflow__transform">
         Predictive Text Studio
         <img
+          class="explanation__workflow__transform__arrow"
           src="assets/workflow-arrow.svg"
           alt=""
-          role="presentation"
-          class="block" />
+          role="presentation" />
       </div>
 
-      <img src="assets/workflow-keyboard.svg" alt="" role="presentation" />
+      <img
+        src="assets/workflow-keyboard.svg"
+        alt=""
+        role="presentation"
+        class="explanation__workflow__image" />
     </div>
     <a href="#get-started">
       <span class="button button--primary button--shadow button--large">Get
