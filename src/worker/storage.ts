@@ -2,7 +2,7 @@ import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
 
 const DB_NAME = "dictionary_sources";
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 1;
 
 interface StoredFile {
   id?: number;
