@@ -10,7 +10,7 @@ export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
 
   const maybePackageInfo = await storage.fetchPackageInfo();
   if (maybePackageInfo == undefined) {
-    throw new Error("the packageInfo is undefined");
+    throw new Error("Could not fetch the package info; Did you update the package BCP-47 tag?");
   }
 
   //hardcode for now
