@@ -60,7 +60,7 @@
     display: flex;
     width: 80vw;
     max-width: var(--body-max-width);
-    min-width: 600px;
+    min-width: 37.5rem;
     margin: auto;
 
     flex-flow: row nowrap;
