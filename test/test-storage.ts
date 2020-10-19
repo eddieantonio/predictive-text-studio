@@ -105,7 +105,8 @@ test("retrieve bcp47tag from the database", async (t) => {
   if (maybePackageInfo == undefined) {
       t.fail("packageInfo is undefined.");
   }
-
-  const bcp47Tag = maybePackageInfo.bcp47Tag;
-  t.is(bcp47Tag, "en");
+  else {
+    const bcp47Tag = maybePackageInfo.bcp47Tag;
+    t.is(bcp47Tag, "en");
+  }
 });

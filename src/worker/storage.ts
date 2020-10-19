@@ -53,6 +53,8 @@ export class PredictiveTextStudioDexie extends Dexie {
       files: "++id, name, wordlist",
       /**
        * packageInfo Table Scehma
+       * packageInfor stores the information needed for create the kmp package.
+       * we might also store language name, moded id in the future.
        * +------------------+
        * | id (primary key) |
        * +------------------+
@@ -107,6 +109,10 @@ export default class Storage {
    * Retrieves packageInfo in the database
    */
   fetchPackageInfo(): Promise<StoredPackageInfo | undefined> {
-    return this.db.packageInfo.where(":id").equals(0).first();
+    /**
+     * The key of the ONLY StoredPackageInfo record.
+     */
+    const PACKAGE_ID = 0;
+    return this.db.packageInfo.where(":id").equals(PACKAGE_ID).first();
   }
 }
