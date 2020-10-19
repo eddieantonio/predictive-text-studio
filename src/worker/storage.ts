@@ -2,7 +2,11 @@ import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
 
 const DB_NAME = "dictionary_sources";
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
+/**
+ * The key of the ONLY StoredPackageInfo record.
+ */
+const PACKAGE_ID = 0;
 
 interface StoredFile {
   id?: number;
