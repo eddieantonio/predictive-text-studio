@@ -6,8 +6,10 @@
 
   let bcp47Tag = "";
   let validTag = false;
+  let displayEnterBCP47Tag = true;
   $: schema = bcp47Parser.parse(bcp47Tag);
   $: validTag = bcp47Tag.length > 0 && schema.language != null;
+  $: displayEnterBCP47Tag = bcp47Tag == "" || validTag;
   $: {
     if (validTag) {
       worker.updateBCP47Tag(bcp47Tag);
@@ -23,5 +25,5 @@
 
 <input id={TAG_INPUT_ID} bind:value={bcp47Tag} />
 <label
-  class:error={validTag}
-  for={TAG_INPUT_ID}>{validTag ? 'Invalid tag' : 'Enter BCP 47 tag'}</label>
+  class:error={!displayEnterBCP47Tag}
+  for={TAG_INPUT_ID}>{displayEnterBCP47Tag ? 'Enter BCP 47 tag' : 'Invalid tag'}</label>
