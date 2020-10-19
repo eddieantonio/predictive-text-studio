@@ -39,7 +39,7 @@ describe("Upload from the the landing page", function () {
 
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
-      .click();
+      .click({force: true});
 
     cy.readFile(downloadedFilePath);
   });
