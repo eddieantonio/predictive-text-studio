@@ -16,6 +16,9 @@ describe("Upload from the the landing page", function () {
 
   it("should find a button to press to upload a file", function () {
     cy.visit("/");
+    // we need a valid bcp47Tag to update the packageInfo
+    cy.contains("label", "Enter BCP 47 tag").scrollIntoView();
+    cy.get("#tag-input").type("zh", { force: true });
 
     console.log(downloadFolder);
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
@@ -39,7 +42,7 @@ describe("Upload from the the landing page", function () {
 
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
-      .click();
+      .click({ force: true });
 
     cy.readFile(downloadedFilePath);
   });

@@ -2,7 +2,11 @@ import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
 
 const DB_NAME = "dictionary_sources";
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
+/**
+ * The key of the ONLY StoredPackageInfo record.
+ */
+const PACKAGE_ID = 0;
 
 interface StoredFile {
   id?: number;
@@ -25,8 +29,17 @@ export interface StoredWordList {
   wordlist: WordList;
 }
 
+export interface StoredPackageInfo {
+  id?: number;
+  /**
+   * the valid bcp47Tag for the language
+   */
+  bcp47Tag: string;
+}
+
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
+  packageInfo: Dexie.Table<StoredPackageInfo, number>;
 
   constructor(options?: DexieOptions) {
     super(DB_NAME, options);
@@ -42,8 +55,20 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        */
       files: "++id, name, wordlist",
+      /**
+       * packageInfo Table Scehma
+       * packageInfo stores the information needed for creating  the KMP package.
+       * we might also store language name, model ID in the future.
+       * +------------------+
+       * | id (primary key) |
+       * +------------------+
+       * | bcp47Tag         |
+       * +------------------+
+       */
+      packageInfo: "++id, bcp47Tag",
     });
     this.files = this.table("files");
+    this.packageInfo = this.table("packageInfo");
   }
 }
 
@@ -70,5 +95,20 @@ export default class Storage {
    */
   fetchAllFiles(): Promise<StoredWordList[]> {
     return this.db.files.toArray();
+  }
+  /**
+   * Update bcp47 tag to database
+   * @param bcp47Tag
+   */
+  updateBCP47Tag(bcp47Tag: string): Promise<void> {
+    return this.db.transaction("readwrite", this.db.packageInfo, async () => {
+      await this.db.packageInfo.put({ bcp47Tag, id: PACKAGE_ID });
+    });
+  }
+  /**
+   * Retrieves packageInfo in the database
+   */
+  fetchPackageInfo(): Promise<StoredPackageInfo | undefined> {
+    return this.db.packageInfo.where(":id").equals(PACKAGE_ID).first();
   }
 }
