@@ -5,12 +5,11 @@
   const TAG_INPUT_ID = "tag-input";
 
   let bcp47Tag = "";
-  let invalidTag = true;
+  let validTag = false;
   $: schema = bcp47Parser.parse(bcp47Tag);
-  $: invalidTag = bcp47Tag !== "" && schema.language === null;
+  $: validTag = bcp47Tag !== "" && schema.language === null;
   $: {
-    if (!invalidTag) {
-      console.log("has valid tag in bcp47Tag", bcp47Tag);
+    if (validTag) {
       worker.updateBCP47Tag(bcp47Tag);
     }
   }
@@ -24,5 +23,5 @@
 
 <input id={TAG_INPUT_ID} bind:value={bcp47Tag} />
 <label
-  class:error={invalidTag}
-  for={TAG_INPUT_ID}>{invalidTag ? 'Invalid tag' : 'Enter BCP 47 tag'}</label>
+  class:error={validTag}
+  for={TAG_INPUT_ID}>{validTag ? 'Invalid tag' : 'Enter BCP 47 tag'}</label>
