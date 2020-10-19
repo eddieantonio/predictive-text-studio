@@ -7,7 +7,7 @@
   let bcp47Tag = "";
   let validTag = false;
   $: schema = bcp47Parser.parse(bcp47Tag);
-  $: validTag = bcp47Tag !== "" && schema.language === null;
+  $: validTag = bcp47Tag.length > 0 && schema.language != null;
   $: {
     if (validTag) {
       worker.updateBCP47Tag(bcp47Tag);
