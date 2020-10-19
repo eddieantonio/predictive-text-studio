@@ -17,7 +17,7 @@ export class PredictiveTextStudioWorkerImpl
 
   async saveFile(name: string, file: File): Promise<ArrayBuffer> {
     const wordlist = await readExcel(await file.arrayBuffer());
-    this.storage.saveFile(name, wordlist);
+    await this.storage.saveFile(name, wordlist);
     return await linkStorageToKmp(this.storage);
   }
 
