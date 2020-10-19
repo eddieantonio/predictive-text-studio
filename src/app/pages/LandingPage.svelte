@@ -212,11 +212,10 @@
   </header>
 
   <section class="explanation" id="explanation">
-    <div class="explanation__workflow">
+    <figure class="explanation__workflow">
       <img
         src="assets/workflow-spreadsheet.svg"
-        alt=""
-        role="presentation"
+        alt="a spreadsheet of words in your language"
         class="explanation__workflow__image" />
 
       <div class="explanation__workflow__transform">
@@ -230,10 +229,9 @@
 
       <img
         src="assets/workflow-keyboard.svg"
-        alt=""
-        role="presentation"
+        alt="your words appear in the predictive text banner on your phone's keyboard"
         class="explanation__workflow__image" />
-    </div>
+    </figure>
     <a href="#get-started">
       <span class="button button--primary button--shadow button--large">Get
         started</span>
