@@ -53,8 +53,8 @@ export class PredictiveTextStudioDexie extends Dexie {
       files: "++id, name, wordlist",
       /**
        * packageInfo Table Scehma
-       * packageInfor stores the information needed for create the kmp package.
-       * we might also store language name, moded id in the future.
+       * packageInfo stores the information needed for creating  the KMP package.
+       * we might also store language name, model ID in the future.
        * +------------------+
        * | id (primary key) |
        * +------------------+
