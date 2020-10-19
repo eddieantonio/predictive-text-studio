@@ -31,15 +31,16 @@
 
   .masthead {
     /* These hacky variables are here */
-    --wave-height: 322px;
-    --masthead-space-top: 3rem;
-    --masthead-content-height: 20rem;
+    --wave-height: 222px;
+    --masthead-space-top: 1rem;
+    --masthead-content-height: 13rem;
     --masthead-solid-color-height: calc(
       var(--masthead-space-top) + var(--masthead-content-height)
     );
     --masthead-background-color: #09f;
 
     width: 100vw;
+    max-width: 100%;
     padding-top: var(--masthead-space-top);
     padding-bottom: var(--wave-height);
 
@@ -59,6 +60,7 @@
     display: flex;
     width: 80vw;
     max-width: var(--body-max-width);
+    min-width: 37.5rem;
     margin: auto;
 
     flex-flow: row nowrap;
@@ -98,6 +100,30 @@
     margin: 2rem;
 
     text-align: center;
+  }
+
+  .explanation__workflow {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+    font-weight: bold;
+  }
+
+  .explanation__workflow__transform {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 10vw;
+    min-width: 180px;
+  }
+
+  .explanation__workflow__transform__arrow {
+    padding-top: 20px;
+  }
+
+  .explanation__workflow__image {
+    width: 16vw;
+    min-width: 200px;
   }
 
   .quick-start {
@@ -186,10 +212,34 @@
   </header>
 
   <section class="explanation" id="explanation">
-    <!-- TODO: figure that explains the flow -->
+    <figure class="explanation__workflow">
+      <img
+        src="assets/workflow-spreadsheet.svg"
+        alt="a spreadsheet of words in your language"
+        class="explanation__workflow__image" />
+
+      <div class="explanation__workflow__transform">
+        Predictive Text Studio
+        <img
+          class="explanation__workflow__transform__arrow"
+          src="assets/workflow-arrow.svg"
+          alt=""
+          role="presentation" />
+      </div>
+
+      <img
+        src="assets/workflow-keyboard.svg"
+        alt="your words appear in the predictive text banner on your phone's keyboard"
+        class="explanation__workflow__image" />
+    </figure>
     <a href="#get-started">
-      <span class="button button--primary button--shadow button--large">Get started</span>
-      <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
+      <span class="button button--primary button--shadow button--large">Get
+        started</span>
+      <img
+        src="assets/down-arrow.svg"
+        alt=""
+        role="presentation"
+        class="block" />
     </a>
   </section>
 
