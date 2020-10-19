@@ -103,9 +103,8 @@ test("retrieve bcp47tag from the database", async (t) => {
   await storage.updateBCP47Tag("en");
   const maybePackageInfo = await storage.fetchPackageInfo();
   if (maybePackageInfo == undefined) {
-      t.fail("packageInfo is undefined.");
-  }
-  else {
+    t.fail("packageInfo is undefined.");
+  } else {
     const bcp47Tag = maybePackageInfo.bcp47Tag;
     t.is(bcp47Tag, "en");
   }
