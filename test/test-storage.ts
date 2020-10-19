@@ -94,7 +94,7 @@ test("update the bcp47 tag to database", async (t) => {
   // At first, nothing in the DB
   t.is(await db.packageInfo.count(), 0);
   await storage.updateBCP47Tag("en");
-  // Now there's one file in the DB!
+  // Now there's one package info record in the DB!
   t.is(await db.packageInfo.count(), 1);
 });
 

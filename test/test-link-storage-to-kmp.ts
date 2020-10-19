@@ -10,7 +10,7 @@ test("a function link the storage file to generate the kmp package", async (t) =
     IDBKeyRange,
   });
   const storage = new Storage(db);
-  // make sure the packageInfo is not undefined
+  // make sure the packageInfo is defined
   await storage.updateBCP47Tag("en");
 
   const kmpFile = await linkStorageToKmp(storage);
