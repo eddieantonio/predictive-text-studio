@@ -96,7 +96,7 @@ export default class Storage {
    */
   updateBCP47Tag(bcp47Tag: string): Promise<void> {
     return this.db.transaction("readwrite", this.db.packageInfo, async () => {
-      await this.db.packageInfo.put({ bcp47Tag, id: 0 });
+      await this.db.packageInfo.put({ bcp47Tag, id: PACKAGE_ID });
     });
   }
   /**
