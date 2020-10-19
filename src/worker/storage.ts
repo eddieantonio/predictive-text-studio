@@ -97,10 +97,6 @@ export default class Storage {
    * @param bcp47Tag
    */
   updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    /**
-     * The key of the ONLY StoredPackageInfo record.
-     */
-    const PACKAGE_ID = 0;
     return this.db.transaction("readwrite", this.db.packageInfo, async () => {
       await this.db.packageInfo.put({ bcp47Tag, id: PACKAGE_ID });
     });
@@ -109,10 +105,6 @@ export default class Storage {
    * Retrieves packageInfo in the database
    */
   fetchPackageInfo(): Promise<StoredPackageInfo | undefined> {
-    /**
-     * The key of the ONLY StoredPackageInfo record.
-     */
-    const PACKAGE_ID = 0;
     return this.db.packageInfo.where(":id").equals(PACKAGE_ID).first();
   }
 }
