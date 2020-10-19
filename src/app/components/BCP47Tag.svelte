@@ -25,5 +25,5 @@
 
 <input id={TAG_INPUT_ID} bind:value={bcp47Tag} />
 <label
-  class:error={displayEnterBCP47Tag}
-  for={TAG_INPUT_ID}>{displayEnterBCP47Tag ? 'Invalid tag' : 'Enter BCP 47 tag'}</label>
+  class:error={!displayEnterBCP47Tag}
+  for={TAG_INPUT_ID}>{displayEnterBCP47Tag ? 'Enter BCP 47 tag' : 'Invalid tag'}</label>
