@@ -1,16 +1,18 @@
 {
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts"
   ],
   "compilerOptions": {
     "lib": ["ES5", "ES6", "WebWorker"],
     "strict": true,
+    "types": ["jest"],
     "baseUrl": ".",
     "paths": {
       "@app/*": ["src/app/*"],
       "@worker/*": ["src/worker/*"],
       "@common/*": ["src/common/*"],
       "*": ["node_modules/*", "types/*"]
-    }
+    },
   }
 }
