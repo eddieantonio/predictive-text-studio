@@ -82,19 +82,20 @@ export class PredictiveTextStudioWorkerImpl
     return wordlist.length;
   }
 
+  private _emitPackageCompileStart: () => void = () => {};
+  private _emitPackageCompileError: (err: Error) => void = () => {};
+  private _emitPackageCompileSuccess: (kmp: Blob) => void = () => {};
+
   onPackageCompileStart(callback: () => void): void {
-    // TODO
-    callback();
+    this._emitPackageCompileStart = callback;
   }
 
-  onPackageCompileError(error: Error, callback: (err: Error) => void): void {
-    // TODO
-    callback(error);
+  onPackageCompileError(callback: (err: Error) => void): void {
+    this._emitPackageCompileError = callback;
   }
 
-  onPackageCompileSuccess(kmp: Blob, callback: (kmp: Blob) => void): void {
-    // TODO
-    callback(kmp);
+  onPackageCompileSuccess(callback: (kmp: Blob) => void): void {
+    this._emitPackageCompileSuccess = callback;
   }
 
   setProjectData(metadata: Readonly<RelevantKmpOptions>): Promise<void> {
