@@ -59,10 +59,7 @@ export class PredictiveTextStudioWorkerImpl
 
     const storedFiles = await this.storage.fetchAllFiles();
     if (storedFiles.length < 1) {
-      const error = new Error("Cannot find any file in the IndexedDB");
-      this.onPackageCompileError(error, (error: Error): void => {
-        console.log(error);
-      });
+      this._emitPackageCompileError(new Error("Cannot find any files in the IndexedDB"));
     } else {
       const kmpFile = await linkStorageToKmp(this.storage);
       const blob = new Blob([kmpFile], { type: "application/octet-stream" });
