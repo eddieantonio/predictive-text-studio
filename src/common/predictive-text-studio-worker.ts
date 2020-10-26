@@ -19,10 +19,6 @@ export interface PredictiveTextStudioWorker {
    */
   updateBCP47Tag(bcp47Tag: string): Promise<void>;
   /**
-   * Generate a KMP file and return a blob of it
-   */
-  generateKMPFromStorage(): Promise<Blob | void>;
-  /**
    * Take a dictionary source and store it
    * @param name
    * @param contents
@@ -43,7 +39,7 @@ export interface PredictiveTextStudioWorker {
    * Register a callback that is called when the KMP package has succesfully compiled
    * @param callback
    */
-  onPackageCompileSuccess(callback: (kmp: Blob) => void): void;
+  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void;
   /**
    * Sets optional and required metadata such as BCP-47, language name, author name, copyright string, etc.
    * @param metadata

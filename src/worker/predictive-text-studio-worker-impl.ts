@@ -16,7 +16,11 @@ const defaultVersion = "1.0.0";
 /**
  * The default copyright.
  */
-const defaultCopyright = "No copyright";
+const defaultCopyright = "";
+
+function doNothing() {
+  // intentionally empty
+}
 
 export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
@@ -51,19 +55,16 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.updateBCP47Tag(bcp47Tag);
   }
 
-  private async generateKMPFromStorage(): Promise<Blob | void> {
+  private async generateKMPFromStorage(): Promise<void> {
     // TODO: Parse multiple dictionary sources, right now just reading the first file
-    this.onPackageCompileStart((): void => {
-      console.log("Compile starts.");
-    });
+    this._emitPackageCompileStart();
 
     const storedFiles = await this.storage.fetchAllFiles();
     if (storedFiles.length < 1) {
       this._emitPackageCompileError(new Error("Cannot find any files in the IndexedDB"));
     } else {
       const kmpFile = await linkStorageToKmp(this.storage);
-      const blob = new Blob([kmpFile], { type: "application/octet-stream" });
-      this._emitPackageCompileSuccess(blob);
+      this._emitPackageCompileSuccess(kmpFile);
     }
   }
 
@@ -73,12 +74,13 @@ export class PredictiveTextStudioWorkerImpl
   ): Promise<number> {
     const wordlist = await readExcel(await contents.arrayBuffer());
     await this.storage.saveFile(name, wordlist);
+    this.generateKMPFromStorage();
     return wordlist.length;
   }
 
-  private _emitPackageCompileStart: () => void = () => {};
-  private _emitPackageCompileError: (err: Error) => void = () => {};
-  private _emitPackageCompileSuccess: (kmp: Blob) => void = () => {};
+  private _emitPackageCompileStart: () => void = doNothing;
+  private _emitPackageCompileError: (err: Error) => void = doNothing;
+  private _emitPackageCompileSuccess: (kmp: ArrayBuffer) => void = doNothing;
 
   onPackageCompileStart(callback: () => void): void {
     this._emitPackageCompileStart = callback;
@@ -88,13 +90,21 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileError = callback;
   }
 
-  onPackageCompileSuccess(callback: (kmp: Blob) => void): void {
+  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void {
     this._emitPackageCompileSuccess = callback;
   }
 
-  setProjectData(metadata: Readonly<RelevantKmpOptions>): Promise<void> {
-    const langName = metadata.languages[0].name;
-    const bcp47Tag = metadata.languages[0].id;
+  setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): Promise<void> {
+    let langName: string = "";
+    let bcp47Tag: string = "";
+    if (metadata.languages == undefined) {
+      langName = "";
+      bcp47Tag = "";
+    } else {
+      langName = metadata.languages[0].name;
+      bcp47Tag = metadata.languages[0].id;
+    }
+    
     const authorName = metadata.authorName || "UnknownAuthor";
     const modelID = metadata.modelID || `${authorName}.${bcp47Tag}.${langName}`;
     const copyright = metadata.copyright || defaultCopyright;

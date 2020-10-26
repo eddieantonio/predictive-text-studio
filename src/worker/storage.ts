@@ -29,16 +29,6 @@ export interface StoredWordList {
   wordlist: WordList;
 }
 /**
- * The information needed to download a KMP file
- */
-export interface StoredPackageInfo {
-  id?: number;
-  /**
-   * the valid bcp47Tag for the language
-   */
-  bcp47Tag: string;
-}
-/**
  * The information needed to create a KMP file
  */
 export interface StoredProjectData {
@@ -71,7 +61,6 @@ export interface StoredProjectData {
 
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
-  packageInfo: Dexie.Table<StoredPackageInfo, number>;
   projectData: Dexie.Table<StoredProjectData, number>;
 
   constructor(options?: DexieOptions) {
@@ -88,16 +77,6 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        */
       files: "++id, name, wordlist",
-      /**
-       * packageInfo Table Scehma
-       * packageInfo stores the information needed for creating  the KMP package.
-       * +------------------+
-       * | id (primary key) |
-       * +------------------+
-       * | bcp47Tag         |
-       * +------------------+
-       */
-      packageInfo: "++id, bcp47Tag",
       /**
        * projectData Table Scehma
        * projectData stores optional and required metadata such as BCP-47, language name, author name, copyright string, etc.
@@ -121,7 +100,6 @@ export class PredictiveTextStudioDexie extends Dexie {
         "++id, langName, bcp47Tag, authorName, modelID, copyright, version",
     });
     this.files = this.table("files");
-    this.packageInfo = this.table("packageInfo");
     this.projectData = this.table("projectData");
   }
 }
@@ -155,15 +133,17 @@ export default class Storage {
    * @param bcp47Tag
    */
   updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    return this.db.transaction("readwrite", this.db.packageInfo, async () => {
-      await this.db.packageInfo.put({ bcp47Tag, id: PACKAGE_ID });
+    return this.db.transaction("readwrite", this.db.projectData, async () => {
+      const currentData = await this.db.projectData.get({id: PACKAGE_ID}) || {langName: "", bcp47Tag, authorName: "", id: PACKAGE_ID};
+      currentData.bcp47Tag = bcp47Tag;
+      await this.db.projectData.put(currentData);
     });
   }
   /**
    * Retrieves packageInfo in the database
    */
-  fetchPackageInfo(): Promise<StoredPackageInfo | undefined> {
-    return this.db.packageInfo.where(":id").equals(PACKAGE_ID).first();
+  fetchPackageInfo(): Promise<StoredProjectData | undefined> {
+    return this.db.projectData.where(":id").equals(PACKAGE_ID).first();
   }
   /**
    * Update required and some optional metadata to database
