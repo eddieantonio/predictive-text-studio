@@ -51,7 +51,7 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.updateBCP47Tag(bcp47Tag);
   }
 
-  async generateKMPFromStorage(): Promise<Blob | void> {
+  private async generateKMPFromStorage(): Promise<Blob | void> {
     // TODO: Parse multiple dictionary sources, right now just reading the first file
     this.onPackageCompileStart((): void => {
       console.log("Compile starts.");
