@@ -26,7 +26,7 @@ export interface PredictiveTextStudioWorker {
    * Take a dictionary source and store it
    * @param name
    * @param contents
-   * Return how many words were added
+   * @return how many words were added
    */
   addDictionarySourceToProject(name: string, contents: File): Promise<number>;
   /**
