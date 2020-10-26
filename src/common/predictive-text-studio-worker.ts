@@ -38,12 +38,12 @@ export interface PredictiveTextStudioWorker {
    * Register a callbcak that is called if the KMP package compilation fails
    * @param callback
    */
-  onPackageCompileError(error: Error, callback: (err: Error) => void): void;
+  onPackageCompileError(callback: (err: Error) => void): void;
   /**
    * Register a callback that is called when the KMP package has succesfully compiled
    * @param callback
    */
-  onPackageCompileSuccess(kmp: Blob, callback: (kmp: Blob) => void): void;
+  onPackageCompileSuccess(callback: (kmp: Blob) => void): void;
   /**
    * Sets optional and required metadata such as BCP-47, language name, author name, copyright string, etc.
    * @param metadata
