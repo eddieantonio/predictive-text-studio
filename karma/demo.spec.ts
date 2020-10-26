@@ -1,5 +1,3 @@
-//import Storagea from "../src/worker/storage";
-
 function testFetch() {
   return fetch(
     "https://api.keyman.com/search/?q=khmer&_ga=2.135402937.901015410.1603127399-773243877.1602533264"
@@ -17,18 +15,18 @@ function testBlob() {
   }
 }
 
-describe("Testing indexdeb", () => {
-  it("testing", () => {
-    storage = new Storage();
-    storage.saveFile(name, wordlist);
-  });
-});
+// describe("Testing indexdeb", () => {
+//   it("testing", () => {
+//     // storage = new Storage();
+//     // storage.saveFile(name, wordlist);
+//   });
+// });
 
 describe("Testing fetch", () => {
   it("should be able to fetch data from KeymanApi", async () => {
     const test = await testFetch();
     console.log(Object.keys(test));
-    expect(Object.keys(test)).toContain("languages");
+    expect(Object.keys(test)).toEqual(["languages", "keyboards"]);
   });
 });
 

@@ -3,10 +3,10 @@ module.exports = function (config) {
   config.set({
     basePath: "",
     frameworks: ["jasmine"],
-    files: ["karma/*.js"],
+    files: ["karma/*.spec.ts"],
     exclude: [],
     preprocessors: {
-      "**/*.test.ts": ["typescript"],
+      "karma/*.spec.ts": ["typescript"],
     },
     reporters: ["spec", "kjhtml"],
     port: 9876,
