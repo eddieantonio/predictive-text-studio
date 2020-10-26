@@ -63,10 +63,7 @@ export class PredictiveTextStudioWorkerImpl
     } else {
       const kmpFile = await linkStorageToKmp(this.storage);
       const blob = new Blob([kmpFile], { type: "application/octet-stream" });
-      this.onPackageCompileSuccess(blob, (kmp: Blob): void => {
-        console.log("Compile successes.");
-      });
-      return blob;
+      this._emitPackageCompileSuccess(blob);
     }
   }
 
