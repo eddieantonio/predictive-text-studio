@@ -6,6 +6,17 @@ import {
 } from "@predictive-text-studio/lexical-model-compiler";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
+import { RelevantKmpOptions } from "@common/kmp-json-file";
+
+/**
+ * The default model version. 1.0.0 also happens to be the minimum model
+ * version that the Keyman team will publish.
+ */
+const defaultVersion = "1.0.0";
+/**
+ * The default copyright.
+ */
+const defaultCopyright = "No copyright";
 
 export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
@@ -38,5 +49,70 @@ export class PredictiveTextStudioWorkerImpl
 
   updateBCP47Tag(bcp47Tag: string): Promise<void> {
     return this.storage.updateBCP47Tag(bcp47Tag);
+  }
+
+  async generateKMPFromStorage(): Promise<Blob | void> {
+    // TODO: Parse multiple dictionary sources, right now just reading the first file
+    this.onPackageCompileStart((): void => {
+      console.log("Compile starts.");
+    });
+
+    const storedFiles = await this.storage.fetchAllFiles();
+    if (storedFiles.length < 1) {
+      const error = new Error("Cannot find any file in the IndexedDB");
+      this.onPackageCompileError(error, (error: Error): void => {
+        console.log(error);
+      });
+    } else {
+      const kmpFile = await linkStorageToKmp(this.storage);
+      const blob = new Blob([kmpFile], { type: "application/octet-stream" });
+      this.onPackageCompileSuccess(blob, (kmp: Blob): void => {
+        console.log("Compile successes.");
+      });
+      return blob;
+    }
+  }
+
+  async addDictionarySourceToProject(
+    name: string,
+    contents: File
+  ): Promise<number> {
+    const wordlist = await readExcel(await contents.arrayBuffer());
+    await this.storage.saveFile(name, wordlist);
+    return wordlist.length;
+  }
+
+  onPackageCompileStart(callback: () => void): void {
+    // TODO
+    callback();
+  }
+
+  onPackageCompileError(error: Error, callback: (err: Error) => void): void {
+    // TODO
+    callback(error);
+  }
+
+  onPackageCompileSuccess(kmp: Blob, callback: (kmp: Blob) => void): void {
+    // TODO
+    callback(kmp);
+  }
+
+  setProjectData(metadata: Readonly<RelevantKmpOptions>): Promise<void> {
+    const langName = metadata.languages[0].name;
+    const bcp47Tag = metadata.languages[0].id;
+    const authorName = metadata.authorName || "UnknownAuthor";
+    const modelID = metadata.modelID || `${authorName}.${bcp47Tag}.${langName}`;
+    const copyright = metadata.copyright || defaultCopyright;
+    const version = metadata.version || defaultVersion;
+
+    const storedData = {
+      langName: langName,
+      bcp47Tag: bcp47Tag,
+      authorName: authorName,
+      modelID: modelID,
+      copyright: copyright,
+      version: version,
+    };
+    return this.storage.updateProjectData(storedData);
   }
 }
