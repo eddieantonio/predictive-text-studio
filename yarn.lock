@@ -6099,6 +6099,13 @@ karma-typescript-es6-transform@^5.2.0:
     log4js "^6.3.0"
     magic-string "^0.25.7"
 
+karma-typescript-preprocessor@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/karma-typescript-preprocessor/-/karma-typescript-preprocessor-0.4.0.tgz#49adde8ae382b23dc7e30b06494509f79eea3e25"
+  integrity sha512-QMfsfQxt1OKZ3OXHIc8oHIvs+v9kX7WruvB4vvnojCyQ2Jtg9mamCxj1UroPxbvSqvhGNhzgWAgTjVitye4UYA==
+  dependencies:
+    typescript "^3.0.3"
+
 karma-typescript@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/karma-typescript/-/karma-typescript-5.2.0.tgz#3a1fdc322b829b698cdab5768ee71b940f021f15"
@@ -9249,7 +9256,7 @@ typescript@*:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
   integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
-typescript@^3.8.3, typescript@^3.9:
+typescript@^3.0.3, typescript@^3.8.3, typescript@^3.9:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==

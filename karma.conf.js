@@ -2,21 +2,12 @@
 module.exports = function (config) {
   config.set({
     basePath: "",
-    frameworks: ["jasmine", "karma-typescript", "browserify"],
-    files: ["karma/*.spec.ts"],
+    frameworks: ["jasmine"],
+    files: ["karma/*.js"],
     exclude: [],
     preprocessors: {
-      "**/*.spec.ts": "karma-typescript",
-      "test/*.js": ["browserify"],
+      "**/*.test.ts": ["typescript"],
     },
-    plugins: [
-      require("karma-browserify"),
-      require("karma-jasmine"),
-      require("karma-chrome-launcher"),
-      require("karma-spec-reporter"),
-      require("karma-jasmine-html-reporter"),
-    ],
-
     reporters: ["spec", "kjhtml"],
     port: 9876,
     colors: true,
