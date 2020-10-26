@@ -61,7 +61,9 @@ export class PredictiveTextStudioWorkerImpl
 
     const storedFiles = await this.storage.fetchAllFiles();
     if (storedFiles.length < 1) {
-      this._emitPackageCompileError(new Error("Cannot find any files in the IndexedDB"));
+      this._emitPackageCompileError(
+        new Error("Cannot find any files in the IndexedDB")
+      );
     } else {
       const kmpFile = await linkStorageToKmp(this.storage);
       this._emitPackageCompileSuccess(kmpFile);
@@ -94,9 +96,11 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileSuccess = callback;
   }
 
-  setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): Promise<void> {
-    let langName: string = "";
-    let bcp47Tag: string = "";
+  setProjectData(
+    metadata: Partial<Readonly<RelevantKmpOptions>>
+  ): Promise<void> {
+    let langName = "";
+    let bcp47Tag = "";
     if (metadata.languages == undefined) {
       langName = "";
       bcp47Tag = "";
@@ -104,7 +108,7 @@ export class PredictiveTextStudioWorkerImpl
       langName = metadata.languages[0].name;
       bcp47Tag = metadata.languages[0].id;
     }
-    
+
     const authorName = metadata.authorName || "UnknownAuthor";
     const modelID = metadata.modelID || `${authorName}.${bcp47Tag}.${langName}`;
     const copyright = metadata.copyright || defaultCopyright;

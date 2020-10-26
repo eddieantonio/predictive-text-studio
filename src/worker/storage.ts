@@ -134,7 +134,9 @@ export default class Storage {
    */
   updateBCP47Tag(bcp47Tag: string): Promise<void> {
     return this.db.transaction("readwrite", this.db.projectData, async () => {
-      const currentData = await this.db.projectData.get({id: PACKAGE_ID}) || {langName: "", bcp47Tag, authorName: "", id: PACKAGE_ID};
+      const currentData = (await this.db.projectData.get({
+        id: PACKAGE_ID,
+      })) || { langName: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
       currentData.bcp47Tag = bcp47Tag;
       await this.db.projectData.put(currentData);
     });

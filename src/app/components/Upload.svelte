@@ -8,7 +8,7 @@
 
   worker.onPackageCompileSuccess((kmp: ArrayBuffer) => {
     downloadURL = createURL(kmp);
-  })
+  });
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
