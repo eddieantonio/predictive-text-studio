@@ -48,5 +48,5 @@ export interface PredictiveTextStudioWorker {
    * Sets optional and required metadata such as BCP-47, language name, author name, copyright string, etc.
    * @param metadata
    */
-  setProjectData(metadata: Readonly<RelevantKmpOptions>): void;
+  setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): void;
 }
