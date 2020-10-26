@@ -17,7 +17,9 @@
     "start": "sirv public -s",
     "test": "ava",
     "test:jest": "jest jest",
+    "test:karma": "karma start",
     "test:mocha": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'unit-test/**/*.ts'",
+    "test:build": "rollup karma/demo.spec.ts > test/bundle.js",
     "validate": "svelte-check"
   },
   "devDependencies": {
@@ -41,6 +43,7 @@
     "@typescript-eslint/parser": "^3.10.1",
     "ava": "^3.12.1",
     "babel-jest": "^26.6.1",
+    "browserify": "^17.0.0",
     "chai": "^4.2.0",
     "cypress": "5.0.0",
     "cypress-file-upload": "^4.1.1",
@@ -49,7 +52,17 @@
     "eslint-plugin-prettier": "^3.1.4",
     "fake-indexeddb": "^3.1.2",
     "husky": "^4.3.0",
+    "jasmine": "^3.6.2",
+    "jasmine-core": "^3.6.0",
     "jest": "^26.6.1",
+    "karma": "^5.2.3",
+    "karma-browserify": "^7.0.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^4.0.1",
+    "karma-jasmine-html-reporter": "^1.5.4",
+    "karma-spec-reporter": "^0.0.32",
+    "karma-typescript": "^5.2.0",
+    "karma-typescript-es6-transform": "^5.2.0",
     "mocha": "^8.2.0",
     "nock": "^13.0.4",
     "node-blob": "^0.0.2",
@@ -67,7 +80,8 @@
     "svelte-preprocess": "^4.1.1",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.9"
+    "typescript": "^3.9",
+    "watchify": "^3.11.1"
   },
   "dependencies": {
     "@predictive-text-studio/lexical-model-compiler": "^14.0.0-alpha.0",
