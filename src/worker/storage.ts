@@ -163,4 +163,8 @@ export default class Storage {
       });
     });
   }
+
+  fetchProjectData(): Promise<StoredProjectData | undefined> {
+    return this.db.projectData.where(":id").equals(PACKAGE_ID).first();
+  }
 }
