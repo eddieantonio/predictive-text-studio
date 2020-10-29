@@ -11,7 +11,12 @@ module.exports = function (config) {
     frameworks: ["chai", "mocha"],
 
     // list of files / patterns to load in the browser
-    files: ["karma/**/*.spec.js"],
+    files: [
+      // tests
+      { pattern: "karma/**/*.spec.js", type: "module" },
+      // files tests rely on
+      { pattern: "karma/demo.js", type: "module", included: false },
+    ],
 
     // list of files / patterns to exclude
     exclude: [],
