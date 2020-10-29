@@ -4,8 +4,6 @@ import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-w
 import Storage, { StoredProjectData } from "@worker/storage";
 import { StoredWordList } from "@worker/storage";
 import * as compiler from "@predictive-text-studio/lexical-model-compiler";
-import { exampleWordlist } from "./fixtures";
-import { WordList } from "@common/types";
 
 test("compile model should throws error when no file is found in the IndexedDB", async (t) => {
   const storageStub = new Storage();

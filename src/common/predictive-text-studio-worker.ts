@@ -1,4 +1,5 @@
-import { RelevantKmpOptions } from "@common/kmp-json-file";
+import type { RelevantKmpOptions } from "./kmp-json-file";
+
 /**
  * This interface establishes a communication protocal between the UI thread and the worker thread
  */
