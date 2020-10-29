@@ -1,6 +1,6 @@
 import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
-
+import { StoredWordList, StoredPackageInfo, keyboardDataObj } from "./models";
 const DB_NAME = "dictionary_sources";
 const SCHEMA_VERSION = 3;
 
@@ -70,6 +70,10 @@ export interface StoredProjectData {
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
   projectData: Dexie.Table<StoredProjectData, number>;
+export class PredictiveTextStudioDexie extends Dexie {
+  files: Dexie.Table<StoredWordList, number>;
+  packageInfo: Dexie.Table<StoredPackageInfo, number>;
+  keyboardData: Dexie.Table<keyboardDataObj, number>;
 
   constructor(options?: DexieOptions) {
     super(DB_NAME, options);
@@ -109,14 +113,32 @@ export class PredictiveTextStudioDexie extends Dexie {
        * | version          |
        * +------------------+
        */
+<<<<<<< HEAD
       projectData:
         "++id, langName, bcp47Tag, authorName, modelID, copyright, version",
+=======
+      packageInfo: "++id, bcp47Tag",
+      /**
+       * KMP keyboardData Table Scehma
+       * +------------------------+
+       * | bcp47Tag (primary key) |
+       * +------------------------+
+       * | language               |
+       * +------------------------+
+       */
+      keyboardData: "bcp47Tag, langauge",
+>>>>>>> implement featchning and storing kmp data
     });
 
     /* The assignments are not required by the runtime, however, they are
      * necessary for proper type-checking. */
     this.files = this.table("files");
+<<<<<<< HEAD
     this.projectData = this.table("projectData");
+=======
+    this.packageInfo = this.table("packageInfo");
+    this.keyboardData = this.table("keyboardData");
+>>>>>>> implement featchning and storing kmp data
   }
 }
 
@@ -193,5 +215,19 @@ export default class Storage {
     }
 
     return projectData;
+  }
+  /**
+   * Save all keyboard info into the database
+   */
+  addKeybaordData(langauge: string, bcp47: string): Promise<void> {
+    return this.db.transaction("readwrite", this.db.keyboardData, async () => {
+      await this.db.keyboardData.put({ langauge, bcp47Tag: bcp47 });
+    });
+  }
+  /**
+   * Retrieves every keyboard data in the database as a list of {language, bcp47Tag}
+   */
+  fetchKeyboardData(): Promise<keyboardDataObj[]> {
+    return this.db.keyboardData.toArray();
   }
 }
