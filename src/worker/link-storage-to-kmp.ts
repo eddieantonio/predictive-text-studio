@@ -14,7 +14,6 @@ export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
       "Could not fetch the package info; Did you update the package BCP-47 tag?"
     );
   }
-
   //hardcode for now
   const langName = "English";
   const bcp47Tag = maybePackageInfo.bcp47Tag;

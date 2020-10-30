@@ -56,3 +56,7 @@ test("it should set project data and update to the database", async (t) => {
     .returns(Promise.resolve(testStoredProjectData));
   t.is(await storageStub.fetchProjectData(), testStoredProjectData);
 });
+
+test.todo(
+  "Add dictionary to database and should return how many words were added"
+);

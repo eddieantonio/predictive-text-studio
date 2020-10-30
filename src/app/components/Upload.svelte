@@ -1,14 +1,15 @@
 <script lang="ts">
   import worker from "../spawn-worker";
   import DownloadKMP from "./DownloadKMP.svelte";
+  import * as Comlink from "comlink";
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
   let downloadURL = "";
 
-  worker.onPackageCompileSuccess((kmp: ArrayBuffer) => {
+  worker.onPackageCompileSuccess(Comlink.proxy((kmp: ArrayBuffer) => {
     downloadURL = createURL(kmp);
-  });
+  }));
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];

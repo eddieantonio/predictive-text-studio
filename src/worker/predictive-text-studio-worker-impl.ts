@@ -51,8 +51,9 @@ export class PredictiveTextStudioWorkerImpl
     }
   }
 
-  updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    return this.storage.updateBCP47Tag(bcp47Tag);
+  async updateBCP47Tag(bcp47Tag: string): Promise<void> {
+    await this.storage.updateBCP47Tag(bcp47Tag);
+    return this.generateKMPFromStorage();
   }
 
   private async generateKMPFromStorage(): Promise<void> {
