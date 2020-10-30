@@ -8,17 +8,17 @@ export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
     storage
   );
 
-  const maybePackageInfo = await storage.fetchPackageInfo();
-  if (maybePackageInfo == undefined) {
+  const maybeProjectData = await storage.fetchProjectData();
+  if (maybeProjectData == undefined) {
     throw new Error(
       "Could not fetch the package info; Did you update the package BCP-47 tag?"
     );
   }
-  //hardcode for now
-  const langName = "English";
-  const bcp47Tag = maybePackageInfo.bcp47Tag;
-  const modelID = `unknownauthor.${bcp47Tag}.example`;
-
+  const langName = maybeProjectData.langName;
+  const bcp47Tag = maybeProjectData.bcp47Tag;
+  const authorName = maybeProjectData.authorName;
+  const modelID = `${authorName}.${bcp47Tag}.example`;
+  
   const kmpFile = await generateKmp(langName, bcp47Tag, sources, modelID);
 
   return kmpFile;

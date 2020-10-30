@@ -7,9 +7,11 @@
   let onDraggedOver = false;
   let downloadURL = "";
 
-  worker.onPackageCompileSuccess(Comlink.proxy((kmp: ArrayBuffer) => {
-    downloadURL = createURL(kmp);
-  }));
+  worker.onPackageCompileSuccess(
+    Comlink.proxy((kmp: ArrayBuffer) => {
+      downloadURL = createURL(kmp);
+    })
+  );
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
