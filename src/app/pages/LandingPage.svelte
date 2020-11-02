@@ -190,9 +190,7 @@
 
 <svelte:head>
   <title>Welcome to Predictive Text Studio</title>
-  <meta
-    name="branching"
-    content="designed for Keyman" />
+  <meta name="branching" content="designed for Keyman" />
   <meta
     name="description"
     content="Add prediction and autocorrect to your language" />
