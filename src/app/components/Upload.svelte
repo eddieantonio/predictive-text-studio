@@ -1,10 +1,17 @@
 <script lang="ts">
   import worker from "../spawn-worker";
   import DownloadKMP from "./DownloadKMP.svelte";
+  import * as Comlink from "comlink";
   const UPLOAD_INPUT_ID = "upload-input";
 
   let onDraggedOver = false;
   let downloadURL = "";
+
+  worker.onPackageCompileSuccess(
+    Comlink.proxy((kmp: ArrayBuffer) => {
+      downloadURL = createURL(kmp);
+    })
+  );
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -39,9 +46,7 @@
       fileList = Array.from(event.dataTransfer.files);
     }
     for (let file of fileList) {
-      //TODO: Handle error
-      const kmpFile = await worker.saveFile(file.name, file);
-      downloadURL = createURL(kmpFile);
+      await worker.addDictionarySourceToProject(file.name, file);
     }
   };
 
@@ -57,9 +62,7 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
-        //TODO: Handle error
-        const kmpFile = await worker.saveFile(file.name, file);
-        downloadURL = createURL(kmpFile);
+        await worker.addDictionarySourceToProject(file.name, file);
       }
     }
   };

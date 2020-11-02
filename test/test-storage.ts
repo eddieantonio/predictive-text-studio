@@ -92,10 +92,10 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
 test("update the bcp47 tag to database", async (t) => {
   const { db, storage } = t.context;
   // At first, nothing in the DB
-  t.is(await db.packageInfo.count(), 0);
+  t.is(await db.projectData.count(), 0);
   await storage.updateBCP47Tag("en");
   // Now there's one package info record in the DB!
-  t.is(await db.packageInfo.count(), 1);
+  t.is(await db.projectData.count(), 1);
 });
 
 test("retrieve bcp47tag from the database", async (t) => {
@@ -107,5 +107,52 @@ test("retrieve bcp47tag from the database", async (t) => {
   } else {
     const bcp47Tag = maybePackageInfo.bcp47Tag;
     t.is(bcp47Tag, "en");
+  }
+});
+
+test("update the project data to database", async (t) => {
+  const { db, storage } = t.context;
+  // At first, nothing in the DB
+  t.is(await db.projectData.count(), 0);
+  const storedProjectData = {
+    langName: "English",
+    bcp47Tag: "en",
+    authorName: "example",
+    modelID: "unknownAuthor.en.example",
+    copyright: "©",
+    version: "1.0.0",
+  };
+  await storage.updateProjectData(storedProjectData);
+  // Now there's one package info record in the DB!
+  t.is(await db.projectData.count(), 1);
+});
+
+test("retrieve project data from the database", async (t) => {
+  const { storage } = t.context;
+  const storedProjectData = {
+    langName: "English",
+    bcp47Tag: "en",
+    authorName: "example",
+    modelID: "unknownAuthor.en.example",
+    copyright: "©",
+    version: "1.0.0",
+  };
+  await storage.updateProjectData(storedProjectData);
+  const maybeProjectData = await storage.fetchProjectData();
+  if (maybeProjectData == undefined) {
+    t.fail("projectData is undefined.");
+  } else {
+    const langName = maybeProjectData.langName;
+    t.is(langName, "English");
+    const bcp47Tag = maybeProjectData.bcp47Tag;
+    t.is(bcp47Tag, "en");
+    const authorName = maybeProjectData.authorName;
+    t.is(authorName, "example");
+    const modelID = maybeProjectData.modelID;
+    t.is(modelID, "unknownAuthor.en.example");
+    const copyright = maybeProjectData.copyright;
+    t.is(copyright, "©");
+    const version = maybeProjectData.version;
+    t.is(version, "1.0.0");
   }
 });

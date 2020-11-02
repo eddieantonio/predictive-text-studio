@@ -12,7 +12,7 @@
   $: displayEnterBCP47Tag = bcp47Tag == "" || validTag;
   $: {
     if (validTag) {
-      worker.updateBCP47Tag(bcp47Tag);
+      worker.setProjectData({ languages: [{ name: "", id: bcp47Tag }] });
     }
   }
 </script>
