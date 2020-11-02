@@ -2,7 +2,7 @@ Contributing
 ============
 
 
-Thank you for contributing to **Predictive Text Studio designed for Keyman**!
+Thank you for contributing to **Predictive Text Studio**!
 
 Whether it's a bug report, updated documentation, fixing a typo, or even
 adding a new feature, we appreciate your contribution.

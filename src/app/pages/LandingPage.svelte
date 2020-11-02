@@ -183,7 +183,7 @@
 </style>
 
 <svelte:head>
-  <title>Welcome to Predictive Text Studio designed for Keyman</title>
+  <title>Welcome to Predictive Text Studio</title>
   <meta
     name="description"
     content="Add prediction and autocorrect to your language" />
@@ -196,7 +196,7 @@
       <div class="masthead__copy">
         <h1 class="masthead__title">
           <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
-          Predictive Text Studio designed for Keyman
+          Predictive Text Studio
         </h1>
 
         <p class="masthead__description">
@@ -219,7 +219,7 @@
         class="explanation__workflow__image" />
 
       <div class="explanation__workflow__transform">
-        Predictive Text Studio designed for Keyman
+        Predictive Text Studio
         <img
           class="explanation__workflow__transform__arrow"
           src="assets/workflow-arrow.svg"

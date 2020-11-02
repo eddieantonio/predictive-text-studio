@@ -157,7 +157,7 @@
         <img
           src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
           alt="Keyman" />
-        <h1>Predictive Text Studio designed for Keyman</h1>
+        <h1>Predictive Text Studio</h1>
       </header>
 
       <div class="languages__container--actions">
