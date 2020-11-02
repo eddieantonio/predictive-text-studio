@@ -1,4 +1,4 @@
-Predictive Text Studio
+Predictive Text Studio designed for Keyman
 ======================
 
 A web application to enable predictive text for your language!
