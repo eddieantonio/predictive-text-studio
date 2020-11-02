@@ -81,6 +81,12 @@
   .masthead__title {
     font-size: 2.5em;
     font-weight: 700;
+    display: inline;
+  }
+
+  .masthead__branching {
+    display: inline;
+    font-size: 1em;
   }
 
   .masthead__description {
@@ -185,6 +191,9 @@
 <svelte:head>
   <title>Welcome to Predictive Text Studio</title>
   <meta
+    name="branching"
+    content="designed for Keyman" />
+  <meta
     name="description"
     content="Add prediction and autocorrect to your language" />
 </svelte:head>
@@ -198,6 +207,10 @@
           <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
           Predictive Text Studio
         </h1>
+
+        <p class="masthead__branching">
+          designed for Keyman
+        </p>
 
         <p class="masthead__description">
           Add
