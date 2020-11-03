@@ -84,7 +84,7 @@
     display: inline;
   }
 
-  .masthead__branching {
+  .masthead__branding {
     display: inline;
     font-size: 1em;
   }
