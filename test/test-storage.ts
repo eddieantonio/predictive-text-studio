@@ -111,13 +111,9 @@ test("retrieve BCP-47 tag from the database", async (t) => {
   const { storage } = t.context;
   await storage.updateBCP47Tag("en");
 
-  const maybePackageInfo = await storage.fetchProjectData();
-  if (maybePackageInfo == undefined) {
-    t.fail("Project data is undefined.");
-  } else {
-    const bcp47Tag = maybePackageInfo.bcp47Tag;
-    t.is(bcp47Tag, "en");
-  }
+  const projectData = await storage.fetchProjectData();
+  const bcp47Tag = projectData.bcp47Tag;
+  t.is(bcp47Tag, "en");
 });
 
 test("update the project data to database", async (t) => {
@@ -132,6 +128,7 @@ test("update the project data to database", async (t) => {
     copyright: "©",
     version: "1.0.0",
   };
+
   await storage.updateProjectData(storedProjectData);
   // Now there's one package info record in the DB!
   t.is(await db.projectData.count(), 1);
@@ -148,21 +145,18 @@ test("retrieve project data from the database", async (t) => {
     version: "1.0.0",
   };
   await storage.updateProjectData(storedProjectData);
-  const maybeProjectData = await storage.fetchProjectData();
-  if (maybeProjectData == undefined) {
-    t.fail("projectData is undefined.");
-  } else {
-    const langName = maybeProjectData.langName;
-    t.is(langName, "English");
-    const bcp47Tag = maybeProjectData.bcp47Tag;
-    t.is(bcp47Tag, "en");
-    const authorName = maybeProjectData.authorName;
-    t.is(authorName, "example");
-    const modelID = maybeProjectData.modelID;
-    t.is(modelID, "unknownAuthor.en.example");
-    const copyright = maybeProjectData.copyright;
-    t.is(copyright, "©");
-    const version = maybeProjectData.version;
-    t.is(version, "1.0.0");
-  }
+
+  const projectData = await storage.fetchProjectData();
+  const langName = projectData.langName;
+  t.is(langName, "English");
+  const bcp47Tag = projectData.bcp47Tag;
+  t.is(bcp47Tag, "en");
+  const authorName = projectData.authorName;
+  t.is(authorName, "example");
+  const modelID = projectData.modelID;
+  t.is(modelID, "unknownAuthor.en.example");
+  const copyright = projectData.copyright;
+  t.is(copyright, "©");
+  const version = projectData.version;
+  t.is(version, "1.0.0");
 });

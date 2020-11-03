@@ -8,8 +8,10 @@ export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
     storage
   );
 
-  const maybeProjectData = await storage.fetchProjectData();
-  if (maybeProjectData == undefined) {
+  let projectData;
+  try {
+    projectData = await storage.fetchProjectData();
+  } catch (e) {
     throw new Error(
       "Could not fetch the package info; Did you update the package BCP-47 tag?"
     );
