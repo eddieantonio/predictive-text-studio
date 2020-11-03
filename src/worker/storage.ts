@@ -182,7 +182,16 @@ export default class Storage {
   /**
    * Retrieves the current project data.
    */
-  fetchProjectData(): Promise<StoredProjectData | undefined> {
-    return this.db.projectData.where(":id").equals(PACKAGE_ID).first();
+  async fetchProjectData(): Promise<StoredProjectData> {
+    const projectData = await this.db.projectData
+      .where(":id")
+      .equals(PACKAGE_ID)
+      .first();
+
+    if (projectData == undefined) {
+      throw new Error("No project data has been stored");
+    }
+
+    return projectData;
   }
 }
