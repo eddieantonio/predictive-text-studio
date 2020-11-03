@@ -163,15 +163,6 @@ export default class Storage {
   }
 
   /**
-   * @deprecated use fetchProjectData() instead
-   *
-   * Retrieves the current project data.
-   */
-  fetchPackageInfo(): Promise<StoredProjectData | undefined> {
-    return this.db.projectData.where(":id").equals(PACKAGE_ID).first();
-  }
-
-  /**
    * Update required and some optional metadata to database
    */
   updateProjectData(metadata: { [key: string]: string }): Promise<void> {
