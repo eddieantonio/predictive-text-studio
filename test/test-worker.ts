@@ -16,21 +16,21 @@ test("compile model should throws error when no file is found in the IndexedDB",
 });
 
 test("compile model", async (t) => {
-  const testStoredFile = {
+  const exampleDictionarySource: StoredWordList = {
     id: 1,
     name: "test",
     wordlist: [["test", 1]],
-  } as StoredWordList;
+  };
 
   const storageStub = new Storage();
   sinon
     .stub(storageStub, "fetchAllFiles")
-    .returns(Promise.resolve([testStoredFile]));
+    .returns(Promise.resolve([exampleDictionarySource]));
   const compilerMock = sinon.mock(compiler);
   compilerMock
     .expects("WordListFromArray")
     .once()
-    .withArgs(testStoredFile.name, testStoredFile.wordlist);
+    .withArgs(exampleDictionarySource.name, exampleDictionarySource.wordlist);
   compilerMock.expects("compileModelFromLexicalModelSource").once();
 
   const workerWrapper = new PredictiveTextStudioWorkerImpl(storageStub);
