@@ -131,7 +131,6 @@
   }
 
   .languages__container--header p {
-    display: inline-flex;
     font-family: Cabin, sans-serif;
     font-size: 20px;
   }
@@ -139,6 +138,7 @@
   .languages__container--header img {
     height: 1rem;
     width: auto;
+    vertical-align: center;
 
     /* fallback font styles in case the image doesn't load */
     font-weight: bold;
@@ -170,10 +170,11 @@
       <header class="languages__container--header">
         <div>
           <h1>Predictive Text Studio</h1>
-          <p>designed for </p>
+          <p>designed for
           <img
           src="/assets/keyman-logo.svg"
           alt="Keyman" />
+          </p>
         </div>
       </header>
 

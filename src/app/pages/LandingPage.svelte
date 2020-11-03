@@ -205,8 +205,8 @@
         </h1>
         <p class="masthead__branding">
           designed for 
+          <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
         </p>
-        <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
         <p class="masthead__description">
           Add
           <strong>prediction</strong>
