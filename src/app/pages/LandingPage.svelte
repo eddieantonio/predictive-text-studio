@@ -69,9 +69,8 @@
   }
 
   .masthead__brand {
-    display: block;
-    height: 2rem;
-    margin-bottom: 2rem;
+    vertical-align: middle;
+    height: 1rem;
 
     /* fallback font styles in case the image doesn't load */
     font-weight: bold;
@@ -81,6 +80,12 @@
   .masthead__title {
     font-size: 2.5em;
     font-weight: 700;
+  }
+
+  .masthead__branding {
+    display: inline;
+    vertical-align: middle;
+    font-size: 1em;
   }
 
   .masthead__description {
@@ -195,10 +200,12 @@
     <div class="masthead__content">
       <div class="masthead__copy">
         <h1 class="masthead__title">
-          <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
           Predictive Text Studio
         </h1>
-
+        <p class="masthead__branding">
+          designed for 
+          <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
+        </p>
         <p class="masthead__description">
           Add
           <strong>prediction</strong>

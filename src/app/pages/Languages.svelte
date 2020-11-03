@@ -120,10 +120,29 @@
     flex-direction: column;
   }
 
+  .languages__container--header div {
+    vertical-align: middle;
+  }
+
   .languages__container--header h1 {
     font-family: Cabin, sans-serif;
     font-weight: bold;
     font-size: 30px;
+  }
+
+  .languages__container--header p {
+    font-family: Cabin, sans-serif;
+    font-size: 20px;
+  }
+
+  .languages__container--header img {
+    height: 1rem;
+    width: auto;
+    vertical-align: center;
+
+    /* fallback font styles in case the image doesn't load */
+    font-weight: bold;
+    color: var(--black, #111);
   }
 
   .languages__container--actions {
@@ -133,11 +152,6 @@
 
   .languages__container--content {
     margin-top: 25px;
-  }
-
-  img {
-    width: 200px;
-    height: auto;
   }
 </style>
 
@@ -154,10 +168,14 @@
 
     <div class="languages__container">
       <header class="languages__container--header">
-        <img
-          src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
+        <div>
+          <h1>Predictive Text Studio</h1>
+          <p>designed for
+          <img
+          src="/assets/keyman-logo.svg"
           alt="Keyman" />
-        <h1>Predictive Text Studio</h1>
+          </p>
+        </div>
       </header>
 
       <div class="languages__container--actions">
