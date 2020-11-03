@@ -8,12 +8,6 @@ const SCHEMA_VERSION = 3;
  */
 const PACKAGE_ID = 0;
 
-interface StoredFile {
-  id?: number;
-  name: string;
-  contents: ArrayBuffer;
-}
-
 /**
  * A word list.
  */
