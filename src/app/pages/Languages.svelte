@@ -121,8 +121,7 @@
   }
 
   .languages__container--header div {
-    display: inline-flex;
-    align-items: baseline;
+    vertical-align: middle;
   }
 
   .languages__container--header h1 {
@@ -132,9 +131,18 @@
   }
 
   .languages__container--header p {
-    margin-left: 5px;
+    display: inline-flex;
     font-family: Cabin, sans-serif;
     font-size: 20px;
+  }
+
+  .languages__container--header img {
+    height: 1rem;
+    width: auto;
+
+    /* fallback font styles in case the image doesn't load */
+    font-weight: bold;
+    color: var(--black, #111);
   }
 
   .languages__container--actions {
@@ -144,11 +152,6 @@
 
   .languages__container--content {
     margin-top: 25px;
-  }
-
-  img {
-    width: 200px;
-    height: auto;
   }
 </style>
 
@@ -165,14 +168,13 @@
 
     <div class="languages__container">
       <header class="languages__container--header">
-        <img
-          src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
-          alt="Keyman" />
         <div>
           <h1>Predictive Text Studio</h1>
-          <p>designed for Keyman</p>
+          <p>designed for </p>
+          <img
+          src="/assets/keyman-logo.svg"
+          alt="Keyman" />
         </div>
-        
       </header>
 
       <div class="languages__container--actions">
