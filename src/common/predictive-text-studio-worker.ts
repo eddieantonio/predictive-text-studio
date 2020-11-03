@@ -5,20 +5,6 @@ import type { RelevantKmpOptions } from "./kmp-json-file";
  */
 export interface PredictiveTextStudioWorker {
   /**
-   * @deprecated use addDictionarySourceToProject instead.
-   * Save a file into IndexedDB, compile the updated model, and generate the
-   * KMP file.
-   */
-  saveFile(name: string, file: File): Promise<ArrayBuffer>;
-
-  /**
-   * @deprecated register a callback using onPackageCompileSuccess instead
-   * Compile the lexical model using files in the IndexedDB, returning the
-   * JavaScript source code.
-   */
-  compileModel(): Promise<string>;
-
-  /**
    * Update the valid BCP4-7 tag to worker, this will affect the kmp file
    * @param bcp47Tag
    */
