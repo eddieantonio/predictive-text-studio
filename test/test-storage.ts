@@ -89,6 +89,12 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
   }
 });
 
+test("it should reject the promise if the database is empty", async (t) => {
+  const { storage } = t.context;
+
+  await t.throwsAsync(() => storage.fetchProjectData());
+});
+
 test("update the BCP-47 tag to database", async (t) => {
   const { db, storage } = t.context;
   // At first, nothing in the DB
