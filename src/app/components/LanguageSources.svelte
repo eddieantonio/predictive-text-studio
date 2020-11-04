@@ -1,5 +1,7 @@
 <script lang="ts">
+  import AddSource from "./AddSource.svelte";
   import Button from "./Button.svelte";
+  import Upload from "./Upload.svelte";
   interface DictionarySource {
     name: string;
     size: number;
@@ -7,6 +9,7 @@
   }
 
   export let sources: DictionarySource[];
+  let addSource = false;
 
   /**
    * Handles the click when the add source button is pressed. Should show another section where user can upload file or open direct entry.
@@ -15,6 +18,7 @@
    * @return {void}
    */
   const handleAddSource = (): void => {
+    addSource = true;
     console.log("Add source button clicked");
   };
 
@@ -35,6 +39,11 @@
    * @return {void}
    */
   const handleDelete = (): void => {
+    const name = "Kinship Terms";
+    const index = sources.findIndex(function (item) {
+      return item.name == name;
+    });
+    sources.splice(index, 1);
     console.log("Delete button clicked");
   };
 </script>
@@ -138,4 +147,5 @@
   <Button color="blue" isOutlined size="large" onClick={handleAddSource}>
     Add Source
   </Button>
+  <AddSource {addSource} />
 </div>
