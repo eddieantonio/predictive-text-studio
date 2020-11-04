@@ -19,3 +19,15 @@ export const exampleWordlist: WordList = [
   ["ȻSE", 1925],
   ["I", 1884],
 ];
+
+export const responseBody = {
+  languages: [
+    { id: "km", name: "Khmer (Battambang Khmer)", keyboards: [Array] },
+    {
+      id: "kxm",
+      name: "Khmer, Northern (Khmer Lue)",
+      keyboards: [Array],
+    },
+    { id: "kdt", name: "Kuay (Old Khmer)", keyboards: [Array] },
+  ],
+};

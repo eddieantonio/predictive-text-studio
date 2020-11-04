@@ -23,3 +23,41 @@ test("it should set project data and update to the database", async (t) => {
 test.todo(
   "Add dictionary to database and should return how many words were added"
 );
+import Storage from "@worker/storage";
+import { StoredWordList } from "@worker/models";
+import * as compiler from "@predictive-text-studio/lexical-model-compiler";
+
+// test("compile model should throws error when no file is found in the IndexedDB", async (t) => {
+//   const storageStub = new Storage();
+//   sinon.stub(storageStub, "fetchAllFiles").returns(Promise.resolve([]));
+
+//   const workerWrapper = new PredictiveTextStudioWorkerImpl(storageStub);
+
+//   const error = await t.throwsAsync(workerWrapper.compileModel());
+//   t.is(error.message, "Cannot find any file in the IndexedDB");
+// });
+
+// test("compile model", async (t) => {
+//   const testStoredFile = {
+//     id: 1,
+//     name: "test",
+//     wordlist: [["test", 1]],
+//   } as StoredWordList;
+
+//   const storageStub = new Storage();
+//   sinon
+//     .stub(storageStub, "fetchAllFiles")
+//     .returns(Promise.resolve([testStoredFile]));
+//   const compilerMock = sinon.mock(compiler);
+//   compilerMock
+//     .expects("WordListFromArray")
+//     .once()
+//     .withArgs(testStoredFile.name, testStoredFile.wordlist);
+//   compilerMock.expects("compileModelFromLexicalModelSource").once();
+
+//   const workerWrapper = new PredictiveTextStudioWorkerImpl(storageStub);
+//   await workerWrapper.compileModel();
+
+//   compilerMock.verify();
+//   t.pass();
+// });
