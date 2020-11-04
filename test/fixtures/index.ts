@@ -1,4 +1,4 @@
-import { StoredWordList } from "./../../src/worker/models";
+import { keyboardDataObj, StoredWordList } from "./../../src/worker/models";
 import type { WordList } from "@common/types";
 
 /**
@@ -33,8 +33,12 @@ export const responseBody = {
   ],
 };
 
-export const testStoredFile = {
+export const storedFileStub = {
   id: 1,
   name: "test",
   wordlist: [["test", 1]],
 } as StoredWordList;
+
+export const keymanKeyboardDataStub: keyboardDataObj[] = [
+  { bcp47Tag: "AB", langauge: "AABBCCDD" },
+];

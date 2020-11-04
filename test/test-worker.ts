@@ -29,7 +29,7 @@ test.todo(
 import Storage from "@worker/storage";
 import * as sinon from "sinon";
 import * as compiler from "@predictive-text-studio/lexical-model-compiler";
-import { testStoredFile } from "./fixtures/index";
+import { keymanKeyboardDataStub, storedFileStub } from "./fixtures/index";
 import { KeymanApi } from "@worker/keyman-api-service";
 import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
 global.fetch = require("node-fetch");
@@ -43,7 +43,10 @@ test.before("optional title", () => {
   keymanApiMock = new KeymanApi();
   sinon
     .stub(storageStub, "fetchAllFiles")
-    .returns(Promise.resolve([testStoredFile]));
+    .returns(Promise.resolve([storedFileStub]));
+  // sinon
+  //   .stub(keymanApiMock, "getLanaguageData")
+  //   .returns(Promise.resolve(keymanKeyboardDataStub));
   workerWrapper = new PredictiveTextStudioWorkerImpl(
     storageStub,
     keymanApiMock
@@ -55,7 +58,7 @@ test("compile model", async (t) => {
   compilerMock
     .expects("WordListFromArray")
     .once()
-    .withArgs(testStoredFile.name, testStoredFile.wordlist);
+    .withArgs(storedFileStub.name, storedFileStub.wordlist);
   compilerMock.expects("compileModelFromLexicalModelSource").once();
 
   await workerWrapper.compileModel();
@@ -63,6 +66,12 @@ test("compile model", async (t) => {
   compilerMock.verify();
   t.pass();
 });
+
+// test("fetch and save Keyman keyboard data", async (t) => {
+//   // await keymanApiMock.getLanaguageData().then((aaa) => {
+//   //   console.log(aaa);
+//   // });
+// });
 
 test("compile model should throws error when no file is found in the IndexedDB", async (t) => {
   const storageStub = new Storage();
