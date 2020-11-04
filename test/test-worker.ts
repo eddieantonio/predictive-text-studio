@@ -1,4 +1,5 @@
 import test from "ava";
+<<<<<<< HEAD
 import * as sinon from "sinon";
 import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
 import Storage, { StoredProjectData } from "@worker/storage";
@@ -23,41 +24,55 @@ test("it should set project data and update to the database", async (t) => {
 test.todo(
   "Add dictionary to database and should return how many words were added"
 );
+=======
+>>>>>>> fix test fail
 import Storage from "@worker/storage";
-import { StoredWordList } from "@worker/models";
+import * as sinon from "sinon";
 import * as compiler from "@predictive-text-studio/lexical-model-compiler";
+import { testStoredFile } from "./fixtures/index";
+import { KeymanApi } from "@worker/keyman-api-service";
+import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
+global.fetch = require("node-fetch");
 
-// test("compile model should throws error when no file is found in the IndexedDB", async (t) => {
-//   const storageStub = new Storage();
-//   sinon.stub(storageStub, "fetchAllFiles").returns(Promise.resolve([]));
+let storageStub: Storage;
+let keymanApiMock: KeymanApi;
+let workerWrapper: PredictiveTextStudioWorkerImpl;
 
-//   const workerWrapper = new PredictiveTextStudioWorkerImpl(storageStub);
+test.before("optional title", () => {
+  storageStub = new Storage();
+  keymanApiMock = new KeymanApi();
+  sinon
+    .stub(storageStub, "fetchAllFiles")
+    .returns(Promise.resolve([testStoredFile]));
+  workerWrapper = new PredictiveTextStudioWorkerImpl(
+    storageStub,
+    keymanApiMock
+  );
+});
 
-//   const error = await t.throwsAsync(workerWrapper.compileModel());
-//   t.is(error.message, "Cannot find any file in the IndexedDB");
-// });
+test("compile model", async (t) => {
+  const compilerMock = sinon.mock(compiler);
+  compilerMock
+    .expects("WordListFromArray")
+    .once()
+    .withArgs(testStoredFile.name, testStoredFile.wordlist);
+  compilerMock.expects("compileModelFromLexicalModelSource").once();
 
-// test("compile model", async (t) => {
-//   const testStoredFile = {
-//     id: 1,
-//     name: "test",
-//     wordlist: [["test", 1]],
-//   } as StoredWordList;
+  await workerWrapper.compileModel();
 
-//   const storageStub = new Storage();
-//   sinon
-//     .stub(storageStub, "fetchAllFiles")
-//     .returns(Promise.resolve([testStoredFile]));
-//   const compilerMock = sinon.mock(compiler);
-//   compilerMock
-//     .expects("WordListFromArray")
-//     .once()
-//     .withArgs(testStoredFile.name, testStoredFile.wordlist);
-//   compilerMock.expects("compileModelFromLexicalModelSource").once();
+  compilerMock.verify();
+  t.pass();
+});
 
-//   const workerWrapper = new PredictiveTextStudioWorkerImpl(storageStub);
-//   await workerWrapper.compileModel();
+test("compile model should throws error when no file is found in the IndexedDB", async (t) => {
+  const storageStub = new Storage();
+  sinon.stub(storageStub, "fetchAllFiles").returns(Promise.resolve([]));
 
-//   compilerMock.verify();
-//   t.pass();
-// });
+  const workerWrapper = new PredictiveTextStudioWorkerImpl(
+    storageStub,
+    keymanApiMock
+  );
+
+  const error = await t.throwsAsync(workerWrapper.compileModel());
+  t.is(error.message, "Cannot find any file in the IndexedDB");
+});

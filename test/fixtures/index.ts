@@ -1,3 +1,4 @@
+import { StoredWordList } from "./../../src/worker/models";
 import type { WordList } from "@common/types";
 
 /**
@@ -31,3 +32,9 @@ export const responseBody = {
     { id: "kdt", name: "Kuay (Old Khmer)", keyboards: [Array] },
   ],
 };
+
+export const testStoredFile = {
+  id: 1,
+  name: "test",
+  wordlist: [["test", 1]],
+} as StoredWordList;

@@ -6,7 +6,7 @@ import * as nock from "nock";
 global.fetch = require("node-fetch");
 
 let keymanApi: KeymanApi;
-test.before("optional title", () => {
+test.before("keyman-api-service", () => {
   keymanApi = new KeymanApi();
 });
 
