@@ -4,9 +4,9 @@
   import SplitButton from "./SplitButton.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
-  export let addSource = false;
-  let leftText = "UPLOAD";
-  let rightText = "DIRECT ENTRY";
+  const leftText = "UPLOAD";
+  const rightText = "DIRECT ENTRY";
+  export let addSource:boolean = false;
   let onDraggedOver = false;
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
@@ -65,6 +65,14 @@
   const handleClose = () => {
     addSource = false;
   };
+
+  const handleUpload = () => {
+    //TODO
+  }
+
+  const handleDirectEntry = () => {
+    //TODO
+  }
 </script>
 
 <style>
@@ -125,7 +133,7 @@
 {#if addSource}
   <div class="arrow-button-zone">
     <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
-    <SplitButton {leftText} {rightText} />
+    <SplitButton leftText={leftText} rightText={rightText} onClickLeft={handleUpload} onClickRight={handleDirectEntry} />
   </div>
 
   <div

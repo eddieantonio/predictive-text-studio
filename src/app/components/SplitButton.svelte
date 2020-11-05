@@ -7,7 +7,8 @@
   export let size: string = "medium"; // optional
   export let leftText: string;
   export let rightText: string;
-  export let onClick: (ev: MouseEvent) => void;
+  export let onClickLeft: (ev: MouseEvent) => void;
+  export let onClickRight: (ev: MouseEvent) => void;
 </script>
 
 <style>
@@ -37,10 +38,10 @@
     class="button button--{colorLeft} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
-    on:click={onClick}>{leftText}</button>
+    on:click={onClickLeft}>{leftText}</button>
   <button
     class="button button--{colorRight} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
-    on:click={onClick}>{rightText}</button>
+    on:click={onClickRight}>{rightText}</button>
 </div>

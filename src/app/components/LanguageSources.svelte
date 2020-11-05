@@ -1,7 +1,6 @@
 <script lang="ts">
   import AddSource from "./AddSource.svelte";
   import Button from "./Button.svelte";
-  import Upload from "./Upload.svelte";
   interface DictionarySource {
     name: string;
     size: number;

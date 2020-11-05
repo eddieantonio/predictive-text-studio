@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { beforeUpdate } from "svelte";
-
   // props
   export let color: string = "grey"; // optional
   export let isOutlined: boolean = false; // optional
