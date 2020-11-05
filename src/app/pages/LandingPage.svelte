@@ -1,5 +1,6 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
+  import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import BCP47Tag from "../components/BCP47Tag.svelte";
 </script>
 
@@ -208,6 +209,7 @@
 
       <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>
     </form>
+    <GoogleSheetsInput />
   </section>
 </main>
 
