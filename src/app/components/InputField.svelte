@@ -3,7 +3,7 @@
   export let id: string;
   export let value: any;
   export let subtext: string;
-  export let fullWidth: boolean;
+  export let fullWidth: boolean = false;
 </script>
 
 <style>
