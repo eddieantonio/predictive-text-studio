@@ -32,3 +32,8 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 .DS_Store
+
+# Google Sheets Credentials
+credentials.json
+token.json
+.env
