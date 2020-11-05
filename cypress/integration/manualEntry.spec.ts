@@ -10,6 +10,7 @@ describe("", function () {
     cy.get("button").contains("UPLOAD").click();
 
     cy.get("button").contains("DIRECT ENTRY").click().scrollIntoView();
+    cy.get("[data-cy=manual-entry-input-tablename]").type("Common Greetings");
     cy.get("[data-cy=manual-entry-input-word]").type("Hello");
     cy.get("[data-cy=manual-entry-input-count]").type("112");
 

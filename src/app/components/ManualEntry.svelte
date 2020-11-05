@@ -18,6 +18,17 @@
     justify-content: center;
   }
 
+  .language__sources-manual-entry-tablename input {
+    height: 30px;
+    width: 400px;
+    border-radius: 2px;
+    border: 1px solid var(--lite-white);
+    padding: 5px;
+    text-align: center;
+    font: 24px var(--main-font);
+    background-color: var(--lite-white);
+  }
+
   th {
     background-color: var(--lite-white);
     padding: 20px 0px 20px 20px;
@@ -65,7 +76,7 @@
     font-size: 1em;
   }
 
-  input {
+  td>input {
     height: 20px;
     width: 80%;
     border-radius: 2px;
@@ -81,6 +92,11 @@
 </style>
 
 <div class="language__sources-manual-entry">
+  <div class="language__sources-manual-entry-tablename">
+    <h4>Table Name</h4>
+    <input data-cy="manual-entry-input-tablename"/>
+  </div>
+  
   <table>
     <thead>
       <th>Word</th>
