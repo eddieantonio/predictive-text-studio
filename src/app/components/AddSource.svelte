@@ -2,12 +2,15 @@
   import worker from "../spawn-worker";
   import Button from "./Button.svelte";
   import SplitButton from "./SplitButton.svelte";
+  import ManualEntry from "./ManualEntry.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
   const leftText = "UPLOAD";
   const rightText = "DIRECT ENTRY";
   export let addSource: boolean = false;
+  let manualEntry: boolean = false;
   let onDraggedOver = false;
+  let fileList: any = [];
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -25,7 +28,6 @@
 
   const handleDrop = async (event: DragEvent) => {
     onDraggedOver = false;
-    let fileList: File[] = [];
 
     if (event.dataTransfer == null) {
       return;
@@ -35,9 +37,6 @@
     } else {
       // Use DataTransfer interface to access the file(s)
       fileList = Array.from(event.dataTransfer.files);
-    }
-    for (let file of fileList) {
-      await worker.addDictionarySourceToProject(file.name, file);
     }
   };
 
@@ -49,29 +48,31 @@
     onDraggedOver = false;
   };
 
-  const handleChange = async (event: Event) => {
+  const handleChange = (event: Event): void => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
-      for (let file of input.files) {
-        await worker.addDictionarySourceToProject(file.name, file);
-      }
+      fileList = input.files;
     }
   };
 
-  const handleSave = () => {
-    //TODO
+  const handleSave = (): void => {
+    for (let file of fileList) {
+      worker.addDictionarySourceToProject(file.name, file);
+    }
   };
 
   const handleClose = () => {
     addSource = false;
+    manualEntry = false;
   };
 
   const handleUpload = () => {
-    //TODO
+    addSource = true;
+    manualEntry = false;
   };
 
   const handleDirectEntry = () => {
-    //TODO
+    manualEntry = true;
   };
 </script>
 
@@ -140,22 +141,26 @@
       onClickRight={handleDirectEntry} />
   </div>
 
-  <div
-    class="upload-zone"
-    class:drag-over={onDraggedOver}
-    on:drop|preventDefault={handleDrop}
-    on:dragover|preventDefault={handleDragOver}
-    on:dragleave|preventDefault={handleDragLeave}>
-    <img role="presentation" src="icons/upload-solid.svg" alt="" />
-    <span>Drag and drop here</span>
-    <span>or</span>
-    <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
-    <input
-      id={UPLOAD_INPUT_ID}
-      type="file"
-      on:change={handleChange}
-      data-cy="upload-spreadsheet" />
-  </div>
+  {#if manualEntry}
+    <ManualEntry />
+  {:else}
+    <div
+      class="upload-zone"
+      class:drag-over={onDraggedOver}
+      on:drop|preventDefault={handleDrop}
+      on:dragover|preventDefault={handleDragOver}
+      on:dragleave|preventDefault={handleDragLeave}>
+      <img role="presentation" src="icons/upload-solid.svg" alt="" />
+      <span>Drag and drop here</span>
+      <span>or</span>
+      <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
+      <input
+        id={UPLOAD_INPUT_ID}
+        type="file"
+        on:change={handleChange}
+        data-cy="upload-spreadsheet" />
+    </div>
+  {/if}
 
   <div class="save-zone">
     <Button isOutlined size="large" onClick={handleClose}>CLOSE</Button>
