@@ -76,7 +76,7 @@
     font-size: 1em;
   }
 
-  td>input {
+  td > input {
     height: 20px;
     width: 80%;
     border-radius: 2px;
@@ -94,9 +94,9 @@
 <div class="language__sources-manual-entry">
   <div class="language__sources-manual-entry-tablename">
     <h4>Table Name</h4>
-    <input data-cy="manual-entry-input-tablename"/>
+    <input data-cy="manual-entry-input-tablename" />
   </div>
-  
+
   <table>
     <thead>
       <th>Word</th>
