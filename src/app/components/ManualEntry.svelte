@@ -40,7 +40,7 @@
     border-collapse: collapse;
     width: 1400px;
     margin-top: 30px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     box-shadow: 0px 25px 40px 0px rgba(0, 0, 0, 0.1);
   }
 
