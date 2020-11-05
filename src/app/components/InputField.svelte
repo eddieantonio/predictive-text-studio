@@ -3,6 +3,7 @@
   export let id: string;
   export let value: any;
   export let subtext: string;
+  export let fullWidth: boolean;
 </script>
 
 <style>
@@ -16,6 +17,10 @@
     margin-bottom: 20px;
   }
 
+  .full-width {
+    width: 100%;
+  }
+
   input {
     font-family: var(--secondary-font), sans-serif;
     font-size: 18px;
@@ -23,6 +28,7 @@
     border-radius: 10px;
     border-width: 1px;
     border-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
   }
 
   .subtext {
@@ -32,7 +38,7 @@
   }
 </style>
 
-<div class="input_field">
+<div class="input_field" class:full-width={fullWidth}>
   <p class:label>{label}</p>
   <input type="text" {id} {value} />
   {#if subtext}
