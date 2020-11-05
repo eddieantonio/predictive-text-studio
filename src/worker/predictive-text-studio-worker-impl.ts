@@ -6,6 +6,7 @@ import {
 } from "@predictive-text-studio/lexical-model-compiler";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
+import { WordList } from "@common/types";
 
 export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
@@ -18,6 +19,14 @@ export class PredictiveTextStudioWorkerImpl
   async saveFile(name: string, file: File): Promise<ArrayBuffer> {
     const wordlist = await readExcel(await file.arrayBuffer());
     this.storage.saveFile(name, wordlist);
+    return await linkStorageToKmp(this.storage);
+  }
+
+  async readGoogleSheet(
+    name: string,
+    wordListObject: WordList
+  ): Promise<ArrayBuffer> {
+    this.storage.saveFile(name, wordListObject);
     return await linkStorageToKmp(this.storage);
   }
 
