@@ -1,9 +1,6 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-  "include": [
-    "../common/**/*",
-    "**/*"
-  ],
+  "include": ["../common/**/*", "**/*"],
   "compilerOptions": {
     "importHelpers": true,
     "strict": true,

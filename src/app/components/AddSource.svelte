@@ -132,7 +132,7 @@
 </style>
 
 {#if addSource}
-  <div class="arrow-button-zone">
+  <div class="arrow-button-zone" data-cy="add-source-window">
     <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
     <SplitButton
       {leftText}
@@ -149,7 +149,8 @@
       class:drag-over={onDraggedOver}
       on:drop|preventDefault={handleDrop}
       on:dragover|preventDefault={handleDragOver}
-      on:dragleave|preventDefault={handleDragLeave}>
+      on:dragleave|preventDefault={handleDragLeave}
+      data-cy="add-source-upload-zone">
       <img role="presentation" src="icons/upload-solid.svg" alt="" />
       <span>Drag and drop here</span>
       <span>or</span>
@@ -163,8 +164,19 @@
   {/if}
 
   <div class="save-zone">
-    <Button isOutlined size="large" onClick={handleClose}>CLOSE</Button>
-    <Button color="blue" isOutlined size="large" onClick={handleSave}>
+    <Button
+      isOutlined
+      size="large"
+      onClick={handleClose}
+      data-cy="close-add-source">
+      CLOSE
+    </Button>
+    <Button
+      color="blue"
+      isOutlined
+      size="large"
+      onClick={handleSave}
+      data-cy="save-source">
       SAVE
     </Button>
   </div>
