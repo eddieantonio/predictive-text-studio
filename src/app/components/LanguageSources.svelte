@@ -9,7 +9,7 @@
   }
 
   export let sources: DictionarySource[];
-  let addSource = false;
+  let addSource: boolean;
 
   /**
    * Handles the click when the add source button is pressed. Should show another section where user can upload file or open direct entry.
@@ -19,7 +19,7 @@
    */
   const handleAddSource = (): void => {
     addSource = true;
-    console.log("Add source button clicked");
+    console.log("Add button clicked");
   };
 
   /**
@@ -39,11 +39,6 @@
    * @return {void}
    */
   const handleDelete = (): void => {
-    const name = "Kinship Terms";
-    const index = sources.findIndex(function (item) {
-      return item.name == name;
-    });
-    sources.splice(index, 1);
     console.log("Delete button clicked");
   };
 </script>
@@ -147,5 +142,5 @@
   <Button color="blue" isOutlined size="large" onClick={handleAddSource}>
     Add Source
   </Button>
-  <AddSource {addSource} />
+  <AddSource bind:addSource />
 </div>
