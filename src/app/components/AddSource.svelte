@@ -6,7 +6,7 @@
 
   const leftText = "UPLOAD";
   const rightText = "DIRECT ENTRY";
-  export let addSource:boolean = false;
+  export let addSource: boolean = false;
   let onDraggedOver = false;
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
@@ -68,11 +68,11 @@
 
   const handleUpload = () => {
     //TODO
-  }
+  };
 
   const handleDirectEntry = () => {
     //TODO
-  }
+  };
 </script>
 
 <style>
@@ -133,7 +133,11 @@
 {#if addSource}
   <div class="arrow-button-zone">
     <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
-    <SplitButton leftText={leftText} rightText={rightText} onClickLeft={handleUpload} onClickRight={handleDirectEntry} />
+    <SplitButton
+      {leftText}
+      {rightText}
+      onClickLeft={handleUpload}
+      onClickRight={handleDirectEntry} />
   </div>
 
   <div
