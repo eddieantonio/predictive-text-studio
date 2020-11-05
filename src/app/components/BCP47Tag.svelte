@@ -1,29 +1,21 @@
 <script lang="ts">
-  import bcp47Parser from "bcp-47";
+  import InputField from "./InputField.svelte";
+  import * as bcp47 from "bcp-47";
   import worker from "../spawn-worker";
 
   const TAG_INPUT_ID = "tag-input";
 
-  let bcp47Tag = "";
-  let validTag = false;
-  let displayEnterBCP47Tag = true;
-  $: schema = bcp47Parser.parse(bcp47Tag);
-  $: validTag = bcp47Tag.length > 0 && schema.language != null;
-  $: displayEnterBCP47Tag = bcp47Tag == "" || validTag;
-  $: {
-    if (validTag) {
-      worker.setProjectData({ languages: [{ name: "", id: bcp47Tag }] });
-    }
+  $: tag = "";
+  $: schema = bcp47.parse(tag);
+  $: validTag = tag === "" || (tag.length > 0 && schema.language !== null);
+  $: error = validTag ? "" : "Invalid BCP 47 Tag";
+  $: if (validTag) {
+    worker.setProjectData({ languages: [{ name: "", id: tag }] });
   }
 </script>
 
-<style>
-  .error {
-    color: var(--red);
-  }
-</style>
-
-<input id={TAG_INPUT_ID} bind:value={bcp47Tag} />
-<label
-  class:error={!displayEnterBCP47Tag}
-  for={TAG_INPUT_ID}>{displayEnterBCP47Tag ? 'Enter BCP 47 tag' : 'Invalid tag'}</label>
+<InputField
+  id={TAG_INPUT_ID}
+  bind:value={tag}
+  bind:error
+  placeholder={'Enter the BCP 47 Tag'} />
