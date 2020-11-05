@@ -4,7 +4,7 @@
   import SplitButton from "./SplitButton.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
-  export let addSource: boolean;
+  export let addSource = false;
   let leftText = "UPLOAD";
   let rightText = "DIRECT ENTRY";
   let onDraggedOver = false;
@@ -77,7 +77,6 @@
     min-width: 200px;
     border: 3px dashed var(--gray-light);
     border-radius: 5px;
-
     line-height: 1.2;
   }
 
@@ -125,11 +124,7 @@
 
 {#if addSource}
   <div class="arrow-button-zone">
-    <img
-        src="assets/down-arrow.svg"
-        alt=""
-        role="presentation"
-        class="block" />
+    <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
     <SplitButton {leftText} {rightText} />
   </div>
 
