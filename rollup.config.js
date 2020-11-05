@@ -11,13 +11,18 @@ import * as child_process from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 
+import replace from '@rollup/plugin-replace';
+import { config as configDotenv } from 'dotenv';
+
 //////////////////////////////// Environment /////////////////////////////////
 const production = !process.env.ROLLUP_WATCH;
 const watchMode = !production;
 
 /////////////////////////////// Configuration ////////////////////////////////
 
-const appConfiguration = {
+configDotenv();
+
+export const appConfiguration = {
   input: "src/app/main.ts",
   output: {
     sourcemap: watchMode === true,
@@ -26,6 +31,11 @@ const appConfiguration = {
     file: "public/app.js",
   },
   plugins: [
+    replace({
+      "process.env.G_CLIENT_ID": JSON.stringify(process.env.CLIENT_ID),
+      "process.env.G_API_KEY": JSON.stringify(process.env.API_KEY),
+    }),
+
     svelte({
       dev: !production,
       preprocess: sveltePreprocess(),
