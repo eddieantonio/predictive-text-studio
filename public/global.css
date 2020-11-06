@@ -22,6 +22,15 @@
   --main-font: "Cabin";
   --secondary-font: "Roboto";
   --mono-font: "Roboto Mono";
+
+  /* Font-size variables */
+  --xxs: 0.75em;
+  --xs: 0.875em;
+  --s: 1em;
+  --m: 1.125em; 
+  --l: 1.25em;
+  --xl: 1.5em;
+  --xxl: 2.5em;
 }
 
 body {
@@ -107,3 +116,42 @@ a.button:focus {
 .button--large {
   padding: .625rem 3.75rem;
 }
+
+/**
+ * Utility classes for margin top
+ */
+.mt-s {
+  margin-top: 10px;
+}
+.mt-m {
+  margin-top: 20px;
+}
+.mt-l {
+  margin-top: 30px;
+}
+.mt-xl {
+  margin-top: 40px;
+}
+.mt-xxl {
+  margin-top: 50px;
+}
+
+/**
+ * Utility classes for margin bottom
+ */
+.mb-s {
+  margin-bottom: 10px;
+}
+.mb-m {
+  margin-bottom: 20px;
+}
+.mb-l {
+  margin-bottom: 30px;
+}
+.mb-xl {
+  margin-bottom: 40px;
+}
+.mb-xxl {
+  margin-bottom: 50px;
+}
+

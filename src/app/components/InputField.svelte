@@ -9,16 +9,12 @@
   .label {
     font-family: var(--main-font), sans-serif;
     font-weight: bold;
-    font-size: 14px;
-  }
-
-  .input_field {
-    margin-bottom: 20px;
+    font-size: var(--xs);
   }
 
   input {
     font-family: var(--secondary-font), sans-serif;
-    font-size: 18px;
+    font-size: var(--m);
     padding: 10px;
     border-radius: 10px;
     border-width: 1px;
@@ -28,11 +24,11 @@
   .subtext {
     font-family: var(--mono-font), monospace;
     color: var(--gray);
-    font-size: 12px;
+    font-size: var(--xxs);
   }
 </style>
 
-<div class="input_field">
+<div class="input_field mb-m">
   <p class:label>{label}</p>
   <input type="text" {id} {value} />
   {#if subtext}

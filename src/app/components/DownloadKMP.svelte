@@ -11,7 +11,6 @@
   .download-link--disabled {
     color: var(--gray-medium-dark);
     cursor: not-allowed;
-
     opacity: 25%;
     text-decoration: none;
   }

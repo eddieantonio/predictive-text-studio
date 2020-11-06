@@ -25,7 +25,7 @@
   .label {
     font-family: var(--main-font), sans-serif;
     font-weight: bold;
-    font-size: 14px;
+    font-size: var(--xs);
   }
 
   img {
