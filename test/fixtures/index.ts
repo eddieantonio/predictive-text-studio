@@ -1,4 +1,8 @@
-import { keyboardDataObj, StoredWordList } from "./../../src/worker/models";
+import {
+  keyboardDataObj,
+  StoredProjectData,
+  StoredWordList,
+} from "./../../src/worker/models";
 import type { WordList } from "@common/types";
 
 /**
@@ -20,6 +24,13 @@ export const exampleWordlist: WordList = [
   ["ȻSE", 1925],
   ["I", 1884],
 ];
+
+export const testStoredProjectData = {
+  id: 1,
+  langName: "English",
+  bcp47Tag: "en",
+  authorName: "UnknownAuthor",
+} as StoredProjectData;
 
 export const responseBody = {
   languages: [

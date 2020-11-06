@@ -13,7 +13,7 @@ test.before("keyman-api-service", () => {
 // Happy Path
 test("getLanaguageData to return fetch data from keyman API in an array", async (t) => {
   nock("https://api.keyman.com").get("/search?q=l").reply(200, responseBody);
-  await keymanApi.getLanaguageData().then((languages: keyboardDataObj[]) => {
+  await keymanApi.fetchLanaguageData().then((languages: keyboardDataObj[]) => {
     t.is(languages.length, 3);
   });
 });
@@ -23,7 +23,7 @@ test("getLanaguageData to catch the error", async (t) => {
   nock("https://api.keyman.com")
     .get("/search?q=l")
     .replyWithError({ code: "System Error" });
-  await keymanApi.getLanaguageData().catch((response) => {
+  await keymanApi.fetchLanaguageData().catch((response) => {
     t.is(response.code, "System Error");
   });
 });

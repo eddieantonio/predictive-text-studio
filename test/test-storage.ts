@@ -165,7 +165,7 @@ test("save Keyman keyboard data with addKeybaordData", async (t) => {
   const { db, storage } = t.context;
 
   t.is(await db.keyboardData.count(), 0);
-  await storage.addKeybaordData(
+  await storage.addKeyboardData(
     keymanKeyboardDataStub[0].langauge,
     keymanKeyboardDataStub[0].bcp47Tag
   );
@@ -175,7 +175,7 @@ test("save Keyman keyboard data with addKeybaordData", async (t) => {
 
 test("retrieve Keyman keyboard data with addKeybaordData", async (t) => {
   const { storage } = t.context;
-  await storage.addKeybaordData(
+  await storage.addKeyboardData(
     keymanKeyboardDataStub[0].langauge,
     keymanKeyboardDataStub[0].bcp47Tag
   );

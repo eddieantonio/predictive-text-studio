@@ -3,7 +3,6 @@ import { readExcel } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
-<<<<<<< HEAD
 import { RelevantKmpOptions } from "@common/kmp-json-file";
 
 /**
@@ -19,9 +18,7 @@ const defaultCopyright = "";
 function doNothing() {
   // intentionally empty
 }
-=======
 import { keyboardDataObj } from "./models";
->>>>>>> implement featchning and storing kmp data
 
 export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
@@ -35,6 +32,16 @@ export class PredictiveTextStudioWorkerImpl
   async updateBCP47Tag(bcp47Tag: string): Promise<void> {
     await this.storage.updateBCP47Tag(bcp47Tag);
     return this.generateKMPFromStorage();
+  }
+
+  async getLanguageData(): Promise<void> {
+    await this.keymanApi
+      .fetchLanaguageData()
+      .then((languages: keyboardDataObj[]) => {
+        languages.forEach(async (data) => {
+          await this.storage.addKeyboardData(data.langauge, data.bcp47Tag);
+        });
+      });
   }
 
   private async generateKMPFromStorage(): Promise<void> {
@@ -52,7 +59,6 @@ export class PredictiveTextStudioWorkerImpl
     }
   }
 
-<<<<<<< HEAD
   async addDictionarySourceToProject(
     name: string,
     contents: File
@@ -106,19 +112,5 @@ export class PredictiveTextStudioWorkerImpl
       version: version,
     };
     return this.storage.updateProjectData(storedData);
-=======
-  async getLanguageData(): Promise<void> {
-    await this.keymanApi
-      .fetchLanaguageData()
-      .then((languages: keyboardDataObj[]) => {
-        languages.forEach(async (data) => {
-          await this.storage.addKeyboardData(data.langauge, data.bcp47Tag);
-        });
-      });
-  }
-
-  updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    return this.storage.updateBCP47Tag(bcp47Tag);
->>>>>>> implement featchning and storing kmp data
   }
 }
