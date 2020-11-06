@@ -56,11 +56,14 @@ export class PredictiveTextStudioDexie extends Dexie {
         "++id, langName, bcp47Tag, authorName, modelID, copyright, version",
       /**
        * KMP keyboardData Table Scehma
-       * +------------------------+
-       * | bcp47Tag (primary key) |
-       * +------------------------+
-       * | language               |
-       * +------------------------+
+       * +------------------+
+       * | id (primary key) |
+       * +------------------+
+       * +------------------+
+       * | bcp47Tag         |
+       * +------------------+
+       * | language         |
+       * +------------------+
        */
       keyboardData: "++id, bcp47Tag, langauge",
     });
