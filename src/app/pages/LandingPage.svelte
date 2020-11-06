@@ -78,18 +78,18 @@
   }
 
   .masthead__title {
-    font-size: 2.5em;
+    font-size: var(--xxl);
     font-weight: 700;
   }
 
   .masthead__branding {
     display: inline;
     vertical-align: middle;
-    font-size: 1em;
+    font-size: var(--s);
   }
 
   .masthead__description {
-    font-size: 1.25em;
+    font-size: var(--l);
   }
 
   .masthead__image {
@@ -142,7 +142,7 @@
     border: 0;
     padding: 0;
 
-    font-size: 1.5em;
+    font-size: var(--xl);
     line-height: 1.5;
   }
 

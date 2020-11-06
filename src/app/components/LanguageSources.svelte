@@ -58,7 +58,6 @@
   table {
     border-collapse: collapse;
     width: 1400px;
-    margin-top: 30px;
     margin-bottom: 100px;
     box-shadow: 0px 25px 40px 0px rgba(0, 0, 0, 0.1);
   }
@@ -100,16 +99,14 @@
   .btn--inline {
     display: inline;
     padding: 0;
-
     border: 0;
     background-color: transparent;
-
-    font-size: 1em;
+    font-size: var(--s);
   }
 </style>
 
 <div class="language__sources">
-  <table>
+  <table class="mt-l">
     <thead>
       <tr>
         <th>Name</th>

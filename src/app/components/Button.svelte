@@ -14,8 +14,7 @@
   .subtext {
     font-family: var(--mono-font), monospace;
     color: var(--gray);
-    font-size: 12px;
-    margin-top: 10px;
+    font-size: var(--xxs);
   }
 
   .button-layout {
@@ -32,6 +31,6 @@
     class:button--outline={isOutlined}
     on:click={onClick}><slot /></button>
   {#if subtext}
-    <p class="subtext">{subtext}</p>
+    <p class="subtext mt-s">{subtext}</p>
   {/if}
 </div>

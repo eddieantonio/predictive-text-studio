@@ -132,7 +132,7 @@
 
   .languages__container--header p {
     font-family: Cabin, sans-serif;
-    font-size: 20px;
+    font-size: var(--l);
   }
 
   .languages__container--header img {
