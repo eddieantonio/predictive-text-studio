@@ -118,8 +118,8 @@ a.button:focus {
 }
 
 /**
-*
-*/
+ * Utility classes for margin top
+ */
 .mt-s {
   margin-top: 10px;
 }
@@ -136,6 +136,9 @@ a.button:focus {
   margin-top: 50px;
 }
 
+/**
+ * Utility classes for margin bottom
+ */
 .mb-s {
   margin-bottom: 10px;
 }
