@@ -1,6 +1,6 @@
 import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
-import { StoredWordList, keyboardDataObj, StoredProjectData } from "./models";
+import { StoredWordList, KeyboardData, StoredProjectData } from "./models";
 const DB_NAME = "dictionary_sources";
 const SCHEMA_VERSION = 3;
 
@@ -12,7 +12,7 @@ const PACKAGE_ID = 0;
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
   projectData: Dexie.Table<StoredProjectData, number>;
-  keyboardData: Dexie.Table<keyboardDataObj, number>;
+  keyboardData: Dexie.Table<KeyboardData, number>;
 
   constructor(options?: DexieOptions) {
     super(DB_NAME, options);
@@ -163,7 +163,7 @@ export default class Storage {
   /**
    * Retrieves every keyboard data in the database as a list of {language, bcp47Tag}
    */
-  fetchKeyboardData(): Promise<keyboardDataObj[]> {
+  fetchKeyboardData(): Promise<KeyboardData[]> {
     return this.db.keyboardData.toArray();
   }
 }

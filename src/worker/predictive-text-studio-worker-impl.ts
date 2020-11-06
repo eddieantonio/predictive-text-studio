@@ -1,9 +1,10 @@
-import { KeymanApi } from "./keyman-api-service";
+import { KeymanAPI } from "./keyman-api-service";
 import { readExcel } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
+import { KeyboardData } from "./models";
 
 /**
  * The default model version. 1.0.0 also happens to be the minimum model
@@ -18,13 +19,12 @@ const defaultCopyright = "";
 function doNothing() {
   // intentionally empty
 }
-import { keyboardDataObj } from "./models";
 
 export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
   constructor(
     private storage = new Storage(),
-    private keymanApi = new KeymanApi()
+    private keymanAPI = new KeymanAPI()
   ) {
     this.getLanguageData();
   }
@@ -35,13 +35,11 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   async getLanguageData(): Promise<void> {
-    await this.keymanApi
-      .fetchLanaguageData()
-      .then((languages: keyboardDataObj[]) => {
-        languages.forEach(async (data) => {
-          await this.storage.addKeyboardData(data.langauge, data.bcp47Tag);
-        });
+    this.keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
+      languages.forEach(async (data) => {
+        await this.storage.addKeyboardData(data.langauge, data.bcp47Tag);
       });
+    });
   }
 
   private async generateKMPFromStorage(): Promise<void> {

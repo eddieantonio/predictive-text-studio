@@ -57,7 +57,7 @@ export interface StoredProjectData {
   version?: string;
 }
 
-export interface keyboardDataObj {
+export interface KeyboardData {
   /**
    * Store bcp47Tag as the primarykey
    */
@@ -69,9 +69,9 @@ export interface keyboardDataObj {
 }
 
 /**
- * KMP endpoint returning object type
+ * KMP endpoint returning object type. Doc: https://help.keyman.com/developer/cloud/search/1.0/#toc-searchlanguage-object
  */
-export interface KeymanObj {
+export interface SearchLanguage {
   keyboards: Array<string>;
   id: string;
   name: string;

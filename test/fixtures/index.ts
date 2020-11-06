@@ -1,5 +1,5 @@
 import {
-  keyboardDataObj,
+  KeyboardData,
   StoredProjectData,
   StoredWordList,
 } from "./../../src/worker/models";
@@ -50,6 +50,6 @@ export const storedFileStub = {
   wordlist: [["test", 1]],
 } as StoredWordList;
 
-export const keymanKeyboardDataStub: keyboardDataObj[] = [
+export const keymanKeyboardDataStub: KeyboardData[] = [
   { bcp47Tag: "AB", langauge: "AABBCCDD" },
 ];
