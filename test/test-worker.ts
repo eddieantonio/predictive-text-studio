@@ -29,7 +29,7 @@ test.todo(
 import Storage from "@worker/storage";
 import * as sinon from "sinon";
 import * as compiler from "@predictive-text-studio/lexical-model-compiler";
-import { keymanKeyboardDataStub, storedFileStub } from "./fixtures/index";
+import { storedFileStub } from "./fixtures/index";
 import { KeymanApi } from "@worker/keyman-api-service";
 import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
 global.fetch = require("node-fetch");
