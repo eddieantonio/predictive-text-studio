@@ -16,10 +16,9 @@ export class KeymanApi {
     this.langageArray = [];
     this.url = new URL(this.baseUrl);
     this.url.search = new URLSearchParams(this.params).toString();
-    console.log(this.url.href);
   }
 
-  async getLanaguageData(): Promise<keyboardDataObj[]> {
+  async fetchLanaguageData(): Promise<keyboardDataObj[]> {
     return fetch(this.url.href)
       .then((response) => response.json())
       .then((data: { languages: Array<KeymanObj> }) => {

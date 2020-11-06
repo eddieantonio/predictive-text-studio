@@ -219,7 +219,7 @@ export default class Storage {
   /**
    * Save all keyboard info into the database
    */
-  addKeybaordData(langauge: string, bcp47: string): Promise<void> {
+  addKeyboardData(langauge: string, bcp47: string): Promise<void> {
     return this.db.transaction("readwrite", this.db.keyboardData, async () => {
       await this.db.keyboardData.put({ langauge, bcp47Tag: bcp47 });
     });

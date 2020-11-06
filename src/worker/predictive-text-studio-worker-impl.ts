@@ -109,10 +109,10 @@ export class PredictiveTextStudioWorkerImpl
 =======
   async getLanguageData(): Promise<void> {
     await this.keymanApi
-      .getLanaguageData()
+      .fetchLanaguageData()
       .then((languages: keyboardDataObj[]) => {
         languages.forEach(async (data) => {
-          await this.storage.addKeybaordData(data.langauge, data.bcp47Tag);
+          await this.storage.addKeyboardData(data.langauge, data.bcp47Tag);
         });
       });
   }

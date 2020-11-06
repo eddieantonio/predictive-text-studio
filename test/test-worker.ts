@@ -44,9 +44,6 @@ test.before("optional title", () => {
   sinon
     .stub(storageStub, "fetchAllFiles")
     .returns(Promise.resolve([storedFileStub]));
-  // sinon
-  //   .stub(keymanApiMock, "getLanaguageData")
-  //   .returns(Promise.resolve(keymanKeyboardDataStub));
   workerWrapper = new PredictiveTextStudioWorkerImpl(
     storageStub,
     keymanApiMock
@@ -66,12 +63,6 @@ test("compile model", async (t) => {
   compilerMock.verify();
   t.pass();
 });
-
-// test("fetch and save Keyman keyboard data", async (t) => {
-//   // await keymanApiMock.getLanaguageData().then((aaa) => {
-//   //   console.log(aaa);
-//   // });
-// });
 
 test("compile model should throws error when no file is found in the IndexedDB", async (t) => {
   const storageStub = new Storage();
