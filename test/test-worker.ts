@@ -3,7 +3,7 @@ import test from "ava";
 import * as sinon from "sinon";
 import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
 import Storage from "@worker/storage";
-import { StoredProjectData } from "@worker/models";
+import { StoredProjectData } from "@worker/storage-models";
 global.fetch = require("node-fetch");
 
 test("it should set project data and update to the database", async (t) => {

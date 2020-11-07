@@ -1,10 +1,10 @@
+import { KeyboardData } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
-import { KeyboardData } from "./models";
 
 /**
  * The default model version. 1.0.0 also happens to be the minimum model

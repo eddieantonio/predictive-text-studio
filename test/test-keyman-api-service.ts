@@ -1,7 +1,7 @@
-import { responseBody } from "./fixtures/index";
+import { responseBody } from "./fixtures";
 import test from "ava";
 import { KeymanAPI } from "@worker/keyman-api-service";
-import { KeyboardData } from "@worker/models";
+import { KeyboardData } from "@worker/storage-models";
 import * as nock from "nock";
 global.fetch = require("node-fetch");
 

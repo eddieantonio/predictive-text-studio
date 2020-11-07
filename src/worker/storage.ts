@@ -1,6 +1,10 @@
 import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
-import { StoredWordList, KeyboardData, StoredProjectData } from "./models";
+import {
+  StoredWordList,
+  KeyboardData,
+  StoredProjectData,
+} from "./storage-models";
 const DB_NAME = "dictionary_sources";
 const SCHEMA_VERSION = 3;
 

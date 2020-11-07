@@ -1,5 +1,11 @@
-import { KeyboardData, SearchLanguage } from "./models";
+import { SearchLanguage } from "./models";
+import { KeyboardData } from "./storage-models";
 
+/**
+ * @file KeymanAPI class to implement all services provided by official Keyman API
+ * Note: Currently this class is used for the functionality to fetch all existing keyboard languages
+ * and more function(s) could be added in the future
+ */
 export class KeymanAPI {
   /**
    * API configs

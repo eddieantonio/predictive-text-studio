@@ -2,7 +2,7 @@ import {
   KeyboardData,
   StoredProjectData,
   StoredWordList,
-} from "./../../src/worker/models";
+} from "./../../src/worker/storage-models";
 import type { WordList } from "@common/types";
 
 /**
@@ -34,13 +34,24 @@ export const testStoredProjectData = {
 
 export const responseBody = {
   languages: [
-    { id: "km", name: "Khmer (Battambang Khmer)", keyboards: [Array] },
+    {
+      id: "km",
+      name: "Khmer (Battambang Khmer)",
+      keyboards: [
+        "basic_kbdkhmr",
+        "basic_kbdkni",
+        "kbdkhmr",
+        "khmer10",
+        "khmer_angkor",
+        "sil_khmer",
+      ],
+    },
     {
       id: "kxm",
       name: "Khmer, Northern (Khmer Lue)",
-      keyboards: [Array],
+      keyboards: ["sil_khmer"],
     },
-    { id: "kdt", name: "Kuay (Old Khmer)", keyboards: [Array] },
+    { id: "kdt", name: "Kuay (Old Khmer)", keyboards: ["sil_khmer"] },
   ],
 };
 
