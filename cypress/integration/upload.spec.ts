@@ -12,14 +12,15 @@ describe("Upload from the the landing page", function () {
   beforeEach(() => {
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
+    cy.visit("/");
+    cy.disableSmoothScroll();
   });
 
   it("should find a button to press to upload a file", function () {
-    cy.visit("/");
     // we need a valid bcp47Tag to update the packageInfo
-    cy.get("#tag-input").type("zh", { force: true });
+    cy.get("#tag-input").scrollIntoView().should("be.visible");
+    cy.get("#tag-input").type("zh");
 
-    console.log(downloadFolder);
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
     cy.get("[data-cy=quick-start]")

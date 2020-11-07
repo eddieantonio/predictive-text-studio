@@ -37,3 +37,15 @@ Cypress.Commands.add("allowUnlimitedDownloadsToFolder", (folderName) => {
     );
   }
 });
+
+Cypress.Commands.add("disableSmoothScroll", () => {
+  /**
+   * Disable css smooth scroll, that doesn't plays nice with cypress.
+   * See https://github.com/cypress-io/cypress/issues/3200
+   */
+  cy.document().then((document) => {
+    const node = document.createElement("style");
+    node.innerHTML = "html { scroll-behavior: inherit !important; }";
+    document.body.appendChild(node);
+  });
+});
