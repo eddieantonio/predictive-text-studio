@@ -179,6 +179,10 @@
     margin: 1rem auto 2rem;
   }
 
+  legend {
+    padding-bottom: 10px;
+  }
+
   @keyframes descend {
     0% {
       opacity: 20%;
@@ -254,7 +258,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <legend> Step 1: Select your language </legend>
+        <legend> Step 1: Enter your language </legend>
         <BCP47Tag />
       </fieldset>
 
