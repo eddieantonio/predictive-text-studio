@@ -40,7 +40,7 @@ Cypress.Commands.add("allowUnlimitedDownloadsToFolder", (folderName) => {
 
 Cypress.Commands.add("disableSmoothScroll", () => {
   /**
-   * Disable css smooth scroll, that doesn't plays nice with cypress.
+   * Disable css smooth scroll to avoid using "{ force:true }" in .type.
    * See https://github.com/cypress-io/cypress/issues/3200
    */
   cy.document().then((document) => {
