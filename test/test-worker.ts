@@ -13,11 +13,11 @@ test("it should set project data and update to the database", async (t) => {
     bcp47Tag: "en",
     authorName: "UnknownAuthor",
   } as StoredProjectData;
-  const keymanAPIMock = new KeymanAPI();
+  const keymanAPI = new KeymanAPI();
   const storageStub = new Storage();
   const workerWrapper = new PredictiveTextStudioWorkerImpl(
     storageStub,
-    keymanAPIMock
+    keymanAPI
   );
   const metadata = { languages: [{ name: "English", id: "en" }] };
   workerWrapper.setProjectData(metadata);
