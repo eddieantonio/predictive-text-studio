@@ -211,6 +211,7 @@
 
 <main>
   <header class="masthead">
+
     <!-- wrapper div required to do margin: auto; trick -->
     <div class="masthead__content">
       <div class="masthead__copy">
