@@ -16,7 +16,6 @@ export class KeymanAPI {
    */
   params = { q: "" };
   url: URL;
-
   constructor() {
     this.url = new URL(this.baseUrl);
     this.url.search = new URLSearchParams(this.params).toString();
@@ -27,6 +26,7 @@ export class KeymanAPI {
     return fetch(this.url.href)
       .then((response) => response.json())
       .then((data: { languages: SearchLanguage[] }) => {
+        languages = [];
         data.languages.forEach((element) => {
           languages.push({
             bcp47Tag: element.id,
