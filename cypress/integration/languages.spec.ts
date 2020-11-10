@@ -4,34 +4,32 @@ describe("AutoComplete Component", function () {
   });
 
   it("should display the suggestion list", function () {
-    cy.get("[data-cy=autocomplete-input]")
+    getDataCY("autocomplete-input")
       .type("e")
       .then(() => {
-        cy.get("[data-cy=autocomplete-suggestions]")
-          .its("length")
-          .should("eq", 3);
+        getDataCY("autocomplete-suggestions").its("length").should("eq", 3);
       });
   });
 
   it("should not display the suggestion list if gibberish is entered", function () {
-    cy.get("[data-cy=autocomplete-input]")
+    getDataCY("autocomplete-input")
       .type("a")
       .then(() => {
-        cy.get("[data-cy=autocomplete-suggestions]").should("not.be.visible");
+        getDataCY("autocomplete-suggestions").should("not.be.visible");
       });
   });
 
   it("should able to select the item in the list", function () {
-    cy.get("[data-cy=autocomplete-input]")
+    getDataCY("autocomplete-input")
       .type("e")
       .then(() => {
-        cy.get("[data-cy=autocomplete-suggestions]").first().click();
-        cy.get("[data-cy=autocomplete-input]").should("have.value", "english");
+        getDataCY("autocomplete-suggestions").first().click();
+        getDataCY("autocomplete-input").should("have.value", "english");
       });
   });
 
   it("should able to select the item in the list with down and enter key", function () {
-    cy.get("[data-cy=autocomplete-input]")
+    getDataCY("autocomplete-input")
       .type("e")
       .type("{downArrow}")
       .type("{downArrow}")
@@ -40,7 +38,7 @@ describe("AutoComplete Component", function () {
   });
 
   it("should able to select the item in the list with up and enter key", function () {
-    cy.get("[data-cy=autocomplete-input]")
+    getDataCY("autocomplete-input")
       .type("e")
       .type("{upArrow}")
       .type("{upArrow}")
@@ -48,3 +46,7 @@ describe("AutoComplete Component", function () {
       .should("have.value", "enn");
   });
 });
+
+function getDataCY(name: string) {
+  return cy.get(`[data-cy=${name}]`);
+}

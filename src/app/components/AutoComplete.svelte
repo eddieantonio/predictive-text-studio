@@ -1,4 +1,5 @@
 <script lang="ts">
+  // TODO: the following interface should be removed once #33 is done 
   interface dataObj {
     bcp47Tag: string;
     langauge: string;
@@ -11,12 +12,13 @@
 
   // Testing Data
   export let results: dataObj[] = [];
-  // To Store Filted array
+  // To store Filted array
   let filetred: dataObj[] = [];
+  // To store selected language
   let selected: string = "";
   // Toggle to show search list
   let show = false;
-  //  Index of Previous focus element
+  // Index of Previous focus element
   let prevIndex = -1;
   // Index of focus element
   let index = -1;
@@ -29,7 +31,7 @@
       return a.test(item.langauge.toUpperCase());
     });
   }
-
+  
   function closeSuggestion() {
     show = false;
   }
@@ -150,7 +152,9 @@
     on:input={(event) => onChange(event)}
     data-cy="autocomplete-input" />
   {#if show}
-    <ul class="autocomplete__suggestion-list" use:clickOutside={closeSuggestion}>
+    <ul
+      class="autocomplete__suggestion-list"
+      use:clickOutside={closeSuggestion}>
       {#each filetred as result}
         <li
           class="autocomplete__suggestion-item"
