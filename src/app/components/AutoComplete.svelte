@@ -5,6 +5,14 @@
       bcp47Tag: "en",
       langauge: "english",
     },
+    {
+      bcp47Tag: "en",
+      langauge: "enn",
+    },
+    {
+      bcp47Tag: "en",
+      langauge: "ewx",
+    },
   ];
   // To Store Filted array
   let filetred: any[] = [];
@@ -20,7 +28,6 @@
   function onChange(event: any) {
     show = true;
     filetred = results.filter((item: any) => {
-      console.log(item.langauge);
       let a = new RegExp("^" + event.target.value.toUpperCase());
       return a.test(item.langauge.toUpperCase());
     });
@@ -29,8 +36,8 @@
     show = false;
   }
   // To close
-  function clickOutside(node: any, onEventFunction: any) {
-    const handleClick = (event: any) => {
+  function clickOutside(node: HTMLUListElement, onEventFunction: Function) {
+    const handleClick = (event: MouseEvent) => {
       var path = event.composedPath();
 
       if (!path.includes(node)) {
@@ -54,13 +61,12 @@
   }
 
   // down arraow
-  function handleKeydown({ keyCode }: any) {
-    if (keyCode !== 38 && keyCode !== 40) return;
+  function handleKeydown({ key }: KeyboardEvent) {
+    if (key !== "ArrowDown" && key !== "ArrowUp") return;
     const current: any = document.getElementsByClassName("item")[i];
     const items = [...document.getElementsByClassName("item")];
     i += 1;
     const currentIndex = items.indexOf(current);
-    console.log(current);
     // let newIndex;
     if (prev !== -1) {
       document.getElementsByClassName("item")[prev].classList.remove("active");
@@ -70,16 +76,14 @@
     if (currentIndex === -1) {
       i = 0;
     } else {
-      if (keyCode === 38) {
+      if (key === "ArrowUp") {
         i = (currentIndex + items.length - 1) % items.length;
         prev = currentIndex;
         current.classList.add("active");
-        console.log(current);
       } else {
         // Next key
         prev = currentIndex;
         i = (currentIndex + 1) % items.length;
-        console.log(i);
       }
     }
   }
