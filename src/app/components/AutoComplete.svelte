@@ -149,6 +149,7 @@
     color: var(--gray);
     font-size: var(--xxs);
   }
+  /*In Sevelte, dynamic class will only work if it's a global style*/
   :global(.autocomplete-active) {
     margin: 0;
     background-color: var(--gray-highlight);
@@ -179,5 +180,5 @@
       {/each}
     </ul>
   {/if}
-  <p class="autocomplete__subtext">BCP47Tag: {subtext}</p>
+  <p class="autocomplete__subtext" data-cy="autocomplete-subtext">BCP47Tag: {subtext}</p>
 </div>

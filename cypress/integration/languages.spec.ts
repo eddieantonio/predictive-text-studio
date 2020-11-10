@@ -45,6 +45,15 @@ describe("AutoComplete Component", function () {
       .type("{enter}")
       .should("have.value", "enn");
   });
+
+  it("should display the correct BCP47 subtext", function () {
+    getDataCY("autocomplete-input")
+      .type("e")
+      .then(() => {
+        getDataCY("autocomplete-suggestions").first().click();
+        getDataCY("autocomplete-subtext").should("have.text", "BCP47Tag: en");
+      });
+  });
 });
 
 function getDataCY(name: string) {
