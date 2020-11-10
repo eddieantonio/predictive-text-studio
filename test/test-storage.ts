@@ -161,22 +161,22 @@ test("retrieve project data from the database", async (t) => {
   t.is(version, "1.0.0");
 });
 
-test("save Keyman keyboard data with addKeybaordData", async (t) => {
+test("save Keyman keyboard data with addKeyboardData", async (t) => {
   const { db, storage } = t.context;
 
   t.is(await db.keyboardData.count(), 0);
   await storage.addKeyboardData(
-    keymanKeyboardDataStub[0].langauge,
+    keymanKeyboardDataStub[0].language,
     keymanKeyboardDataStub[0].bcp47Tag
   );
 
   t.is(await db.keyboardData.count(), 1);
 });
 
-test("retrieve Keyman keyboard data with addKeybaordData", async (t) => {
+test("retrieve Keyman keyboard data with addKeyboardData", async (t) => {
   const { storage } = t.context;
   await storage.addKeyboardData(
-    keymanKeyboardDataStub[0].langauge,
+    keymanKeyboardDataStub[0].language,
     keymanKeyboardDataStub[0].bcp47Tag
   );
   await storage.fetchKeyboardData().then((data) => {

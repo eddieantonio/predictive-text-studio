@@ -37,7 +37,7 @@ export class PredictiveTextStudioWorkerImpl
   async getLanguageData(): Promise<void> {
     this.keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
       languages.forEach(async (data) => {
-        await this.storage.addKeyboardData(data.langauge, data.bcp47Tag);
+        await this.storage.addKeyboardData(data.language, data.bcp47Tag);
       });
     });
   }

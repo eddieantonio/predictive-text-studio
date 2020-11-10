@@ -69,5 +69,5 @@ export interface KeyboardData {
   /**
    * Keyboard Language of the bcp47Tag
    */
-  langauge: string;
+  language: string;
 }

@@ -69,7 +69,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * | language         |
        * +------------------+
        */
-      keyboardData: "++id, bcp47Tag, langauge",
+      keyboardData: "++id, bcp47Tag, language",
     });
 
     /* The assignments are not required by the runtime, however, they are
@@ -158,9 +158,9 @@ export default class Storage {
   /**
    * Save all keyboard info into the database
    */
-  addKeyboardData(langauge: string, bcp47: string): Promise<void> {
+  addKeyboardData(language: string, bcp47: string): Promise<void> {
     return this.db.transaction("readwrite", this.db.keyboardData, async () => {
-      await this.db.keyboardData.put({ langauge, bcp47Tag: bcp47 });
+      await this.db.keyboardData.put({ language, bcp47Tag: bcp47 });
     });
   }
 

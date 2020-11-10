@@ -62,5 +62,5 @@ export const storedFileStub = {
 } as StoredWordList;
 
 export const keymanKeyboardDataStub: KeyboardData[] = [
-  { bcp47Tag: "AB", langauge: "AABBCCDD" },
+  { bcp47Tag: "AB", language: "AABBCCDD" },
 ];

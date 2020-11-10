@@ -14,12 +14,12 @@ export class KeymanAPI {
   /**
    * Query all languages data, doc: https://help.keyman.com/developer/cloud/search/1.0/
    */
-  params = { q: "l" };
+  params = { q: "" };
   url: URL;
-  langageArray: Array<KeyboardData>;
+  languages: KeyboardData[];
 
   constructor() {
-    this.langageArray = [];
+    this.languages = [];
     this.url = new URL(this.baseUrl);
     this.url.search = new URLSearchParams(this.params).toString();
   }
@@ -29,14 +29,14 @@ export class KeymanAPI {
       .then((response) => response.json())
       .then((data: { languages: SearchLanguage[] }) => {
         data.languages.forEach((element) => {
-          this.langageArray.push({
+          this.languages.push({
             bcp47Tag: element.id,
-            langauge: element.name,
+            language: element.name,
           });
         });
       })
       .then(() => {
-        return this.langageArray;
+        return this.languages;
       });
   }
 }
