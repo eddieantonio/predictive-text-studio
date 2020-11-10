@@ -16,6 +16,11 @@ export class KeymanAPI {
    */
   params = { q: "" };
   url: URL;
+<<<<<<< HEAD
+=======
+  langageArray: KeyboardData[];
+
+>>>>>>> pre commit refromat
   constructor() {
     this.url = new URL(this.baseUrl);
     this.url.search = new URLSearchParams(this.params).toString();

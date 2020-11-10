@@ -174,9 +174,7 @@
         <li
           class="autocomplete__suggestion-item"
           data-cy="autocomplete-suggestions">
-          <div on:click={() => selectedList(result)}>
-            {result.langauge}
-          </div>
+          <div on:click={() => selectedList(result)}>{result.langauge}</div>
         </li>
       {/each}
     </ul>
