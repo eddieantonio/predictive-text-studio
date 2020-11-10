@@ -16,27 +16,26 @@ export class KeymanAPI {
    */
   params = { q: "" };
   url: URL;
-  languages: KeyboardData[];
 
   constructor() {
-    this.languages = [];
     this.url = new URL(this.baseUrl);
     this.url.search = new URLSearchParams(this.params).toString();
   }
 
   fetchLanaguageData(): Promise<KeyboardData[]> {
+    let languages: KeyboardData[];
     return fetch(this.url.href)
       .then((response) => response.json())
       .then((data: { languages: SearchLanguage[] }) => {
         data.languages.forEach((element) => {
-          this.languages.push({
+          languages.push({
             bcp47Tag: element.id,
             language: element.name,
           });
         });
       })
       .then(() => {
-        return this.languages;
+        return languages;
       });
   }
 }
