@@ -30,11 +30,11 @@
     });
   }
 
-  function toggle() {
+  function closeSuggestion() {
     show = false;
   }
 
-  // To close
+  // If anywhere on the screen is clicked
   function clickOutside(node: HTMLUListElement, onEventFunction: Function) {
     const handleClick = (event: MouseEvent) => {
       const path = event.composedPath();
@@ -150,7 +150,7 @@
     on:input={(event) => onChange(event)}
     data-cy="autocomplete-input" />
   {#if show}
-    <ul class="autocomplete__suggestion-list" use:clickOutside={toggle}>
+    <ul class="autocomplete__suggestion-list" use:clickOutside={closeSuggestion}>
       {#each filetred as result}
         <li
           class="autocomplete__suggestion-item"

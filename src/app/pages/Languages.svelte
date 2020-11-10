@@ -41,6 +41,7 @@
       },
     ],
   };
+  // TODO: Temporary data placeholder for autocorrect component and will be removed once #33 is done
   let testingData: any = [
     {
       bcp47Tag: "en",
@@ -214,6 +215,7 @@
           <LanguageSources sources={languageInformation.sources} />
         {/if}
       </div>
+      <!-- TODO: A placeholder autocorrect component and will be removed once #33 is done -->
       <AutoComplete results="{testingData}"/>
     </div>
   </div>
