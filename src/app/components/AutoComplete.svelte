@@ -3,6 +3,11 @@
     bcp47Tag: string;
     langauge: string;
   }
+  enum keyboardKey {
+    Up = "ArrowUp",
+    Down = "ArrowDown",
+  }
+
   // Testing Data
   export let results: dataObj[] = [
     {
@@ -26,7 +31,7 @@
   //  Index of Previous focus element
   let prevIndex = -1;
   // Index of focus element
-  let index = 0;
+  let index = -1;
 
   // Input to search
   function onChange(event: any) {
@@ -63,33 +68,77 @@
     selected = type;
   }
 
+  const mod = (a: number, n: number) => {
+    return a - n * Math.floor(a / n);
+  };
   // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
-    if (key !== "ArrowDown" && key !== "ArrowUp") return;
-    const currentElement: any = document.getElementsByClassName("autocomplete__suggestion-item")[index];
-    const items = [...document.getElementsByClassName("autocomplete__suggestion-item")];
-    const currentIndex = items.indexOf(currentElement);
-    // let newIndex;
-    if (prevIndex !== -1) {
-      document
-        .getElementsByClassName("autocomplete__suggestion-item")
-        [prevIndex].classList.remove("autocomplete-active");
-    }
-
-    if (currentIndex === -1) {
-      index = 0;
-    } else {
-      if (key === "ArrowUp") {
-        prevIndex = currentIndex;
-        index = (currentIndex + items.length - 1) % items.length;
-        currentElement.classList.add("autocomplete-active");
+    if (key !== keyboardKey.Down && key !== keyboardKey.Up) return;
+    if (key == keyboardKey.Down) {
+      prevIndex = index;
+      index += 1;
+    } else if (key == keyboardKey.Up) {
+      if (index == -1) {
+        index = -1;
       } else {
-        // Next key
-        prevIndex = currentIndex;
-        index = (currentIndex + 1) % items.length;
-        currentElement.classList.add("autocomplete-active");
+        prevIndex = index;
+        index -= 1;
       }
     }
+    const allItems = [
+      ...document.getElementsByClassName("autocomplete__suggestion-item"),
+    ];
+    // if (Object.is(index, NaN)) {
+    //   console.log("hello");
+    //   index = -1;
+    // }
+    // console.log(allItems);
+    // console.log(index);
+    // console.log(allItems.length);
+    index = mod(index, allItems.length);
+    // console.log(index);
+
+    const currentElement: any = document.getElementsByClassName(
+      "autocomplete__suggestion-item"
+    )[index];
+    currentElement.classList.add("autocomplete-active");
+    document
+      .getElementsByClassName("autocomplete__suggestion-item")
+      [prevIndex].classList.remove("autocomplete-active");
+    console.log(currentElement);
+    // index = index % filetred.length;
+    // const currentElement: any = document.getElementsByClassName(
+    //   "autocomplete__suggestion-item"
+    // )[index];
+    // currentElement.classList.add("autocomplete-active");
+    // console.log(currentElement);
+    // const currentElement: any = document.getElementsByClassName(
+    //   "autocomplete__suggestion-item"
+    // )[index];
+    // const items = [
+    //   ...document.getElementsByClassName("autocomplete__suggestion-item"),
+    // ];
+    // const currentIndex = items.indexOf(currentElement);
+    // // let newIndex;
+    // if (prevIndex !== -1) {
+    //   document
+    //     .getElementsByClassName("autocomplete__suggestion-item")
+    //     [prevIndex].classList.remove("autocomplete-active");
+    // }
+    // currentElement.classList.add("autocomplete-active");
+    // console.log(currentIndex)
+    // if (currentIndex === -1) {
+    //   index = 0;
+    // }
+
+    // if (key === "ArrowUp") {
+    //   prevIndex = currentIndex;
+    //   index = (currentIndex - 1) % items.length;
+    // } else {
+    //   // Next key
+    //   prevIndex = currentIndex;
+    //   index = (currentIndex + 1) % items.length;
+    // }
   }
 </script>
 
@@ -119,7 +168,7 @@
     text-decoration: none;
     z-index: 5;
   }
-  .autocomplete__suggestion-item{
+  .autocomplete__suggestion-item {
     font-size: 18px;
     font-style: bold;
     padding: 10px 15px;
