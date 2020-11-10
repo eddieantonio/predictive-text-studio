@@ -1,5 +1,5 @@
 <script lang="ts">
-  // TODO: the following interface should be removed once #33 is done 
+  // TODO: the following interface should be removed once #33 is done
   interface dataObj {
     bcp47Tag: string;
     langauge: string;
@@ -9,7 +9,8 @@
     Down = "ArrowDown",
     Enter = "Enter",
   }
-
+  export let label = "";
+  export let subtext = "";
   // Testing Data
   export let results: dataObj[] = [];
   // To store Filted array
@@ -31,7 +32,7 @@
       return a.test(item.langauge.toUpperCase());
     });
   }
-  
+
   function closeSuggestion() {
     show = false;
   }
@@ -53,9 +54,10 @@
   }
 
   // On select item in list
-  function selectedList(type: string) {
+  function selectedList(data: dataObj) {
     show = false;
-    selected = type;
+    selected = data.langauge;
+    subtext = data.bcp47Tag;
   }
 
   const mod = (a: number, n: number) => {
@@ -82,6 +84,7 @@
       }
     } else if (key == keyboardKey.Enter) {
       selected = filetred[index].langauge;
+      subtext = filetred[index].bcp47Tag;
       show = false;
     }
     const allItems = [
@@ -105,37 +108,46 @@
     position: relative;
     width: fit-content;
   }
-
+  .autocomplete__label {
+    font-family: var(--main-font), sans-serif;
+    font-weight: bold;
+    font-size: var(--xs);
+  }
   .autocomplete__input {
     font-family: var(--secondary-font), sans-serif;
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 10px;
+    font-size: var(--m);
+    padding: var(--sb-xs);
+    border-radius: var(--sb-xs);
     border-width: 1px;
     border-color: rgba(0, 0, 0, 0.2);
   }
   .autocomplete__suggestion-list {
     position: absolute;
-    padding: 0 0 10px 0;
+    padding: 0 0 var(--sb-xs) 0;
     margin: 0;
     width: 100%;
     background: white;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 0 0 10px 10px;
+    box-shadow: 0px var(--sb-xs) var(--sb-m) rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 var(--sb-xs) var(--sb-xs);
     list-style-type: none;
     text-decoration: none;
     z-index: 5;
   }
   .autocomplete__suggestion-item {
-    font-size: 18px;
+    font-size: var(--m);
     font-style: bold;
-    padding: 10px 15px;
+    padding: var(--sb-xs) var(--sb-s);
     overflow: hidden;
-    border-right: solid 15px rgba(0, 0, 0, 0);
+    border-right: solid var(--sb-s) rgba(0, 0, 0, 0);
   }
   .autocomplete__suggestion-item:hover {
     cursor: pointer;
     background-color: var(--gray-highlight);
+  }
+  .autocomplete__subtext {
+    font-family: var(--mono-font), monospace;
+    color: var(--gray);
+    font-size: var(--xxs);
   }
   :global(.autocomplete-active) {
     margin: 0;
@@ -145,6 +157,9 @@
 
 <svelte:window on:keydown={handleKeydown} />
 <div class="autocomplete">
+  {#if label !== ''}
+    <p class="autocomplete__label">{label}</p>
+  {/if}
   <input
     class="autocomplete__input"
     value={selected}
@@ -159,11 +174,12 @@
         <li
           class="autocomplete__suggestion-item"
           data-cy="autocomplete-suggestions">
-          <div on:click={() => selectedList(result.langauge)}>
+          <div on:click={() => selectedList(result)}>
             {result.langauge}
           </div>
         </li>
       {/each}
     </ul>
   {/if}
+  <p class="autocomplete__subtext">BCP47Tag: {subtext}</p>
 </div>

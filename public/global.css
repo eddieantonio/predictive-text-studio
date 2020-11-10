@@ -32,6 +32,15 @@
   --l: 1.25em;
   --xl: 1.5em;
   --xxl: 2.5em;
+
+  /* Spacing and border variables */
+  --sb-xxs: 5px;
+  --sb-xs: 10px;
+  --sb-s: 15px;
+  --sb-m: 20px;
+  --sb-l: 25px;
+  --sb-xl: 30px;
+  --sb-xxl: 40px;
 }
 
 body {

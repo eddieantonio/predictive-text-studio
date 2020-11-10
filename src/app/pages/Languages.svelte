@@ -216,7 +216,7 @@
         {/if}
       </div>
       <!-- TODO: A placeholder autocorrect component and will be removed once #33 is done -->
-      <AutoComplete results="{testingData}"/>
+      <AutoComplete label="Testing AutoComplete" subtext="" results="{testingData}"/>
     </div>
   </div>
 </main>
