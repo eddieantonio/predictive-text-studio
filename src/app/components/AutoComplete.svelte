@@ -1,6 +1,10 @@
 <script lang="ts">
+  interface dataObj {
+    bcp47Tag: string;
+    langauge: string;
+  }
   // Testing Data
-  export let results: any = [
+  export let results: dataObj[] = [
     {
       bcp47Tag: "en",
       langauge: "english",
@@ -15,14 +19,14 @@
     },
   ];
   // To Store Filted array
-  let filetred: any[] = [];
-  let selected: any = "";
+  let filetred: dataObj[] = [];
+  let selected: string = "";
   // Toggle to show search list
   let show = false;
-  // Previous focus list
-  let prev = -1;
-
-  let i = 0;
+  //  Index of Previous focus element
+  let prevIndex = -1;
+  // Index of focus element
+  let index = 0;
 
   // Input to search
   function onChange(event: any) {
@@ -32,21 +36,20 @@
       return a.test(item.langauge.toUpperCase());
     });
   }
+
   function toggle() {
     show = false;
   }
+
   // To close
   function clickOutside(node: HTMLUListElement, onEventFunction: Function) {
     const handleClick = (event: MouseEvent) => {
-      var path = event.composedPath();
-
+      const path = event.composedPath();
       if (!path.includes(node)) {
         onEventFunction();
       }
     };
-
     document.addEventListener("click", handleClick);
-
     return {
       destroy() {
         document.removeEventListener("click", handleClick);
@@ -54,53 +57,49 @@
     };
   }
 
-  // on click list
+  // On select item in list
   function selectedList(type: any) {
     show = false;
     selected = type;
   }
 
-  // down arraow
+  // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
     if (key !== "ArrowDown" && key !== "ArrowUp") return;
-    const current: any = document.getElementsByClassName("item")[i];
-    const items = [...document.getElementsByClassName("item")];
-    i += 1;
-    const currentIndex = items.indexOf(current);
+    const currentElement: any = document.getElementsByClassName("autocomplete__suggestion-item")[index];
+    const items = [...document.getElementsByClassName("autocomplete__suggestion-item")];
+    const currentIndex = items.indexOf(currentElement);
     // let newIndex;
-    if (prev !== -1) {
-      document.getElementsByClassName("item")[prev].classList.remove("active");
+    if (prevIndex !== -1) {
+      document
+        .getElementsByClassName("autocomplete__suggestion-item")
+        [prevIndex].classList.remove("autocomplete-active");
     }
 
-    current.classList.add("active");
     if (currentIndex === -1) {
-      i = 0;
+      index = 0;
     } else {
       if (key === "ArrowUp") {
-        i = (currentIndex + items.length - 1) % items.length;
-        prev = currentIndex;
-        current.classList.add("active");
+        prevIndex = currentIndex;
+        index = (currentIndex + items.length - 1) % items.length;
+        currentElement.classList.add("autocomplete-active");
       } else {
         // Next key
-        prev = currentIndex;
-        i = (currentIndex + 1) % items.length;
+        prevIndex = currentIndex;
+        index = (currentIndex + 1) % items.length;
+        currentElement.classList.add("autocomplete-active");
       }
     }
   }
 </script>
 
 <style>
-  li:hover {
-    cursor: pointer;
-    background-color: var(--gray-highlight);
-  }
-  :global(.active) {
-    /*when navigating through the items using the arrow keys:*/
-    margin: 0;
-    background-color: var(--gray-highlight);
+  .autocomplete {
+    position: relative;
+    width: fit-content;
   }
 
-  input {
+  .autocomplete__input {
     font-family: var(--secondary-font), sans-serif;
     font-size: 18px;
     padding: 10px;
@@ -108,8 +107,7 @@
     border-width: 1px;
     border-color: rgba(0, 0, 0, 0.2);
   }
-
-  ul {
+  .autocomplete__suggestion-list {
     position: absolute;
     padding: 0 0 10px 0;
     margin: 0;
@@ -119,29 +117,36 @@
     border-radius: 0 0 10px 10px;
     list-style-type: none;
     text-decoration: none;
-    z-index: 99;
+    z-index: 5;
   }
-
-  li {
+  .autocomplete__suggestion-item{
     font-size: 18px;
     font-style: bold;
     padding: 10px 15px;
     overflow: hidden;
     border-right: solid 15px rgba(0, 0, 0, 0);
   }
-  .main {
-    position: relative;
-    width: fit-content;
+  .autocomplete__suggestion-item:hover {
+    cursor: pointer;
+    background-color: var(--gray-highlight);
+  }
+  :global(.autocomplete-active) {
+    margin: 0;
+    background-color: var(--gray-highlight);
   }
 </style>
 
 <svelte:window on:keydown={handleKeydown} />
-<div class="main">
-  <input value={selected} type="text" on:input={(event) => onChange(event)} />
+<div class="autocomplete">
+  <input
+    class="autocomplete__input"
+    value={selected}
+    type="text"
+    on:input={(event) => onChange(event)} />
   {#if show}
-    <ul use:clickOutside={toggle}>
+    <ul class="autocomplete__suggestion-list" use:clickOutside={toggle}>
       {#each filetred as result}
-        <li class="item">
+        <li class="autocomplete__suggestion-item">
           <div on:click={() => selectedList(result.langauge)}>
             {result.langauge}
           </div>
