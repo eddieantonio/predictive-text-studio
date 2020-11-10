@@ -41,6 +41,20 @@
       },
     ],
   };
+  let testingData: any = [
+    {
+      bcp47Tag: "en",
+      langauge: "english",
+    },
+    {
+      bcp47Tag: "en",
+      langauge: "enn",
+    },
+    {
+      bcp47Tag: "en",
+      langauge: "ewx",
+    },
+  ];
 
   interface LanguageProject {
     id: number;
@@ -173,7 +187,6 @@
           </p>
         </div>
       </header>
-      <AutoComplete/>
       <div class="languages__container--actions">
         <Button
           color="grey"
@@ -201,6 +214,7 @@
           <LanguageSources sources={languageInformation.sources} />
         {/if}
       </div>
+      <AutoComplete results="{testingData}"/>
     </div>
   </div>
 </main>

@@ -6,23 +6,11 @@
   enum keyboardKey {
     Up = "ArrowUp",
     Down = "ArrowDown",
+    Enter = "Enter",
   }
 
   // Testing Data
-  export let results: dataObj[] = [
-    {
-      bcp47Tag: "en",
-      langauge: "english",
-    },
-    {
-      bcp47Tag: "en",
-      langauge: "enn",
-    },
-    {
-      bcp47Tag: "en",
-      langauge: "ewx",
-    },
-  ];
+  export let results: dataObj[] = [];
   // To Store Filted array
   let filetred: dataObj[] = [];
   let selected: string = "";
@@ -63,7 +51,7 @@
   }
 
   // On select item in list
-  function selectedList(type: any) {
+  function selectedList(type: string) {
     show = false;
     selected = type;
   }
@@ -73,7 +61,13 @@
   };
   // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
-    if (key !== keyboardKey.Down && key !== keyboardKey.Up) return;
+    console.log(key);
+    if (
+      key !== keyboardKey.Down &&
+      key !== keyboardKey.Up &&
+      key !== keyboardKey.Enter
+    )
+      return;
     if (key == keyboardKey.Down) {
       prevIndex = index;
       index += 1;
@@ -84,61 +78,23 @@
         prevIndex = index;
         index -= 1;
       }
+    } else if (key == keyboardKey.Enter) {
+      selected = filetred[index].langauge;
+      show = false;
     }
     const allItems = [
       ...document.getElementsByClassName("autocomplete__suggestion-item"),
     ];
-    // if (Object.is(index, NaN)) {
-    //   console.log("hello");
-    //   index = -1;
-    // }
-    // console.log(allItems);
-    // console.log(index);
-    // console.log(allItems.length);
-    index = mod(index, allItems.length);
-    // console.log(index);
 
-    const currentElement: any = document.getElementsByClassName(
-      "autocomplete__suggestion-item"
-    )[index];
-    currentElement.classList.add("autocomplete-active");
+    index = mod(index, allItems.length);
     document
       .getElementsByClassName("autocomplete__suggestion-item")
-      [prevIndex].classList.remove("autocomplete-active");
-    console.log(currentElement);
-    // index = index % filetred.length;
-    // const currentElement: any = document.getElementsByClassName(
-    //   "autocomplete__suggestion-item"
-    // )[index];
-    // currentElement.classList.add("autocomplete-active");
-    // console.log(currentElement);
-    // const currentElement: any = document.getElementsByClassName(
-    //   "autocomplete__suggestion-item"
-    // )[index];
-    // const items = [
-    //   ...document.getElementsByClassName("autocomplete__suggestion-item"),
-    // ];
-    // const currentIndex = items.indexOf(currentElement);
-    // // let newIndex;
-    // if (prevIndex !== -1) {
-    //   document
-    //     .getElementsByClassName("autocomplete__suggestion-item")
-    //     [prevIndex].classList.remove("autocomplete-active");
-    // }
-    // currentElement.classList.add("autocomplete-active");
-    // console.log(currentIndex)
-    // if (currentIndex === -1) {
-    //   index = 0;
-    // }
-
-    // if (key === "ArrowUp") {
-    //   prevIndex = currentIndex;
-    //   index = (currentIndex - 1) % items.length;
-    // } else {
-    //   // Next key
-    //   prevIndex = currentIndex;
-    //   index = (currentIndex + 1) % items.length;
-    // }
+      [index].classList.add("autocomplete-active");
+    if (prevIndex !== -1) {
+      document
+        .getElementsByClassName("autocomplete__suggestion-item")
+        [prevIndex].classList.remove("autocomplete-active");
+    }
   }
 </script>
 
@@ -191,11 +147,14 @@
     class="autocomplete__input"
     value={selected}
     type="text"
-    on:input={(event) => onChange(event)} />
+    on:input={(event) => onChange(event)}
+    data-cy="autocomplete-input" />
   {#if show}
     <ul class="autocomplete__suggestion-list" use:clickOutside={toggle}>
       {#each filetred as result}
-        <li class="autocomplete__suggestion-item">
+        <li
+          class="autocomplete__suggestion-item"
+          data-cy="autocomplete-suggestions">
           <div on:click={() => selectedList(result.langauge)}>
             {result.langauge}
           </div>
