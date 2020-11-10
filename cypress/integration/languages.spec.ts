@@ -13,6 +13,14 @@ describe("AutoComplete Component", function () {
       });
   });
 
+  it("should not display the suggestion list if gibberish is entered", function () {
+    cy.get("[data-cy=autocomplete-input]")
+      .type("a")
+      .then(() => {
+        cy.get("[data-cy=autocomplete-suggestions]").should("not.be.visible");
+      });
+  });
+
   it("should able to select the item in the list", function () {
     cy.get("[data-cy=autocomplete-input]")
       .type("e")
@@ -22,11 +30,21 @@ describe("AutoComplete Component", function () {
       });
   });
 
-  it("should able to select the item in the list", function () {
+  it("should able to select the item in the list with down and enter key", function () {
     cy.get("[data-cy=autocomplete-input]")
       .type("e")
-      .then(() => {
-        cy.get("[data-cy=autocomplete-input]").type("{downArrow}");
-      });
+      .type("{downArrow}")
+      .type("{downArrow}")
+      .type("{enter}")
+      .should("have.value", "enn");
+  });
+
+  it("should able to select the item in the list with up and enter key", function () {
+    cy.get("[data-cy=autocomplete-input]")
+      .type("e")
+      .type("{upArrow}")
+      .type("{upArrow}")
+      .type("{enter}")
+      .should("have.value", "enn");
   });
 });
