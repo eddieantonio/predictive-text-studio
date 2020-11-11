@@ -71,3 +71,6 @@ export interface KeyboardData {
    */
   language: string;
 }
+export interface KeyboardDataWithTime extends KeyboardData {
+  timestamp: Date;
+}

@@ -14,7 +14,7 @@ export class KeymanAPI {
   /**
    * Query all languages data, doc: https://help.keyman.com/developer/cloud/search/1.0/
    */
-  params = { q: "" };
+  params = { q: "l" };
   url: URL;
   constructor() {
     this.url = new URL(this.baseUrl);

@@ -1,4 +1,4 @@
-import { KeyboardData } from "./storage-models";
+import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
@@ -15,6 +15,10 @@ const defaultVersion = "1.0.0";
  * The default copyright.
  */
 const defaultCopyright = "";
+/**
+ * Seven day in millisecond (trashold before )
+ */
+const sevenDays = 604800000;
 
 function doNothing() {
   // intentionally empty
@@ -35,6 +39,20 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   async getLanguageData(): Promise<void> {
+    let dateDiff: number;
+    const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
+    const datenow: Date = new Date();
+
+    if (keyboardData.length !== 0) {
+      dateDiff = datenow.getTime() - keyboardData[0].timestamp.getTime();
+      if (dateDiff > sevenDays) {
+        await this.storage.deleteKeyboardData();
+        this.fetchLanguageDataFromService();
+      }
+    } else this.fetchLanguageDataFromService();
+  }
+
+  async fetchLanguageDataFromService(): Promise<void> {
     this.keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
       languages.forEach(async (data) => {
         await this.storage.addKeyboardData(data.language, data.bcp47Tag);
