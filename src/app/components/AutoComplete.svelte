@@ -38,6 +38,7 @@
   }
 
   // If anywhere on the screen is clicked
+  // Derived from https://github.com/rster2002/svelte-outside-click
   function clickOutside(node: HTMLUListElement, onEventFunction: Function) {
     const handleClick = (event: MouseEvent) => {
       const path = event.composedPath();
@@ -63,6 +64,7 @@
   const mod = (a: number, n: number) => {
     return a - n * Math.floor(a / n);
   };
+
   // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
     console.log(key);
