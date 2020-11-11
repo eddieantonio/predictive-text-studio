@@ -83,8 +83,7 @@
    *
    * @return {void}
    */
-  const handleDownload = (): void => {
-  };
+  const handleDownload = (): void => {};
 </script>
 
 <style>

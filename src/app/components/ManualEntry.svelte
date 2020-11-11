@@ -3,8 +3,7 @@
    * Handles the click when the delte button is pressed
    * TODO
    */
-  const handleDelete = (): void => {
-  };
+  const handleDelete = (): void => {};
 </script>
 
 <style>
