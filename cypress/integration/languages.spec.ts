@@ -51,7 +51,10 @@ describe("AutoComplete Component", () => {
       .type("e")
       .then(() => {
         getDataCY("autocomplete-suggestions").first().click();
-        getDataCY("autocomplete-subtext").should("have.text", "BCP47Tag: en");
+        getDataCY("autocomplete-subtext").should(
+          "have.text",
+          "BCP47Tag:\n    en"
+        );
       });
   });
 });
