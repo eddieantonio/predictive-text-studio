@@ -26,8 +26,7 @@
    *
    * @return {void}
    */
-  const handleEdit = (): void => {
-  };
+  const handleEdit = (): void => {};
 
   /**
    * Handles the click when the delete button is pressed.
@@ -35,8 +34,7 @@
    *
    * @return {void}
    */
-  const handleDelete = (): void => {
-  };
+  const handleDelete = (): void => {};
 </script>
 
 <style>
@@ -135,7 +133,12 @@
       </tr>
     {/each}
   </table>
-  <Button color="blue" isOutlined size="large" onClick={handleAddSource} data_cy="language-sources-add-source">
+  <Button
+    color="blue"
+    isOutlined
+    size="large"
+    onClick={handleAddSource}
+    data_cy="language-sources-add-source">
     Add Source
   </Button>
   <AddSource bind:addSource />

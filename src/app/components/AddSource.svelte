@@ -170,8 +170,19 @@
   {/if}
 
   <div class="save-zone">
-    <Button isOutlined size="large" onClick={handleClose} data_cy="add-sources-close-btn">CLOSE</Button>
-    <Button color="blue" isOutlined size="large" onClick={handleSave} data_cy="add-sources-save-btn">
+    <Button
+      isOutlined
+      size="large"
+      onClick={handleClose}
+      data_cy="add-sources-close-btn">
+      CLOSE
+    </Button>
+    <Button
+      color="blue"
+      isOutlined
+      size="large"
+      onClick={handleSave}
+      data_cy="add-sources-save-btn">
       SAVE
     </Button>
   </div>

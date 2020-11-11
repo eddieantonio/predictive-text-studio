@@ -4,7 +4,10 @@ describe("Add source feature in LanguageSource page", function () {
     cy.get("[data-cy=languages-sources-btn]").contains("Sources").click();
 
     // Add source component should show after clicking the Add Source Button
-    cy.get("[data-cy=language-sources-add-source]").contains("Add Source").click().scrollIntoView();
+    cy.get("[data-cy=language-sources-add-source]")
+      .contains("Add Source")
+      .click()
+      .scrollIntoView();
     cy.get("[data-cy=add-source-options]").should("exist");
 
     cy.get("[data-cy=add-sources-splitbtn-left]").contains("UPLOAD").click();

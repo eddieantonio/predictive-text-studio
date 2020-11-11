@@ -4,7 +4,6 @@
    * TODO
    */
   const handleDelete = (): void => {
-    console.log("Delete button clicked");
   };
 </script>
 

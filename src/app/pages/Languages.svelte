@@ -75,7 +75,6 @@
    */
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
-    console.log(buttonName + " button selected");
   };
 
   /**
@@ -85,7 +84,6 @@
    * @return {void}
    */
   const handleDownload = (): void => {
-    console.log("Download button clicked");
   };
 </script>
 
