@@ -1,9 +1,9 @@
-describe("AutoComplete Component", function () {
+describe("AutoComplete Component", () => {
   beforeEach(() => {
     cy.visit("/languages?");
   });
 
-  it("should display the suggestion list", function () {
+  it("should display the suggestion list", () => {
     getDataCY("autocomplete-input")
       .type("e")
       .then(() => {
@@ -11,7 +11,7 @@ describe("AutoComplete Component", function () {
       });
   });
 
-  it("should not display the suggestion list if gibberish is entered", function () {
+  it("should not display the suggestion list if gibberish is entered", () => {
     getDataCY("autocomplete-input")
       .type("a")
       .then(() => {
@@ -19,7 +19,7 @@ describe("AutoComplete Component", function () {
       });
   });
 
-  it("should able to select the item in the list", function () {
+  it("should able to select the item in the list", () => {
     getDataCY("autocomplete-input")
       .type("e")
       .then(() => {
@@ -28,7 +28,7 @@ describe("AutoComplete Component", function () {
       });
   });
 
-  it("should able to select the item in the list with down and enter key", function () {
+  it("should able to select the item in the list with down and enter key", () => {
     getDataCY("autocomplete-input")
       .type("e")
       .type("{downArrow}")
@@ -37,7 +37,7 @@ describe("AutoComplete Component", function () {
       .should("have.value", "enn");
   });
 
-  it("should able to select the item in the list with up and enter key", function () {
+  it("should able to select the item in the list with up and enter key", () => {
     getDataCY("autocomplete-input")
       .type("e")
       .type("{upArrow}")
@@ -46,7 +46,7 @@ describe("AutoComplete Component", function () {
       .should("have.value", "enn");
   });
 
-  it("should display the correct BCP47 subtext", function () {
+  it("should display the correct BCP47 subtext", () => {
     getDataCY("autocomplete-input")
       .type("e")
       .then(() => {

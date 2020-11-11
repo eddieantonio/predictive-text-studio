@@ -182,5 +182,8 @@
       {/each}
     </ul>
   {/if}
-  <p class="autocomplete__subtext" data-cy="autocomplete-subtext">BCP47Tag: {subtext}</p>
+  <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
+    BCP47Tag:
+    {subtext}
+  </p>
 </div>
