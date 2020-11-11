@@ -10,7 +10,7 @@
   export let addSource: boolean = false;
   let manualEntry: boolean = false;
   let onDraggedOver = false;
-  let fileList: any = [];
+  let fileList: File[] | FileList = [];
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -26,7 +26,7 @@
     return fileList;
   }
 
-  const handleDrop = async (event: DragEvent) => {
+  const handleDrop = (event: DragEvent) => {
     onDraggedOver = false;
 
     if (event.dataTransfer == null) {
@@ -132,8 +132,8 @@
 </style>
 
 {#if addSource}
-  <div class="arrow-button-zone" data-cy="add-source-window">
-    <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
+  <div class="arrow-button-zone" data-cy="add-source-options">
+    <img src="assets/down-arrow.svg" alt="Down Arrow" role="presentation" class="block" />
     <SplitButton
       {leftText}
       {rightText}
@@ -167,16 +167,14 @@
     <Button
       isOutlined
       size="large"
-      onClick={handleClose}
-      data-cy="close-add-source">
+      onClick={handleClose}>
       CLOSE
     </Button>
     <Button
       color="blue"
       isOutlined
       size="large"
-      onClick={handleSave}
-      data-cy="save-source">
+      onClick={handleSave}>
       SAVE
     </Button>
   </div>
