@@ -133,7 +133,11 @@
 
 {#if addSource}
   <div class="arrow-button-zone" data-cy="add-source-options">
-    <img src="assets/down-arrow.svg" alt="Down Arrow" role="presentation" class="block" />
+    <img
+      src="assets/down-arrow.svg"
+      alt="Down Arrow"
+      role="presentation"
+      class="block" />
     <SplitButton
       {leftText}
       {rightText}
@@ -164,17 +168,8 @@
   {/if}
 
   <div class="save-zone">
-    <Button
-      isOutlined
-      size="large"
-      onClick={handleClose}>
-      CLOSE
-    </Button>
-    <Button
-      color="blue"
-      isOutlined
-      size="large"
-      onClick={handleSave}>
+    <Button isOutlined size="large" onClick={handleClose}>CLOSE</Button>
+    <Button color="blue" isOutlined size="large" onClick={handleSave}>
       SAVE
     </Button>
   </div>
