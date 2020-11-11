@@ -1,3 +1,8 @@
+import {
+  KeyboardData,
+  StoredProjectData,
+  StoredWordList,
+} from "./../../src/worker/storage-models";
 import type { WordList } from "@common/types";
 
 /**
@@ -18,4 +23,44 @@ export const exampleWordlist: WordList = [
   ["I¸", 1988],
   ["ȻSE", 1925],
   ["I", 1884],
+];
+
+export const testStoredProjectData = {
+  id: 1,
+  langName: "English",
+  bcp47Tag: "en",
+  authorName: "UnknownAuthor",
+} as StoredProjectData;
+
+export const responseBody = {
+  languages: [
+    {
+      id: "km",
+      name: "Khmer (Battambang Khmer)",
+      keyboards: [
+        "basic_kbdkhmr",
+        "basic_kbdkni",
+        "kbdkhmr",
+        "khmer10",
+        "khmer_angkor",
+        "sil_khmer",
+      ],
+    },
+    {
+      id: "kxm",
+      name: "Khmer, Northern (Khmer Lue)",
+      keyboards: ["sil_khmer"],
+    },
+    { id: "kdt", name: "Kuay (Old Khmer)", keyboards: ["sil_khmer"] },
+  ],
+};
+
+export const storedFileStub = {
+  id: 1,
+  name: "test",
+  wordlist: [["test", 1]],
+} as StoredWordList;
+
+export const keymanKeyboardDataStub: KeyboardData[] = [
+  { bcp47Tag: "AB", language: "AABBCCDD" },
 ];

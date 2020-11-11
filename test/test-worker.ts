@@ -1,7 +1,10 @@
+import { KeymanAPI } from "@worker/keyman-api-service";
 import test from "ava";
 import * as sinon from "sinon";
 import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
-import Storage, { StoredProjectData } from "@worker/storage";
+import Storage from "@worker/storage";
+import { StoredProjectData } from "@worker/storage-models";
+global.fetch = require("node-fetch");
 
 test("it should set project data and update to the database", async (t) => {
   const testStoredProjectData = {
@@ -10,8 +13,12 @@ test("it should set project data and update to the database", async (t) => {
     bcp47Tag: "en",
     authorName: "UnknownAuthor",
   } as StoredProjectData;
+  const keymanAPI = new KeymanAPI();
   const storageStub = new Storage();
-  const workerWrapper = new PredictiveTextStudioWorkerImpl(storageStub);
+  const workerWrapper = new PredictiveTextStudioWorkerImpl(
+    storageStub,
+    keymanAPI
+  );
   const metadata = { languages: [{ name: "English", id: "en" }] };
   workerWrapper.setProjectData(metadata);
   sinon

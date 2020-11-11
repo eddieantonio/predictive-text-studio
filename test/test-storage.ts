@@ -6,7 +6,7 @@ import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { WordList } from "@common/types";
 
-import { exampleWordlist } from "./fixtures";
+import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
 /**
  * Every test will have access to:
@@ -159,4 +159,27 @@ test("retrieve project data from the database", async (t) => {
   t.is(copyright, "©");
   const version = projectData.version;
   t.is(version, "1.0.0");
+});
+
+test("save Keyman keyboard data with addKeyboardData", async (t) => {
+  const { db, storage } = t.context;
+
+  t.is(await db.keyboardData.count(), 0);
+  await storage.addKeyboardData(
+    keymanKeyboardDataStub[0].language,
+    keymanKeyboardDataStub[0].bcp47Tag
+  );
+
+  t.is(await db.keyboardData.count(), 1);
+});
+
+test("retrieve Keyman keyboard data with addKeyboardData", async (t) => {
+  const { storage } = t.context;
+  await storage.addKeyboardData(
+    keymanKeyboardDataStub[0].language,
+    keymanKeyboardDataStub[0].bcp47Tag
+  );
+  await storage.fetchKeyboardData().then((data) => {
+    t.is(data.length, 1);
+  });
 });
