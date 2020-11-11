@@ -18,7 +18,6 @@
    */
   const handleAddSource = (): void => {
     addSource = true;
-    console.log("Add button clicked");
   };
 
   /**
@@ -28,7 +27,6 @@
    * @return {void}
    */
   const handleEdit = (): void => {
-    console.log("Edit button clicked");
   };
 
   /**
@@ -38,7 +36,6 @@
    * @return {void}
    */
   const handleDelete = (): void => {
-    console.log("Delete button clicked");
   };
 </script>
 
@@ -138,7 +135,7 @@
       </tr>
     {/each}
   </table>
-  <Button color="blue" isOutlined size="large" onClick={handleAddSource}>
+  <Button color="blue" isOutlined size="large" onClick={handleAddSource} data_cy="language-sources-add-source">
     Add Source
   </Button>
   <AddSource bind:addSource />

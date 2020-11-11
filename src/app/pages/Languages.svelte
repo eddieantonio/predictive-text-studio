@@ -183,16 +183,19 @@
           color="grey"
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
+          data_cy="languages-information-btn"
         >Information</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           onClick={()=> handleClick('sources')}
+          data_cy="languages-sources-btn"
         >Sources</Button>
         <Button
           color="blue"
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
+          data_cy="languages-download-btn"
         >Download</Button>
       </div>
       <div class="languages__container--content">

@@ -141,6 +141,8 @@
     <SplitButton
       {leftText}
       {rightText}
+      data_cy_left="add-sources-splitbtn-left"
+      data_cy_right="add-sources-splitbtn-right"
       onClickLeft={handleUpload}
       onClickRight={handleDirectEntry} />
   </div>
@@ -168,8 +170,8 @@
   {/if}
 
   <div class="save-zone">
-    <Button isOutlined size="large" onClick={handleClose}>CLOSE</Button>
-    <Button color="blue" isOutlined size="large" onClick={handleSave}>
+    <Button isOutlined size="large" onClick={handleClose} data_cy="add-sources-close-btn">CLOSE</Button>
+    <Button color="blue" isOutlined size="large" onClick={handleSave} data_cy="add-sources-save-btn">
       SAVE
     </Button>
   </div>

@@ -7,6 +7,8 @@
   export let size: string = "medium"; // optional
   export let leftText: string;
   export let rightText: string;
+  export let data_cy_left: string;
+  export let data_cy_right: string;
   export let onClickLeft: (ev: MouseEvent) => void;
   export let onClickRight: (ev: MouseEvent) => void;
 </script>
@@ -38,10 +40,12 @@
     class="button button--{colorLeft} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
-    on:click={onClickLeft}>{leftText}</button>
+    on:click={onClickLeft}
+    data-cy={data_cy_left}>{leftText}</button>
   <button
     class="button button--{colorRight} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
-    on:click={onClickRight}>{rightText}</button>
+    on:click={onClickRight}
+    data-cy={data_cy_right}>{rightText}</button>
 </div>
