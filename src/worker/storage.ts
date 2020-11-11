@@ -178,7 +178,7 @@ export default class Storage {
   }
 
   /**
-   * Clearout every keyboard data in the database as a list of {language, bcp47Tag, KeyboardDataWithTime}
+   * Delete all keyboard data in the database as a list of {language, bcp47Tag, KeyboardDataWithTime}
    */
   deleteKeyboardData(): Promise<void> {
     return this.db.transaction("readwrite", this.db.keyboardData, async () => {

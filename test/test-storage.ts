@@ -183,3 +183,15 @@ test("retrieve Keyman keyboard data with addKeyboardData", async (t) => {
     t.is(data.length, 1);
   });
 });
+
+test("delete all Keyman keyboard data with deleteKeyboardData", async (t) => {
+  const { storage } = t.context;
+  await storage.addKeyboardData(
+    keymanKeyboardDataStub[0].language,
+    keymanKeyboardDataStub[0].bcp47Tag
+  );
+  await storage.deleteKeyboardData();
+  await storage.fetchKeyboardData().then((data) => {
+    t.is(data.length, 0);
+  });
+});

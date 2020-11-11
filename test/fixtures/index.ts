@@ -1,5 +1,6 @@
 import {
   KeyboardData,
+  KeyboardDataWithTime,
   StoredProjectData,
   StoredWordList,
 } from "./../../src/worker/storage-models";
@@ -61,6 +62,10 @@ export const storedFileStub = {
   wordlist: [["test", 1]],
 } as StoredWordList;
 
-export const keymanKeyboardDataStub: KeyboardData[] = [
-  { bcp47Tag: "AB", language: "AABBCCDD" },
+export const keymanKeyboardDataStub: KeyboardDataWithTime[] = [
+  {
+    bcp47Tag: "AB",
+    language: "AABBCCDD",
+    timestamp: new Date(),
+  },
 ];
