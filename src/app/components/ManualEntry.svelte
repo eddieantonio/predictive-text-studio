@@ -10,7 +10,7 @@
   .language__sources-manual-entry {
     display: flex;
     flex-direction: column;
-    padding: .3125rem;
+    padding: 0.3125rem;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
@@ -19,7 +19,7 @@
   .language__sources-manual-entry-tablename input {
     height: 30px;
     width: 400px;
-    padding: .3125rem;
+    padding: 0.3125rem;
     border-radius: 2px;
     border: 1px solid var(--lite-white);
     background-color: var(--lite-white);
@@ -48,7 +48,7 @@
 
   td {
     vertical-align: middle;
-    padding: .625rem 0 .625rem 1.25rem;
+    padding: 0.625rem 0 0.625rem 1.25rem;
     color: var(--gray-dark);
     text-align: center;
   }
@@ -77,7 +77,7 @@
   td > input {
     height: 20px;
     width: 80%;
-    padding: .3125rem;
+    padding: 0.3125rem;
     border-radius: 2px;
     border: 1px solid var(--lite-white);
     text-align: center;

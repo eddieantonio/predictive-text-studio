@@ -130,11 +130,7 @@
 
 {#if addSource}
   <div class="arrow-button-zone" data-cy="add-source-options">
-    <img
-      src="assets/down-arrow.svg"
-      alt=""
-      role="presentation"
-      class="block" />
+    <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
     <SplitButton
       leftText="Upload"
       rightText="Direct entry"

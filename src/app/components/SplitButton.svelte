@@ -25,12 +25,12 @@
     border-radius: 0;
   }
   button:first-child {
-    border-top-left-radius: .625em;
-    border-bottom-left-radius: .625em;
+    border-top-left-radius: 0.625em;
+    border-bottom-left-radius: 0.625em;
   }
   button:last-child {
-    border-top-right-radius: .625em;
-    border-bottom-right-radius: .625em;
+    border-top-right-radius: 0.625em;
+    border-bottom-right-radius: 0.625em;
   }
 </style>
 
