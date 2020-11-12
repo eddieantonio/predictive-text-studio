@@ -1,5 +1,3 @@
-import { createPublicKey } from "crypto";
-
 describe("Add source feature in LanguageSource page", function () {
   it("should find a button to press to add source by uploading file", function () {
     cy.visit("/languages");
