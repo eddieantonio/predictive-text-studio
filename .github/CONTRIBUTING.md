@@ -101,6 +101,14 @@ With the server running as above (with `yarn start`), run this to open
     yarn run cy
 
 
+Coding Conventions
+------------------
+
+Please make sure your PRs follow [our conventions
+document](../docs/conventions.md). Following this guide will prevent
+many unnecessary PR comments!
+
+
 For CANOSP Participants
 -----------------------
 

@@ -132,6 +132,14 @@ See here:
  - https://softwareengineering.stackexchange.com/a/213685/284069
 
 
+JavaScript: Use Airbnb's Naming Conventions
+-------------------------------------------
+
+When in doubt, consult [Airbnb's JavaScript style
+guide](https://github.com/airbnb/javascript#naming-conventions) for
+naming conventions.
+
+
 CSS: ordering declarations in CSS rulesets
 ------------------------------------------
 
