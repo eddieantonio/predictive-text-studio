@@ -25,6 +25,7 @@ Table of contents
   * [Build](#build)
   * [Start the development environment](#start-the-development-environment)
   * [Run the end-to-end tests interactively](#run-the-end-to-end-tests-interactively)
+- [Coding Conventions](#coding-conventions)
 - [For CANOSP Participants](#for-canosp-participants)
   * [Choose a card](#choose-a-card)
   * [Assign yourself to the issue associated with the card](#assign-yourself-to-the-issue-associated-with-the-card)
@@ -99,6 +100,14 @@ With the server running as above (with `yarn start`), run this to open
 [Cypress](https://www.cypress.io/):
 
     yarn run cy
+
+
+Coding Conventions
+------------------
+
+Please make sure your PRs follow [our conventions
+document](../docs/conventions.md). Following this guide will prevent
+many unnecessary PR comments!
 
 
 For CANOSP Participants
