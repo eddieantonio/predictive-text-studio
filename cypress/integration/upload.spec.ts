@@ -20,7 +20,6 @@ describe("Upload from the the landing page", function () {
     cy.contains("label", "Enter BCP 47 tag").scrollIntoView();
     cy.get("#tag-input").type("zh", { force: true });
 
-    console.log(downloadFolder);
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
     cy.get("[data-cy=quick-start]")
