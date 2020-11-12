@@ -4,7 +4,6 @@
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
-  export let addSource: boolean = false;
   let manualEntry: boolean = false;
   let onDraggedOver = false;
   let fileList: File[] | FileList = [];
@@ -59,12 +58,10 @@
   };
 
   const closeAddSourceZone = () => {
-    addSource = false;
     manualEntry = false;
   };
 
   const uploadSourcesFromFile = () => {
-    addSource = true;
     manualEntry = false;
   };
 
@@ -107,7 +104,7 @@
 
   img {
     width: 2em;
-    padding-bottom: 1em;
+    padding-bottom: 1rem;
     color: var(--blue);
   }
 
@@ -119,7 +116,7 @@
     padding: 1%;
   }
 
-  .arrow-button-zone {
+  .top-button-zone {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,55 +125,45 @@
   }
 </style>
 
-{#if addSource}
-  <div class="arrow-button-zone" data-cy="add-source-options">
-    <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
-    <SplitButton
-      leftText="Upload"
-      rightText="Direct entry"
-      dataCyLeft="add-sources-splitbtn-left"
-      dataCyRight="add-sources-splitbtn-right"
-      onClickLeft={uploadSourcesFromFile}
-      onClickRight={directEntrySources} />
-  </div>
+<div class="top-button-zone" data-cy="add-source-options">
+  <SplitButton
+    leftText="Upload"
+    rightText="Direct entry"
+    dataCyLeft="add-sources-splitbtn-left"
+    dataCyRight="add-sources-splitbtn-right"
+    onClickLeft={uploadSourcesFromFile}
+    onClickRight={directEntrySources} />
+</div>
 
-  {#if manualEntry}
-    <ManualEntry />
-  {:else}
-    <div
-      class="upload-zone"
-      class:drag-over={onDraggedOver}
-      on:drop|preventDefault={handleDrop}
-      on:dragover|preventDefault={handleDragOver}
-      on:dragleave|preventDefault={handleDragLeave}
-      data-cy="add-source-upload-zone">
-      <img role="presentation" src="icons/upload-solid.svg" alt="" />
-      <span>Drag and drop here</span>
-      <span>or</span>
-      <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
-      <input
-        id={UPLOAD_INPUT_ID}
-        type="file"
-        on:change={handleChange}
-        data-cy="upload-spreadsheet" />
-    </div>
-  {/if}
-
-  <div class="save-zone">
-    <Button
-      isOutlined
-      size="large"
-      onClick={closeAddSourceZone}
-      dataCy="add-sources-close-btn">
-      Close
-    </Button>
-    <Button
-      color="blue"
-      isOutlined
-      size="large"
-      onClick={saveAddedSources}
-      dataCy="add-sources-save-btn">
-      Save
-    </Button>
+{#if manualEntry}
+  <ManualEntry />
+{:else}
+  <div
+    class="upload-zone"
+    class:drag-over={onDraggedOver}
+    on:drop|preventDefault={handleDrop}
+    on:dragover|preventDefault={handleDragOver}
+    on:dragleave|preventDefault={handleDragLeave}
+    data-cy="add-source-upload-zone">
+    <img role="presentation" src="icons/upload-solid.svg" alt="" />
+    <span>Drag and drop here</span>
+    <span>or</span>
+    <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
+    <input
+      id={UPLOAD_INPUT_ID}
+      type="file"
+      on:change={handleChange}
+      data-cy="upload-spreadsheet" />
   </div>
 {/if}
+
+<div class="save-zone">
+  <Button
+    color="blue"
+    isOutlined
+    size="large"
+    onClick={saveAddedSources}
+    dataCy="add-sources-save-btn">
+    Save
+  </Button>
+</div>

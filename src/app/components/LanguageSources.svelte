@@ -8,17 +8,6 @@
   }
 
   export let sources: DictionarySource[];
-  let addSource: boolean;
-
-  /**
-   * Handles the click when the add source button is pressed. Should show another section where user can upload file or open direct entry.
-   * TODO: Replace stub
-   *
-   * @return {void}
-   */
-  const handleAddSource = (): void => {
-    addSource = true;
-  };
 
   /**
    * Handles the click when the edit button is pressed.
@@ -133,13 +122,8 @@
       </tr>
     {/each}
   </table>
-  <Button
-    color="blue"
-    isOutlined
-    size="large"
-    onClick={handleAddSource}
-    dataCy="language-sources-add-source">
-    Add Source
-  </Button>
-  <AddSource bind:addSource />
+  <details data-cy="language-sources-add-sources">
+    <summary>Add Source</summary>
+    <AddSource />
+  </details>
 </div>

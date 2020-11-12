@@ -3,12 +3,11 @@ describe("", function () {
     cy.visit("/languages");
     cy.get("[data-cy=languages-sources-btn]").contains("Sources").click();
 
-    // Add source component should show after clicking the Add Source Button
-    cy.get("[data-cy=language-sources-add-source]")
+    // Add source component should show after clicking the details element
+    cy.get("[data-cy=language-sources-add-sources]")
       .contains("Add Source")
       .click()
       .scrollIntoView();
-    cy.get("[data-cy=add-source-options]").should("exist");
 
     cy.get("[data-cy=add-sources-splitbtn-right]")
       .contains("Direct entry")
@@ -21,9 +20,9 @@ describe("", function () {
     cy.get("[data-cy=manual-entry-delete]").contains("Delete").click();
     //TODO: Current row should be deleted
 
-    // After clicking the close button, the addSource component should disappear
-    cy.get("[data-cy=add-sources-close-btn]").contains("Close").click();
-
-    cy.get("[data-cy=add-source-options]").should("not.exist");
+    // After clicking the details element, the add source zone will gone
+    cy.get("[data-cy=language-sources-add-sources]")
+      .contains("Add Source")
+      .click();
   });
 });
