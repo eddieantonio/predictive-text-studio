@@ -15,11 +15,10 @@
 
 <style>
   .split-button-layout {
-    display: inline-flex;
+    display: flex;
     padding: 3%;
   }
   button {
-    float: left;
     width: 160px;
     margin: 0;
     border-radius: 0;
