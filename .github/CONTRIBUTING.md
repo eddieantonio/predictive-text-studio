@@ -25,6 +25,7 @@ Table of contents
   * [Build](#build)
   * [Start the development environment](#start-the-development-environment)
   * [Run the end-to-end tests interactively](#run-the-end-to-end-tests-interactively)
+- [Coding Conventions](#coding-conventions)
 - [For CANOSP Participants](#for-canosp-participants)
   * [Choose a card](#choose-a-card)
   * [Assign yourself to the issue associated with the card](#assign-yourself-to-the-issue-associated-with-the-card)
