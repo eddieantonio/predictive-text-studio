@@ -4,7 +4,7 @@
   import * as Comlink from "comlink";
   const UPLOAD_INPUT_ID = "upload-input";
 
-  let onDraggedOver = false;
+  let dragEnterCounter = 0;
   let downloadURL = "";
 
   worker.onPackageCompileSuccess(
@@ -33,7 +33,7 @@
   }
 
   const handleDrop = async (event: DragEvent) => {
-    onDraggedOver = false;
+    dragEnterCounter = 0;
     let fileList: File[] = [];
 
     if (event.dataTransfer == null) {
@@ -50,12 +50,12 @@
     }
   };
 
-  const handleDragOver = () => {
-    onDraggedOver = true;
+  const handleDragEnter = () => {
+    dragEnterCounter++;
   };
 
   const handleDragLeave = () => {
-    onDraggedOver = false;
+    dragEnterCounter--;
   };
 
   const handleChange = async (event: Event) => {
@@ -110,10 +110,11 @@
 
 <div
   class="upload-zone"
-  class:drag-over={onDraggedOver}
+  class:drag-over={dragEnterCounter > 0}
   on:drop|preventDefault={handleDrop}
-  on:dragover|preventDefault={handleDragOver}
-  on:dragleave|preventDefault={handleDragLeave}>
+  on:dragenter|preventDefault={handleDragEnter}
+  on:dragleave|preventDefault={handleDragLeave}
+  data-cy="upload-dropzone">
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
   <span>Drag and drop here</span>
   <span>or</span>

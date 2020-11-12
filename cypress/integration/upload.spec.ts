@@ -36,13 +36,26 @@ describe("Upload from the the landing page", function () {
       .should("have.attr", "data-download-state", "disabled");
     cy.readFile(downloadedFilePath).should("not.exist");
 
-    cy.get("@quick-start")
-      .get("[data-cy=upload-spreadsheet]")
-      .attachFile("sencoten-top-10.xlsx");
+    const filename = "sencoten-top-10.xlsx";
+    cy.fixture(filename, "base64").then((fixture) => {
+      const testFile = new File(
+        [Cypress.Blob.base64StringToBlob(fixture)],
+        name
+      );
+      const event = { dataTransfer: { files: [testFile] } };
+
+      cy.get("@quick-start")
+        .get("[data-cy=upload-dropzone]")
+        .trigger("dragenter", event);
+
+      cy.get("@quick-start")
+        .get("[data-cy=upload-dropzone]")
+        .trigger("drop", event);
+    });
 
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
-      .click({ force: true });
+      .click();
 
     cy.readFile(downloadedFilePath);
   });
