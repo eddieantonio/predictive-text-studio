@@ -10,12 +10,12 @@ describe("Add source feature in LanguageSource page", function () {
       .scrollIntoView();
     cy.get("[data-cy=add-source-options]").should("exist");
 
-    cy.get("[data-cy=add-sources-splitbtn-left]").contains("UPLOAD").click();
+    cy.get("[data-cy=add-sources-splitbtn-left]").contains("Upload").click();
 
     cy.get("[data-cy=add-source-upload-zone]").contains("label", "Browse file");
 
     // After clicking the close button, the addSource component should disappear
-    cy.get("[data-cy=add-sources-close-btn]").contains("CLOSE").click();
+    cy.get("[data-cy=add-sources-close-btn]").contains("Close").click();
 
     cy.get("[data-cy=add-source-options]").should("not.exist");
   });

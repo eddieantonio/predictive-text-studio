@@ -7,8 +7,8 @@
   export let size: string = "medium"; // optional
   export let leftText: string;
   export let rightText: string;
-  export let data_cy_left: string;
-  export let data_cy_right: string;
+  export let dataCyLeft: string;
+  export let dataCyRight: string;
   export let onClickLeft: (ev: MouseEvent) => void;
   export let onClickRight: (ev: MouseEvent) => void;
 </script>
@@ -19,19 +19,18 @@
     padding: 3%;
   }
   button {
-    margin: 0em;
-    border-radius: 0rem;
     float: left;
-    width: 10rem;
+    width: 160px;
+    margin: 0;
+    border-radius: 0;
   }
   button:first-child {
-    border-top-left-radius: 0.625em;
-    border-bottom-left-radius: 0.625em;
+    border-top-left-radius: .625em;
+    border-bottom-left-radius: .625em;
   }
   button:last-child {
-    border-left: 0em;
-    border-top-right-radius: 0.625em;
-    border-bottom-right-radius: 0.625em;
+    border-top-right-radius: .625em;
+    border-bottom-right-radius: .625em;
   }
 </style>
 
@@ -41,11 +40,11 @@
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
     on:click={onClickLeft}
-    data-cy={data_cy_left}>{leftText}</button>
+    data-cy={dataCyLeft}>{leftText}</button>
   <button
     class="button button--{colorRight} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
     on:click={onClickRight}
-    data-cy={data_cy_right}>{rightText}</button>
+    data-cy={dataCyRight}>{rightText}</button>
 </div>

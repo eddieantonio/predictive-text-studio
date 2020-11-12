@@ -138,7 +138,7 @@
     isOutlined
     size="large"
     onClick={handleAddSource}
-    data_cy="language-sources-add-source">
+    dataCy="language-sources-add-source">
     Add Source
   </Button>
   <AddSource bind:addSource />

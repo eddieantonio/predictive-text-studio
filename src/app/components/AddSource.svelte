@@ -4,9 +4,6 @@
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
-
-  const leftText = "UPLOAD";
-  const rightText = "DIRECT ENTRY";
   export let addSource: boolean = false;
   let manualEntry: boolean = false;
   let onDraggedOver = false;
@@ -55,23 +52,23 @@
     }
   };
 
-  const handleSave = (): void => {
+  const saveAddedSources = (): void => {
     for (let file of fileList) {
       worker.addDictionarySourceToProject(file.name, file);
     }
   };
 
-  const handleClose = () => {
+  const closeAddSourceZone = () => {
     addSource = false;
     manualEntry = false;
   };
 
-  const handleUpload = () => {
+  const uploadSourcesFromFile = () => {
     addSource = true;
     manualEntry = false;
   };
 
-  const handleDirectEntry = () => {
+  const directEntrySources = () => {
     manualEntry = true;
   };
 </script>
@@ -84,8 +81,8 @@
     justify-content: center;
     padding: 5%;
     min-width: 200px;
-    border: 3px dashed var(--gray-light);
     border-radius: 5px;
+    border: 3px dashed var(--gray-light);
     line-height: 1.2;
   }
 
@@ -110,8 +107,8 @@
 
   img {
     width: 2em;
-    color: var(--blue);
     padding-bottom: 1em;
+    color: var(--blue);
   }
 
   .save-zone {
@@ -135,16 +132,16 @@
   <div class="arrow-button-zone" data-cy="add-source-options">
     <img
       src="assets/down-arrow.svg"
-      alt="Down Arrow"
+      alt=""
       role="presentation"
       class="block" />
     <SplitButton
-      {leftText}
-      {rightText}
-      data_cy_left="add-sources-splitbtn-left"
-      data_cy_right="add-sources-splitbtn-right"
-      onClickLeft={handleUpload}
-      onClickRight={handleDirectEntry} />
+      leftText="Upload"
+      rightText="Direct entry"
+      dataCyLeft="add-sources-splitbtn-left"
+      dataCyRight="add-sources-splitbtn-right"
+      onClickLeft={uploadSourcesFromFile}
+      onClickRight={directEntrySources} />
   </div>
 
   {#if manualEntry}
@@ -173,17 +170,17 @@
     <Button
       isOutlined
       size="large"
-      onClick={handleClose}
-      data_cy="add-sources-close-btn">
-      CLOSE
+      onClick={closeAddSourceZone}
+      dataCy="add-sources-close-btn">
+      Close
     </Button>
     <Button
       color="blue"
       isOutlined
       size="large"
-      onClick={handleSave}
-      data_cy="add-sources-save-btn">
-      SAVE
+      onClick={saveAddedSources}
+      dataCy="add-sources-save-btn">
+      Save
     </Button>
   </div>
 {/if}

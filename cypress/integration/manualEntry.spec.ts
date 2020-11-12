@@ -11,7 +11,7 @@ describe("", function () {
     cy.get("[data-cy=add-source-options]").should("exist");
 
     cy.get("[data-cy=add-sources-splitbtn-right]")
-      .contains("DIRECT ENTRY")
+      .contains("Direct entry")
       .click()
       .scrollIntoView();
     cy.get("[data-cy=manual-entry-input-tablename]").type("Common Greetings");
@@ -22,7 +22,7 @@ describe("", function () {
     //TODO: Current row should be deleted
 
     // After clicking the close button, the addSource component should disappear
-    cy.get("[data-cy=add-sources-close-btn]").contains("CLOSE").click();
+    cy.get("[data-cy=add-sources-close-btn]").contains("Close").click();
 
     cy.get("[data-cy=add-source-options]").should("not.exist");
   });
