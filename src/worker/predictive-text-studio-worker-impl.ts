@@ -16,9 +16,10 @@ const defaultVersion = "1.0.0";
  */
 const defaultCopyright = "";
 /**
- * Seven day in millisecond (trashold before )
+ * expiryThreshold is used to decide if keyboard data is too old
+ * currently it is set to seven day in millisecond
  */
-const sevenDays = 604800000;
+const expiryThreshold = 604800000;
 
 function doNothing() {
   // intentionally empty
@@ -38,26 +39,30 @@ export class PredictiveTextStudioWorkerImpl
     return this.generateKMPFromStorage();
   }
 
-  async getLanguageData(): Promise<void> {
-    let dateDiff: number;
-    const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
-    const datenow: Date = new Date();
-
-    if (keyboardData.length !== 0) {
-      dateDiff = datenow.getTime() - keyboardData[0].timestamp.getTime();
-      if (dateDiff > sevenDays) {
-        await this.storage.deleteKeyboardData();
-        this.fetchLanguageDataFromService();
-      }
-    } else this.fetchLanguageDataFromService();
-  }
-
   async fetchLanguageDataFromService(): Promise<void> {
     this.keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
       languages.forEach(async (data) => {
         await this.storage.addKeyboardData(data.language, data.bcp47Tag);
       });
     });
+  }
+
+  async getLanguageData(): Promise<void> {
+    let dateDiff: number;
+    const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
+    const datenow: Date = new Date();
+    console.log("hello");
+    if (keyboardData.length !== 0) {
+      console.log("hellox");
+      dateDiff = datenow.getTime() - keyboardData[0].timestamp.getTime();
+      if (dateDiff > expiryThreshold) {
+        await this.storage.deleteKeyboardData();
+        this.fetchLanguageDataFromService();
+      }
+    } else {
+      console.log("eh");
+      this.fetchLanguageDataFromService();
+    }
   }
 
   private async generateKMPFromStorage(): Promise<void> {
