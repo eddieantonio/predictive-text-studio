@@ -1,5 +1,4 @@
 import {
-  KeyboardData,
   KeyboardDataWithTime,
   StoredProjectData,
   StoredWordList,
