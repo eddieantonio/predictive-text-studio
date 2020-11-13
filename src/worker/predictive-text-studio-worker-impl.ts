@@ -51,16 +51,13 @@ export class PredictiveTextStudioWorkerImpl
     let dateDiff: number;
     const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
     const datenow: Date = new Date();
-    console.log("hello");
     if (keyboardData.length !== 0) {
-      console.log("hellox");
       dateDiff = datenow.getTime() - keyboardData[0].timestamp.getTime();
       if (dateDiff > expiryThreshold) {
         await this.storage.deleteKeyboardData();
         this.fetchLanguageDataFromService();
       }
     } else {
-      console.log("eh");
       this.fetchLanguageDataFromService();
     }
   }
