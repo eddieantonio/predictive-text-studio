@@ -4,24 +4,21 @@
   import InputField from "./InputField.svelte";
   import Button from "./Button.svelte";
 
-  var spreadsheetId = "";
   var error = null;
+  let googleSheetsURL = "";
 
   // Client ID and API key from the Developer Console
-  var CLIENT_ID = process.env.G_CLIENT_ID;
-  var API_KEY = process.env.G_API_KEY;
+  const CLIENT_ID = process.env.G_CLIENT_ID;
+  const API_KEY = process.env.G_API_KEY;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
-  var DISCOVERY_DOCS = [
+  const DISCOVERY_DOCS = [
     "https://sheets.googleapis.com/$discovery/rest?version=v4",
   ];
 
   // Authorization scopes required by the API; multiple scopes can be
   // included, separated by spaces.
-  var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
-
-  // let authorizeButton = document.getElementById("authorize_button");
-  // let signoutButton = document.getElementById("signout_button");
+  const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
   /**
    *  On load, called to load the auth2 library and API client library.
@@ -44,15 +41,15 @@
         scope: SCOPES,
       })
       .then(
-        function () {
+        () => {
           // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
           // Handle the initial sign-in state.
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         },
-        function (error) {
-          error = JSON.stringify(error, null, 2);
+        function () {
+          error = "Error: Could not connect to Google Sheets";
         }
       );
   }
@@ -89,14 +86,11 @@
    *
    */
   function getSpreadsheetId() {
-    let url = document.getElementById("googleSheetsURL").value;
-    if (url) {
-      return url.split("/")[5];
+    googleSheetsURL = document.getElementById("googleSheetsURL").value;
+    if (googleSheetsURL) {
+      return googleSheetsURL.split("/")[5];
     } else {
-      error =
-        "Error: The url " +
-        url +
-        " is not a valid Google Sheets URl, please paste a valid one.";
+      error = `Error: The url ${googleSheetsURL} is not a valid Google Sheets URl. Please paste a valid one.`;
     }
   }
 
@@ -106,42 +100,41 @@
    */
   async function getValuesFromSpreadSheet() {
     const wordListObject = [];
-    spreadsheetId = getSpreadsheetId() || "";
-    if (!error) {
-      gapi.client.sheets.spreadsheets.values
-        .get({
-          spreadsheetId: spreadsheetId,
-          range: "A2:B",
-        })
-        .then(
-          async function (response) {
-            var range = response.result;
-            if (range.values.length > 0) {
-              for (let i = 0; i < range.values.length; i++) {
-                let row = range.values[i];
-                let word = row[0];
-                let wordCount = row[1];
-                if (!wordCount) {
-                  wordCount = 0;
-                }
-                wordListObject.push([word, wordCount]);
-              }
-              error = null;
-              console.log(wordListObject); // TODO: remove me
+    let spreadsheetId = getSpreadsheetId() || "";
 
-              const kmpFile = await worker.readGoogleSheet(
-                spreadsheetId,
-                wordListObject
-              );
-            } else {
-              error = "Error: No data found in the Google Sheet.";
-            }
-          },
-          function (response) {
-            error = "Error: " + response.result.error.message;
-          }
-        );
+    if (error) {
+      return error;
     }
+
+    gapi.client.sheets.spreadsheets.values
+      .get({
+        spreadsheetId: spreadsheetId,
+        range: "A2:B",
+      })
+      .then(
+        async function (response) {
+          var range = response.result;
+          if (range.values.length > 0) {
+            for (let i = 0; i < range.values.length; i++) {
+              let row = range.values[i];
+              let word = row[0];
+              let wordCount = row[1];
+              if (!wordCount) {
+                wordCount = 0;
+              }
+              wordListObject.push([word, wordCount]);
+            }
+            error = null;
+
+            await worker.readGoogleSheet(spreadsheetId, wordListObject);
+          } else {
+            error = "Error: No data found in the Google Sheet.";
+          }
+        },
+        function (response) {
+          error = "Error: " + response.result.error.message;
+        }
+      );
   }
 </script>
 
@@ -160,7 +153,7 @@
   }
 </style>
 
-<pre id="content" style="white-space: pre-wrap;" />
+<!-- <pre id="content" style="white-space: pre-wrap;" /> -->
 <div class="google-sheets">
   {#if error}
     <p class:error>{error}</p>
@@ -169,7 +162,7 @@
   <InputField
     label="Google Sheets URL"
     id="googleSheetsURL"
-    value={spreadsheetId}
+    bind:value={googleSheetsURL}
     fullWidth={true} />
   <Button color="blue" onClick={handleClientLoad}>Read Values</Button>
 </div>
