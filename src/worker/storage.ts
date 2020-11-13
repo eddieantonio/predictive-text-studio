@@ -2,8 +2,8 @@ import Dexie, { DexieOptions } from "dexie";
 import { WordList } from "@common/types";
 import {
   StoredWordList,
-  KeyboardData,
   StoredProjectData,
+  KeyboardDataWithTime,
 } from "./storage-models";
 const DB_NAME = "dictionary_sources";
 const SCHEMA_VERSION = 3;
@@ -16,7 +16,7 @@ const PACKAGE_ID = 0;
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
   projectData: Dexie.Table<StoredProjectData, number>;
-  keyboardData: Dexie.Table<KeyboardData, number>;
+  keyboardData: Dexie.Table<KeyboardDataWithTime, number>;
 
   constructor(options?: DexieOptions) {
     super(DB_NAME, options);
@@ -63,13 +63,14 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        * | id (primary key) |
        * +------------------+
-       * +------------------+
        * | bcp47Tag         |
        * +------------------+
        * | language         |
        * +------------------+
+       * | timestamp        |
+       * +------------------+
        */
-      keyboardData: "++id, bcp47Tag, language",
+      keyboardData: "++id, bcp47Tag, language, timestamp",
     });
 
     /* The assignments are not required by the runtime, however, they are
@@ -159,15 +160,29 @@ export default class Storage {
    * Save all keyboard info into the database
    */
   addKeyboardData(language: string, bcp47: string): Promise<void> {
+    const date = new Date();
     return this.db.transaction("readwrite", this.db.keyboardData, async () => {
-      await this.db.keyboardData.put({ language, bcp47Tag: bcp47 });
+      await this.db.keyboardData.put({
+        language,
+        bcp47Tag: bcp47,
+        timestamp: date,
+      });
     });
   }
 
   /**
-   * Retrieves every keyboard data in the database as a list of {language, bcp47Tag}
+   * Retrieves every keyboard data in the database as a list of {language, bcp47Tag, KeyboardDataWithTime}
    */
-  fetchKeyboardData(): Promise<KeyboardData[]> {
+  fetchKeyboardData(): Promise<KeyboardDataWithTime[]> {
     return this.db.keyboardData.toArray();
+  }
+
+  /**
+   * Delete all keyboard data in the database as a list of {language, bcp47Tag, KeyboardDataWithTime}
+   */
+  deleteKeyboardData(): Promise<void> {
+    return this.db.transaction("readwrite", this.db.keyboardData, async () => {
+      await this.db.keyboardData.clear();
+    });
   }
 }

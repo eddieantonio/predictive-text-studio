@@ -1,4 +1,4 @@
-import { KeyboardData } from "./storage-models";
+import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
@@ -15,6 +15,11 @@ const defaultVersion = "1.0.0";
  * The default copyright.
  */
 const defaultCopyright = "";
+/**
+ * expiryThreshold is used to decide if keyboard data is too old
+ * currently it is set to seven days in millisecond
+ */
+const expiryThreshold = 604800000;
 
 function doNothing() {
   // intentionally empty
@@ -34,12 +39,27 @@ export class PredictiveTextStudioWorkerImpl
     return this.generateKMPFromStorage();
   }
 
-  async getLanguageData(): Promise<void> {
+  async fetchLanguageDataFromService(): Promise<void> {
     this.keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
       languages.forEach(async (data) => {
         await this.storage.addKeyboardData(data.language, data.bcp47Tag);
       });
     });
+  }
+
+  async getLanguageData(): Promise<void> {
+    let dateDiff: number;
+    const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
+    const datenow: Date = new Date();
+    if (keyboardData.length !== 0) {
+      dateDiff = datenow.getTime() - keyboardData[0].timestamp.getTime();
+      if (dateDiff > expiryThreshold) {
+        await this.storage.deleteKeyboardData();
+        this.fetchLanguageDataFromService();
+      }
+    } else {
+      this.fetchLanguageDataFromService();
+    }
   }
 
   private async generateKMPFromStorage(): Promise<void> {

@@ -15,15 +15,16 @@ test("it should set project data and update to the database", async (t) => {
   } as StoredProjectData;
   const keymanAPI = new KeymanAPI();
   const storageStub = new Storage();
+  sinon.stub(storageStub, "fetchKeyboardData").returns(Promise.resolve([]));
+  sinon
+    .stub(storageStub, "fetchProjectData")
+    .returns(Promise.resolve(testStoredProjectData));
   const workerWrapper = new PredictiveTextStudioWorkerImpl(
     storageStub,
     keymanAPI
   );
   const metadata = { languages: [{ name: "English", id: "en" }] };
   workerWrapper.setProjectData(metadata);
-  sinon
-    .stub(storageStub, "fetchProjectData")
-    .returns(Promise.resolve(testStoredProjectData));
   t.is(await storageStub.fetchProjectData(), testStoredProjectData);
 });
 
