@@ -17,7 +17,7 @@ const defaultVersion = "1.0.0";
 const defaultCopyright = "";
 /**
  * expiryThreshold is used to decide if keyboard data is too old
- * currently it is set to seven day in millisecond
+ * currently it is set to seven days in millisecond
  */
 const expiryThreshold = 604800000;
 
