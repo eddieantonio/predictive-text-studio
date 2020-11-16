@@ -91,8 +91,8 @@
 
 <style>
   main {
-    height: 100vh;
-    margin: -8px;
+    height: 100%;
+    min-height: 100vh;
   }
 
   .languages {
@@ -160,7 +160,7 @@
   1. Create/refactor button component
   2. Use variable names for colors and fonts
  -->
-<main>
+<main class="main">
   <div class="languages">
     <div class="languages__sidebar">
       <Sidebar {languages} {selectedLanguage} />

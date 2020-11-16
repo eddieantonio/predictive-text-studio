@@ -8,6 +8,7 @@
 <style>
   .sidebar {
     height: 100%;
+    min-height: 100vh;
     background-color: var(--gray-dark);
     display: flex;
     flex-direction: column;
