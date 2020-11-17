@@ -4,6 +4,14 @@
   import * as Comlink from "comlink";
   const UPLOAD_INPUT_ID = "upload-input";
 
+  // Dragging over nested element in a drag-and-drop zone
+  // will fire a dragLeave event
+  // Making implementing drag over effect problematic
+  // Using a dragEnterCounter solves this issue
+  // See https://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+  // This problem can also be solved by listening for dragOver
+  // However, as of right now, doing so on Chrome when dragging over nested element
+  // will cause the drag over effect to be cancelled for a short amount of time, then resume
   let dragEnterCounter = 0;
   let downloadURL = "";
 
