@@ -6,12 +6,8 @@
 <style>
   :global(body) {
     display: flex;
-
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-
     flex-flow: column nowrap;
+    min-height: 100vh;
   }
 
   :global(:root) {

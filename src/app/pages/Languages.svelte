@@ -91,8 +91,7 @@
 
 <style>
   main {
-    height: 100vh;
-    margin: -8px;
+    min-height: 100vh;
   }
 
   .languages {
