@@ -159,7 +159,7 @@
   1. Create/refactor button component
   2. Use variable names for colors and fonts
  -->
-<main class="main">
+<main>
   <div class="languages">
     <div class="languages__sidebar">
       <Sidebar {languages} {selectedLanguage} />
