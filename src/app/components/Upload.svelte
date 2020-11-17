@@ -4,7 +4,15 @@
   import * as Comlink from "comlink";
   const UPLOAD_INPUT_ID = "upload-input";
 
-  let onDraggedOver = false;
+  // Dragging over nested element in a drag-and-drop zone
+  // will fire a dragLeave event
+  // Making implementing drag over effect problematic
+  // Using a dragEnterCounter solves this issue
+  // See https://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+  // This problem can also be solved by listening for dragOver
+  // However, as of right now, doing so on Chrome when dragging over nested element
+  // will cause the drag over effect to be cancelled for a short amount of time, then resume
+  let dragEnterCounter = 0;
   let downloadURL = "";
 
   worker.onPackageCompileSuccess(
@@ -33,7 +41,7 @@
   }
 
   const handleDrop = async (event: DragEvent) => {
-    onDraggedOver = false;
+    dragEnterCounter = 0;
     let fileList: File[] = [];
 
     if (event.dataTransfer == null) {
@@ -50,12 +58,12 @@
     }
   };
 
-  const handleDragOver = () => {
-    onDraggedOver = true;
+  const handleDragEnter = () => {
+    dragEnterCounter++;
   };
 
   const handleDragLeave = () => {
-    onDraggedOver = false;
+    dragEnterCounter--;
   };
 
   const handleChange = async (event: Event) => {
@@ -110,10 +118,11 @@
 
 <div
   class="upload-zone"
-  class:drag-over={onDraggedOver}
+  class:drag-over={dragEnterCounter > 0}
   on:drop|preventDefault={handleDrop}
-  on:dragover|preventDefault={handleDragOver}
-  on:dragleave|preventDefault={handleDragLeave}>
+  on:dragenter|preventDefault={handleDragEnter}
+  on:dragleave|preventDefault={handleDragLeave}
+  data-cy="upload-dropzone">
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
   <span>Drag and drop here</span>
   <span>or</span>
