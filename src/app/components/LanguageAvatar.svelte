@@ -25,9 +25,7 @@
    * @param {string} languageName - A the name of the language selected.
    * @return {void}
    */
-  const handleClick = (languageName: string): void => {
-    console.log(languageName + " button selected");
-  };
+  const handleClick = (languageName: string): void => {};
 </script>
 
 <style>

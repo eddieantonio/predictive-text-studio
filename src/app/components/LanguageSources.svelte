@@ -1,4 +1,5 @@
 <script lang="ts">
+  import AddSource from "./AddSource.svelte";
   import Button from "./Button.svelte";
   interface DictionarySource {
     name: string;
@@ -9,24 +10,12 @@
   export let sources: DictionarySource[];
 
   /**
-   * Handles the click when the add source button is pressed. Should show another section where user can upload file or open direct entry.
-   * TODO: Replace stub
-   *
-   * @return {void}
-   */
-  const handleAddSource = (): void => {
-    console.log("Add source button clicked");
-  };
-
-  /**
    * Handles the click when the edit button is pressed.
    * TODO: Replace stub
    *
    * @return {void}
    */
-  const handleEdit = (): void => {
-    console.log("Edit button clicked");
-  };
+  const handleEdit = (): void => {};
 
   /**
    * Handles the click when the delete button is pressed.
@@ -34,9 +23,7 @@
    *
    * @return {void}
    */
-  const handleDelete = (): void => {
-    console.log("Delete button clicked");
-  };
+  const handleDelete = (): void => {};
 </script>
 
 <style>
@@ -132,7 +119,8 @@
       </tr>
     {/each}
   </table>
-  <Button color="blue" isOutlined size="large" onClick={handleAddSource}>
-    Add Source
-  </Button>
+  <details data-cy="language-sources-add-sources">
+    <summary>Add Source</summary>
+    <AddSource />
+  </details>
 </div>

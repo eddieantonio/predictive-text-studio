@@ -75,7 +75,6 @@
    */
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
-    console.log(buttonName + " button selected");
   };
 
   /**
@@ -84,9 +83,7 @@
    *
    * @return {void}
    */
-  const handleDownload = (): void => {
-    console.log("Download button clicked");
-  };
+  const handleDownload = (): void => {};
 </script>
 
 <style>
@@ -182,16 +179,19 @@
           color="grey"
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
+          dataCy="languages-information-btn"
         >Information</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           onClick={()=> handleClick('sources')}
+          dataCy="languages-sources-btn"
         >Sources</Button>
         <Button
           color="blue"
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
+          dataCy="languages-download-btn"
         >Download</Button>
       </div>
       <div class="languages__container--content">
