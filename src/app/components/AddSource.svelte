@@ -3,6 +3,7 @@
   import Button from "./Button.svelte";
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
+  import Upload from "./Upload.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
   let manualEntry: boolean = false;
   let onDraggedOver = false;
@@ -71,43 +72,6 @@
 </script>
 
 <style>
-  .upload-zone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5%;
-    min-width: 200px;
-    border-radius: 5px;
-    border: 3px dashed var(--gray-light);
-    line-height: 1.2;
-  }
-
-  .drag-over {
-    border-color: var(--blue);
-    background-color: var(--blue-light);
-  }
-
-  input {
-    display: none;
-  }
-
-  .upload-btn {
-    margin: 0 auto;
-    color: var(--primary-blue);
-  }
-
-  .upload-btn:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-
-  img {
-    width: 2em;
-    padding-bottom: 1rem;
-    color: var(--blue);
-  }
-
   .save-zone {
     display: flex;
     flex-direction: row;
@@ -138,23 +102,7 @@
 {#if manualEntry}
   <ManualEntry />
 {:else}
-  <div
-    class="upload-zone"
-    class:drag-over={onDraggedOver}
-    on:drop|preventDefault={handleDrop}
-    on:dragover|preventDefault={handleDragOver}
-    on:dragleave|preventDefault={handleDragLeave}
-    data-cy="add-source-upload-zone">
-    <img role="presentation" src="icons/upload-solid.svg" alt="" />
-    <span>Drag and drop here</span>
-    <span>or</span>
-    <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
-    <input
-      id={UPLOAD_INPUT_ID}
-      type="file"
-      on:change={handleChange}
-      data-cy="upload-spreadsheet" />
-  </div>
+  <Upload />
 {/if}
 
 <div class="save-zone">
