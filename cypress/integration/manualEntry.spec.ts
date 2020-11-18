@@ -19,7 +19,7 @@ describe("", function () {
 
     cy.get("[data-cy=manual-entry-delete]").contains("Delete").click();
     //TODO: Current row should be deleted
-    
+
     cy.get("[data-cy=language-sources-add-sources]")
       .contains("Add Source")
       .click();
