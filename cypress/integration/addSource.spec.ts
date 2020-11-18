@@ -9,7 +9,6 @@ describe("Add source feature in LanguageSource page", function () {
     cy.get("[data-cy=add-sources-splitbtn-left]").contains("Upload").click();
     cy.get("[data-cy=add-source-upload-zone]").contains("label", "Browse file");
 
-    // After clicking the details element, the add source zone will gone
     cy.get("[data-cy=language-sources-add-sources]")
       .contains("Add Source")
       .click();

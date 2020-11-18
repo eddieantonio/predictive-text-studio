@@ -19,8 +19,7 @@ describe("", function () {
 
     cy.get("[data-cy=manual-entry-delete]").contains("Delete").click();
     //TODO: Current row should be deleted
-
-    // After clicking the details element, the add source zone will gone
+    
     cy.get("[data-cy=language-sources-add-sources]")
       .contains("Add Source")
       .click();
