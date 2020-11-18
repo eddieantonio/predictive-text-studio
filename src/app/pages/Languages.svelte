@@ -45,15 +45,15 @@
   let testingData: any = [
     {
       bcp47Tag: "en",
-      langauge: "english",
+      language: "english",
     },
     {
       bcp47Tag: "en",
-      langauge: "enn",
+      language: "enn",
     },
     {
       bcp47Tag: "en",
-      langauge: "ewx",
+      language: "ewx",
     },
   ];
 
