@@ -2,7 +2,7 @@
   // TODO: the following interface should be removed once #33 is done
   interface dataObj {
     bcp47Tag: string;
-    langauge: string;
+    language: string;
   }
   enum keyboardKey {
     Up = "ArrowUp",
@@ -29,7 +29,7 @@
     show = true;
     filetred = results.filter((item: any) => {
       let a = new RegExp("^" + event.target.value.toUpperCase());
-      return a.test(item.langauge.toUpperCase());
+      return a.test(item.language.toUpperCase());
     });
   }
 
@@ -57,7 +57,7 @@
   // On select item in list
   function selectedList(data: dataObj) {
     show = false;
-    selected = data.langauge;
+    selected = data.language;
     subtext = data.bcp47Tag;
   }
 
@@ -67,7 +67,6 @@
 
   // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
-    console.log(key);
     if (
       key !== keyboardKey.Down &&
       key !== keyboardKey.Up &&
@@ -85,7 +84,7 @@
         index -= 1;
       }
     } else if (key == keyboardKey.Enter) {
-      selected = filetred[index].langauge;
+      selected = filetred[index].language;
       subtext = filetred[index].bcp47Tag;
       show = false;
     }
@@ -177,7 +176,7 @@
         <li
           class="autocomplete__suggestion-item"
           data-cy="autocomplete-suggestions">
-          <div on:click={() => selectedList(result)}>{result.langauge}</div>
+          <div on:click={() => selectedList(result)}>{result.language}</div>
         </li>
       {/each}
     </ul>
