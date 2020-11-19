@@ -1,12 +1,20 @@
 <script lang="ts">
   import worker from "../spawn-worker";
-  import Button from "./Button.svelte";
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
   let manualEntry: boolean = false;
   let onDraggedOver = false;
   let fileList: File[] | FileList = [];
+  let tableData = {
+    name: "",
+    data: [
+      {
+        word: "",
+        count: null,
+      },
+    ],
+  };
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -48,12 +56,6 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       fileList = input.files;
-    }
-  };
-
-  const saveAddedSources = (): void => {
-    for (let file of fileList) {
-      worker.addDictionarySourceToProject(file.name, file);
     }
   };
 
@@ -108,14 +110,6 @@
     color: var(--blue);
   }
 
-  .save-zone {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 1%;
-  }
-
   .top-button-zone {
     display: flex;
     flex-direction: column;
@@ -136,7 +130,7 @@
 </div>
 
 {#if manualEntry}
-  <ManualEntry />
+  <ManualEntry {tableData} />
 {:else}
   <div
     class="upload-zone"
@@ -156,14 +150,3 @@
       data-cy="upload-spreadsheet" />
   </div>
 {/if}
-
-<div class="save-zone">
-  <Button
-    color="blue"
-    isOutlined
-    size="large"
-    onClick={saveAddedSources}
-    dataCy="add-sources-save-btn">
-    Save
-  </Button>
-</div>

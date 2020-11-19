@@ -1,9 +1,37 @@
 <script lang="ts">
-  /**
-   * Handles the click when the delete button is pressed
-   * TODO
-   */
-  const deleteRow = (): void => {};
+  import Button from "./Button.svelte";
+  export let tableData: { name: string; data: [] };
+  let rowDataFromManualEntry = tableData.data;
+  let tableName = tableData.name;
+
+  let columns = [
+    {
+      label: "Word",
+      name: "word",
+    },
+    {
+      label: "Count",
+      name: "count",
+    },
+    {
+      label: "Action",
+      name: "action",
+    },
+  ];
+
+  const deleteRow = (i): void => {
+    const part = rowDataFromManualEntry.splice(i, 1);
+    rowDataFromManualEntry = rowDataFromManualEntry;
+  };
+
+  const addNewRow = (): void => {
+    rowDataFromManualEntry.push({});
+    rowDataFromManualEntry = rowDataFromManualEntry;
+  };
+
+  const saveTableData = () => {
+    //TODO: save manual entry data into database
+  };
 </script>
 
 <style>
@@ -27,13 +55,6 @@
     text-align: center;
   }
 
-  th {
-    vertical-align: middle;
-    padding: 1.25rem 0 1.25rem 1.25rem;
-    background-color: var(--lite-white);
-    text-align: center;
-  }
-
   table {
     border-collapse: collapse;
     width: 1400px;
@@ -42,31 +63,38 @@
     box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.1);
   }
 
-  tr {
+  table th {
+    vertical-align: middle;
+    padding: 1.25rem 0 1.25rem 1.25rem;
+    background-color: var(--lite-white);
+    text-align: center;
+  }
+
+  table tr {
     border-bottom: 1pt solid var(--lite-white);
   }
 
-  td {
+  table td {
     vertical-align: middle;
     padding: 0.625rem 0 0.625rem 1.25rem;
     color: var(--gray-dark);
     text-align: center;
   }
 
-  th:first-of-type {
+  table th:first-of-type {
     border-top-left-radius: 10px;
   }
-  th:last-of-type {
+  table th:last-of-type {
     border-top-right-radius: 10px;
   }
-  tr:last-of-type td:first-of-type {
+  table tr:last-of-type td:first-of-type {
     border-bottom-left-radius: 10px;
   }
-  tr:last-of-type td:last-of-type {
+  table tr:last-of-type td:last-of-type {
     border-bottom-right-radius: 10px;
   }
 
-  .btn--inline {
+  table .btn--inline {
     display: inline;
     padding: 0;
     border: 0;
@@ -74,7 +102,7 @@
     font-size: 1em;
   }
 
-  td > input {
+  table td > input {
     height: 20px;
     width: 80%;
     padding: 0.3125rem;
@@ -84,50 +112,78 @@
     font: 1em var(--main-font);
   }
 
-  input:focus {
+  table input:focus {
     background-color: var(--lite-white);
+  }
+
+  .save-zone {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
   }
 </style>
 
 <div class="language__sources-manual-entry">
   <div class="language__sources-manual-entry-tablename">
     <h4>Table Name</h4>
-    <input data-cy="manual-entry-input-tablename" />
+    <input
+      type="text"
+      bind:value={tableName}
+      data-cy="manual-entry-input-tablename" />
   </div>
 
-  <table>
+  <table id="manual-entry-table">
     <thead>
-      <th>Word</th>
-      <th>Count</th>
-      <th>Action</th>
+      {#each columns as column (column.name)}
+        <th>{column.label}</th>
+      {/each}
+      <th />
     </thead>
 
+    {#each rowDataFromManualEntry as row, i (i)}
+      <tr>
+        <td>
+          <input
+            type="text"
+            bind:value={row[columns[0].name]}
+            data-cy="manual-entry-input-word" />
+        </td>
+        <td>
+          <input
+            type="number"
+            min="0"
+            placeholder="Optional"
+            bind:value={row[columns[1].name]}
+            data-cy="manual-entry-input-count" />
+        </td>
+        <td>
+          <button
+            class="btn--inline"
+            on:click={(e) => deleteRow(i)}
+            data-cy="manual-entry-delete">Delete</button>
+        </td>
+      </tr>
+    {/each}
     <tr>
-      <td><input type="text" data-cy="manual-entry-input-word" /></td>
-      <td>
-        <input
-          type="number"
-          placeholder="Optional"
-          data-cy="manual-entry-input-count" />
-      </td>
-      <td>
+      <td colspan="3">
         <button
           class="btn--inline"
-          on:click={deleteRow}
-          data-cy="manual-entry-delete">Delete</button>
+          on:click={addNewRow}
+          data-cy="munual-entry-add-row">Add Row</button>
       </td>
     </tr>
-    <!-- TODO: hard code new row for now, but we can auto generate new row later -->
-    <tr>
-            <td>
-                <input type="text" />
-            </td>
-            <td>
-                <input type="number" placeholder="Optional" />
-            </td>
-            <td>
-                <button class="btn--inline" on:click={deleteRow}>Delete</button>
-            </td>
-        </tr>
   </table>
+
+  <div class="save-zone">
+    <Button
+      color="blue"
+      isOutlined
+      size="large"
+      onClick={saveTableData}
+      dataCy="add-sources-save-btn">
+      Save
+    </Button>
+  </div>
 </div>
