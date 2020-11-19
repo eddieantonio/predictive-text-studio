@@ -1,62 +1,11 @@
 <script lang="ts">
-  import worker from "../spawn-worker";
   import Button from "./Button.svelte";
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
-  const UPLOAD_INPUT_ID = "upload-input";
   let manualEntry: boolean = false;
-  let onDraggedOver = false;
-  let fileList: File[] | FileList = [];
 
-  function fileFromDataTransferItem(items: DataTransferItemList): File[] {
-    const fileList: File[] = [];
-    for (let item of items) {
-      // If dropped items aren't files, reject them
-      if (item.kind === "file") {
-        const file = item.getAsFile();
-        if (file !== null) {
-          fileList.push(file);
-        }
-      }
-    }
-    return fileList;
-  }
-
-  const handleDrop = (event: DragEvent) => {
-    onDraggedOver = false;
-
-    if (event.dataTransfer == null) {
-      return;
-    } else if (event.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      fileList = fileFromDataTransferItem(event.dataTransfer.items);
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      fileList = Array.from(event.dataTransfer.files);
-    }
-  };
-
-  const handleDragOver = () => {
-    onDraggedOver = true;
-  };
-
-  const handleDragLeave = () => {
-    onDraggedOver = false;
-  };
-
-  const handleChange = (event: Event): void => {
-    const input = event.target as HTMLInputElement;
-    if (input !== null && input.files) {
-      fileList = input.files;
-    }
-  };
-
-  const saveAddedSources = (): void => {
-    for (let file of fileList) {
-      worker.addDictionarySourceToProject(file.name, file);
-    }
-  };
+  const saveAddedSources = (): void => {};
 
   const closeAddSourceZone = () => {
     manualEntry = false;
