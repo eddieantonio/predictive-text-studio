@@ -52,6 +52,7 @@ Generate-Kmp.ts-->Link-Storage-to-Kmp.ts: kmpFile
 deactivate Generate-Kmp.ts
 
 Link-Storage-to-Kmp.ts-->Predictive-Text-Studio-Worker.ts: kmpFile
+deactivate Link-Storage-to-Kmp.ts
 Predictive-Text-Studio-Worker.ts->Predictive-Text-Studio-Worker.ts: _emitPackageCompileSuccess(kmpFile)
 deactivate Predictive-Text-Studio-Worker.ts
 
