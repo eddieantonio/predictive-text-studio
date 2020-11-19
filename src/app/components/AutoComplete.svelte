@@ -123,6 +123,8 @@
     padding: 0 0 var(--sb-xs) 0;
     margin: 0;
     width: 100%;
+    height: 11rem;
+    overflow: scroll;
     background: white;
     box-shadow: 0px var(--sb-xs) var(--sb-m) rgba(0, 0, 0, 0.2);
     border-radius: 0 0 var(--sb-xs) var(--sb-xs);
