@@ -55,4 +55,9 @@ export interface PredictiveTextStudioWorker {
    * @see RelevantKmpOptions
    */
   setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): void;
+
+  /**
+   * Retrieving Keyman keyboard data from the IndexedDB storage
+   */
+  getDataFromStorage(): Promise<void>;
 }

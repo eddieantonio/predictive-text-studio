@@ -1,5 +1,7 @@
 <script lang="ts">
   // TODO: the following interface should be removed once #33 is done
+  import { onMount } from "svelte";
+  import worker from "../spawn-worker";
   interface dataObj {
     bcp47Tag: string;
     language: string;
@@ -24,6 +26,10 @@
   // Index of focus element
   let index = -1;
 
+  onMount(async () => {
+    results = await worker.getDataFromStorage();
+  });
+
   // Input to search
   function onChange(event: Event) {
     show = true;
@@ -32,6 +38,7 @@
       const a = new RegExp("^" + target.value.toUpperCase());
       return a.test(item.language.toUpperCase());
     });
+
   }
 
   function closeSuggestion() {
