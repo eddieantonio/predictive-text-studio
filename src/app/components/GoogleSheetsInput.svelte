@@ -93,7 +93,7 @@
     const wordListObject = [];
     const spreadsheetId = getSpreadsheetId() || "";
     if (error) {
-      return error;
+      return;
     }
 
     let response;
@@ -124,7 +124,7 @@
     }
     error = null;
 
-    await worker.readGoogleSheet(spreadsheetId, wordListObject);
+    worker.readGoogleSheet(spreadsheetId, wordListObject);
   }
 </script>
 
