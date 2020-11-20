@@ -72,13 +72,6 @@
   }
 
   /**
-   *  Sign out the user upon button click.
-   */
-  function handleSignoutClick(event) {
-    gapi.auth2.getAuthInstance().signOut();
-  }
-
-  /**
    * Gets the unique spreadsheet ID from a Google Sheet URL
    *
    */
