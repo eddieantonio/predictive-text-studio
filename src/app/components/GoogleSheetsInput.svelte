@@ -153,7 +153,6 @@
   }
 </style>
 
-<!-- <pre id="content" style="white-space: pre-wrap;" /> -->
 <div class="google-sheets">
   {#if error}
     <p class:error>{error}</p>
