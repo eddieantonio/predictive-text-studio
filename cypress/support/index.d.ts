@@ -12,5 +12,15 @@ declare namespace Cypress {
      * cy.disableSmoothScroll()
      */
     disableSmoothScroll(): void;
+
+    /**
+     * Gets an element by its [data-cy] attribute.
+     *
+     * Secretly, `cy.data("NAME")` is a shortcut for `cy.get("[data-cy=NAME]")`.
+     *
+     * Why use [data-cy]?
+     * See: https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements
+     */
+    data(dataCy: string): Chainable;
   }
 }

@@ -49,3 +49,10 @@ Cypress.Commands.add("disableSmoothScroll", () => {
     document.body.appendChild(node);
   });
 });
+
+/**
+ * Shortcut for cy.get("[data=NAME]")
+ */
+Cypress.Commands.add("data", (dataCy) => {
+  return cy.get(`[data-cy=${dataCy}]`);
+});
