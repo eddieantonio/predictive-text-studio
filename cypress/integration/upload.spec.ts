@@ -23,7 +23,7 @@ describe("Upload from the the landing page", function () {
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
-    cy.get("[data-cy=quick-start]")
+    cy.data("quick-start")
       .as("quick-start")
       .scrollIntoView()
       .contains("Browse file");
@@ -31,7 +31,7 @@ describe("Upload from the the landing page", function () {
     // Before we upload anything there should be no download link,
     // and no file downloaded in our folder
     cy.get("@quick-start")
-      .get("[data-cy=download-kmp]")
+      .data("download-kmp")
       .as("download-kmp")
       .should("have.attr", "data-download-state", "disabled");
     cy.readFile(downloadedFilePath).should("not.exist");
@@ -45,12 +45,10 @@ describe("Upload from the the landing page", function () {
       const event = { dataTransfer: { files: [testFile] } };
 
       cy.get("@quick-start")
-        .get("[data-cy=upload-dropzone]")
+        .data("upload-dropzone")
         .trigger("dragenter", event);
 
-      cy.get("@quick-start")
-        .get("[data-cy=upload-dropzone]")
-        .trigger("drop", event);
+      cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
     cy.get("@download-kmp")
