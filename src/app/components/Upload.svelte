@@ -1,7 +1,5 @@
 <script lang="ts">
   import worker from "../spawn-worker";
-  import DownloadKMP from "./DownloadKMP.svelte";
-  import * as Comlink from "comlink";
   const UPLOAD_INPUT_ID = "upload-input";
 
   // Dragging over nested element in a drag-and-drop zone
@@ -13,13 +11,6 @@
   // However, as of right now, doing so on Chrome when dragging over nested element
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
   let dragEnterCounter = 0;
-  let downloadURL = "";
-
-  worker.onPackageCompileSuccess(
-    Comlink.proxy((kmp: ArrayBuffer) => {
-      downloadURL = createURL(kmp);
-    })
-  );
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -33,11 +24,6 @@
       }
     }
     return fileList;
-  }
-
-  function createURL(kmpFile: ArrayBuffer): string {
-    const blob = new Blob([kmpFile], { type: "application/octet-stream" });
-    return URL.createObjectURL(blob);
   }
 
   const handleDrop = async (event: DragEvent) => {
@@ -132,5 +118,4 @@
     type="file"
     on:change={handleChange}
     data-cy="upload-spreadsheet" />
-  <DownloadKMP {downloadURL} />
 </div>

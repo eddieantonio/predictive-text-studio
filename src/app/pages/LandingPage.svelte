@@ -1,6 +1,21 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
   import BCP47Tag from "../components/BCP47Tag.svelte";
+  import DownloadKMP from "../components/DownloadKMP.svelte";
+  import worker from "../spawn-worker";
+  import * as Comlink from "comlink";
+  let downloadURL = "";
+
+  worker.onPackageCompileSuccess(
+    Comlink.proxy((kmp: ArrayBuffer) => {
+      downloadURL = createURL(kmp);
+    })
+  );
+
+  function createURL(kmpFile: ArrayBuffer): string {
+    const blob = new Blob([kmpFile], { type: "application/octet-stream" });
+    return URL.createObjectURL(blob);
+  }
 </script>
 
 <style>
@@ -261,6 +276,7 @@
       <fieldset class="quick-start__step">
         <legend> Step 2: Attach a word list </legend>
         <Upload />
+        <DownloadKMP {downloadURL} />
       </fieldset>
 
       <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>
