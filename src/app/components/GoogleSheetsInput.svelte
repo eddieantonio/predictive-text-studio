@@ -67,7 +67,7 @@
   /**
    *  Sign in the user upon button click.
    */
-  function handleAuthClick(event) {
+  function signInToGoogleAPI(event) {
     gapi.auth2.getAuthInstance().signIn();
   }
 
