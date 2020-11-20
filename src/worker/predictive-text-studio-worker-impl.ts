@@ -48,7 +48,7 @@ export class PredictiveTextStudioWorkerImpl
     });
   }
 
-  async getDataFromStorage(): Promise<any> {
+  async getDataFromStorage(): Promise<KeyboardDataWithTime[]> {
     return this.storage.fetchKeyboardData();
   }
 

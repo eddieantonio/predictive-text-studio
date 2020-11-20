@@ -1,11 +1,21 @@
 <script lang="ts">
-  // TODO: the following interface should be removed once #33 is done
   import { onMount } from "svelte";
   import worker from "../spawn-worker";
-  interface dataObj {
+  interface KeyboardDataWithTime {
+    /**
+     * Store bcp47Tag as the primarykey
+     */
     bcp47Tag: string;
+    /**
+     * Keyboard Language of the bcp47Tag
+     */
     language: string;
+    /**
+     * Timestamp of last updated time
+     */
+    timestamp: Date;
   }
+
   enum keyboardKey {
     Up = "ArrowUp",
     Down = "ArrowDown",
@@ -17,6 +27,10 @@
   export let results: dataObj[] = [];
   // To store filtered array
   let filtered: dataObj[] = [];
+  // To store Keyman Keyboard data
+  let results: KeyboardDataWithTime[] = [];
+  // To store Filted array
+  let filetred: any[] = [];
   // To store selected language
   let selected: string = "";
   // Toggle to show search list
@@ -31,14 +45,13 @@
   });
 
   // Input to search
-  function onChange(event: Event) {
+  async function onChange(event: any) {
     show = true;
-    filtered = results.filter((item: any) => {
-      const target = event.target as HTMLTextAreaElement;
-      const a = new RegExp("^" + target.value.toUpperCase());
-      return a.test(item.language.toUpperCase());
+    filetred = results.filter((element) => {
+      // Using regular expressing for search method
+      let regExp = new RegExp("^" + event.target.value.toUpperCase());
+      return regExp.test(element.language.toUpperCase());
     });
-
   }
 
   function closeSuggestion() {
@@ -63,7 +76,7 @@
   }
 
   // On select item in list
-  function selectedList(data: dataObj) {
+  function selectedList(data: KeyboardDataWithTime) {
     show = false;
     selected = data.language;
     subtext = data.bcp47Tag;
@@ -116,7 +129,7 @@
     padding: var(--sb-xs);
     border-radius: var(--sb-xs);
     border-width: 1px;
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: var(--gray);
   }
   .autocomplete__suggestion-list {
     position: absolute;
@@ -155,7 +168,7 @@
 </style>
 
 <svelte:window on:keydown={handleKeydown} />
-<div class="autocomplete">
+<div class="autocomplete mb-m">
   {#if label !== ''}
     <p class="autocomplete__label">{label}</p>
   {/if}

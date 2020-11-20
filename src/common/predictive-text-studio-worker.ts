@@ -2,6 +2,23 @@ import type { RelevantKmpOptions } from "./kmp-json-file";
 import type { DictionaryEntry } from "./types";
 
 /**
+ * KeyboardDataWithTime interface
+ */
+interface KeyboardDataWithTime {
+  /**
+   * Store bcp47Tag as the primarykey
+   */
+  bcp47Tag: string;
+  /**
+   * Keyboard Language of the bcp47Tag
+   */
+  language: string;
+  /**
+   * Timestamp of last updated time
+   */
+  timestamp: Date;
+}
+/**
  * This interface establishes a communication protocal between the UI thread and the worker thread
  */
 export interface PredictiveTextStudioWorker {
@@ -59,5 +76,5 @@ export interface PredictiveTextStudioWorker {
   /**
    * Retrieving Keyman keyboard data from the IndexedDB storage
    */
-  getDataFromStorage(): Promise<void>;
+  getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
 }
