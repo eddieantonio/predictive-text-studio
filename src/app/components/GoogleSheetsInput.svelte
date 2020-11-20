@@ -143,6 +143,11 @@
   }
 </style>
 
+<svelte:head>
+  <script async defer src="https://apis.google.com/js/api.js">
+  </script>
+</svelte:head>
+
 <div class="google-sheets">
   {#if error}
     <p class:error>{error}</p>
@@ -155,7 +160,3 @@
     fullWidth={true} />
   <Button color="blue" onClick={handleClientLoad}>Read Values</Button>
 </div>
-<svelte:head>
-  <script async defer src="https://apis.google.com/js/api.js">
-  </script>
-</svelte:head>
