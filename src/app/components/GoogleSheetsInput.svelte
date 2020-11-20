@@ -88,43 +88,43 @@
    * Read word and count form storage
    * Sample: https://docs.google.com/spreadsheets/d/1lzHxoMWHpdGecby4d0y15AVf80csA7iNkaMMEL54Q7g/edit#gid=0
    */
+
   async function getValuesFromSpreadSheet() {
     const wordListObject = [];
-    let spreadsheetId = getSpreadsheetId() || "";
-
+    const spreadsheetId = getSpreadsheetId() || "";
     if (error) {
       return error;
     }
 
-    gapi.client.sheets.spreadsheets.values
-      .get({
+    let response;
+    try {
+      response = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
         range: "A2:B",
-      })
-      .then(
-        async function (response) {
-          var range = response.result;
-          if (range.values.length > 0) {
-            for (let i = 0; i < range.values.length; i++) {
-              let row = range.values[i];
-              let word = row[0];
-              let wordCount = row[1];
-              if (!wordCount) {
-                wordCount = 0;
-              }
-              wordListObject.push([word, wordCount]);
-            }
-            error = null;
+      });
+    } catch {
+      error = "Error: " + response.result.error.message;
+      return;
+    }
 
-            await worker.readGoogleSheet(spreadsheetId, wordListObject);
-          } else {
-            error = "Error: No data found in the Google Sheet.";
-          }
-        },
-        function (response) {
-          error = "Error: " + response.result.error.message;
-        }
-      );
+    const range = response.result;
+    if (range.values.length <= 0) {
+      error = "Error: No data found in the Google Sheet.";
+      return;
+    }
+
+    for (let i = 0; i < range.values.length; i++) {
+      const row = range.values[i];
+      const word = row[0];
+      let wordCount = row[1];
+      if (!wordCount) {
+        wordCount = 0;
+      }
+      wordListObject.push([word, wordCount]);
+    }
+    error = null;
+
+    await worker.readGoogleSheet(spreadsheetId, wordListObject);
   }
 </script>
 
