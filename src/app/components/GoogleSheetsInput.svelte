@@ -152,7 +152,6 @@
   {#if error}
     <p class:error>{error}</p>
   {/if}
-  <h2>Or Get Values from a Google Sheet</h2>
   <InputField
     label="Google Sheets URL"
     id="googleSheetsURL"
