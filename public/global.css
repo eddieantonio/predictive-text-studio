@@ -8,12 +8,14 @@
   --orange-light: #fbc88f;
   --gray: #888888;
   --gray-hover: #c5c5c5;
+  --gray-disabled: #949494;
   --gray-light: #d6d6d6;
   --gray-highlight: #e0e0e0;
   --gray-dark: #454545;
   --lite-white: #f1f1f1;
   --white: #ffffff;
-  --primary-blue: #0099ff;
+  --hello: #0071bc;
+  --primary-blue: #0077cc;
   --dark-blue: #0876c0;
 
   --default-text-color: #000;
