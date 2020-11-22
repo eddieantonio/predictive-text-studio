@@ -9,7 +9,7 @@
     data: [
       {
         word: "",
-        count: undefined
+        count: undefined,
       },
     ],
   };

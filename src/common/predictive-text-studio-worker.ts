@@ -24,7 +24,7 @@ export interface PredictiveTextStudioWorker {
    */
   addManualEntryDictionaryToProject(tableData: {
     name: string;
-    data: { word: string, count: number | undefined }[];
+    data: { word: string; count: number | undefined }[];
   }): Promise<number>;
 
   /**

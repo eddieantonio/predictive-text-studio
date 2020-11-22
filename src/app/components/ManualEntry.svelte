@@ -2,9 +2,14 @@
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
 
+  interface rowDataObj {
+    word: string;
+    count: number | undefined;
+  }
+
   export let tableData: {
     name: string;
-    data: { word: string; count: number | undefined }[];
+    data: rowDataObj[];
   };
 
   let rowDataFromManualEntry = tableData.data;
@@ -27,7 +32,7 @@
   );
   $: btnColor = validInput ? "blue" : "grey";
 
-  const validateRowData = (rowData: {word: string; count: number | undefined}): boolean => {
+  const validateRowData = (rowData: rowDataObj): boolean => {
     const word = rowData.word;
     return word !== "" && word !== undefined && word !== null;
   };
@@ -38,7 +43,7 @@
   };
 
   const addNewRow = (): void => {
-    rowDataFromManualEntry.push({word: '', count: undefined});
+    rowDataFromManualEntry.push({ word: "", count: undefined });
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
