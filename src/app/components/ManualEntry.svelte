@@ -1,9 +1,9 @@
 <script lang="ts">
   import Button from "./Button.svelte";
   export let tableData: { name: string; data: [] };
+
   let rowDataFromManualEntry = tableData.data;
   let tableName = tableData.name;
-
   let columns = [
     {
       label: "Word",
@@ -18,6 +18,13 @@
       name: "action",
     },
   ];
+  $: validInput = rowDataFromManualEntry.every(element => validateEveryRowData(element));
+  $: btnColor = validInput ? "blue" : "grey";
+  
+  const validateEveryRowData = (rowData): boolean => {
+    const word = rowData.word;
+    return (word !== '' && word !== undefined && word !== null);
+  }
 
   const deleteRow = (i): void => {
     const part = rowDataFromManualEntry.splice(i, 1);
@@ -31,6 +38,8 @@
 
   const saveTableData = () => {
     //TODO: save manual entry data into database
+    console.log(validInput)
+    console.log("save btn clicked.")
   };
 </script>
 
@@ -116,6 +125,11 @@
     background-color: var(--lite-white);
   }
 
+  table p {
+    display: inline;
+    color: var(--red);
+  }
+
   .save-zone {
     display: flex;
     flex-direction: row;
@@ -149,6 +163,9 @@
             type="text"
             bind:value={row[columns[0].name]}
             data-cy="manual-entry-input-word" />
+          {#if !validateEveryRowData(row)}
+            <p>*</p>
+          {/if}
         </td>
         <td>
           <input
@@ -178,8 +195,9 @@
 
   <div class="save-zone">
     <Button
-      color="blue"
+      color={btnColor}
       isOutlined
+      disabled={!validInput}
       size="large"
       onClick={saveTableData}
       dataCy="add-sources-save-btn">

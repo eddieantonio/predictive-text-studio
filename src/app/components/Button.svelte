@@ -6,6 +6,7 @@
   export let size: string = "medium"; // optional
   export let subtext: string = ""; // optional
   export let dataCy: string = ""; // optional
+  export let disabled: boolean = false; // optional
   export let onClick: (ev: MouseEvent) => void;
 </script>
 
@@ -28,6 +29,7 @@
     class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
+    class:button--disabled={disabled}
     on:click={onClick}
     data-cy={dataCy}><slot /></button>
   {#if subtext}
