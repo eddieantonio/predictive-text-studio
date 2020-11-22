@@ -1,9 +1,12 @@
 <script lang="ts">
   import Button from "./Button.svelte";
-  export let tableData: { name: string; data: [] };
+  import worker from "../spawn-worker";
+  export let tableData: {
+    name: string;
+    data: [{ word: string; count: number }];
+  };
 
   let rowDataFromManualEntry = tableData.data;
-  let tableName = tableData.name;
   let columns = [
     {
       label: "Word",
@@ -18,13 +21,15 @@
       name: "action",
     },
   ];
-  $: validInput = rowDataFromManualEntry.every(element => validateEveryRowData(element));
+  $: validInput = rowDataFromManualEntry.every((element) =>
+    validateRowData(element)
+  );
   $: btnColor = validInput ? "blue" : "grey";
-  
-  const validateEveryRowData = (rowData): boolean => {
+
+  const validateRowData = (rowData): boolean => {
     const word = rowData.word;
-    return (word !== '' && word !== undefined && word !== null);
-  }
+    return word !== "" && word !== undefined && word !== null;
+  };
 
   const deleteRow = (i): void => {
     const part = rowDataFromManualEntry.splice(i, 1);
@@ -36,10 +41,10 @@
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
-  const saveTableData = () => {
-    //TODO: save manual entry data into database
-    console.log(validInput)
-    console.log("save btn clicked.")
+  const saveTableData = async () => {
+    const numOfWordStored = await worker.addManualEntryDictionaryToProject(
+      tableData
+    );
   };
 </script>
 
@@ -144,7 +149,7 @@
     <h4>Table Name</h4>
     <input
       type="text"
-      bind:value={tableName}
+      bind:value={tableData.name}
       data-cy="manual-entry-input-tablename" />
   </div>
 
@@ -163,7 +168,7 @@
             type="text"
             bind:value={row[columns[0].name]}
             data-cy="manual-entry-input-word" />
-          {#if !validateEveryRowData(row)}
+          {#if !validateRowData(row)}
             <p>*</p>
           {/if}
         </td>

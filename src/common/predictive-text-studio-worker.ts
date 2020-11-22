@@ -12,12 +12,20 @@ export interface PredictiveTextStudioWorker {
 
   /**
    * Take a dictionary source and store it.
-   *
    * @param name the dictionary source name — typically the uploaded filename.
    * @param contents the actual file itself
    * @return {number} how many words were added by this source
    */
   addDictionarySourceToProject(name: string, contents: File): Promise<number>;
+
+  /**
+   * Store the manual entry data into the database
+   * @param tableData Manual entry data
+   */
+  addManualEntryDictionaryToProject(tableData: {
+    name: string;
+    data: [{ word: string; count: number }];
+  }): Promise<number>;
 
   /**
    * Register a callback that is called directly before the KMP package is

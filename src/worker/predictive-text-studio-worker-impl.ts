@@ -1,6 +1,6 @@
 import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
-import { readExcel } from "./read-wordlist";
+import { readExcel, readManualEntryData } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
@@ -84,6 +84,16 @@ export class PredictiveTextStudioWorkerImpl
     const wordlist = await readExcel(await contents.arrayBuffer());
     await this.storage.saveFile(name, wordlist);
     this.generateKMPFromStorage();
+    return wordlist.length;
+  }
+
+  async addManualEntryDictionaryToProject(tableData: {
+    name: string;
+    data: [{ word: string; count: number }];
+  }): Promise<number> {
+    const dictionaryName = tableData.name;
+    const wordlist = await readManualEntryData(tableData.data);
+    await this.storage.saveFile(dictionaryName, wordlist);
     return wordlist.length;
   }
 

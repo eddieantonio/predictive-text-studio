@@ -2,7 +2,7 @@
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
-  
+
   let manualEntry: boolean = false;
   let tableData = {
     name: "",
