@@ -89,7 +89,7 @@ export class PredictiveTextStudioWorkerImpl
 
   async addManualEntryDictionaryToProject(tableData: {
     name: string;
-    data: [{ word: string; count: number }];
+    data: { word: string; count: number | undefined }[];
   }): Promise<number> {
     const dictionaryName = tableData.name;
     const wordlist = await readManualEntryData(tableData.data);

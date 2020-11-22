@@ -9,15 +9,9 @@
     data: [
       {
         word: "",
-        count: null,
+        count: undefined
       },
     ],
-  };
-
-  const saveAddedSources = (): void => {};
-
-  const closeAddSourceZone = () => {
-    manualEntry = false;
   };
 
   const uploadSourcesFromFile = () => {

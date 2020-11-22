@@ -1,9 +1,10 @@
 <script lang="ts">
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
+
   export let tableData: {
     name: string;
-    data: [{ word: string; count: number }];
+    data: { word: string; count: number | undefined }[];
   };
 
   let rowDataFromManualEntry = tableData.data;
@@ -26,18 +27,18 @@
   );
   $: btnColor = validInput ? "blue" : "grey";
 
-  const validateRowData = (rowData): boolean => {
+  const validateRowData = (rowData: {word: string; count: number | undefined}): boolean => {
     const word = rowData.word;
     return word !== "" && word !== undefined && word !== null;
   };
 
-  const deleteRow = (i): void => {
+  const deleteRow = (i: number): void => {
     const part = rowDataFromManualEntry.splice(i, 1);
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
   const addNewRow = (): void => {
-    rowDataFromManualEntry.push({});
+    rowDataFromManualEntry.push({word: '', count: undefined});
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
@@ -166,7 +167,7 @@
         <td>
           <input
             type="text"
-            bind:value={row[columns[0].name]}
+            bind:value={row.word}
             data-cy="manual-entry-input-word" />
           {#if !validateRowData(row)}
             <p>*</p>
@@ -177,13 +178,13 @@
             type="number"
             min="0"
             placeholder="Optional"
-            bind:value={row[columns[1].name]}
+            bind:value={row.count}
             data-cy="manual-entry-input-count" />
         </td>
         <td>
           <button
             class="btn--inline"
-            on:click={(e) => deleteRow(i)}
+            on:click={() => deleteRow(i)}
             data-cy="manual-entry-delete">Delete</button>
         </td>
       </tr>
