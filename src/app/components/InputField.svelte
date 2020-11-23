@@ -46,7 +46,9 @@
 </style>
 
 <div class="input-field mt-s mb-m">
-  <label class="input-field__label-{className} mt-s" for="input-{id}">{label}</label>
+  <label
+    class="input-field__label-{className} mt-s"
+    for="input-{id}">{label}</label>
   <input class="mt-s" type="text" id="input-{id}" bind:value {placeholder} />
   {#if error !== ''}
     <p class:error>{error}</p>
