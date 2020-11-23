@@ -1,7 +1,7 @@
 <script lang="ts">
   export let label: string | undefined;
-  export let className: string | undefined;
-  export let cyData: string | undefined;
+  export let className: string | undefined = "";
+  export let cyData: string | undefined ="";
   export let id: string;
   export let value: any;
   export let subtext = "";
