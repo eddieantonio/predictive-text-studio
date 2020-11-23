@@ -4,7 +4,7 @@ describe("BCP47Tag component test cases", function () {
     cy.disableSmoothScroll();
   });
 
-  it("should not show error message when valid tag is given", function () {
+  it("should not show error message when valid tag is given", () => {
     cy.data("tag-input").scrollIntoView().should("be.visible");
     cy.data("tag-input")
       .invoke("attr", "placeholder")
@@ -13,13 +13,13 @@ describe("BCP47Tag component test cases", function () {
     cy.contains("p", "Invalid BCP 47 Tag").should("not.exist");
   });
 
-  it("should show error message when invalid tag is given", function () {
+  it("should show error message when invalid tag is given", () => {
     cy.data("tag-input").scrollIntoView().should("be.visible");
     cy.data("tag-input").type("012345");
     cy.contains("p", "Invalid BCP 47 Tag");
   });
 
-  it("should clears error message when valid tag is given", function () {
+  it("should clears error message when valid tag is given", () => {
     cy.data("tag-input").scrollIntoView().should("be.visible");
     cy.data("tag-input").type("012345");
     cy.contains("p", "Invalid BCP 47 Tag");
