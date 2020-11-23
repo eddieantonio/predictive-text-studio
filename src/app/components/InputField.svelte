@@ -1,6 +1,7 @@
 <script lang="ts">
   export let label = "";
   export let className: string;
+  export let cyData: string;
   export let id: string;
   export let value: any;
   export let subtext = "";
@@ -31,7 +32,7 @@
     border-color: var(--primary-blue);
   }
 
-  .subtext {
+  .input-field__subtext {
     font-family: var(--mono-font), monospace;
     color: var(--gray-secondary-text);
     font-size: var(--xxs);
@@ -49,7 +50,13 @@
   <label
     class="input-field__label-{className} mt-s"
     for="input-{id}">{label}</label>
-  <input class="mt-s" type="text" id="input-{id}" bind:value {placeholder} />
+  <input
+    class="mt-s"
+    type="text"
+    id="input-{id}"
+    bind:value
+    {placeholder}
+    data-cy={cyData} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
