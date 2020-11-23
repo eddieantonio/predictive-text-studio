@@ -2,9 +2,9 @@
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
 
-  interface rowDataObj {
+  interface DictionaryEntry {
     word: string;
-    count: number | undefined;
+    count?: number;
   }
 
   export let tableData: {
@@ -98,7 +98,7 @@
     vertical-align: middle;
     padding: 0.625rem 0 0.625rem 1.25rem;
     color: var(--gray-dark);
-    text-align: center;
+    text-align: start;
   }
 
   table th:first-of-type {
@@ -173,10 +173,8 @@
           <input
             type="text"
             bind:value={row.word}
+            required
             data-cy="manual-entry-input-word" />
-          {#if !validateRowData(row)}
-            <p>*</p>
-          {/if}
         </td>
         <td>
           <input
@@ -199,7 +197,7 @@
         <button
           class="btn--inline"
           on:click={addNewRow}
-          data-cy="munual-entry-add-row">Add Row</button>
+          data-cy="manual-entry-add-row">Add Row</button>
       </td>
     </tr>
   </table>

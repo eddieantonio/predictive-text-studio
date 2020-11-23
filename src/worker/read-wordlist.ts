@@ -46,14 +46,13 @@ function asNonNegativeInteger(x: unknown): number {
   return n;
 }
 
-export async function readManualEntryData(
+export function readManualEntryData(
   contents: { word: string; count: number | undefined }[]
-): Promise<WordList> {
-  const wordlist: WordList = [];
-  contents.forEach((row) => {
+): WordList {
+  const wordlist: WordList = contents.map((row) => {
     const word = row.word;
     const count = asNonNegativeInteger(row.count || 0);
-    wordlist.push([word, count]);
+    return [word, count];
   });
   return wordlist;
 }
