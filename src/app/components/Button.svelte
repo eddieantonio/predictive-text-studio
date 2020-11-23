@@ -29,7 +29,7 @@
     class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
-    type={type}
+    {type}
     on:click={onClick}
     data-cy={dataCy}><slot /></button>
   {#if subtext}

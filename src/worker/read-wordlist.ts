@@ -46,9 +46,7 @@ function asNonNegativeInteger(x: unknown): number {
   return n;
 }
 
-export function readManualEntryData(
-  contents: DictionaryEntry[]
-): WordList {
+export function readManualEntryData(contents: DictionaryEntry[]): WordList {
   const wordlist: WordList = contents.map((row) => {
     const word = row.word;
     const count = asNonNegativeInteger(row.count || 0);

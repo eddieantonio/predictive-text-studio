@@ -27,15 +27,25 @@
       name: "action",
     },
   ];
-  
+
   const validateTableName = (tableName: string): boolean => {
-    return tableName !== "" && tableName !== undefined && tableName !== null && !tableName.match(/^([\s\t\r\n]*)$/);
-  }
+    return (
+      tableName !== "" &&
+      tableName !== undefined &&
+      tableName !== null &&
+      !tableName.match(/^([\s\t\r\n]*)$/)
+    );
+  };
 
   const validateRowsData = (rowsData: DictionaryEntry[]): boolean => {
     return rowsData.every((rowData) => {
       const word = rowData.word;
-      return word !== "" && word !== undefined && word !== null && !word.match(/^([\s\t\r\n]*)$/);
+      return (
+        word !== "" &&
+        word !== undefined &&
+        word !== null &&
+        !word.match(/^([\s\t\r\n]*)$/)
+      );
     });
   };
 
@@ -50,7 +60,9 @@
   };
 
   const saveTableData = async () => {
-    const validDictionary: boolean = validateRowsData(rowDataFromManualEntry) && validateTableName(tableData.name);
+    const validDictionary: boolean =
+      validateRowsData(rowDataFromManualEntry) &&
+      validateTableName(tableData.name);
     if (validDictionary) {
       const numOfWordStored = await worker.addManualEntryDictionaryToProject(
         tableData
@@ -206,8 +218,8 @@
 
   <div class="save-zone">
     <Button
-      type={"submit"}
-      color={"blue"}
+      type={'submit'}
+      color={'blue'}
       isOutlined
       size="large"
       onClick={saveTableData}
