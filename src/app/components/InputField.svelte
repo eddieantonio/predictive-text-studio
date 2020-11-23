@@ -15,6 +15,7 @@
   }
 
   input {
+    display: block;
     font-family: var(--secondary-font), sans-serif;
     font-size: var(--m);
     padding: 10px;
@@ -43,11 +44,11 @@
   }
 </style>
 
-<div class="input_field mb-m">
+<div class="input_field mt-s mb-m">
   {#if label !== ''}
-    <p class:label>{label}</p>
+    <label class="mt-s" for="input-{id}" class:label>{label}</label>
   {/if}
-  <input type="text" {id} bind:value {placeholder} />
+  <input class="mt-s" type="text" id="input-{id}" bind:value {placeholder} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}

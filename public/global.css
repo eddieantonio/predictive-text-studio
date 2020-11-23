@@ -30,7 +30,7 @@
   --xxs: 0.75em;
   --xs: 0.875em;
   --s: 1em;
-  --m: 1.125em; 
+  --m: 1.125em;
   --l: 1.25em;
   --xl: 1.5em;
   --xxl: 2.5em;
@@ -51,11 +51,18 @@ body {
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--main-font), sans-serif;
 }
 
-pre, code, samp {
+pre,
+code,
+samp {
   font-family: var(--mono-font), monospace;
 }
 
@@ -66,10 +73,10 @@ pre, code, samp {
  */
 .button {
   display: inline-block;
-  margin: 0 .625em;
-  padding: .625rem 1.25rem; /* button--medium size */
+  margin: 0 0.625em;
+  padding: 0.625rem 1.25rem; /* button--medium size */
   border: 1px solid transparent;
-  border-radius: .625rem;
+  border-radius: 0.625rem;
 
   font: bold 1em var(--main-font), sans-serif;
   text-transform: uppercase;
@@ -84,7 +91,7 @@ pre, code, samp {
 
 /* make <a> .button have a focus ring like <button> elements. */
 a.button:focus {
-  outline: .5rem auto var(--primary-blue);
+  outline: 0.5rem auto var(--primary-blue);
   outline-color: -webkit-focus-ring-color;
 }
 
@@ -124,18 +131,21 @@ a.button:focus {
 }
 
 .button--small {
-  padding: .3125rem .625rem;
+  padding: 0.3125rem 0.625rem;
 }
 
 .button--large {
-  padding: .625rem 3.75rem;
+  padding: 0.625rem 3.75rem;
 }
 
 /**
  * Utility classes for margin top
  */
-.mt-s {
+.mt-xs {
   margin-top: 10px;
+}
+.mt-s {
+  margin-top: 14px;
 }
 .mt-m {
   margin-top: 20px;
@@ -168,4 +178,3 @@ a.button:focus {
 .mb-xxl {
   margin-bottom: 50px;
 }
-

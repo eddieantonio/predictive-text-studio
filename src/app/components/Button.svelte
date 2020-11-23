@@ -33,6 +33,6 @@
     on:click={onClick}
     data-cy={dataCy}><slot /></button>
   {#if subtext}
-    <p class="subtext mt-s">{subtext}</p>
+    <p class="subtext mt-xs">{subtext}</p>
   {/if}
 </div>
