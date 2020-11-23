@@ -16,6 +16,7 @@
 
 <InputField
   id={TAG_INPUT_ID}
+  label="Step 1: Enter your languages"
   bind:value={tag}
   bind:error
   placeholder={'Enter the BCP 47 Tag'} />

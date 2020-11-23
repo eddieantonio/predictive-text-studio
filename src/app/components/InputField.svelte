@@ -32,7 +32,7 @@
 
   .subtext {
     font-family: var(--mono-font), monospace;
-    color: var(--gray);
+    color: var(--gray-secondary-text);
     font-size: var(--xxs);
   }
 
@@ -45,14 +45,12 @@
 </style>
 
 <div class="input_field mt-s mb-m">
-  {#if label !== ''}
-    <label class="mt-s" for="input-{id}" class:label>{label}</label>
-  {/if}
+  <label class="label-{label} mt-s" for="input-{id}" >{label}</label>
   <input class="mt-s" type="text" id="input-{id}" bind:value {placeholder} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
   {#if subtext !== ''}
-    <p class:subtext>{subtext}</p>
+    <p class="subtext">{subtext}</p>
   {/if}
 </div>

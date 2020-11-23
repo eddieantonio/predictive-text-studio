@@ -13,7 +13,7 @@
 <style>
   .subtext {
     font-family: var(--mono-font), monospace;
-    color: var(--gray);
+    color: var(--gray-secondary-text);
     font-size: var(--xxs);
   }
 
