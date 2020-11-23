@@ -1,5 +1,6 @@
 <script lang="ts">
   export let label = "";
+  export let className: string;
   export let id: string;
   export let value: any;
   export let subtext = "";
@@ -8,7 +9,7 @@
 </script>
 
 <style>
-  .label {
+  label {
     font-family: var(--main-font), sans-serif;
     font-weight: bold;
     font-size: var(--xs);
@@ -44,13 +45,13 @@
   }
 </style>
 
-<div class="input_field mt-s mb-m">
-  <label class="label-{label} mt-s" for="input-{id}" >{label}</label>
+<div class="input-field mt-s mb-m">
+  <label class="input-field__label-{className} mt-s" for="input-{id}">{label}</label>
   <input class="mt-s" type="text" id="input-{id}" bind:value {placeholder} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
   {#if subtext !== ''}
-    <p class="subtext">{subtext}</p>
+    <p class="input-field__subtext">{subtext}</p>
   {/if}
 </div>
