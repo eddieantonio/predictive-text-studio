@@ -5,6 +5,7 @@ import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worke
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
+import { DictionaryEntry } from "@common/manual-entry-file";
 
 /**
  * The default model version. 1.0.0 also happens to be the minimum model
@@ -89,7 +90,7 @@ export class PredictiveTextStudioWorkerImpl
 
   async addManualEntryDictionaryToProject(tableData: {
     name: string;
-    data: { word: string; count: number | undefined }[];
+    data: DictionaryEntry[];
   }): Promise<number> {
     const dictionaryName = tableData.name;
     const wordlist = await readManualEntryData(tableData.data);

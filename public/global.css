@@ -111,14 +111,6 @@ a.button:focus {
   box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.15);
 }
 
-.button--disabled {
-  border-color: var(--gray-medium-dark);
-  color: var(--gray-medium-dark);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 25%;
-}
-
 .button--small {
   padding: .3125rem .625rem;
 }

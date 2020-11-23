@@ -9,7 +9,7 @@
 
   export let tableData: {
     name: string;
-    data: rowDataObj[];
+    data: DictionaryEntry[];
   };
 
   let rowDataFromManualEntry = tableData.data;
@@ -27,14 +27,16 @@
       name: "action",
     },
   ];
-  $: validInput = rowDataFromManualEntry.every((element) =>
-    validateRowData(element)
-  );
-  $: btnColor = validInput ? "blue" : "grey";
+  
+  const validateTableName = (tableName: string): boolean => {
+    return tableName !== "" && tableName !== undefined && tableName !== null && !tableName.match(/^([\s\t\r\n]*)$/);
+  }
 
-  const validateRowData = (rowData: rowDataObj): boolean => {
-    const word = rowData.word;
-    return word !== "" && word !== undefined && word !== null;
+  const validateRowsData = (rowsData: DictionaryEntry[]): boolean => {
+    return rowsData.every((rowData) => {
+      const word = rowData.word;
+      return word !== "" && word !== undefined && word !== null && !word.match(/^([\s\t\r\n]*)$/);
+    });
   };
 
   const deleteRow = (i: number): void => {
@@ -43,14 +45,17 @@
   };
 
   const addNewRow = (): void => {
-    rowDataFromManualEntry.push({ word: "", count: undefined });
+    rowDataFromManualEntry.push({ word: "" });
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
   const saveTableData = async () => {
-    const numOfWordStored = await worker.addManualEntryDictionaryToProject(
-      tableData
-    );
+    const validDictionary: boolean = validateRowsData(rowDataFromManualEntry) && validateTableName(tableData.name);
+    if (validDictionary) {
+      const numOfWordStored = await worker.addManualEntryDictionaryToProject(
+        tableData
+      );
+    }
   };
 </script>
 
@@ -65,8 +70,8 @@
   }
 
   .language__sources-manual-entry-tablename input {
-    height: 30px;
-    width: 400px;
+    height: 1.875rem;
+    width: 25rem;
     padding: 0.3125rem;
     border-radius: 2px;
     border: 1px solid var(--lite-white);
@@ -83,38 +88,39 @@
     box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.1);
   }
 
-  table th {
+  th {
     vertical-align: middle;
     padding: 1.25rem 0 1.25rem 1.25rem;
     background-color: var(--lite-white);
     text-align: center;
   }
 
-  table tr {
+  tr {
     border-bottom: 1pt solid var(--lite-white);
   }
 
-  table td {
+  td {
     vertical-align: middle;
     padding: 0.625rem 0 0.625rem 1.25rem;
     color: var(--gray-dark);
     text-align: start;
   }
 
-  table th:first-of-type {
+  th:first-of-type {
     border-top-left-radius: 10px;
   }
-  table th:last-of-type {
+  th:last-of-type {
     border-top-right-radius: 10px;
   }
-  table tr:last-of-type td:first-of-type {
+  tr:last-of-type td:first-of-type {
     border-bottom-left-radius: 10px;
   }
-  table tr:last-of-type td:last-of-type {
+  tr:last-of-type td:last-of-type {
     border-bottom-right-radius: 10px;
+    text-align: center;
   }
 
-  table .btn--inline {
+  .btn--inline {
     display: inline;
     padding: 0;
     border: 0;
@@ -122,8 +128,8 @@
     font-size: 1em;
   }
 
-  table td > input {
-    height: 20px;
+  td > input {
+    height: 1.25rem;
     width: 80%;
     padding: 0.3125rem;
     border-radius: 2px;
@@ -132,13 +138,8 @@
     font: 1em var(--main-font);
   }
 
-  table input:focus {
+  input:focus {
     background-color: var(--lite-white);
-  }
-
-  table p {
-    display: inline;
-    color: var(--red);
   }
 
   .save-zone {
@@ -150,12 +151,13 @@
   }
 </style>
 
-<div class="language__sources-manual-entry">
+<form class="language__sources-manual-entry" on:submit|preventDefault>
   <div class="language__sources-manual-entry-tablename">
     <h4>Table Name</h4>
     <input
       type="text"
       bind:value={tableData.name}
+      required
       data-cy="manual-entry-input-tablename" />
   </div>
 
@@ -204,13 +206,13 @@
 
   <div class="save-zone">
     <Button
-      color={btnColor}
+      type={"submit"}
+      color={"blue"}
       isOutlined
-      disabled={!validInput}
       size="large"
       onClick={saveTableData}
       dataCy="add-sources-save-btn">
       Save
     </Button>
   </div>
-</div>
+</form>

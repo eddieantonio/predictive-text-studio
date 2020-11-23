@@ -1,4 +1,5 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
+import type { DictionaryEntry } from "./manual-entry-file";
 
 /**
  * This interface establishes a communication protocal between the UI thread and the worker thread
@@ -24,7 +25,7 @@ export interface PredictiveTextStudioWorker {
    */
   addManualEntryDictionaryToProject(tableData: {
     name: string;
-    data: { word: string; count: number | undefined }[];
+    data: DictionaryEntry[];
   }): Promise<number>;
 
   /**

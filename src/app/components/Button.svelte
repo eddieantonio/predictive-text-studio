@@ -1,12 +1,12 @@
 <script lang="ts">
   // props
   export let color: string = "grey"; // optional
+  export let type: string = "button"; // optional
   export let isOutlined: boolean = false; // optional
   export let hasDropShadow: boolean = false; // optional
   export let size: string = "medium"; // optional
   export let subtext: string = ""; // optional
   export let dataCy: string = ""; // optional
-  export let disabled: boolean = false; // optional
   export let onClick: (ev: MouseEvent) => void;
 </script>
 
@@ -29,7 +29,7 @@
     class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
-    class:button--disabled={disabled}
+    type={type}
     on:click={onClick}
     data-cy={dataCy}><slot /></button>
   {#if subtext}

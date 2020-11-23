@@ -9,7 +9,6 @@
     data: [
       {
         word: "",
-        count: undefined,
       },
     ],
   };
