@@ -12,6 +12,21 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
+
+  let isFocused = false;
+
+  const onInput = (event: Event) => {
+    const target = event.target as HTMLTextAreaElement;
+    console.log(target.value);
+  };
+  const onFocus = () => {
+    isFocused = true;
+    console.log(isFocused);
+  };
+  const onBlur = () => {
+    isFocused = false;
+    console.log(isFocused);
+  };
 </script>
 
 <style>
@@ -67,7 +82,10 @@
     id="input-{id}"
     bind:value
     {placeholder}
-    data-cy={cyData} />
+    data-cy={cyData}
+    on:input={onInput}
+    on:focus={onFocus}
+    on:blur={onBlur} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
