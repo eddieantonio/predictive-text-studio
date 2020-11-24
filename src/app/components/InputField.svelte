@@ -1,7 +1,12 @@
 <script lang="ts">
   export let label: string | undefined;
-  export let className: string | undefined = "";
-  export let cyData: string | undefined ="";
+  /**
+   * Component size options
+   * Size option medium (default size) or large 
+   * ex: size = "large" 
+   */ 
+  export let size: string | undefined = "";
+  export let cyData: string | undefined = "";
   export let id: string;
   export let value: any;
   export let subtext = "";
@@ -27,6 +32,12 @@
     border-style: solid;
   }
 
+  .input-field__label--large {
+    font: var(--main-font);
+    font-size: var(--s);
+    font-weight: normal;
+  }
+
   input:focus {
     outline: none;
     border-color: var(--primary-blue);
@@ -47,9 +58,7 @@
 </style>
 
 <div class="input-field mt-s mb-m">
-  <label
-    class="input-field__label-{className} mt-s"
-    for="input-{id}">{label}</label>
+  <label class="input-field__label--{size} mt-s" for="input-{id}">{label}</label>
   <input
     class="mt-s"
     type="text"

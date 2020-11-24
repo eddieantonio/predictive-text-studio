@@ -14,17 +14,9 @@
   }
 </script>
 
-<style>
-  :global().input-field__label-bcp {
-    font: var(--main-font);
-    font-size: var(--s) !important;
-    font-weight: normal !important;
-  }
-</style>
-
 <InputField
   id={TAG_INPUT_ID}
-  className="bcp"
+  size="large"
   cyData="tag-input"
   label="Step 1: Enter your languages"
   bind:value={tag}

@@ -37,8 +37,6 @@
 <div class="language__info">
   <div class="language__info-left">
     <InputField
-      className=""
-      cyData=""
       label="Language"
       id="language"
       value={properties.name}
