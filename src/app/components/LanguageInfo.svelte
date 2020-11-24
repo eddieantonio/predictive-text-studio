@@ -40,7 +40,7 @@
     <AutoComplete label="Language" subtext="" />
     <InputField
       label="Author or Organization"
-      id="author"
+      id="authorName"
       value={properties.author}
       subtext="Shortcode: raeanne" />
     <InputField

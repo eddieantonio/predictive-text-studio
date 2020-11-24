@@ -12,6 +12,7 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
+  import worker from "../spawn-worker"
 
   let isFocused = false;
 
@@ -23,9 +24,12 @@
     isFocused = true;
     console.log(isFocused);
   };
-  const onBlur = () => {
+  const onBlur = (event: Event) => {
     isFocused = false;
-    console.log(isFocused);
+    let tempObj: any = {};
+    const target = event.target as HTMLTextAreaElement;
+    tempObj[target.id] = value;
+    worker.setProjectData(tempObj)
   };
 </script>
 
