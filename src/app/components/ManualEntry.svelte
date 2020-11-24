@@ -12,7 +12,6 @@
     data: DictionaryEntry[];
   };
 
-  let rowDataFromManualEntry = tableData.data;
   let columns = [
     {
       label: "Word",
@@ -27,6 +26,13 @@
       name: "action",
     },
   ];
+  $: rowDataFromManualEntry = tableData.data;
+  $: validDictionary =
+    validateRowsData(rowDataFromManualEntry) &&
+    validateTableName(tableData.name);
+  $: if (validDictionary) {
+    worker.addManualEntryDictionaryToProject(tableData);
+  }
 
   const validateTableName = (tableName: string): boolean => {
     return (
@@ -50,7 +56,7 @@
   };
 
   const deleteRow = (i: number): void => {
-    const part = rowDataFromManualEntry.splice(i, 1);
+    rowDataFromManualEntry.splice(i, 1);
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
