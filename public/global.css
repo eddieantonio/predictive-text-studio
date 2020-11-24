@@ -34,13 +34,13 @@
   --xxl: 2.5em;
 
   /* Spacing and border variables */
-  --sb-xxs: 5px;
-  --sb-xs: 10px;
-  --sb-s: 15px;
-  --sb-m: 20px;
-  --sb-l: 25px;
-  --sb-xl: 30px;
-  --sb-xxl: 40px;
+  --sb-xxs: 0.3125rem;
+  --sb-xs: 0.625rem;
+  --sb-s: 0.9375rem;
+  --sb-m: 1.25rem;
+  --sb-l: 1.5625rem;
+  --sb-xl: 1.875rem;
+  --sb-xxl: 2.5rem;
 }
 
 body {

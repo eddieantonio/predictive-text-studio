@@ -13,8 +13,8 @@
   export let subtext = "";
   // Testing Data
   export let results: dataObj[] = [];
-  // To store Filted array
-  let filetred: dataObj[] = [];
+  // To store filtered array
+  let filtered: dataObj[] = [];
   // To store selected language
   let selected: string = "";
   // Toggle to show search list
@@ -25,10 +25,11 @@
   let index = -1;
 
   // Input to search
-  function onChange(event: any) {
+  function onChange(event: Event) {
     show = true;
-    filetred = results.filter((item: any) => {
-      let a = new RegExp("^" + event.target.value.toUpperCase());
+    filtered = results.filter((item: any) => {
+      const target = event.target as HTMLTextAreaElement;
+      const a = new RegExp("^" + target.value.toUpperCase());
       return a.test(item.language.toUpperCase());
     });
   }
@@ -67,40 +68,27 @@
 
   // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
-    if (
-      key !== keyboardKey.Down &&
-      key !== keyboardKey.Up &&
-      key !== keyboardKey.Enter
-    )
-      return;
-    if (key == keyboardKey.Down) {
+    if (key === keyboardKey.Down) {
       prevIndex = index;
       index += 1;
-    } else if (key == keyboardKey.Up) {
+    } else if (key === keyboardKey.Up) {
       if (index == -1) {
         index = -1;
       } else {
         prevIndex = index;
         index -= 1;
       }
-    } else if (key == keyboardKey.Enter) {
-      selected = filetred[index].language;
-      subtext = filetred[index].bcp47Tag;
-      show = false;
+    } else if (key === keyboardKey.Enter) {
+      selectedList(filtered[index]);
+    } else {
+      /* Not a key we care about */
+      return;
     }
     const allItems = [
       ...document.getElementsByClassName("autocomplete__suggestion-item"),
     ];
 
     index = mod(index, allItems.length);
-    document
-      .getElementsByClassName("autocomplete__suggestion-item")
-      [index].classList.add("autocomplete-active");
-    if (prevIndex !== -1) {
-      document
-        .getElementsByClassName("autocomplete__suggestion-item")
-        [prevIndex].classList.remove("autocomplete-active");
-    }
   }
 </script>
 
@@ -141,6 +129,10 @@
     overflow: hidden;
     border-right: solid var(--sb-s) rgba(0, 0, 0, 0);
   }
+  .autocomplete__suggestion-item--active {
+    margin: 0;
+    background-color: var(--gray-highlight);
+  }
   .autocomplete__suggestion-item:hover {
     cursor: pointer;
     background-color: var(--gray-highlight);
@@ -149,11 +141,6 @@
     font-family: var(--mono-font), monospace;
     color: var(--gray);
     font-size: var(--xxs);
-  }
-  /*In Sevelte, dynamic class will only work if it's a global style*/
-  :global(.autocomplete-active) {
-    margin: 0;
-    background-color: var(--gray-highlight);
   }
 </style>
 
@@ -172,9 +159,10 @@
     <ul
       class="autocomplete__suggestion-list"
       use:clickOutside={closeSuggestion}>
-      {#each filetred as result}
+      {#each filtered as result, i}
         <li
           class="autocomplete__suggestion-item"
+          class:autocomplete__suggestion-item--active={i == index}
           data-cy="autocomplete-suggestions">
           <div on:click={() => selectedList(result)}>{result.language}</div>
         </li>
