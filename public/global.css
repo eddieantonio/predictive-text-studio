@@ -9,6 +9,7 @@
   --gray: #888888;
   --gray-hover: #c5c5c5;
   --gray-light: #d6d6d6;
+  --gray-highlight: #e0e0e0;
   --gray-dark: #454545;
   --lite-white: #f1f1f1;
   --white: #ffffff;
@@ -31,6 +32,15 @@
   --l: 1.25em;
   --xl: 1.5em;
   --xxl: 2.5em;
+
+  /* Spacing and border variables */
+  --sb-xxs: 0.3125rem;
+  --sb-xs: 0.625rem;
+  --sb-s: 0.9375rem;
+  --sb-m: 1.25rem;
+  --sb-l: 1.5625rem;
+  --sb-xl: 1.875rem;
+  --sb-xxl: 2.5rem;
 }
 
 body {
