@@ -1,7 +1,7 @@
 <script lang="ts">
   import InputField from "./InputField.svelte";
   export let properties: any; // TODO: I am not sure what type to change it to from any
-  export let answer: string;
+  export let languageDirection: string;
 </script>
 
 <style>
@@ -38,25 +38,25 @@
 <div class="language__info">
   <div class="language__info-left">
     <InputField
-      {answer}
+      {languageDirection}
       label="Language"
       id="language"
       value={properties.name}
       subtext="BCP49: kwk-latn" />
     <InputField
-      {answer}
+      {languageDirection}
       label="Author or Organization"
       id="author"
       value={properties.author}
       subtext="Shortcode: raeanne" />
     <InputField
-      {answer}
+      {languageDirection}
       label="Dictionary Name"
       id="dictionaryName"
       value={properties.dictionary_name}
       subtext="Model ID: raeanne.kwk.kwakwala" />
     <InputField
-      {answer}
+      {languageDirection}
       label="Copyright"
       id="copyright"
       value={properties.copyright}

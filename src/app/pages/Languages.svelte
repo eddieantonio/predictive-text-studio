@@ -11,7 +11,7 @@
 
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
-  let answer = writingDictrection.LeftToRight;
+  let languageDirection = writingDictrection.LeftToRight;
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
@@ -91,9 +91,9 @@
    */
   const handleDownload = (): void => {};
 
-  const toggleWritingDirection= (): void => {
-    answer =
-      answer == writingDictrection.RightToLeft
+  const toggleWritingDirection = (): void => {
+    languageDirection =
+      languageDirection == writingDictrection.RightToLeft
         ? writingDictrection.LeftToRight
         : writingDictrection.RightToLeft;
   };
@@ -209,12 +209,11 @@
         <Button
           color="blue"
           onClick={toggleWritingDirection}
-          dataCy="languages-download-btn"
         >Toggle Writing Direction</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo answer="{answer}" properties={languageInformation.properties} />
+          <LanguageInfo languageDirection={languageDirection} properties={languageInformation.properties} />
         {:else if selectedButton === 'sources'}
           <LanguageSources sources={languageInformation.sources} />
         {/if}

@@ -5,7 +5,8 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
-  export let answer: string | undefined = "ltr";
+  // LanaugeDirection default is set to Left To Right
+  export let languageDirection: string | undefined = "ltr";
 </script>
 
 <style>
@@ -46,13 +47,13 @@
 
 <div class="input_field mb-m">
   {#if label !== ''}
-    <p class:label dir={answer}>{label}</p>
+    <p class:label dir={languageDirection}>{label}</p>
   {/if}
-  <input type="text" {id} bind:value {placeholder} dir={answer} />
+  <input type="text" {id} bind:value {placeholder} dir={languageDirection} />
   {#if error !== ''}
-    <p class:error dir={answer}>{error}</p>
+    <p class:error dir={languageDirection}>{error}</p>
   {/if}
   {#if subtext !== ''}
-    <p class:subtext dir={answer}>{subtext}</p>
+    <p class:subtext dir={languageDirection}>{subtext}</p>
   {/if}
 </div>
