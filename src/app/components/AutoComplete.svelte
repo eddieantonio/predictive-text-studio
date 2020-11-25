@@ -23,14 +23,10 @@
   }
   export let label = "";
   export let subtext = "";
-  // Testing Data
-  export let results: dataObj[] = [];
   // To store filtered array
-  let filtered: dataObj[] = [];
+  let filtered: KeyboardDataWithTime[] = [];
   // To store Keyman Keyboard data
   let results: KeyboardDataWithTime[] = [];
-  // To store Filted array
-  let filetred: any[] = [];
   // To store selected language
   let selected: string = "";
   // Toggle to show search list
@@ -47,7 +43,7 @@
   // Input to search
   async function onChange(event: any) {
     show = true;
-    filetred = results.filter((element) => {
+    filtered = results.filter((element) => {
       // Using regular expressing for search method
       let regExp = new RegExp("^" + event.target.value.toUpperCase());
       return regExp.test(element.language.toUpperCase());
