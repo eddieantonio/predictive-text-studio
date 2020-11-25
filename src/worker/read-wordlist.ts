@@ -1,6 +1,6 @@
 import * as Excel from "exceljs";
 import { WordList } from "@common/types";
-import { DictionaryEntry } from "@common/manual-entry-file";
+import { DictionaryEntry } from "@common/types";
 
 export async function readExcel(
   excelFile: ArrayBuffer | Uint8Array

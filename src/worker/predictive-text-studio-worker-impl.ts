@@ -5,7 +5,7 @@ import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worke
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
-import { DictionaryEntry } from "@common/manual-entry-file";
+import { DictionaryEntry } from "@common/types";
 
 /**
  * The default model version. 1.0.0 also happens to be the minimum model
@@ -93,7 +93,7 @@ export class PredictiveTextStudioWorkerImpl
     data: DictionaryEntry[];
   }): Promise<number> {
     const dictionaryName = tableData.name;
-    const wordlist = await readManualEntryData(tableData.data);
+    const wordlist = readManualEntryData(tableData.data);
     await this.storage.saveFile(dictionaryName, wordlist);
     return wordlist.length;
   }

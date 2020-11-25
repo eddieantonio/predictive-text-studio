@@ -1,5 +1,5 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
-import type { DictionaryEntry } from "./manual-entry-file";
+import type { DictionaryEntry } from "./types";
 
 /**
  * This interface establishes a communication protocal between the UI thread and the worker thread

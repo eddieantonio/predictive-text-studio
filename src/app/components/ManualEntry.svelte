@@ -12,20 +12,6 @@
     data: DictionaryEntry[];
   };
 
-  let columns = [
-    {
-      label: "Word",
-      name: "word",
-    },
-    {
-      label: "Count",
-      name: "count",
-    },
-    {
-      label: "Action",
-      name: "action",
-    },
-  ];
   $: rowDataFromManualEntry = tableData.data;
   $: validDictionary =
     validateRowsData(rowDataFromManualEntry) &&
@@ -181,10 +167,9 @@
 
   <table id="manual-entry-table">
     <thead>
-      {#each columns as column (column.name)}
-        <th>{column.label}</th>
-      {/each}
-      <th />
+      <th> Word </th>
+      <th> Count </th>
+      <th> Action </th>
     </thead>
 
     {#each rowDataFromManualEntry as row, i (i)}
@@ -224,8 +209,8 @@
 
   <div class="save-zone">
     <Button
-      type={'submit'}
-      color={'blue'}
+      type="submit"
+      color="blue"
       isOutlined
       size="large"
       onClick={saveTableData}
