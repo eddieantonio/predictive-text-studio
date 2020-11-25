@@ -1,6 +1,7 @@
 <script lang="ts">
   // props
   export let color: string = "grey"; // optional
+  export let type: string = "button"; // optional
   export let isOutlined: boolean = false; // optional
   export let hasDropShadow: boolean = false; // optional
   export let size: string = "medium"; // optional
@@ -28,6 +29,7 @@
     class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
+    {type}
     on:click={onClick}
     data-cy={dataCy}><slot /></button>
   {#if subtext}

@@ -1,14 +1,16 @@
 <script lang="ts">
-  import Button from "./Button.svelte";
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
+
   let manualEntry: boolean = false;
-
-  const saveAddedSources = (): void => {};
-
-  const closeAddSourceZone = () => {
-    manualEntry = false;
+  let tableData = {
+    name: "",
+    data: [
+      {
+        word: "",
+      },
+    ],
   };
 
   const uploadSourcesFromFile = () => {
@@ -21,14 +23,6 @@
 </script>
 
 <style>
-  .save-zone {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 1%;
-  }
-
   .top-button-zone {
     display: flex;
     flex-direction: column;
@@ -49,18 +43,7 @@
 </div>
 
 {#if manualEntry}
-  <ManualEntry />
+  <ManualEntry {tableData} />
 {:else}
   <Upload />
 {/if}
-
-<div class="save-zone">
-  <Button
-    color="blue"
-    isOutlined
-    size="large"
-    onClick={saveAddedSources}
-    dataCy="add-sources-save-btn">
-    Save
-  </Button>
-</div>

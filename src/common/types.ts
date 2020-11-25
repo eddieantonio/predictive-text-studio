@@ -15,3 +15,11 @@ export type WordAndCount = [string, number];
  * the type.
  */
 export type WordList = WordAndCount[];
+
+/**
+ * A manually entered collection of words and their counts.
+ */
+export interface DictionaryEntry {
+  word: string;
+  count?: number;
+}
