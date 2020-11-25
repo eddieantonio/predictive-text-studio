@@ -84,11 +84,10 @@
       /* Not a key we care about */
       return;
     }
-    const allItems = [
-      ...document.getElementsByClassName("autocomplete__suggestion-item"),
-    ];
+    
+    const numberOfSuggestions = document.getElementsByClassName("autocomplete__suggestion-item").length;
 
-    index = mod(index, allItems.length);
+    index = numberOfSuggestions > 0 ? mod(index, numberOfSuggestions) : 0;
   }
 </script>
 
