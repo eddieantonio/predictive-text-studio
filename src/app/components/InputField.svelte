@@ -45,7 +45,7 @@
 </style>
 
 <div class="input_field mb-m">
-  <h1>{answer}</h1>
+  <h1 dir="{answer}">{answer}</h1>
   {#if label !== ''}
     <p class:label>{label}</p>
   {/if}

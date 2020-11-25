@@ -44,16 +44,19 @@
       value={properties.name}
       subtext="BCP49: kwk-latn" />
     <InputField
+      {answer}
       label="Author or Organization"
       id="author"
       value={properties.author}
       subtext="Shortcode: raeanne" />
     <InputField
+      {answer}
       label="Dictionary Name"
       id="dictionaryName"
       value={properties.dictionary_name}
       subtext="Model ID: raeanne.kwk.kwakwala" />
     <InputField
+      {answer}
       label="Copyright"
       id="copyright"
       value={properties.copyright}

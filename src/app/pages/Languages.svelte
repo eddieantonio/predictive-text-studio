@@ -6,7 +6,7 @@
 
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
-  let answer = "22";
+  let answer = "ltr";
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
@@ -87,7 +87,7 @@
   const handleDownload = (): void => {};
 
   const toggleDireftion = (): void => {
-    answer = "qq";
+    answer = "rtl";
   };
 </script>
 
