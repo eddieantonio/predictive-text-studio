@@ -84,8 +84,10 @@
       /* Not a key we care about */
       return;
     }
-    
-    const numberOfSuggestions = document.getElementsByClassName("autocomplete__suggestion-item").length;
+
+    const numberOfSuggestions = document.getElementsByClassName(
+      "autocomplete__suggestion-item"
+    ).length;
 
     index = numberOfSuggestions > 0 ? mod(index, numberOfSuggestions) : 0;
   }
