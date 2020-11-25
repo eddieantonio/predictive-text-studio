@@ -1,6 +1,7 @@
 <script lang="ts">
   import InputField from "./InputField.svelte";
   export let properties: any; // TODO: I am not sure what type to change it to from any
+  export let answer: string;
 </script>
 
 <style>
@@ -37,6 +38,7 @@
 <div class="language__info">
   <div class="language__info-left">
     <InputField
+      {answer}
       label="Language"
       id="language"
       value={properties.name}

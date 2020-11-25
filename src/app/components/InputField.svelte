@@ -5,6 +5,7 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
+  export let answer: string;
 </script>
 
 <style>
@@ -44,6 +45,7 @@
 </style>
 
 <div class="input_field mb-m">
+  <h1>{answer}</h1>
   {#if label !== ''}
     <p class:label>{label}</p>
   {/if}

@@ -6,6 +6,7 @@
 
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
+  let answer = "22";
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
@@ -84,6 +85,10 @@
    * @return {void}
    */
   const handleDownload = (): void => {};
+
+  const toggleDireftion = (): void => {
+    answer = "qq";
+  };
 </script>
 
 <style>
@@ -193,10 +198,15 @@
           subtext={languageInformation.wordCount.toString() + " words"}
           dataCy="languages-download-btn"
         >Download</Button>
+        <Button
+          color="blue"
+          onClick={toggleDireftion}
+          dataCy="languages-download-btn"
+        >Hello</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo properties={languageInformation.properties} />
+          <LanguageInfo answer="{answer}" properties={languageInformation.properties} />
         {:else if selectedButton === 'sources'}
           <LanguageSources sources={languageInformation.sources} />
         {/if}
