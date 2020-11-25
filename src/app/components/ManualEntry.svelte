@@ -13,32 +13,32 @@
   };
 
   $: rowDataFromManualEntry = tableData.data;
-  $: validDictionary =
-    validateRowsData(rowDataFromManualEntry) &&
-    validateTableName(tableData.name);
+  $: validDictionary = validateTableData(tableData);
   $: if (validDictionary) {
     worker.addManualEntryDictionaryToProject(tableData);
   }
 
-  const validateTableName = (tableName: string): boolean => {
+  const validInput = (input: string): boolean => {
     return (
-      tableName !== "" &&
-      tableName !== undefined &&
-      tableName !== null &&
-      !tableName.match(/^([\s\t\r\n]*)$/)
+      input !== "" &&
+      input !== undefined &&
+      input !== null &&
+      !input.match(/^([\s\t\r\n]*)$/)
     );
   };
 
-  const validateRowsData = (rowsData: DictionaryEntry[]): boolean => {
-    return rowsData.every((rowData) => {
-      const word = rowData.word;
-      return (
-        word !== "" &&
-        word !== undefined &&
-        word !== null &&
-        !word.match(/^([\s\t\r\n]*)$/)
-      );
+  const validateTableData = (tableData: {
+    name: string;
+    data: DictionaryEntry[];
+  }): boolean => {
+    const name = tableData.name;
+    const validTitle = validInput(name);
+
+    const rowsData = tableData.data;
+    const validRows = rowsData.every((rowData) => {
+      return validInput(rowData.word);
     });
+    return validTitle && validRows;
   };
 
   const deleteRow = (i: number): void => {
@@ -52,9 +52,6 @@
   };
 
   const saveTableData = async () => {
-    const validDictionary: boolean =
-      validateRowsData(rowDataFromManualEntry) &&
-      validateTableName(tableData.name);
     if (validDictionary) {
       const numOfWordStored = await worker.addManualEntryDictionaryToProject(
         tableData
@@ -167,9 +164,9 @@
 
   <table id="manual-entry-table">
     <thead>
-      <th> Word </th>
-      <th> Count </th>
-      <th> Action </th>
+      <th>Word</th>
+      <th>Count</th>
+      <th>Action</th>
     </thead>
 
     {#each rowDataFromManualEntry as row, i (i)}
