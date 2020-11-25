@@ -5,7 +5,7 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
-  export let answer: string;
+  export let answer: string | undefined = "ltr";
 </script>
 
 <style>
@@ -45,15 +45,14 @@
 </style>
 
 <div class="input_field mb-m">
-  <h1 dir="{answer}">{answer}</h1>
   {#if label !== ''}
-    <p class:label>{label}</p>
+    <p class:label dir={answer}>{label}</p>
   {/if}
-  <input type="text" {id} bind:value {placeholder} />
+  <input type="text" {id} bind:value {placeholder} dir={answer} />
   {#if error !== ''}
-    <p class:error>{error}</p>
+    <p class:error dir={answer}>{error}</p>
   {/if}
   {#if subtext !== ''}
-    <p class:subtext>{subtext}</p>
+    <p class:subtext dir={answer}>{subtext}</p>
   {/if}
 </div>

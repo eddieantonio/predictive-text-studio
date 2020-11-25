@@ -4,9 +4,14 @@
   import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
 
+  enum writingDictrection {
+    LeftToRight = "ltr",
+    RightToLeft = "rtl",
+  }
+
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
-  let answer = "ltr";
+  let answer = writingDictrection.LeftToRight;
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
@@ -86,8 +91,11 @@
    */
   const handleDownload = (): void => {};
 
-  const toggleDireftion = (): void => {
-    answer = "rtl";
+  const toggleWritingDirection= (): void => {
+    answer =
+      answer == writingDictrection.RightToLeft
+        ? writingDictrection.LeftToRight
+        : writingDictrection.RightToLeft;
   };
 </script>
 
@@ -200,9 +208,9 @@
         >Download</Button>
         <Button
           color="blue"
-          onClick={toggleDireftion}
+          onClick={toggleWritingDirection}
           dataCy="languages-download-btn"
-        >Hello</Button>
+        >Toggle Writing Direction</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
