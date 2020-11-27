@@ -11,9 +11,10 @@
     margin-top: 1.5em;
   }
 
-  .download-link--disabled {
-    color: var(--gray-disabled);
-    cursor: not-allowed;
+  .download-component__link--disabled {
+    color: var(--gray-medium-dark);
+    opacity: 25%;
+    pointer-events: none;
     text-decoration: none;
   }
 </style>
