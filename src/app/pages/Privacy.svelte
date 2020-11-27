@@ -23,7 +23,7 @@
     <a href="/"><Button color="blue">Back</Button></a>
     <h2>Predictive Text Studio Privacy Policy</h2>
     <p><strong>Effective as of:</strong> 11/12/2020</p>
-    <h3>1. Introduction</h3>
+    <h3>Introduction</h3>
     <p>
       These Privacy Policy (“Privacy Policy”) apply to the use of the website
       and products provided by Predictive Text Stuio (hereinafter also referred
@@ -81,12 +81,12 @@
       this page from time to time to ensure you are aware of any changes. Where
       appropriate we may notify you of such changes.
     </p>
-    <h3>2. Information we may collect about you</h3>
+    <h3>Information we may collect about you</h3>
     <p>
       We do not collect or store any of the data you supply to us while using
       the Service or website. All data is stored locally on your browser.
     </p>
-    <h3>3. Collecting, processing and using personal data</h3>
+    <h3>Collecting, processing and using personal data</h3>
     <p>We do not store or process any personal data.</p>
     <h3>4. Why we collect information about you - purpose of processing</h3>
     <p>
@@ -97,12 +97,12 @@
       possible.
     </p>
     <p />
-    <h3>5. Cookies and Web Beacons</h3>
+    <h3>Cookies and Web Beacons</h3>
     <p>We do not use cookies or web beacons.</p>
-    <h3>6. Log files</h3>
+    <h3>Log files</h3>
     <p>Log files do not contain any personal data.</p>
     <p />
-    <h3>7. Children personal data</h3>
+    <h3>Children personal data</h3>
     <p>
       We do not collect personal information from anyone including those under
       the age of 18. We encourage parents and legal guardians to monitor their
@@ -110,7 +110,7 @@
       their children never to provide personal information through the websites
       or Services.
     </p>
-    <h3>8. Data sharing</h3>
+    <h3>Data sharing</h3>
     <p>We do not share your data with any third parties.</p>
     <p>
       Required by law: We may disclose information to the extent that we are
@@ -119,14 +119,9 @@
       prospective legal proceedings; and in order to establish, exercise or
       defend our legal rights.
     </p>
-    <h3>9. Data transmission</h3>
-    <p>
-      Your data is transmitted safely by using encryption. We secure our website
-      and other systems with technical and organizational measures against the
-      loss, destruction, access, change or dissemination of your data by
-      unauthorized persons.
-    </p>
-    <h3>10. Your rights</h3>
+    <h3>Data transmission</h3>
+    <p>We do not transmit you data.</p>
+    <h3>Your rights</h3>
     <p>
       You have the following rights over the way your personal data are
       processed.
@@ -153,7 +148,7 @@
       service provider.
     </p>
     <p>f) Make a complaint to a Supervisory Authority.</p>
-    <h3>11. Changes to this privacy policy</h3>
+    <h3>Changes to this privacy policy</h3>
     <p>
       This Privacy Policy may be updated from time to time. We encourage you to
       review this website for the latest information on our privacy practices.
