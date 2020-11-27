@@ -25,9 +25,7 @@
    * @param {string} languageName - A the name of the language selected.
    * @return {void}
    */
-  const handleClick = (languageName: string): void => {
-    console.log(languageName + " button selected");
-  };
+  const handleClick = (languageName: string): void => {};
 </script>
 
 <style>
@@ -41,7 +39,7 @@
     border-radius: 100%;
     margin-top: 40px;
     font-family: var(--main-font), sans-serif;
-    font-size: 20px;
+    font-size: var(--m);
     box-sizing: border-box;
     transition: border-color 0.2s ease;
     border: 3px solid var(--white);

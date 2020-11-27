@@ -1,0 +1,65 @@
+title Excel File Upload
+
+actor User
+activate User
+
+note over Upload.svelte:App
+User->Upload.svelte:handleDrop()
+activate Upload.svelte
+deactivate User
+
+note over Predictive-Text-Studio-Worker.ts: Worker
+Upload.svelte->Predictive-Text-Studio-Worker.ts:worker.addDictionarySourceToProject(file.name, file)
+activate Predictive-Text-Studio-Worker.ts
+
+note over Read-Wordlist.ts: Worker
+Predictive-Text-Studio-Worker.ts->Read-Wordlist.ts:readExcel(file.arrayBuffer())
+activate Read-Wordlist.ts
+
+loop for each row in sheet
+Read-Wordlist.ts->Worksheet: getRow()
+activate Worksheet
+Worksheet-->Read-Wordlist.ts: row
+deactivate Worksheet
+end
+
+Read-Wordlist.ts-->Predictive-Text-Studio-Worker.ts: wordList
+deactivate Read-Wordlist.ts
+
+note over Storage.ts: Worker
+Predictive-Text-Studio-Worker.ts->Storage.ts: saveFile(name, wordList)
+activate Storage.ts
+deactivate Storage.ts
+
+Predictive-Text-Studio-Worker.ts->Predictive-Text-Studio-Worker.ts: generateKMPFromStorage()
+activate Predictive-Text-Studio-Worker.ts
+Predictive-Text-Studio-Worker.ts->Predictive-Text-Studio-Worker.ts:_emitPackageCompileStart()
+
+note over Link-Storage-to-Kmp.ts: Worker
+Predictive-Text-Studio-Worker.ts->Link-Storage-to-Kmp.ts: linkStorageToKmp(storage)
+activate Link-Storage-to-Kmp.ts
+
+note over Generate-Storage-from-Kmp.ts: Worker
+Link-Storage-to-Kmp.ts->Generate-Storage-from-Kmp.ts:generateSourcesFromStorage(storage)
+activate Generate-Storage-from-Kmp.ts
+Generate-Storage-from-Kmp.ts-->Link-Storage-to-Kmp.ts: sources
+deactivate Generate-Storage-from-Kmp.ts
+
+note over Generate-Kmp.ts: Worker
+Link-Storage-to-Kmp.ts->Generate-Kmp.ts:generateKmp(langName, bcp47tag, sources, modelID)
+activate Generate-Kmp.ts
+Generate-Kmp.ts-->Link-Storage-to-Kmp.ts: kmpFile
+deactivate Generate-Kmp.ts
+
+Link-Storage-to-Kmp.ts-->Predictive-Text-Studio-Worker.ts: kmpFile
+deactivate Link-Storage-to-Kmp.ts
+Predictive-Text-Studio-Worker.ts->Predictive-Text-Studio-Worker.ts: _emitPackageCompileSuccess(kmpFile)
+deactivate Predictive-Text-Studio-Worker.ts
+
+Predictive-Text-Studio-Worker.ts-->Upload.svelte: wordList.length
+deactivate Predictive-Text-Studio-Worker.ts
+
+activate User
+Upload.svelte-->User:  kmpFile
+deactivate Upload.svelte
+deactivate User

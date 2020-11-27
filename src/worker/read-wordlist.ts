@@ -1,6 +1,6 @@
 import * as Excel from "exceljs";
-
 import { WordList } from "@common/types";
+import { DictionaryEntry } from "@common/types";
 
 export async function readExcel(
   excelFile: ArrayBuffer | Uint8Array
@@ -44,4 +44,13 @@ function asNonNegativeInteger(x: unknown): number {
   }
 
   return n;
+}
+
+export function readManualEntryData(contents: DictionaryEntry[]): WordList {
+  const wordlist: WordList = contents.map((row) => {
+    const word = row.word;
+    const count = asNonNegativeInteger(row.count || 0);
+    return [word, count];
+  });
+  return wordlist;
 }

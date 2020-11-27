@@ -1,0 +1,56 @@
+title Google Sheets Upload
+
+actor User
+activate User
+
+note over GoogleSheetsInput.svelte: App
+User->GoogleSheetsInput.svelte: handleClientLoad()
+activate GoogleSheetsInput.svelte
+deactivate User
+GoogleSheetsInput.svelte->GoogleSheetsInput.svelte: getValuesFromSpreadSheet()
+
+activate GoogleSheetsInput.svelte
+loop for each row in sheet
+GoogleSheetsInput.svelte->GoogleSheets:getRow()
+activate GoogleSheets
+GoogleSheetsInput.svelte<--GoogleSheets:row
+deactivate GoogleSheets
+GoogleSheetsInput.svelte->GoogleSheetsInput.svelte: wordListObject.push(word, wordCount)
+end
+
+note over Predictive-Text-Studio-Worker.ts: Worker
+GoogleSheetsInput.svelte->Predictive-Text-Studio-Worker.ts: worker.readGoogleSheet(spreadSheetId, wordListObject)
+
+note over Storage.ts: Worker
+activate Predictive-Text-Studio-Worker.ts	
+Predictive-Text-Studio-Worker.ts->Storage.ts: saveFile(name, wordList)
+activate Storage.ts
+deactivate Storage.ts
+
+note over Link-Storage-To-Kmp.ts: Worker
+Predictive-Text-Studio-Worker.ts->Link-Storage-To-Kmp.ts: linkStorageToKmp(storage)
+activate Link-Storage-To-Kmp.ts
+
+note over Generate-Storage-From-Kmp: Worker
+Link-Storage-To-Kmp.ts->Generate-Storage-From-Kmp: generateSourcesFromStorage(storage)
+
+
+activate Generate-Storage-From-Kmp
+Generate-Storage-From-Kmp<--Link-Storage-To-Kmp.ts:sources
+deactivate Generate-Storage-From-Kmp
+
+note over Generate-Kmp: Worker
+Link-Storage-To-Kmp.ts->Generate-Kmp: generateKmp(langName, bcp47tag, sources, modelID)
+activate Generate-Kmp
+Generate-Kmp<--Link-Storage-To-Kmp.ts: kmpFile
+deactivate Generate-Kmp
+
+Link-Storage-To-Kmp.ts-->Predictive-Text-Studio-Worker.ts:kmpFile	
+
+Predictive-Text-Studio-Worker.ts-->GoogleSheetsInput.svelte: kmpFile
+deactivate GoogleSheetsInput.svelte
+
+activate User
+GoogleSheetsInput.svelte-->User:kmpFile
+deactivate GoogleSheetsInput.svelte
+deactivate User

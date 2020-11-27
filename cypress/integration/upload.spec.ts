@@ -12,15 +12,18 @@ describe("Upload from the the landing page", function () {
   beforeEach(() => {
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
+    cy.visit("/");
+    cy.disableSmoothScroll();
   });
 
   it("should find a button to press to upload a file", function () {
-    cy.visit("/");
+    // we need a valid bcp47Tag to update the packageInfo
+    cy.get("#tag-input").scrollIntoView().should("be.visible");
+    cy.get("#tag-input").type("zh");
 
-    console.log(downloadFolder);
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
-    cy.get("[data-cy=quick-start]")
+    cy.data("quick-start")
       .as("quick-start")
       .scrollIntoView()
       .contains("Browse file");
@@ -28,14 +31,25 @@ describe("Upload from the the landing page", function () {
     // Before we upload anything there should be no download link,
     // and no file downloaded in our folder
     cy.get("@quick-start")
-      .get("[data-cy=download-kmp]")
+      .data("download-kmp")
       .as("download-kmp")
       .should("have.attr", "data-download-state", "disabled");
     cy.readFile(downloadedFilePath).should("not.exist");
 
-    cy.get("@quick-start")
-      .get("[data-cy=upload-spreadsheet]")
-      .attachFile("sencoten-top-10.xlsx");
+    const filename = "sencoten-top-10.xlsx";
+    cy.fixture(filename, "base64").then((fixture) => {
+      const testFile = new File(
+        [Cypress.Blob.base64StringToBlob(fixture)],
+        name
+      );
+      const event = { dataTransfer: { files: [testFile] } };
+
+      cy.get("@quick-start")
+        .data("upload-dropzone")
+        .trigger("dragenter", event);
+
+      cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
+    });
 
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")

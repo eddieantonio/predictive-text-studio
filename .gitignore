@@ -27,6 +27,8 @@ coverage/
 
 .yarn/
 
+.env
+
 # Cypress stuff
 cypress/screenshots/
 cypress/videos/

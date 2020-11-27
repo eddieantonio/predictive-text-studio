@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { beforeUpdate } from "svelte";
-
   // props
   export let color: string = "grey"; // optional
+  export let type: string = "button"; // optional
   export let isOutlined: boolean = false; // optional
   export let hasDropShadow: boolean = false; // optional
   export let size: string = "medium"; // optional
   export let subtext: string = ""; // optional
+  export let dataCy: string = ""; // optional
   export let onClick: (ev: MouseEvent) => void;
 </script>
 
@@ -14,8 +14,7 @@
   .subtext {
     font-family: var(--mono-font), monospace;
     color: var(--gray);
-    font-size: 12px;
-    margin-top: 10px;
+    font-size: var(--xxs);
   }
 
   .button-layout {
@@ -30,8 +29,10 @@
     class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
-    on:click={onClick}><slot /></button>
+    {type}
+    on:click={onClick}
+    data-cy={dataCy}><slot /></button>
   {#if subtext}
-    <p class="subtext">{subtext}</p>
+    <p class="subtext mt-s">{subtext}</p>
   {/if}
 </div>

@@ -11,7 +11,9 @@ module.exports = {
   ],
   rules: {
     // Project-speific rules
-    //
-    // For now, there are none!
+
+    "no-console": ["error", { allow: ["error", "warn"] }],
+    // Always prefer T[] instead of Array<T>
+    "@typescript-eslint/array-type": ["error", { default: "array" }],
   },
 };

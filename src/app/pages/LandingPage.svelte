@@ -2,17 +2,28 @@
   import Upload from "../components/Upload.svelte";
   import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import BCP47Tag from "../components/BCP47Tag.svelte";
+  import DownloadKMP from "../components/DownloadKMP.svelte";
+  import worker from "../spawn-worker";
+  import * as Comlink from "comlink";
+  let downloadURL = "";
+
+  worker.onPackageCompileSuccess(
+    Comlink.proxy((kmp: ArrayBuffer) => {
+      downloadURL = createURL(kmp);
+    })
+  );
+
+  function createURL(kmpFile: ArrayBuffer): string {
+    const blob = new Blob([kmpFile], { type: "application/octet-stream" });
+    return URL.createObjectURL(blob);
+  }
 </script>
 
 <style>
   :global(body) {
     display: flex;
-
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-
     flex-flow: column nowrap;
+    min-height: 100vh;
   }
 
   :global(:root) {
@@ -32,15 +43,16 @@
 
   .masthead {
     /* These hacky variables are here */
-    --wave-height: 322px;
-    --masthead-space-top: 3rem;
-    --masthead-content-height: 20rem;
+    --wave-height: 222px;
+    --masthead-space-top: 1rem;
+    --masthead-content-height: 13rem;
     --masthead-solid-color-height: calc(
       var(--masthead-space-top) + var(--masthead-content-height)
     );
     --masthead-background-color: #09f;
 
     width: 100vw;
+    max-width: 100%;
     padding-top: var(--masthead-space-top);
     padding-bottom: var(--wave-height);
 
@@ -60,6 +72,7 @@
     display: flex;
     width: 80vw;
     max-width: var(--body-max-width);
+    min-width: 37.5rem;
     margin: auto;
 
     flex-flow: row nowrap;
@@ -68,9 +81,8 @@
   }
 
   .masthead__brand {
-    display: block;
-    height: 2rem;
-    margin-bottom: 2rem;
+    vertical-align: middle;
+    height: 1rem;
 
     /* fallback font styles in case the image doesn't load */
     font-weight: bold;
@@ -78,12 +90,18 @@
   }
 
   .masthead__title {
-    font-size: 2.5em;
+    font-size: var(--xxl);
     font-weight: 700;
   }
 
+  .masthead__branding {
+    display: inline;
+    vertical-align: middle;
+    font-size: var(--s);
+  }
+
   .masthead__description {
-    font-size: 1.25em;
+    font-size: var(--l);
   }
 
   .masthead__image {
@@ -101,6 +119,30 @@
     text-align: center;
   }
 
+  .explanation__workflow {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+    font-weight: bold;
+  }
+
+  .explanation__workflow__transform {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 10vw;
+    min-width: 180px;
+  }
+
+  .explanation__workflow__transform__arrow {
+    padding-top: 20px;
+  }
+
+  .explanation__workflow__image {
+    width: 16vw;
+    min-width: 200px;
+  }
+
   .quick-start {
     margin: 9rem auto;
     min-width: 20em;
@@ -112,7 +154,7 @@
     border: 0;
     padding: 0;
 
-    font-size: 1.5em;
+    font-size: var(--xl);
     line-height: 1.5;
   }
 
@@ -149,6 +191,10 @@
     margin: 1rem auto 2rem;
   }
 
+  legend {
+    padding-bottom: 10px;
+  }
+
   @keyframes descend {
     0% {
       opacity: 20%;
@@ -170,10 +216,12 @@
     <div class="masthead__content">
       <div class="masthead__copy">
         <h1 class="masthead__title">
-          <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
           Predictive Text Studio
         </h1>
-
+        <p class="masthead__branding">
+          designed for 
+          <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
+        </p>
         <p class="masthead__description">
           Add
           <strong>prediction</strong>
@@ -187,10 +235,34 @@
   </header>
 
   <section class="explanation" id="explanation">
-    <!-- TODO: figure that explains the flow -->
+    <figure class="explanation__workflow">
+      <img
+        src="assets/workflow-spreadsheet.svg"
+        alt="a spreadsheet of words in your language"
+        class="explanation__workflow__image" />
+
+      <div class="explanation__workflow__transform">
+        Predictive Text Studio
+        <img
+          class="explanation__workflow__transform__arrow"
+          src="assets/workflow-arrow.svg"
+          alt=""
+          role="presentation" />
+      </div>
+
+      <img
+        src="assets/workflow-keyboard.svg"
+        alt="your words appear in the predictive text banner on your phone's keyboard"
+        class="explanation__workflow__image" />
+    </figure>
     <a href="#get-started">
-      <span class="button button--primary button--shadow button--large">Get started</span>
-      <img src="assets/down-arrow.svg" alt="" role="presentation" class="block" />
+      <span class="button button--primary button--shadow button--large">Get
+        started</span>
+      <img
+        src="assets/down-arrow.svg"
+        alt=""
+        role="presentation"
+        class="block" />
     </a>
   </section>
 
@@ -198,13 +270,14 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <legend> Step 1: Select your language </legend>
+        <legend> Step 1: Enter your language </legend>
         <BCP47Tag />
       </fieldset>
 
       <fieldset class="quick-start__step">
         <legend> Step 2: Attach a word list </legend>
         <Upload />
+        <DownloadKMP {downloadURL} />
       </fieldset>
 
       <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>

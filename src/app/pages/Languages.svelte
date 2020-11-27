@@ -3,7 +3,7 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
-
+  import AutoComplete from "../components/AutoComplete.svelte";
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
 
@@ -41,6 +41,21 @@
       },
     ],
   };
+  // TODO: Temporary data placeholder for autocorrect component and will be removed once #33 is done
+  let testingData: any = [
+    {
+      bcp47Tag: "en",
+      language: "english",
+    },
+    {
+      bcp47Tag: "en",
+      language: "enn",
+    },
+    {
+      bcp47Tag: "en",
+      language: "ewx",
+    },
+  ];
 
   interface LanguageProject {
     id: number;
@@ -75,7 +90,6 @@
    */
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
-    console.log(buttonName + " button selected");
   };
 
   /**
@@ -84,15 +98,12 @@
    *
    * @return {void}
    */
-  const handleDownload = (): void => {
-    console.log("Download button clicked");
-  };
+  const handleDownload = (): void => {};
 </script>
 
 <style>
   main {
-    height: 100vh;
-    margin: -8px;
+    min-height: 100vh;
   }
 
   .languages {
@@ -120,10 +131,29 @@
     flex-direction: column;
   }
 
+  .languages__container--header div {
+    vertical-align: middle;
+  }
+
   .languages__container--header h1 {
     font-family: Cabin, sans-serif;
     font-weight: bold;
     font-size: 30px;
+  }
+
+  .languages__container--header p {
+    font-family: Cabin, sans-serif;
+    font-size: var(--l);
+  }
+
+  .languages__container--header img {
+    height: 1rem;
+    width: auto;
+    vertical-align: center;
+
+    /* fallback font styles in case the image doesn't load */
+    font-weight: bold;
+    color: var(--black, #111);
   }
 
   .languages__container--actions {
@@ -133,11 +163,6 @@
 
   .languages__container--content {
     margin-top: 25px;
-  }
-
-  img {
-    width: 200px;
-    height: auto;
   }
 </style>
 
@@ -154,27 +179,33 @@
 
     <div class="languages__container">
       <header class="languages__container--header">
-        <img
-          src="https://keyman.com/cdn/deploy/img/logo2.ba10b4af03869e69115ce84380e980aa.png"
+        <div>
+          <h1>Predictive Text Studio</h1>
+          <p>designed for
+          <img
+          src="/assets/keyman-logo.svg"
           alt="Keyman" />
-        <h1>Predictive Text Studio</h1>
+          </p>
+        </div>
       </header>
-
       <div class="languages__container--actions">
         <Button
           color="grey"
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
+          dataCy="languages-information-btn"
         >Information</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           onClick={()=> handleClick('sources')}
+          dataCy="languages-sources-btn"
         >Sources</Button>
         <Button
           color="blue"
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
+          dataCy="languages-download-btn"
         >Download</Button>
       </div>
       <div class="languages__container--content">
@@ -184,6 +215,8 @@
           <LanguageSources sources={languageInformation.sources} />
         {/if}
       </div>
+      <!-- TODO: A placeholder autocorrect component and will be removed once #33 is done -->
+      <AutoComplete label="Testing AutoComplete" subtext="" results="{testingData}"/>
     </div>
   </div>
 </main>

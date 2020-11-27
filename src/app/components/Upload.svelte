@@ -1,10 +1,16 @@
 <script lang="ts">
   import worker from "../spawn-worker";
-  import DownloadKMP from "./DownloadKMP.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
-  let onDraggedOver = false;
-  let downloadURL = "";
+  // Dragging over nested element in a drag-and-drop zone
+  // will fire a dragLeave event
+  // Making implementing drag over effect problematic
+  // Using a dragEnterCounter solves this issue
+  // See https://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+  // This problem can also be solved by listening for dragOver
+  // However, as of right now, doing so on Chrome when dragging over nested element
+  // will cause the drag over effect to be cancelled for a short amount of time, then resume
+  let dragEnterCounter = 0;
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -20,13 +26,8 @@
     return fileList;
   }
 
-  function createURL(kmpFile: ArrayBuffer): string {
-    const blob = new Blob([kmpFile], { type: "application/octet-stream" });
-    return URL.createObjectURL(blob);
-  }
-
   const handleDrop = async (event: DragEvent) => {
-    onDraggedOver = false;
+    dragEnterCounter = 0;
     let fileList: File[] = [];
 
     if (event.dataTransfer == null) {
@@ -39,27 +40,23 @@
       fileList = Array.from(event.dataTransfer.files);
     }
     for (let file of fileList) {
-      //TODO: Handle error
-      const kmpFile = await worker.saveFile(file.name, file);
-      downloadURL = createURL(kmpFile);
+      await worker.addDictionarySourceToProject(file.name, file);
     }
   };
 
-  const handleDragOver = () => {
-    onDraggedOver = true;
+  const handleDragEnter = () => {
+    dragEnterCounter++;
   };
 
   const handleDragLeave = () => {
-    onDraggedOver = false;
+    dragEnterCounter--;
   };
 
   const handleChange = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       for (let file of input.files) {
-        //TODO: Handle error
-        const kmpFile = await worker.saveFile(file.name, file);
-        downloadURL = createURL(kmpFile);
+        await worker.addDictionarySourceToProject(file.name, file);
       }
     }
   };
@@ -107,10 +104,11 @@
 
 <div
   class="upload-zone"
-  class:drag-over={onDraggedOver}
+  class:drag-over={dragEnterCounter > 0}
   on:drop|preventDefault={handleDrop}
-  on:dragover|preventDefault={handleDragOver}
-  on:dragleave|preventDefault={handleDragLeave}>
+  on:dragenter|preventDefault={handleDragEnter}
+  on:dragleave|preventDefault={handleDragLeave}
+  data-cy="upload-dropzone">
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
   <span>Drag and drop here</span>
   <span>or</span>
@@ -120,5 +118,4 @@
     type="file"
     on:change={handleChange}
     data-cy="upload-spreadsheet" />
-  <DownloadKMP {downloadURL} />
 </div>

@@ -6,7 +6,7 @@ import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { WordList } from "@common/types";
 
-import { exampleWordlist } from "./fixtures";
+import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
 /**
  * Every test will have access to:
@@ -87,4 +87,111 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
   function byName(a: { name: string }, b: { name: string }): number {
     return a.name > b.name ? 1 : -1;
   }
+});
+
+test("it should reject the promise if the database is empty", async (t) => {
+  const { storage } = t.context;
+
+  await t.throwsAsync(() => storage.fetchProjectData());
+});
+
+test("update the BCP-47 tag to database", async (t) => {
+  const { db, storage } = t.context;
+  // At first, nothing in the DB
+  t.is(await db.projectData.count(), 0);
+
+  // Store it.
+  await storage.updateBCP47Tag("en");
+
+  // Now there's one package info record in the DB!
+  t.is(await db.projectData.count(), 1);
+});
+
+test("retrieve BCP-47 tag from the database", async (t) => {
+  const { storage } = t.context;
+  await storage.updateBCP47Tag("en");
+
+  const projectData = await storage.fetchProjectData();
+  const bcp47Tag = projectData.bcp47Tag;
+  t.is(bcp47Tag, "en");
+});
+
+test("update the project data to database", async (t) => {
+  const { db, storage } = t.context;
+  // At first, nothing in the DB
+  t.is(await db.projectData.count(), 0);
+  const storedProjectData = {
+    langName: "English",
+    bcp47Tag: "en",
+    authorName: "example",
+    modelID: "unknownAuthor.en.example",
+    copyright: "©",
+    version: "1.0.0",
+  };
+
+  await storage.updateProjectData(storedProjectData);
+  // Now there's one package info record in the DB!
+  t.is(await db.projectData.count(), 1);
+});
+
+test("retrieve project data from the database", async (t) => {
+  const { storage } = t.context;
+  const storedProjectData = {
+    langName: "English",
+    bcp47Tag: "en",
+    authorName: "example",
+    modelID: "unknownAuthor.en.example",
+    copyright: "©",
+    version: "1.0.0",
+  };
+  await storage.updateProjectData(storedProjectData);
+
+  const projectData = await storage.fetchProjectData();
+  const langName = projectData.langName;
+  t.is(langName, "English");
+  const bcp47Tag = projectData.bcp47Tag;
+  t.is(bcp47Tag, "en");
+  const authorName = projectData.authorName;
+  t.is(authorName, "example");
+  const modelID = projectData.modelID;
+  t.is(modelID, "unknownAuthor.en.example");
+  const copyright = projectData.copyright;
+  t.is(copyright, "©");
+  const version = projectData.version;
+  t.is(version, "1.0.0");
+});
+
+test("save Keyman keyboard data with addKeyboardData", async (t) => {
+  const { db, storage } = t.context;
+
+  t.is(await db.keyboardData.count(), 0);
+  await storage.addKeyboardData(
+    keymanKeyboardDataStub[0].language,
+    keymanKeyboardDataStub[0].bcp47Tag
+  );
+
+  t.is(await db.keyboardData.count(), 1);
+});
+
+test("retrieve Keyman keyboard data with addKeyboardData", async (t) => {
+  const { storage } = t.context;
+  await storage.addKeyboardData(
+    keymanKeyboardDataStub[0].language,
+    keymanKeyboardDataStub[0].bcp47Tag
+  );
+  await storage.fetchKeyboardData().then((data) => {
+    t.is(data.length, 1);
+  });
+});
+
+test("delete all Keyman keyboard data with deleteKeyboardData", async (t) => {
+  const { storage } = t.context;
+  await storage.addKeyboardData(
+    keymanKeyboardDataStub[0].language,
+    keymanKeyboardDataStub[0].bcp47Tag
+  );
+  await storage.deleteKeyboardData();
+  await storage.fetchKeyboardData().then((data) => {
+    t.is(data.length, 0);
+  });
 });
