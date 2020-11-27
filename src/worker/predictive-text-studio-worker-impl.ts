@@ -72,8 +72,6 @@ export class PredictiveTextStudioWorkerImpl
     return await linkStorageToKmp(this.storage);
   }
 
-  async compileModel(): Promise<string> {
-
   private async generateKMPFromStorage(): Promise<void> {
     // TODO: Parse multiple dictionary sources, right now just reading the first file
     this._emitPackageCompileStart();
