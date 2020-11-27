@@ -210,9 +210,9 @@
       <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>
       <fieldset class="quick-start__step">
         <legend>Or Get Values from a Google Sheet</legend>
-        <GoogleSheetsInput />
       </fieldset>
     </form>
+    <GoogleSheetsInput />
   </section>
 </main>
 

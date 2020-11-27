@@ -59,7 +59,7 @@
     if (isSignedIn) {
       getValuesFromSpreadSheet();
     } else {
-      handleAuthClick();
+      signInToGoogleAPI();
       getValuesFromSpreadSheet();
     }
   }
@@ -92,6 +92,7 @@
   async function getValuesFromSpreadSheet() {
     const wordListObject = [];
     const spreadsheetId = getSpreadsheetId() || "";
+    console.log(error);
     if (error) {
       return;
     }
@@ -125,6 +126,7 @@
     error = null;
 
     worker.readGoogleSheet(spreadsheetId, wordListObject);
+    console.log("completed");
   }
 </script>
 
@@ -157,5 +159,8 @@
     id="googleSheetsURL"
     bind:value={googleSheetsURL}
     fullWidth={true} />
-  <Button color="blue" onClick={handleClientLoad}>Read Values</Button>
+  <button
+    class="button button--primary button--shadow quick-start__submit"
+    on:click={handleClientLoad}>Read Values</button>
+  <!-- <Button color="blue" onClick={handleClientLoad}>Read Values</Button> -->
 </div>
