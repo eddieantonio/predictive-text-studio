@@ -38,7 +38,7 @@
     <p>
       If you have any questions or comments about this Privacy Policy, please
       contact us at
-      <a href="mailto:easantos@ualberta.ca">easantos@ualberta.ca</a>.
+      <a href="mailto:easantos+ptstudio@ualberta.ca">easantos+ptstudio@ualberta.ca</a>.
     </p>
     <p>
       We are committed to protecting and respecting your privacy. The Privacy
