@@ -55,7 +55,7 @@
 </style>
 
 <div class="top-button-zone" data-cy="add-source-options">
-  <SplitButton {splitBtns}/>
+  <SplitButton {splitBtns} />
 </div>
 
 {#if manualEntry}
