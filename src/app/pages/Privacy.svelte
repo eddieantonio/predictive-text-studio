@@ -9,18 +9,24 @@
     margin-top: 20px;
   }
 
-  .privacy h1 h2 h3 h4 {
-    font-family: Cabin, sans-serif;
-  }
-
   a {
     text-decoration: none;
+  }
+  article {
+    counter-reset: clause;
+  }
+
+  article h3::before {
+    counter-increment: clause;
+    content: counter(clause) ". ";
   }
 </style>
 
 <main>
-  <div class="privacy">
-    <a href="/"><Button color="blue">Back</Button></a>
+  <article class="privacy">
+    <nav style="text-align: center">
+      <a href="/" class="button button--blue">Back</a>
+    </nav>
     <h2>Predictive Text Studio Privacy Policy</h2>
     <p><strong>Effective as of:</strong> 11/12/2020</p>
     <h3>Introduction</h3>
@@ -38,7 +44,8 @@
     <p>
       If you have any questions or comments about this Privacy Policy, please
       contact us at
-      <a href="mailto:easantos@ualberta.ca">easantos@ualberta.ca</a>.
+      <a
+        href="mailto:easantos+ptstudio@ualberta.ca">easantos+ptstudio@ualberta.ca</a>.
     </p>
     <p>
       We are committed to protecting and respecting your privacy. The Privacy
@@ -88,7 +95,7 @@
     </p>
     <h3>Collecting, processing and using personal data</h3>
     <p>We do not store or process any personal data.</p>
-    <h3>4. Why we collect information about you - purpose of processing</h3>
+    <h3>Why we collect information about you - purpose of processing</h3>
     <p>
       We will use information you provide for delivering our Services to you
       under the terms of use agreed between us. The processing of information in
@@ -128,7 +135,8 @@
     </p>
     <p>
       To make a request, please let us know by sending an email to
-      <a href="mailto:easantos@ualberta.ca">easantos@ualberta.ca</a>.
+      <a
+        href="mailto:easantos+ptstudio@ualberta.ca">easantos+ptstudio@ualberta.ca</a>.
     </p>
     <p>
       a) You have the right to request a copy of the personal information we
@@ -161,5 +169,5 @@
         href="http://livechat.com/privacy-policy-generator/?ppg"
         target="_blank">Privacy Policy Generator</a>.
     </p>
-  </div>
+  </article>
 </main>
