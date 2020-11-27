@@ -124,7 +124,7 @@
     </p>
     <p>
       To make a request, please let us know by sending an email to
-      <a href="mailto:easantos@ualberta.ca">easantos@ualberta.ca</a>.
+      <a href="mailto:easantos+ptstudio@ualberta.ca">easantos+ptstudio@ualberta.ca</a>.
     </p>
     <p>
       a) You have the right to request a copy of the personal information we
