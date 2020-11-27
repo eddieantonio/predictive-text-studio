@@ -12,6 +12,14 @@
   a {
     text-decoration: none;
   }
+  article {
+    counter-reset: clause;
+  }
+  
+  article h3::before {
+    counter-increment: clause;
+    content: counter(clause) ". ";
+  }
 </style>
 
 <main>
