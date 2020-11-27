@@ -3,6 +3,36 @@
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
 
+  // Split Button
+  const uploadSourcesFromFile = () => {
+    manualEntry = false;
+  };
+
+  const directEntrySources = () => {
+    manualEntry = true;
+  };
+
+  let splitBtns = [
+    {
+      color: "blue",
+      size: "medium",
+      text: "Upload",
+      isOutlined: false,
+      hasDropShadow: false,
+      dataCy: "add-sources-splitbtn-upload",
+      handleClick: uploadSourcesFromFile,
+    },
+    {
+      color: "grey",
+      size: "medium",
+      text: "Direct entry",
+      isOutlined: false,
+      hasDropShadow: false,
+      dataCy: "add-sources-splitbtn-direct-entry",
+      handleClick: directEntrySources,
+    },
+  ];
+  // Manual Entry
   let manualEntry: boolean = false;
   let tableData = {
     name: "",
@@ -11,14 +41,6 @@
         word: "",
       },
     ],
-  };
-
-  const uploadSourcesFromFile = () => {
-    manualEntry = false;
-  };
-
-  const directEntrySources = () => {
-    manualEntry = true;
   };
 </script>
 
@@ -33,13 +55,7 @@
 </style>
 
 <div class="top-button-zone" data-cy="add-source-options">
-  <SplitButton
-    leftText="Upload"
-    rightText="Direct entry"
-    dataCyLeft="add-sources-splitbtn-left"
-    dataCyRight="add-sources-splitbtn-right"
-    onClickLeft={uploadSourcesFromFile}
-    onClickRight={directEntrySources} />
+  <SplitButton {splitBtns}/>
 </div>
 
 {#if manualEntry}
