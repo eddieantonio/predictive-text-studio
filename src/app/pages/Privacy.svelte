@@ -19,7 +19,7 @@
 </style>
 
 <main>
-  <div class="privacy">
+  <article class="privacy">
     <a href="/"><Button color="blue">Back</Button></a>
     <h2>Predictive Text Studio Privacy Policy</h2>
     <p><strong>Effective as of:</strong> 11/12/2020</p>
