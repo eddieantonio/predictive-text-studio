@@ -18,7 +18,7 @@ export interface PredictiveTextStudioWorker {
    * Save a google sheet into IndexedDB
    */
   readGoogleSheet(name: string, wordList: WordList): Promise<ArrayBuffer>;
-  
+
   /**
    * Compile the lexical model using files in the IndexedDB
    * Take a dictionary source and store it.
