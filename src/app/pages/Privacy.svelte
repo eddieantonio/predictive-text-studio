@@ -9,10 +9,6 @@
     margin-top: 20px;
   }
 
-  .privacy h1 h2 h3 h4 {
-    font-family: Cabin, sans-serif;
-  }
-
   a {
     text-decoration: none;
   }
