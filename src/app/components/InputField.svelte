@@ -2,10 +2,10 @@
   export let label = "";
   export let id: string;
   export let value: any;
-  export let subtext: string;
+  export let subtext: string = "";
   export let fullWidth: boolean = false;
-  export let error = "";
-  export let placeholder = "";
+  export let error: string = "";
+  export let placeholder: string = "";
 </script>
 
 <style>
@@ -49,8 +49,7 @@
   }
 </style>
 
-
-<div class="input_field mb-m">
+<div class="input_field mb-m" class:full-width={fullWidth}>
   {#if label !== ''}
     <p class:label>{label}</p>
   {/if}
