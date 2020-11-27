@@ -36,9 +36,9 @@
   --xxl: 2.5em;
 
   /* Spacing and border variables */
-  --sb-xxs: 0.3125rem;
-  --sb-xs: 0.625rem;
-  --sb-s: 0.9375rem;
+  --sb-xxs: .3125rem;
+  --sb-xs: .625rem;
+  --sb-s: .9375rem;
   --sb-m: 1.25rem;
   --sb-l: 1.5625rem;
   --sb-xl: 1.875rem;
@@ -73,10 +73,10 @@ samp {
  */
 .button {
   display: inline-block;
-  margin: 0 0.625em;
-  padding: 0.625rem 1.25rem; /* button--medium size */
+  margin: 0 .625em;
+  padding: .625rem 1.25rem; /* button--medium size */
   border: 1px solid transparent;
-  border-radius: 0.625rem;
+  border-radius: .625rem;
 
   font: bold 1em var(--main-font), sans-serif;
   text-transform: uppercase;
@@ -91,7 +91,7 @@ samp {
 
 /* make <a> .button have a focus ring like <button> elements. */
 a.button:focus {
-  outline: 0.5rem auto var(--primary-blue);
+  outline: .5rem auto var(--primary-blue);
   outline-color: -webkit-focus-ring-color;
 }
 
@@ -131,11 +131,11 @@ a.button:focus {
 }
 
 .button--small {
-  padding: 0.3125rem 0.625rem;
+  padding: .3125rem .625rem;
 }
 
 .button--large {
-  padding: 0.625rem 3.75rem;
+  padding: .625rem 3.75rem;
 }
 
 /**

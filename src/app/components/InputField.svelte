@@ -2,9 +2,9 @@
   export let label: string | undefined;
   /**
    * Component size options
-   * Size option medium (default size) or large 
-   * ex: size = "large" 
-   */ 
+   * Size option medium (default size) or large
+   * ex: size = "large"
+   */
   export let size: string | undefined = "";
   export let cyData: string | undefined = "";
   export let id: string;
@@ -58,7 +58,9 @@
 </style>
 
 <div class="input-field mt-s mb-m">
-  <label class="input-field__label--{size} mt-s" for="input-{id}">{label}</label>
+  <label
+    class="input-field__label--{size} mt-s"
+    for="input-{id}">{label}</label>
   <input
     class="mt-s"
     type="text"
