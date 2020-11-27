@@ -77,7 +77,12 @@
    */
   function getSpreadsheetId() {
     googleSheetsURL = document.getElementById("googleSheetsURL").value;
-    if (googleSheetsURL) {
+
+    const googleSheetRegExp = RegExp(
+      "http(s?)://docs.google.com/spreadsheets/[a-z]+/[a-zA-z0-9]+/[a-zA-z0-9#=]+"
+    );
+
+    if (googleSheetRegExp.test(googleSheetsURL)) {
       return googleSheetsURL.split("/")[5];
     } else {
       error = `Error: The url ${googleSheetsURL} is not a valid Google Sheets URl. Please paste a valid one.`;
