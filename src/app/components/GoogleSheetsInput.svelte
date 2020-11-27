@@ -146,7 +146,7 @@
   .error {
     background-color: #f8d7db;
     color: #400000;
-    padding: 5px 10px;
+    padding: 0.3125rem 0.625rem;
   }
 </style>
 
@@ -167,5 +167,4 @@
   <button
     class="button button--primary button--shadow quick-start__submit"
     on:click={handleClientLoad}>Read Values</button>
-  <!-- <Button color="blue" onClick={handleClientLoad}>Read Values</Button> -->
 </div>
