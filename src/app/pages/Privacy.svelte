@@ -163,5 +163,5 @@
         href="http://livechat.com/privacy-policy-generator/?ppg"
         target="_blank">Privacy Policy Generator</a>.
     </p>
-  </div>
+  </article>
 </main>
