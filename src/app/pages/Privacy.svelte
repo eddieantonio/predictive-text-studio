@@ -88,15 +88,6 @@
     </p>
     <h3>3. Collecting, processing and using personal data</h3>
     <p>We do not store or process any personal data.</p>
-    <h3>4. Why we collect information about you - purpose of processing</h3>
-    <p>
-      We will use information you provide for delivering our Services to you
-      under the terms of use agreed between us. The processing of information in
-      this way is necessary for us to provide you the Service properly and to
-      ensure the features function properly so that you have the best Service
-      possible.
-    </p>
-    <p />
     <h3>5. Cookies and Web Beacons</h3>
     <p>We do not use cookies or web beacons.</p>
     <h3>6. Log files</h3>
