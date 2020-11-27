@@ -1,5 +1,12 @@
 <script lang="ts">
-  export let label = "";
+  export let label: string | undefined;
+  /**
+   * Component size options
+   * Size option medium (default size) or large
+   * ex: size = "large"
+   */
+  export let size: string | undefined = "";
+  export let cyData: string | undefined = "";
   export let id: string;
   export let value: any;
   export let subtext = "";
@@ -8,13 +15,14 @@
 </script>
 
 <style>
-  .label {
+  label {
     font-family: var(--main-font), sans-serif;
     font-weight: bold;
     font-size: var(--xs);
   }
 
   input {
+    display: block;
     font-family: var(--secondary-font), sans-serif;
     font-size: var(--m);
     padding: 10px;
@@ -24,14 +32,20 @@
     border-style: solid;
   }
 
+  .input-field__label--large {
+    font: var(--main-font);
+    font-size: var(--s);
+    font-weight: normal;
+  }
+
   input:focus {
     outline: none;
     border-color: var(--primary-blue);
   }
 
-  .subtext {
+  .input-field__subtext {
     font-family: var(--mono-font), monospace;
-    color: var(--gray);
+    color: var(--gray-secondary-text);
     font-size: var(--xxs);
   }
 
@@ -43,15 +57,21 @@
   }
 </style>
 
-<div class="input_field mb-m">
-  {#if label !== ''}
-    <p class:label>{label}</p>
-  {/if}
-  <input type="text" {id} bind:value {placeholder} />
+<div class="input-field mt-s mb-m">
+  <label
+    class="input-field__label--{size} mt-s"
+    for="input-{id}">{label}</label>
+  <input
+    class="mt-s"
+    type="text"
+    id="input-{id}"
+    bind:value
+    {placeholder}
+    data-cy={cyData} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
   {#if subtext !== ''}
-    <p class:subtext>{subtext}</p>
+    <p class="input-field__subtext">{subtext}</p>
   {/if}
 </div>
