@@ -1,20 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import worker from "../spawn-worker";
-  interface KeyboardDataWithTime {
-    /**
-     * Store bcp47Tag as the primarykey
-     */
-    bcp47Tag: string;
-    /**
-     * Keyboard Language of the bcp47Tag
-     */
-    language: string;
-    /**
-     * Timestamp of last updated time
-     */
-    timestamp: Date;
-  }
+  import type { KeyboardDataWithTime } from "@common/types";
 
   enum keyboardKey {
     Up = "ArrowUp",
@@ -41,11 +28,11 @@
   });
 
   // Input to search
-  async function onChange(event: Event) {
+  function onChange(event: Event) {
     show = true;
     filtered = results.filter((element) => {
       // Using regular expressing for search method
-      const target = event.target as HTMLTextAreaElement;		
+      const target = event.target as HTMLTextAreaElement;
       const regExp = new RegExp("^" + target.value.toUpperCase());
       return regExp.test(element.language.toUpperCase());
     });
