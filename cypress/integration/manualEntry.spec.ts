@@ -9,7 +9,7 @@ describe("Adding sources by direct entry", function () {
       .click()
       .scrollIntoView();
 
-    cy.data("add-sources-splitbtn-right")
+    cy.data("add-sources-splitbtn-direct-entry")
       .contains("Direct entry")
       .click()
       .scrollIntoView();
