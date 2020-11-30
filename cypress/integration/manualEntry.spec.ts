@@ -1,4 +1,4 @@
-describe("", function () {
+describe("Adding sources by direct entry", function () {
   it("should find a button to press to add source by user entry manually", function () {
     cy.visit("/languages");
     cy.data("languages-sources-btn").contains("Sources").click();
