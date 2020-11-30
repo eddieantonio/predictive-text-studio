@@ -25,8 +25,8 @@
     results = await worker.getDataFromStorage();
   });
 
-  // Input to search
-  function onChange(event: Event) {
+  // Does a prefix search with autocomplete suggestions.
+  function filterAutocompleteSuggestions(event: Event) {
     show = true;
     filtered = results.filter((element) => {
       // Using regular expressing for search method
@@ -156,7 +156,7 @@
     class="autocomplete__input"
     value={selected}
     type="text"
-    on:input={(event) => onChange(event)}
+    on:input={filterAutocompleteSuggestions}
     data-cy="autocomplete-input" />
   {#if show}
     <ul
