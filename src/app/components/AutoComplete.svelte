@@ -41,11 +41,12 @@
   });
 
   // Input to search
-  async function onChange(event: any) {
+  async function onChange(event: Event) {
     show = true;
     filtered = results.filter((element) => {
       // Using regular expressing for search method
-      let regExp = new RegExp("^" + event.target.value.toUpperCase());
+      const target = event.target as HTMLTextAreaElement;		
+      const regExp = new RegExp("^" + target.value.toUpperCase());
       return regExp.test(element.language.toUpperCase());
     });
   }
