@@ -157,10 +157,6 @@
  -->
 <main>
   <div class="languages">
-    <div class="languages__sidebar">
-      <Sidebar {languages} {selectedLanguage} />
-    </div>
-
     <div class="languages__container">
       <header class="languages__container--header">
         <div>
