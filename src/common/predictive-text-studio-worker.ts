@@ -1,5 +1,5 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
-import type { DictionaryEntry } from "./types";
+import type { DictionaryEntry, KeyboardDataWithTime } from "./types";
 
 /**
  * This interface establishes a communication protocal between the UI thread and the worker thread
@@ -55,4 +55,9 @@ export interface PredictiveTextStudioWorker {
    * @see RelevantKmpOptions
    */
   setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): void;
+
+  /**
+   * Retrieving Keyman keyboard data from the IndexedDB storage
+   */
+  getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
 }

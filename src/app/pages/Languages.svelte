@@ -3,7 +3,6 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
-  import AutoComplete from "../components/AutoComplete.svelte";
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
 
@@ -41,21 +40,6 @@
       },
     ],
   };
-  // TODO: Temporary data placeholder for autocorrect component and will be removed once #33 is done
-  let testingData: any = [
-    {
-      bcp47Tag: "en",
-      language: "english",
-    },
-    {
-      bcp47Tag: "en",
-      language: "enn",
-    },
-    {
-      bcp47Tag: "en",
-      language: "ewx",
-    },
-  ];
 
   interface LanguageProject {
     id: number;
@@ -215,8 +199,6 @@
           <LanguageSources sources={languageInformation.sources} />
         {/if}
       </div>
-      <!-- TODO: A placeholder autocorrect component and will be removed once #33 is done -->
-      <AutoComplete label="Testing AutoComplete" subtext=""/>
     </div>
   </div>
 </main>

@@ -1,9 +1,8 @@
 <script lang="ts">
-  // TODO: the following interface should be removed once #33 is done
-  interface dataObj {
-    bcp47Tag: string;
-    language: string;
-  }
+  import { onMount } from "svelte";
+  import worker from "../spawn-worker";
+  import type { KeyboardDataWithTime } from "@common/types";
+
   enum keyboardKey {
     Up = "ArrowUp",
     Down = "ArrowDown",
@@ -11,26 +10,29 @@
   }
   export let label = "";
   export let subtext = "";
-  // Testing Data
-  export let results: dataObj[] = [];
   // To store filtered array
-  let filtered: dataObj[] = [];
+  let filtered: KeyboardDataWithTime[] = [];
+  // To store Keyman Keyboard data
+  let results: KeyboardDataWithTime[] = [];
   // To store selected language
   let selected: string = "";
   // Toggle to show search list
   let show = false;
-  // Index of Previous focus element
-  let prevIndex = -1;
   // Index of focus element
   let index = -1;
+
+  onMount(async () => {
+    results = await worker.getDataFromStorage();
+  });
 
   // Input to search
   function onChange(event: Event) {
     show = true;
-    filtered = results.filter((item: any) => {
+    filtered = results.filter((element) => {
+      // Using regular expressing for search method
       const target = event.target as HTMLTextAreaElement;
-      const a = new RegExp("^" + target.value.toUpperCase());
-      return a.test(item.language.toUpperCase());
+      const regExp = new RegExp("^" + target.value.toUpperCase());
+      return regExp.test(element.language.toUpperCase());
     });
   }
 
@@ -56,7 +58,7 @@
   }
 
   // On select item in list
-  function selectedList(data: dataObj) {
+  function selectedList(data: KeyboardDataWithTime) {
     show = false;
     selected = data.language;
     subtext = data.bcp47Tag;
@@ -69,13 +71,11 @@
   // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
     if (key === keyboardKey.Down) {
-      prevIndex = index;
       index += 1;
     } else if (key === keyboardKey.Up) {
       if (index == -1) {
         index = -1;
       } else {
-        prevIndex = index;
         index -= 1;
       }
     } else if (key === keyboardKey.Enter) {
@@ -109,13 +109,15 @@
     padding: var(--sb-xs);
     border-radius: var(--sb-xs);
     border-width: 1px;
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: var(--gray);
   }
   .autocomplete__suggestion-list {
     position: absolute;
     padding: 0 0 var(--sb-xs) 0;
     margin: 0;
     width: 100%;
+    height: 11rem;
+    overflow: scroll;
     background: white;
     box-shadow: 0px var(--sb-xs) var(--sb-m) rgba(0, 0, 0, 0.2);
     border-radius: 0 0 var(--sb-xs) var(--sb-xs);
@@ -146,7 +148,7 @@
 </style>
 
 <svelte:window on:keydown={handleKeydown} />
-<div class="autocomplete">
+<div class="autocomplete mb-m">
   {#if label !== ''}
     <p class="autocomplete__label">{label}</p>
   {/if}

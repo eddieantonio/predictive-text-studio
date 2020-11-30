@@ -1,5 +1,6 @@
 <script lang="ts">
   import InputField from "./InputField.svelte";
+  import AutoComplete from "../components/AutoComplete.svelte";
   export let properties: any; // TODO: I am not sure what type to change it to from any
 </script>
 
@@ -36,11 +37,7 @@
 
 <div class="language__info">
   <div class="language__info-left">
-    <InputField
-      label="Language"
-      id="language"
-      value={properties.name}
-      subtext="BCP49: kwk-latn" />
+    <AutoComplete label="Language" subtext="" />
     <InputField
       label="Author or Organization"
       id="author"

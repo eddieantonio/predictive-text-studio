@@ -48,6 +48,10 @@ export class PredictiveTextStudioWorkerImpl
     });
   }
 
+  async getDataFromStorage(): Promise<KeyboardDataWithTime[]> {
+    return this.storage.fetchKeyboardData();
+  }
+
   async getLanguageData(): Promise<void> {
     let dateDiff: number;
     const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
