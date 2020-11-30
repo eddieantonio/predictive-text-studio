@@ -3,7 +3,6 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
-  import AutoComplete from "../components/AutoComplete.svelte";
   export let selectedButton: string = "information";
   export let selectedLanguage: string = "Kwakwala";
 

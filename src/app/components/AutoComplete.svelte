@@ -18,8 +18,6 @@
   let selected: string = "";
   // Toggle to show search list
   let show = false;
-  // Index of Previous focus element
-  let prevIndex = -1;
   // Index of focus element
   let index = -1;
 
@@ -73,13 +71,11 @@
   // Up/Down arraow
   function handleKeydown({ key }: KeyboardEvent) {
     if (key === keyboardKey.Down) {
-      prevIndex = index;
       index += 1;
     } else if (key === keyboardKey.Up) {
       if (index == -1) {
         index = -1;
       } else {
-        prevIndex = index;
         index -= 1;
       }
     } else if (key === keyboardKey.Enter) {
