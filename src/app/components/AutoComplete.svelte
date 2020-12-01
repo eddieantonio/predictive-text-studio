@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import worker from "../spawn-worker";
+  import { createEventDispatcher } from "svelte";
   import type { KeyboardDataWithTime } from "@common/types";
 
   enum keyboardKey {
@@ -20,7 +21,6 @@
   let show = false;
   // Index of focus element
   let index = -1;
-  import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
   onMount(async () => {
     results = await worker.getDataFromStorage();

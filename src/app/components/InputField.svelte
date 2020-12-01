@@ -15,8 +15,8 @@
   export let placeholder = "";
 
   const dispatch = createEventDispatcher();
- 
-  function emitInputValue(event: Event) {
+
+  function dispatchInputValue(event: Event) {
     const target = event.target as HTMLTextAreaElement;
     const cleanId = target.id.split("-").pop();
     dispatch("message", {
@@ -80,7 +80,7 @@
     {placeholder}
     data-cy={cyData}
     bind:value
-    on:blur={emitInputValue} />
+    on:blur={dispatchInputValue} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
