@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   export let label: string | undefined;
   /**
    * Component size options
@@ -12,28 +13,9 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
-  import worker from "../spawn-worker";
 
-  let isFocused = false;
-  let tempObj: any = {};
-  import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
-  // const onInput = (event: Event) => {
-  //   const target = event.target as HTMLTextAreaElement;
-  //   console.log(target.value);
-  // };
-  const onFocus = () => {
-    isFocused = true;
-  };
-  // const onBlur = (event: Event) => {
-  //   isFocused = false;
-  //   const target = event.target as HTMLTextAreaElement;
-  //   const cleanId = target.id.split("-").pop();
-  //   tempObj.append((tempObj[target.id] = value));
-
-  //   console.log(tempObj);
-  //   worker.setProjectData(tempObj);
-  // };
+ 
   function emitInputValue(event: Event) {
     const target = event.target as HTMLTextAreaElement;
     const cleanId = target.id.split("-").pop();
@@ -95,10 +77,9 @@
     class="mt-s"
     type="text"
     id="input-{id}"
-    bind:value
     {placeholder}
     data-cy={cyData}
-    on:focus={onFocus}
+    bind:value
     on:blur={emitInputValue} />
   {#if error !== ''}
     <p class:error>{error}</p>
