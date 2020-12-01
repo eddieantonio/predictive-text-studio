@@ -15,7 +15,9 @@
   import worker from "../spawn-worker"
 
   let isFocused = false;
-
+  let tempObj: any = {};
+  import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
   const onInput = (event: Event) => {
     const target = event.target as HTMLTextAreaElement;
     console.log(target.value);
@@ -26,11 +28,20 @@
   };
   const onBlur = (event: Event) => {
     isFocused = false;
-    let tempObj: any = {};
     const target = event.target as HTMLTextAreaElement;
-    tempObj[target.id] = value;
+    const cleanId = target.id.split("-").pop()
+    tempObj.append(tempObj[target.id] = value);
+    
+    console.log(tempObj)
     worker.setProjectData(tempObj)
   };
+  function sayHello(event: Event) {
+    const target = event.target as HTMLTextAreaElement;
+		dispatch('message', {
+      key: target.id,
+      value: 'hello'
+		});
+	}
 </script>
 
 <style>
@@ -89,7 +100,7 @@
     data-cy={cyData}
     on:input={onInput}
     on:focus={onFocus}
-    on:blur={onBlur} />
+    on:blur={sayHello} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
