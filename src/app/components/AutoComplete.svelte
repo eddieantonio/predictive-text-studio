@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import worker from "../spawn-worker";
   import type { KeyboardDataWithTime } from "@common/types";
-  
 
   enum keyboardKey {
     Up = "ArrowUp",
@@ -66,7 +65,7 @@
     subtext = data.bcp47Tag;
     dispatch("message", {
       key: "languages",
-      value: [{name: selected, id: subtext}],
+      value: [{ name: selected, id: subtext }],
     });
   }
 
