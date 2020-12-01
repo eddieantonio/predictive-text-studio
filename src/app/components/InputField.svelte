@@ -36,7 +36,7 @@
   // };
   function emitInputValue(event: Event) {
     const target = event.target as HTMLTextAreaElement;
-    const cleanId = target.id.split("-").pop()
+    const cleanId = target.id.split("-").pop();
     dispatch("message", {
       key: cleanId,
       value: value,

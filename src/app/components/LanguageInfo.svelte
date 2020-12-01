@@ -3,14 +3,13 @@
   import AutoComplete from "../components/AutoComplete.svelte";
   export let properties: any; // TODO: I am not sure what type to change it to from any
   import worker from "../spawn-worker";
-  
+
   let tempObj: any = {};
 
   function onInputValue(event: CustomEvent) {
     tempObj[event.detail.key] = event.detail.value;
     worker.setProjectData(tempObj);
   }
-
 </script>
 
 <style>
@@ -51,7 +50,7 @@
       on:message={onInputValue}
       label="Author or Organization"
       id="authorName"
-      value={properties.author}
+      value=""
       subtext="Shortcode: raeanne" />
     <InputField
       on:message={onInputValue}
@@ -63,7 +62,7 @@
       on:message={onInputValue}
       label="Copyright"
       id="copyright"
-      value={properties.copyright}
+      value=""
       subtext="" />
   </div>
   <div class="language__info-right">
