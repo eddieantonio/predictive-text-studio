@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import worker from "../spawn-worker";
   import type { KeyboardDataWithTime } from "@common/types";
+  
 
   enum keyboardKey {
     Up = "ArrowUp",
@@ -20,7 +21,8 @@
   let show = false;
   // Index of focus element
   let index = -1;
-
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
   onMount(async () => {
     results = await worker.getDataFromStorage();
   });
@@ -62,6 +64,10 @@
     show = false;
     selected = data.language;
     subtext = data.bcp47Tag;
+    dispatch("message", {
+      key: "languages",
+      value: [{name: selected, id: subtext}],
+    });
   }
 
   const mod = (a: number, n: number) => {

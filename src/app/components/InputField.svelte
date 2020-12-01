@@ -12,36 +12,36 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
-  import worker from "../spawn-worker"
+  import worker from "../spawn-worker";
 
   let isFocused = false;
   let tempObj: any = {};
-  import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
-  const onInput = (event: Event) => {
-    const target = event.target as HTMLTextAreaElement;
-    console.log(target.value);
-  };
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
+  // const onInput = (event: Event) => {
+  //   const target = event.target as HTMLTextAreaElement;
+  //   console.log(target.value);
+  // };
   const onFocus = () => {
     isFocused = true;
-    console.log(isFocused);
   };
-  const onBlur = (event: Event) => {
-    isFocused = false;
+  // const onBlur = (event: Event) => {
+  //   isFocused = false;
+  //   const target = event.target as HTMLTextAreaElement;
+  //   const cleanId = target.id.split("-").pop();
+  //   tempObj.append((tempObj[target.id] = value));
+
+  //   console.log(tempObj);
+  //   worker.setProjectData(tempObj);
+  // };
+  function emitInputValue(event: Event) {
     const target = event.target as HTMLTextAreaElement;
     const cleanId = target.id.split("-").pop()
-    tempObj.append(tempObj[target.id] = value);
-    
-    console.log(tempObj)
-    worker.setProjectData(tempObj)
-  };
-  function sayHello(event: Event) {
-    const target = event.target as HTMLTextAreaElement;
-		dispatch('message', {
-      key: target.id,
-      value: 'hello'
-		});
-	}
+    dispatch("message", {
+      key: cleanId,
+      value: value,
+    });
+  }
 </script>
 
 <style>
@@ -98,9 +98,8 @@
     bind:value
     {placeholder}
     data-cy={cyData}
-    on:input={onInput}
     on:focus={onFocus}
-    on:blur={sayHello} />
+    on:blur={emitInputValue} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
