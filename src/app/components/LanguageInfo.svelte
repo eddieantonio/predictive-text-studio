@@ -2,6 +2,14 @@
   import InputField from "./InputField.svelte";
   import AutoComplete from "../components/AutoComplete.svelte";
   export let properties: any; // TODO: I am not sure what type to change it to from any
+  let tempObj: any = {};
+  function handleMessage(event) {
+    // alert(event.detail.text);
+    tempObj[event.detail.key] = event.detail.value
+    // tempObj["ww"] = event.detail.text
+    console.log(tempObj)
+    // console.log(event.detail)
+	}
 </script>
 
 <style>
@@ -39,11 +47,13 @@
   <div class="language__info-left">
     <AutoComplete label="Language" subtext="" />
     <InputField
+      on:message={handleMessage}
       label="Author or Organization"
       id="authorName"
       value={properties.author}
       subtext="Shortcode: raeanne" />
     <InputField
+    on:message={handleMessage}
       label="Dictionary Name"
       id="dictionaryName"
       value={properties.dictionary_name}
