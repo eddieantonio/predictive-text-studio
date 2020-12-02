@@ -4,6 +4,7 @@
   import DownloadKMP from "../components/DownloadKMP.svelte";
   import worker from "../spawn-worker";
   import * as Comlink from "comlink";
+  import AirDrop from "../components/AirDrop.svelte";
   let downloadURL = "";
 
   worker.onPackageCompileSuccess(
@@ -276,6 +277,7 @@
         <legend> Step 2: Attach a word list </legend>
         <Upload />
         <DownloadKMP {downloadURL} />
+      <AirDrop {downloadURL} />
       </fieldset>
 
       <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>
