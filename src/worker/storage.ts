@@ -200,7 +200,7 @@ export default class Storage {
 
   saveCompiledKMPFile(KMPFile: ArrayBuffer | File): Promise<void> {
     return this.db.transaction("readwrite", this.db.KMPFileData, async () => {
-      await this.db.KMPFileData.put({KMPPackage: KMPFile})
-    })
+      await this.db.KMPFileData.put({ KMPPackage: KMPFile });
+    });
   }
 }
