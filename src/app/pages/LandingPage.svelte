@@ -7,9 +7,10 @@
   let downloadURL = "";
 
   worker.onPackageCompileSuccess(
-    Comlink.proxy((kmp: ArrayBuffer) => {
+    Comlink.proxy(async () => {
+      const KMPPackage = await worker.getKMPPackage();
+      const kmp = KMPPackage.package;
       downloadURL = createURL(kmp);
-      worker.saveKMPPackage(kmp);
     })
   );
 

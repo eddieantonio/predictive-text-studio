@@ -41,5 +41,5 @@ export interface KeyboardDataWithTime {
 
 export interface KMPPackageData {
   /** The coompiled KMP package */
-  package: ArrayBuffer | File;
+  package: ArrayBuffer;
 }

@@ -200,11 +200,14 @@ export default class Storage {
 
   /**
    * Save the KMP package once it compiled
-   * @param KMPFile It can be an ArrayBuffer or a File type (for later sharing purpose)
+   * @param KMPFile
    */
-  saveCompiledKMPFile(KMPFile: ArrayBuffer | File): Promise<void> {
+  saveCompiledKMPAsArrayBuffer(KMPFile: ArrayBuffer): Promise<void> {
     return this.db.transaction("readwrite", this.db.KMPFileData, async () => {
-      await this.db.KMPFileData.put({ package: KMPFile, id: PACKAGE_ID });
+      await this.db.KMPFileData.put({
+        package: KMPFile,
+        id: PACKAGE_ID,
+      });
     });
   }
 

@@ -47,7 +47,7 @@ export interface PredictiveTextStudioWorker {
    * Register a callback that is called when the KMP package has succesfully
    * compiled.
    */
-  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void;
+  onPackageCompileSuccess(callback: () => void): void;
 
   /**
    * Sets optional and required metadata such as BCP-47, language name, author
@@ -67,9 +67,9 @@ export interface PredictiveTextStudioWorker {
 
   /**
    * Save the KMP package once it compiled
-   * @param KMPFile It can be an ArrayBuffer or a File type (for later sharing purpose)
+   * @param KMPFile
    */
-  saveKMPPackage(KMP: File | ArrayBuffer): Promise<void>;
+  saveKMPPackage(KMP: ArrayBuffer): Promise<void>;
 
   /**
    * Retrieve the compiled KMP package from database
