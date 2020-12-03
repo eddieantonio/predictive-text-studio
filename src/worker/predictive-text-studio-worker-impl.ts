@@ -1,4 +1,8 @@
-import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
+import {
+  KeyboardData,
+  KeyboardDataWithTime,
+  KMPPackageData,
+} from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel, readManualEntryData } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
@@ -77,9 +81,8 @@ export class PredictiveTextStudioWorkerImpl
         new Error("Cannot find any files in the IndexedDB")
       );
     } else {
-      const kmpFile = await linkStorageToKmp(this.storage);
-      this._emitPackageCompileSuccess(kmpFile);
-      this.storage.saveCompiledKMPFile(kmpFile);
+      const KMPArrayBuffer = await linkStorageToKmp(this.storage);
+      this._emitPackageCompileSuccess(KMPArrayBuffer);
     }
   }
 
@@ -146,5 +149,13 @@ export class PredictiveTextStudioWorkerImpl
       version: version,
     };
     return this.storage.updateProjectData(storedData);
+  }
+
+  saveKMPPackage(KMP: File | ArrayBuffer): Promise<void> {
+    return this.storage.saveCompiledKMPFile(KMP);
+  }
+
+  async getKMPPackage(): Promise<KMPPackageData> {
+    return this.storage.fetchCompiledKMPFile();
   }
 }

@@ -9,6 +9,7 @@
   worker.onPackageCompileSuccess(
     Comlink.proxy((kmp: ArrayBuffer) => {
       downloadURL = createURL(kmp);
+      worker.saveKMPPackage(kmp);
     })
   );
 

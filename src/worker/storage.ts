@@ -198,9 +198,26 @@ export default class Storage {
     });
   }
 
+  /**
+   * Save the KMP package once it compiled
+   * @param KMPFile It can be an ArrayBuffer or a File type (for later sharing purpose)
+   */
   saveCompiledKMPFile(KMPFile: ArrayBuffer | File): Promise<void> {
     return this.db.transaction("readwrite", this.db.KMPFileData, async () => {
-      await this.db.KMPFileData.put({ KMPPackage: KMPFile });
+      await this.db.KMPFileData.put({ package: KMPFile, id: PACKAGE_ID });
     });
+  }
+
+  /**
+   * Retrieve the compiled KMP package from database
+   */
+  async fetchCompiledKMPFile(): Promise<KMPPackageData> {
+    const KMPFile = await this.db.KMPFileData.where(":id")
+      .equals(PACKAGE_ID)
+      .first();
+    if (KMPFile == undefined) {
+      throw new Error("No KMP file has been compiled");
+    }
+    return KMPFile;
   }
 }

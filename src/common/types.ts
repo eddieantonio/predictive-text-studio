@@ -38,3 +38,8 @@ export interface KeyboardDataWithTime {
    */
   timestamp: Date;
 }
+
+export interface KMPPackageData {
+  /** The coompiled KMP package */
+  package: ArrayBuffer | File;
+}

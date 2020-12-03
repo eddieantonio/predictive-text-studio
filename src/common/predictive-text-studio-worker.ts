@@ -1,5 +1,9 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
-import type { DictionaryEntry, KeyboardDataWithTime } from "./types";
+import type {
+  DictionaryEntry,
+  KeyboardDataWithTime,
+  KMPPackageData,
+} from "./types";
 
 /**
  * This interface establishes a communication protocal between the UI thread and the worker thread
@@ -60,4 +64,15 @@ export interface PredictiveTextStudioWorker {
    * Retrieving Keyman keyboard data from the IndexedDB storage
    */
   getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
+
+  /**
+   * Save the KMP package once it compiled
+   * @param KMPFile It can be an ArrayBuffer or a File type (for later sharing purpose)
+   */
+  saveKMPPackage(KMP: File | ArrayBuffer): Promise<void>;
+
+  /**
+   * Retrieve the compiled KMP package from database
+   */
+  getKMPPackage(): Promise<KMPPackageData>;
 }
