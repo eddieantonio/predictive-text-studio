@@ -79,6 +79,7 @@ export class PredictiveTextStudioWorkerImpl
     } else {
       const kmpFile = await linkStorageToKmp(this.storage);
       this._emitPackageCompileSuccess(kmpFile);
+      this.storage.saveCompiledKMPFile(kmpFile);
     }
   }
 
