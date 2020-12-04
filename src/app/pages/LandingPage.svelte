@@ -29,7 +29,7 @@
   }
 
   function updateContinueStatus() {
-    continueReady = languageStatus && fileStatus ? true : false
+    continueReady = languageStatus && fileStatus ? true : false;
   }
 </script>
 
@@ -181,7 +181,7 @@
     background: var(--gray-disabled);
     pointer-events: none;
   }
-  .quick-start__submit-wrapper--disabled{
+  .quick-start__submit-wrapper--disabled {
     cursor: not-allowed;
   }
 
@@ -308,7 +308,8 @@
         <button
         class="button button--primary button--shadow quick-start__submit-button" 
         class:quick-start__submit-button--disabled={!continueReady}
-        type="submit"> Continue 
+        type="submit"
+        data-cy="landing-page-continue-button"> Continue 
         </button>
       </div>
     
