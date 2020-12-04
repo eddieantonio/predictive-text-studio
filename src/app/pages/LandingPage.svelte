@@ -7,6 +7,7 @@
   let downloadURL = "";
   let languageStatus: boolean = false;
   let fileStatus: boolean = false;
+  let continueReady: boolean = false;
   worker.onPackageCompileSuccess(
     Comlink.proxy((kmp: ArrayBuffer) => {
       downloadURL = createURL(kmp);
@@ -20,9 +21,15 @@
 
   function updateLanguageStatus(event: CustomEvent) {
     languageStatus = event.detail.status;
+    updateContinueStatus();
   }
   function updateFileStatus(event: CustomEvent) {
     fileStatus = event.detail.status;
+    updateContinueStatus();
+  }
+
+  function updateContinueStatus() {
+    continueReady = languageStatus && fileStatus ? true : false
   }
 </script>
 
@@ -165,9 +172,17 @@
     line-height: 1.5;
   }
 
-  .quick-start__submit {
+  .quick-start__submit-button {
     margin: 2rem 0;
     width: 100%;
+  }
+
+  .quick-start__submit-button--disabled {
+    background: var(--gray-disabled);
+    pointer-events: none;
+  }
+  .quick-start__submit-wrapper--disabled{
+    cursor: not-allowed;
   }
 
   .footer {
@@ -272,6 +287,9 @@
         class="block" />
     </a>
   </section>
+  <h1>{fileStatus}</h1>
+  <h2>{languageStatus}</h2>
+  <h3>{continueReady}</h3>
   <section id="get-started" class="quick-start">
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
@@ -281,11 +299,19 @@
 
       <fieldset class="quick-start__step">
         <legend> Step 2: Attach a word list </legend>
-      <Upload on:file={updateFileStatus}/>
+        <Upload on:file={updateFileStatus}/>
         <DownloadKMP {downloadURL} />
       </fieldset>
-
-      <button class="button button--primary button--shadow quick-start__submit" type="submit"> Continue </button>
+      <div
+      class="quick-start__submit-wrapper"
+      class:quick-start__submit-wrapper--disabled={!continueReady}> 
+        <button
+        class="button button--primary button--shadow quick-start__submit-button" 
+        class:quick-start__submit-button--disabled={!continueReady}
+        type="submit"> Continue 
+        </button>
+      </div>
+    
     </form>
   </section>
 </main>

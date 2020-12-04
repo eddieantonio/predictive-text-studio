@@ -58,7 +58,7 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       dispatch("file", {
-        status: true
+        status: true,
       });
       for (let file of input.files) {
         await worker.addDictionarySourceToProject(file.name, file);
