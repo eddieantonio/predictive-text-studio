@@ -41,17 +41,14 @@
     <InputField
       label="Author or Organization"
       id="author"
-      value={properties.author}
       subtext="Shortcode" />
     <InputField
       label="Dictionary Name"
       id="dictionaryName"
-      value={properties.dictionary_name}
       subtext="Model ID" />
     <InputField
       label="Copyright"
       id="copyright"
-      value={properties.copyright}
       subtext="" />
   </div>
   <div class="language__info-right">

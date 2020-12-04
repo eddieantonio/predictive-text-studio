@@ -8,11 +8,10 @@
   export let size: string | undefined = "";
   export let cyData: string | undefined = "";
   export let id: string;
-  export let value: any;
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
-  let inputValue: string = ""
+  let inputValue: string = "";
 </script>
 
 <style>
@@ -73,6 +72,6 @@
     <p class:error>{error}</p>
   {/if}
   {#if subtext !== ''}
-<p class="input-field__subtext">{subtext}: {inputValue}</p>
+    <p class="input-field__subtext">{subtext}: {inputValue}</p>
   {/if}
 </div>
