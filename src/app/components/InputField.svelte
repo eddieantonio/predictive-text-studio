@@ -97,7 +97,7 @@
     on:blur={dispatchInputValue}
     on:input={dispatchInputValueOnInput} />
   {#if error !== ''}
-    <p class:error>{error}</p>
+    <p class:error data-cy="input-error-message">{error}</p>
   {/if}
   {#if subtext !== ''}
     <p class="input-field__subtext">{subtext}: {inputValue}</p>
