@@ -4,16 +4,16 @@
   import worker from "../spawn-worker";
 
   const TAG_INPUT_ID = "tag-input";
-  let errorMessage: string = ""
-  
+  let errorMessage: string = "";
+
   function onInputValue(event: CustomEvent) {
-    const inputValue = event.detail.value
+    const inputValue = event.detail.value;
     const schema = bcp47.parse(inputValue);
     if (inputValue.length > 0 && schema.language !== null) {
-      errorMessage = ""
+      errorMessage = "";
       worker.setProjectData({ languages: [{ name: "", id: inputValue }] });
     } else {
-      errorMessage = "Invalid BCP 47 Tag"
+      errorMessage = "Invalid BCP 47 Tag";
     }
   }
 </script>

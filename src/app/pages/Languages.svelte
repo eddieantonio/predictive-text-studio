@@ -14,10 +14,6 @@
       );
     },
     properties: {
-      name: "Kwakwala",
-      author: "Rae Anne",
-      dictionary_name: "Kwakwala",
-      copyright: "Rae Anne 2020",
       keyboard_image:
         "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg",
     },
