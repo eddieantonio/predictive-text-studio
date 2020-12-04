@@ -5,7 +5,7 @@
   import worker from "../spawn-worker";
   import * as Comlink from "comlink";
   let downloadURL = "";
-
+  let languageStatus: boolean = false;
   worker.onPackageCompileSuccess(
     Comlink.proxy((kmp: ArrayBuffer) => {
       downloadURL = createURL(kmp);
@@ -15,6 +15,10 @@
   function createURL(kmpFile: ArrayBuffer): string {
     const blob = new Blob([kmpFile], { type: "application/octet-stream" });
     return URL.createObjectURL(blob);
+  }
+
+  function updateLanguageStatus(event: CustomEvent) {
+    languageStatus = event.detail.status;
   }
 </script>
 
@@ -269,7 +273,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <BCP47Tag />
+        <BCP47Tag on:langauge={updateLanguageStatus} />
       </fieldset>
 
       <fieldset class="quick-start__step">
@@ -278,7 +282,7 @@
         <DownloadKMP {downloadURL} />
       </fieldset>
 
-      <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>
+      <button class="button button--primary button--shadow quick-start__submit" type="submit"> Continue </button>
     </form>
   </section>
 </main>
