@@ -1,10 +1,9 @@
 <script lang="ts">
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
-  import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
   export let selectedButton: string = "information";
-  export let selectedLanguage: string = "Kwakwala";
+
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
@@ -41,7 +40,6 @@
     id: number;
     name: string;
   }
-
 
   /**
    * Handles the click when a content button (Information/Sources) is pressed
