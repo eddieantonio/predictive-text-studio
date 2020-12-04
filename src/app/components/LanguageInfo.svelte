@@ -46,10 +46,7 @@
       label="Dictionary Name"
       id="dictionaryName"
       subtext="Model ID" />
-    <InputField
-      label="Copyright"
-      id="copyright"
-      subtext="" />
+    <InputField label="Copyright" id="copyright" subtext="" />
   </div>
   <div class="language__info-right">
     <p class="label">Keyboard Preview</p>
