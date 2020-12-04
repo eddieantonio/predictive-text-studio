@@ -83,6 +83,29 @@
    * @return {void}
    */
   const handleDownload = (): void => {};
+
+  /**
+   * Handles the click when the email language button is pressed.
+   * Should open the default mail application with the link to the .kmp file in the body.
+   * TODO: Replace stub
+   *
+   * @return {void}
+   */
+  const handleEmail = (): void => {};
+
+  /**
+   * Handles the click when the AirDrop language button is pressed. Should open AirDrop with a .kmp file.
+   * TODO: Replace stub
+   *
+   * @return {void}
+   */
+  const handleAirDrop = (): void => {};
+
+  var isSharePopupOpen = false;
+
+  const toggleSharePopup = (): void => {
+    isSharePopupOpen = !isSharePopupOpen;
+  };
 </script>
 
 <style>
@@ -148,45 +171,98 @@
   .languages__container--content {
     margin-top: 25px;
   }
+
+  .share__container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .share__container-popup {
+    width: 10rem;
+    height: 100%;
+    padding: 0.5rem 2rem;
+    margin-left: -2rem;
+    margin-top: 1rem;
+    z-index: 2;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 5px;
+  }
+
+  .share__container-button {
+    margin-top: 10px;
+  }
 </style>
 
-<!--
-  TODO:
-  1. Create/refactor button component
-  2. Use variable names for colors and fonts
- -->
 <main>
   <div class="languages">
     <div class="languages__container">
       <header class="languages__container--header">
         <div>
           <h1>Predictive Text Studio</h1>
-          <p>designed for
-          <img
-          src="/assets/keyman-logo.svg"
-          alt="Keyman" />
-          </p>
+          <p>designed for <img src="/assets/keyman-logo.svg" alt="Keyman" /></p>
         </div>
       </header>
       <div class="languages__container--actions">
         <Button
           color="grey"
-          isOutlined={(selectedButton === 'information')}
+          isOutlined={selectedButton === 'information'}
           onClick={() => handleClick('information')}
-          dataCy="languages-information-btn"
-        >Information</Button>
+          dataCy="languages-information-btn">
+          Information
+        </Button>
         <Button
           color="grey"
-          isOutlined={(selectedButton === 'sources')}
-          onClick={()=> handleClick('sources')}
-          dataCy="languages-sources-btn"
-        >Sources</Button>
-        <Button
-          color="blue"
-          onClick={handleDownload}
-          subtext={languageInformation.wordCount.toString() + " words"}
-          dataCy="languages-download-btn"
-        >Download</Button>
+          isOutlined={selectedButton === 'sources'}
+          onClick={() => handleClick('sources')}
+          dataCy="languages-sources-btn">
+          Sources
+        </Button>
+        <div class="share__container">
+          <Button
+            color="blue"
+            onClick={toggleSharePopup}
+            subtext={languageInformation.wordCount.toString() + ' words'}
+            dataCy="languages-download-btn">
+            Share
+          </Button>
+          {#if isSharePopupOpen}
+            <div class="share__container-popup">
+              <div class="share__container-button">
+                <Button
+                  color="blue"
+                  onClick={handleDownload}
+                  isFullWidth={true}
+                  dataCy="languages-download-btn">
+                  Download
+                </Button>
+              </div>
+              <div class="share__container-button">
+                <Button
+                  color="blue"
+                  onClick={handleDownload}
+                  isFullWidth={true}
+                  dataCy="languages-email-btn">
+                  Email
+                </Button>
+              </div>
+              <div class="share__container-button">
+                <Button
+                  color="blue"
+                  onClick={handleDownload}
+                  isFullWidth={true}
+                  dataCy="languages-airdrop-btn">
+                  Air Drop
+                </Button>
+              </div>
+            </div>
+          {/if}
+        </div>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}

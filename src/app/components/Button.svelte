@@ -8,6 +8,7 @@
   export let subtext: string = ""; // optional
   export let dataCy: string = ""; // optional
   export let onClick: (ev: MouseEvent) => void;
+  export let isFullWidth: boolean = false;
 </script>
 
 <style>
@@ -22,6 +23,10 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .button--full-width {
+    width: 100%;
+  }
 </style>
 
 <div class="button-layout">
@@ -29,6 +34,7 @@
     class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
+    class:button--full-width={isFullWidth}
     {type}
     on:click={onClick}
     data-cy={dataCy}><slot /></button>
