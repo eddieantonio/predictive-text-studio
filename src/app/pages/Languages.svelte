@@ -15,10 +15,6 @@
       );
     },
     properties: {
-      name: "Kwakwala",
-      author: "Rae Anne",
-      dictionary_name: "Kwakwala",
-      copyright: "Rae Anne 2020",
       keyboard_image:
         "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg",
     },
@@ -46,24 +42,6 @@
     name: string;
   }
 
-  export let languages: LanguageProject[] = [
-    {
-      id: 1,
-      name: "Kwakwala",
-    },
-    {
-      id: 2,
-      name: "A",
-    },
-    {
-      id: 3,
-      name: "S",
-    },
-    {
-      id: 4,
-      name: "P",
-    },
-  ];
 
   /**
    * Handles the click when a content button (Information/Sources) is pressed
