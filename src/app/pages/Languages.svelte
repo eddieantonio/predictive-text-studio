@@ -40,9 +40,8 @@
     id: number;
     name: string;
   }
-  const keyboardImage = "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg";
-
-
+  const keyboardImage =
+    "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg";
 
   /**
    * Handles the click when a content button (Information/Sources) is pressed

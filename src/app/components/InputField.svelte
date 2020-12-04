@@ -12,6 +12,7 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
+  let inputValue: string = ""
 </script>
 
 <style>
@@ -65,13 +66,13 @@
     class="mt-s"
     type="text"
     id="input-{id}"
-    bind:value
+    bind:value={inputValue}
     {placeholder}
     data-cy={cyData} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
   {#if subtext !== ''}
-    <p class="input-field__subtext">{subtext}</p>
+<p class="input-field__subtext">{subtext}: {inputValue}</p>
   {/if}
 </div>
