@@ -11,6 +11,7 @@
   worker.onPackageCompileSuccess(
     Comlink.proxy((kmp: ArrayBuffer) => {
       downloadURL = createURL(kmp);
+      updateContinueStatus();
     })
   );
 
@@ -29,7 +30,7 @@
   }
 
   function updateContinueStatus() {
-    continueReady = languageStatus && fileStatus ? true : false;
+    continueReady = languageStatus && downloadURL !== "" ? true : false;
   }
 </script>
 
