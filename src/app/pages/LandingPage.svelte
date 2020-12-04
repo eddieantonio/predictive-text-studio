@@ -286,6 +286,8 @@
 <footer class="footer">
   <p class="footer__copyright">
     <small>
+      <a href="/privacy">Privacy Policy</a>
+      <br />
       © 2020
       <a
         href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">
