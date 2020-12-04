@@ -11,6 +11,8 @@
     if (inputValue.length > 0 && schema.language !== null) {
       errorMessage = "";
       worker.setProjectData({ languages: [{ name: "", id: inputValue }] });
+    } else if (inputValue.length == 0) {
+      errorMessage = "";
     } else {
       errorMessage = "Invalid BCP 47 Tag";
     }
