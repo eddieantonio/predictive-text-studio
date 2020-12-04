@@ -82,7 +82,9 @@
    *
    * @return {void}
    */
-  const handleDownload = (): void => {};
+  const handleDownload = (): void => {
+    console.log("Download Button Pressed");
+  };
 
   /**
    * Handles the click when the email language button is pressed.
@@ -91,7 +93,12 @@
    *
    * @return {void}
    */
-  const handleEmail = (): void => {};
+  const handleEmail = (): void => {
+    let emailSubject: String = `I am sharing my ${languageInformation.properties.name} KMP file`;
+    let emailBody: String = "downloadURL";
+    let mailToString = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+    window.open(mailToString);
+  };
 
   /**
    * Handles the click when the AirDrop language button is pressed. Should open AirDrop with a .kmp file.
@@ -99,7 +106,9 @@
    *
    * @return {void}
    */
-  const handleAirDrop = (): void => {};
+  const handleAirDrop = (): void => {
+    console.log("AirDrop Share Button Pressed");
+  };
 
   var isSharePopupOpen = false;
 
@@ -245,7 +254,7 @@
               <div class="share__container-button">
                 <Button
                   color="blue"
-                  onClick={handleDownload}
+                  onClick={handleEmail}
                   isFullWidth={true}
                   dataCy="languages-email-btn">
                   Email
@@ -254,7 +263,7 @@
               <div class="share__container-button">
                 <Button
                   color="blue"
-                  onClick={handleDownload}
+                  onClick={handleAirDrop}
                   isFullWidth={true}
                   dataCy="languages-airdrop-btn">
                   Air Drop
