@@ -3,9 +3,8 @@
   import * as bcp47 from "bcp-47";
   import worker from "../spawn-worker";
 
-  const TAG_INPUT_ID = "tag-input";
   let errorMessage: string = "";
-
+  
   function onInputValue(event: CustomEvent) {
     const inputValue = event.detail.value;
     const schema = bcp47.parse(inputValue);
@@ -20,7 +19,7 @@
 
 <InputField
   on:messageOnChange={onInputValue}
-  id={TAG_INPUT_ID}
+  id="tag-input"
   size="large"
   cyData="tag-input"
   label="Step 1: Enter your languages"
