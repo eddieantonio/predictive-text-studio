@@ -9,12 +9,11 @@
   export let size: string | undefined = "";
   export let cyData: string | undefined = "";
   export let id: string;
-  export let value: any;
   export let subtext: string = "";
   export let fullWidth: boolean = false;
   export let error: string = "";
   export let placeholder: string = "";
-
+  let inputValue: string = "";
   const dispatch = createEventDispatcher();
 
   function dispatchInputValue(event: Event) {
@@ -22,7 +21,7 @@
     const cleanId = target.id.split("-").pop();
     dispatch("message", {
       key: cleanId,
-      value: value,
+      value: inputValue,
     });
   }
 
@@ -31,7 +30,7 @@
     const cleanId = target.id.split("-").pop();
     dispatch("messageOnChange", {
       key: cleanId,
-      value: value,
+      value: inputValue,
     });
   }
 </script>
@@ -94,13 +93,13 @@
     id="input-{id}"
     {placeholder}
     data-cy={cyData}
-    bind:value
+    bind:value={inputValue}
     on:blur={dispatchInputValue}
     on:input={dispatchInputValueOnInput} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}
   {#if subtext !== ''}
-    <p class="input-field__subtext">{subtext}</p>
+    <p class="input-field__subtext">{subtext}: {inputValue}</p>
   {/if}
 </div>
