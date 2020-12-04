@@ -4,7 +4,7 @@
   import worker from "../spawn-worker";
 
   let errorMessage: string = "";
-  
+
   function onInputValue(event: CustomEvent) {
     const inputValue = event.detail.value;
     const schema = bcp47.parse(inputValue);

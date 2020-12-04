@@ -4,7 +4,6 @@
   import Button from "../components/Button.svelte";
   export let selectedButton: string = "information";
 
-
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
     get wordCount(): number {
