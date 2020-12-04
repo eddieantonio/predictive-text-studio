@@ -6,7 +6,6 @@
   import * as Comlink from "comlink";
   let downloadURL = "";
   let languageStatus: boolean = false;
-  let fileStatus: boolean = false;
   let continueReady: boolean = false;
   worker.onPackageCompileSuccess(
     Comlink.proxy((kmp: ArrayBuffer) => {
@@ -20,13 +19,13 @@
     return URL.createObjectURL(blob);
   }
 
+  function updateContinueStatus() {
+    continueReady = languageStatus && downloadURL !== "" ? true : false;
+  }
+
   function updateLanguageStatus(event: CustomEvent) {
     languageStatus = event.detail.status;
     updateContinueStatus();
-  }
-
-  function updateContinueStatus() {
-    continueReady = languageStatus && downloadURL !== "" ? true : false;
   }
 </script>
 
@@ -284,9 +283,7 @@
         class="block" />
     </a>
   </section>
-  <h1>{fileStatus}</h1>
-  <h2>{languageStatus}</h2>
-  <h3>{continueReady}</h3>
+
   <section id="get-started" class="quick-start">
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
