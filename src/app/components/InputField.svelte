@@ -25,6 +25,15 @@
       value: value,
     });
   }
+
+  function dispatchInputValueOnInput(event: Event) {
+    const target = event.target as HTMLTextAreaElement;
+    const cleanId = target.id.split("-").pop();
+    dispatch("messageOnChange", {
+      key: cleanId,
+      value: value,
+    });
+  }
 </script>
 
 <style>
@@ -86,7 +95,8 @@
     {placeholder}
     data-cy={cyData}
     bind:value
-    on:blur={dispatchInputValue} />
+    on:blur={dispatchInputValue}
+    on:input={dispatchInputValueOnInput} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}

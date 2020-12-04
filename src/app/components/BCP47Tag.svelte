@@ -12,9 +12,13 @@
   $: if (validTag) {
     worker.setProjectData({ languages: [{ name: "", id: tag }] });
   }
+  function onInputValue(event: CustomEvent) {
+    console.log(event.detail.value)
+  }
 </script>
 
 <InputField
+  on:messageOnChange={onInputValue}
   id={TAG_INPUT_ID}
   size="large"
   cyData="tag-input"
