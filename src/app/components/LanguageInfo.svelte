@@ -50,18 +50,15 @@
       on:message={onInputValue}
       label="Author or Organization"
       id="authorName"
-      value=""
-      subtext="Shortcode: raeanne" />
+      subtext="Shortcode" />
     <InputField
       label="Dictionary Name"
       id="dictionaryName"
-      value={properties.dictionary_name}
-      subtext="Model ID: raeanne.kwk.kwakwala" />
+      subtext="Model ID" />
     <InputField
       on:message={onInputValue}
       label="Copyright"
       id="copyright"
-      value=""
       subtext="" />
   </div>
   <div class="language__info-right">
