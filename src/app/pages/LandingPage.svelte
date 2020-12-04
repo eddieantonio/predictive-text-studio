@@ -6,6 +6,7 @@
   import * as Comlink from "comlink";
   let downloadURL = "";
   let languageStatus: boolean = false;
+  let fileStatus: boolean = false;
   worker.onPackageCompileSuccess(
     Comlink.proxy((kmp: ArrayBuffer) => {
       downloadURL = createURL(kmp);
@@ -19,6 +20,9 @@
 
   function updateLanguageStatus(event: CustomEvent) {
     languageStatus = event.detail.status;
+  }
+  function updateFileStatus(event: CustomEvent) {
+    fileStatus = event.detail.status;
   }
 </script>
 
@@ -268,7 +272,6 @@
         class="block" />
     </a>
   </section>
-
   <section id="get-started" class="quick-start">
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
@@ -278,7 +281,7 @@
 
       <fieldset class="quick-start__step">
         <legend> Step 2: Attach a word list </legend>
-        <Upload />
+      <Upload on:file={updateFileStatus}/>
         <DownloadKMP {downloadURL} />
       </fieldset>
 

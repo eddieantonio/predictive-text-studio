@@ -14,17 +14,17 @@
       errorMessage = "";
       worker.setProjectData({ languages: [{ name: "", id: inputValue }] });
       dispatch("langauge", {
-        status: true
+        status: true,
       });
     } else if (inputValue.length == 0) {
       errorMessage = "";
       dispatch("langauge", {
-        status: false
+        status: false,
       });
     } else {
       errorMessage = "Invalid BCP 47 Tag";
       dispatch("langauge", {
-        status: false
+        status: false,
       });
     }
   }
