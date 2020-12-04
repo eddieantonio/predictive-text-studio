@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
   import worker from "../spawn-worker";
   const UPLOAD_INPUT_ID = "upload-input";
 
@@ -12,7 +11,6 @@
   // However, as of right now, doing so on Chrome when dragging over nested element
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
   let dragEnterCounter = 0;
-  const dispatch = createEventDispatcher();
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -57,9 +55,6 @@
   const handleChange = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
-      dispatch("file", {
-        status: true,
-      });
       for (let file of input.files) {
         await worker.addDictionarySourceToProject(file.name, file);
       }

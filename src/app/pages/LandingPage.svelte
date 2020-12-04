@@ -24,10 +24,6 @@
     languageStatus = event.detail.status;
     updateContinueStatus();
   }
-  function updateFileStatus(event: CustomEvent) {
-    fileStatus = event.detail.status;
-    updateContinueStatus();
-  }
 
   function updateContinueStatus() {
     continueReady = languageStatus && downloadURL !== "" ? true : false;
@@ -300,7 +296,7 @@
 
       <fieldset class="quick-start__step">
         <legend> Step 2: Attach a word list </legend>
-        <Upload on:file={updateFileStatus}/>
+        <Upload/>
         <DownloadKMP {downloadURL} />
       </fieldset>
       <div
