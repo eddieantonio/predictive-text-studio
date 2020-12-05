@@ -212,6 +212,5 @@ test("retrieve the KMP package from the database", async (t) => {
   await storage.saveCompiledKMPAsArrayBuffer(kmp);
 
   const kmpRetrieved = await storage.fetchCompiledKMPFile();
-  const packageRetrieved = kmpRetrieved.package;
-  t.assert(packageRetrieved instanceof ArrayBuffer);
+  t.assert(kmpRetrieved instanceof ArrayBuffer);
 });

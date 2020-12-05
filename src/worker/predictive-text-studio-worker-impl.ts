@@ -1,8 +1,4 @@
-import {
-  KeyboardData,
-  KeyboardDataWithTime,
-  KMPPackageData,
-} from "./storage-models";
+import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel, readManualEntryData } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
@@ -156,7 +152,7 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
 
-  async getKMPPackage(): Promise<KMPPackageData> {
+  async getKMPPackage(): Promise<ArrayBuffer> {
     return this.storage.fetchCompiledKMPFile();
   }
 }

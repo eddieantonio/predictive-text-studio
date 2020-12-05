@@ -214,13 +214,13 @@ export default class Storage {
   /**
    * Retrieve the compiled KMP package from database
    */
-  async fetchCompiledKMPFile(): Promise<KMPPackageData> {
+  async fetchCompiledKMPFile(): Promise<ArrayBuffer> {
     const kmpFile = await this.db.KMPFileData.where(":id")
       .equals(PACKAGE_ID)
       .first();
     if (kmpFile == undefined) {
       throw new Error("No KMP file has been compiled");
     }
-    return kmpFile;
+    return kmpFile.package;
   }
 }
