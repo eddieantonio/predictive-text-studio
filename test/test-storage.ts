@@ -200,18 +200,18 @@ test("store the KMP package to database", async (t) => {
   const { db, storage } = t.context;
   // At first, nothing in the DB
   t.is(await db.KMPFileData.count(), 0);
-  const KMP = new ArrayBuffer(1);
-  await storage.saveCompiledKMPAsArrayBuffer(KMP);
+  const kmp = new ArrayBuffer(1);
+  await storage.saveCompiledKMPAsArrayBuffer(kmp);
   // Now there's one package info record in the DB!
   t.is(await db.KMPFileData.count(), 1);
 });
 
 test("retrieve the KMP package from the database", async (t) => {
   const { storage } = t.context;
-  const KMP = new ArrayBuffer(1);
-  await storage.saveCompiledKMPAsArrayBuffer(KMP);
+  const kmp = new ArrayBuffer(1);
+  await storage.saveCompiledKMPAsArrayBuffer(kmp);
 
-  const KMPRetrieved = await storage.fetchCompiledKMPFile();
-  const packageRetrieved = KMPRetrieved.package;
+  const kmpRetrieved = await storage.fetchCompiledKMPFile();
+  const packageRetrieved = kmpRetrieved.package;
   t.assert(packageRetrieved instanceof ArrayBuffer);
 });

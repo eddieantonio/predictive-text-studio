@@ -202,10 +202,10 @@ export default class Storage {
    * Save the KMP package once it compiled
    * @param KMPFile
    */
-  saveCompiledKMPAsArrayBuffer(KMPFile: ArrayBuffer): Promise<void> {
+  saveCompiledKMPAsArrayBuffer(kmpFile: ArrayBuffer): Promise<void> {
     return this.db.transaction("readwrite", this.db.KMPFileData, async () => {
       await this.db.KMPFileData.put({
-        package: KMPFile,
+        package: kmpFile,
         id: PACKAGE_ID,
       });
     });
@@ -215,12 +215,12 @@ export default class Storage {
    * Retrieve the compiled KMP package from database
    */
   async fetchCompiledKMPFile(): Promise<KMPPackageData> {
-    const KMPFile = await this.db.KMPFileData.where(":id")
+    const kmpFile = await this.db.KMPFileData.where(":id")
       .equals(PACKAGE_ID)
       .first();
-    if (KMPFile == undefined) {
+    if (kmpFile == undefined) {
       throw new Error("No KMP file has been compiled");
     }
-    return KMPFile;
+    return kmpFile;
   }
 }

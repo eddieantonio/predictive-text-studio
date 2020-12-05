@@ -2,7 +2,6 @@ import type { RelevantKmpOptions } from "./kmp-json-file";
 import type {
   DictionaryEntry,
   KeyboardDataWithTime,
-  KMPPackageData,
 } from "./types";
 
 /**
@@ -66,13 +65,7 @@ export interface PredictiveTextStudioWorker {
   getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
 
   /**
-   * Save the KMP package once it compiled
-   * @param KMPFile
-   */
-  saveKMPPackage(KMP: ArrayBuffer): Promise<void>;
-
-  /**
    * Retrieve the compiled KMP package from database
    */
-  getKMPPackage(): Promise<KMPPackageData>;
+  getKMPPackage(): Promise<ArrayBuffer>;
 }

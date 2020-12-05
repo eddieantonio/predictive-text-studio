@@ -81,8 +81,8 @@ export class PredictiveTextStudioWorkerImpl
         new Error("Cannot find any files in the IndexedDB")
       );
     } else {
-      const KMPArrayBuffer = await linkStorageToKmp(this.storage);
-      this.saveKMPPackage(KMPArrayBuffer);
+      const kmpArrayBuffer = await linkStorageToKmp(this.storage);
+      this.saveKMPPackage(kmpArrayBuffer);
       this._emitPackageCompileSuccess();
     }
   }
@@ -152,8 +152,8 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.updateProjectData(storedData);
   }
 
-  saveKMPPackage(KMP: ArrayBuffer): Promise<void> {
-    return this.storage.saveCompiledKMPAsArrayBuffer(KMP);
+  private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
+    return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
 
   async getKMPPackage(): Promise<KMPPackageData> {
