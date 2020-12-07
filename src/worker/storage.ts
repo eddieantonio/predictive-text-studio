@@ -4,9 +4,10 @@ import {
   StoredWordList,
   StoredProjectData,
   KeyboardDataWithTime,
+  KMPPackageData,
 } from "./storage-models";
 const DB_NAME = "dictionary_sources";
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
 
 /**
  * The key of the ONLY StoredPackageInfo record.
@@ -17,6 +18,7 @@ export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
   projectData: Dexie.Table<StoredProjectData, number>;
   keyboardData: Dexie.Table<KeyboardDataWithTime, number>;
+  KMPFileData: Dexie.Table<KMPPackageData, number>;
 
   constructor(options?: DexieOptions) {
     super(DB_NAME, options);
@@ -71,6 +73,15 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        */
       keyboardData: "++id, bcp47Tag, language, timestamp",
+      /**
+       * KMP keyboardData Table Scehma
+       * +------------------+
+       * | id (primary key) |
+       * +------------------+
+       * | package          |
+       * +------------------+
+       */
+      KMPFileData: "++id, package",
     });
 
     /* The assignments are not required by the runtime, however, they are
@@ -78,6 +89,7 @@ export class PredictiveTextStudioDexie extends Dexie {
     this.files = this.table("files");
     this.projectData = this.table("projectData");
     this.keyboardData = this.table("keyboardData");
+    this.KMPFileData = this.table("KMPFileData");
   }
 }
 
@@ -184,5 +196,31 @@ export default class Storage {
     return this.db.transaction("readwrite", this.db.keyboardData, async () => {
       await this.db.keyboardData.clear();
     });
+  }
+
+  /**
+   * Save the KMP package once it compiled
+   * @param KMPFile
+   */
+  saveCompiledKMPAsArrayBuffer(kmpFile: ArrayBuffer): Promise<void> {
+    return this.db.transaction("readwrite", this.db.KMPFileData, async () => {
+      await this.db.KMPFileData.put({
+        package: kmpFile,
+        id: PACKAGE_ID,
+      });
+    });
+  }
+
+  /**
+   * Retrieve the compiled KMP package from database
+   */
+  async fetchCompiledKMPFile(): Promise<ArrayBuffer> {
+    const kmpFile = await this.db.KMPFileData.where(":id")
+      .equals(PACKAGE_ID)
+      .first();
+    if (kmpFile == undefined) {
+      throw new Error("No KMP file has been compiled");
+    }
+    return kmpFile.package;
   }
 }

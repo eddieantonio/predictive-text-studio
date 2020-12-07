@@ -77,8 +77,9 @@ export class PredictiveTextStudioWorkerImpl
         new Error("Cannot find any files in the IndexedDB")
       );
     } else {
-      const kmpFile = await linkStorageToKmp(this.storage);
-      this._emitPackageCompileSuccess(kmpFile);
+      const kmpArrayBuffer = await linkStorageToKmp(this.storage);
+      this.saveKMPPackage(kmpArrayBuffer);
+      this._emitPackageCompileSuccess();
     }
   }
 
@@ -104,7 +105,7 @@ export class PredictiveTextStudioWorkerImpl
 
   private _emitPackageCompileStart: () => void = doNothing;
   private _emitPackageCompileError: (err: Error) => void = doNothing;
-  private _emitPackageCompileSuccess: (kmp: ArrayBuffer) => void = doNothing;
+  private _emitPackageCompileSuccess: () => void = doNothing;
 
   onPackageCompileStart(callback: () => void): void {
     this._emitPackageCompileStart = callback;
@@ -114,7 +115,7 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileError = callback;
   }
 
-  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void {
+  onPackageCompileSuccess(callback: () => void): void {
     this._emitPackageCompileSuccess = callback;
   }
 
@@ -145,5 +146,13 @@ export class PredictiveTextStudioWorkerImpl
       version: version,
     };
     return this.storage.updateProjectData(storedData);
+  }
+
+  private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
+    return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
+  }
+
+  async getKMPPackage(): Promise<ArrayBuffer> {
+    return this.storage.fetchCompiledKMPFile();
   }
 }
