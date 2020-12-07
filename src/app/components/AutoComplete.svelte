@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import worker from "../spawn-worker";
+  import { createEventDispatcher } from "svelte";
   import type { KeyboardDataWithTime } from "@common/types";
 
   enum keyboardKey {
@@ -20,7 +21,9 @@
   let show = false;
   // Index of focus element
   let index = -1;
-
+  // To store input text
+  let inputText: string = "";
+  const dispatch = createEventDispatcher();
   onMount(async () => {
     results = await worker.getDataFromStorage();
   });
@@ -32,6 +35,7 @@
       // Using regular expressing for search method
       const target = event.target as HTMLTextAreaElement;
       const regExp = new RegExp("^" + target.value.toUpperCase());
+      inputText = target.value;
       return regExp.test(element.language.toUpperCase());
     });
   }
@@ -44,6 +48,11 @@
   // Derived from https://github.com/rster2002/svelte-outside-click
   function clickOutside(node: HTMLUListElement, onEventFunction: Function) {
     const handleClick = (event: MouseEvent) => {
+      // If the language does not exist in Keyman database
+      dispatch("message", {
+        key: "languages",
+        value: [{ name: inputText, id: "" }],
+      });
       const path = event.composedPath();
       if (!path.includes(node)) {
         onEventFunction();
@@ -62,6 +71,10 @@
     show = false;
     selected = data.language;
     subtext = data.bcp47Tag;
+    dispatch("message", {
+      key: "languages",
+      value: [{ name: selected, id: subtext }],
+    });
   }
 
   const mod = (a: number, n: number) => {

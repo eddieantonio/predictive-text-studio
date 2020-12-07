@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   export let label: string | undefined;
   /**
    * Component size options
@@ -12,6 +13,17 @@
   export let subtext = "";
   export let error = "";
   export let placeholder = "";
+
+  const dispatch = createEventDispatcher();
+
+  function dispatchInputValue(event: Event) {
+    const target = event.target as HTMLTextAreaElement;
+    const cleanId = target.id.split("-").pop();
+    dispatch("message", {
+      key: cleanId,
+      value: value,
+    });
+  }
 </script>
 
 <style>
@@ -65,9 +77,10 @@
     class="mt-s"
     type="text"
     id="input-{id}"
-    bind:value
     {placeholder}
-    data-cy={cyData} />
+    data-cy={cyData}
+    bind:value
+    on:blur={dispatchInputValue} />
   {#if error !== ''}
     <p class:error>{error}</p>
   {/if}

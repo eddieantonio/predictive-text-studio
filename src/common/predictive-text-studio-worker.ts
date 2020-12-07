@@ -43,7 +43,7 @@ export interface PredictiveTextStudioWorker {
    * Register a callback that is called when the KMP package has succesfully
    * compiled.
    */
-  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void;
+  onPackageCompileSuccess(callback: () => void): void;
 
   /**
    * Sets optional and required metadata such as BCP-47, language name, author
@@ -60,4 +60,9 @@ export interface PredictiveTextStudioWorker {
    * Retrieving Keyman keyboard data from the IndexedDB storage
    */
   getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
+
+  /**
+   * Retrieve the compiled KMP package from database
+   */
+  getKMPPackage(): Promise<ArrayBuffer>;
 }
