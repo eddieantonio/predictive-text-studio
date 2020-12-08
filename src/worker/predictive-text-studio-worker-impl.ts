@@ -4,6 +4,7 @@ import { readExcel, readManualEntryData } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
+import { WordList } from "@common/types";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
 import { DictionaryEntry } from "@common/types";
 
@@ -65,6 +66,14 @@ export class PredictiveTextStudioWorkerImpl
     } else {
       this.fetchLanguageDataFromService();
     }
+  }
+
+  async readGoogleSheet(
+    name: string,
+    wordListObject: WordList
+  ): Promise<ArrayBuffer> {
+    this.storage.saveFile(name, wordListObject);
+    return await linkStorageToKmp(this.storage);
   }
 
   private async generateKMPFromStorage(): Promise<void> {

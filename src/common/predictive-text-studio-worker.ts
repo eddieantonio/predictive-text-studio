@@ -2,8 +2,11 @@ import type { RelevantKmpOptions } from "./kmp-json-file";
 import type { DictionaryEntry, KeyboardDataWithTime } from "./types";
 
 /**
- * This interface establishes a communication protocal between the UI thread and the worker thread
+ * This interface establishes a communication protocol between the UI thread and the worker thread
  */
+
+import type { WordList } from "@common/types";
+
 export interface PredictiveTextStudioWorker {
   /**
    * Update the valid BCP4-7 tag to worker, this will affect the kmp file
@@ -12,6 +15,12 @@ export interface PredictiveTextStudioWorker {
   updateBCP47Tag(bcp47Tag: string): Promise<void>;
 
   /**
+   * Save a google sheet into IndexedDB
+   */
+  readGoogleSheet(name: string, wordList: WordList): Promise<ArrayBuffer>;
+
+  /**
+   * Compile the lexical model using files in the IndexedDB
    * Take a dictionary source and store it.
    * @param name the dictionary source name — typically the uploaded filename.
    * @param contents the actual file itself

@@ -10,9 +10,10 @@
   export let cyData: string | undefined = "";
   export let id: string;
   export let value: any;
-  export let subtext = "";
-  export let error = "";
-  export let placeholder = "";
+  export let subtext: string = "";
+  export let fullWidth: boolean = false;
+  export let error: string = "";
+  export let placeholder: string = "";
 
   const dispatch = createEventDispatcher();
 
@@ -33,6 +34,10 @@
     font-size: var(--xs);
   }
 
+  .full-width {
+    width: 100%;
+  }
+
   input {
     display: block;
     font-family: var(--secondary-font), sans-serif;
@@ -40,6 +45,7 @@
     padding: 10px;
     border-radius: 10px;
     border-width: 1px;
+    width: 100%;
     border-color: var(--gray);
     border-style: solid;
   }
@@ -69,7 +75,7 @@
   }
 </style>
 
-<div class="input-field mt-s mb-m">
+<div class="input_field mt-s mb-m" class:full-width={fullWidth}>
   <label
     class="input-field__label--{size} mt-s"
     for="input-{id}">{label}</label>

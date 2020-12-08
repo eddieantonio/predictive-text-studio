@@ -4,7 +4,6 @@
   import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
   export let selectedButton: string = "information";
-  export let selectedLanguage: string = "Kwakwala";
 
   // Mock language data object - this would be read from localstorage/db
   export let languageInformation = {
@@ -45,25 +44,6 @@
     id: number;
     name: string;
   }
-
-  export let languages: LanguageProject[] = [
-    {
-      id: 1,
-      name: "Kwakwala",
-    },
-    {
-      id: 2,
-      name: "A",
-    },
-    {
-      id: 3,
-      name: "S",
-    },
-    {
-      id: 4,
-      name: "P",
-    },
-  ];
 
   /**
    * Handles the click when a content button (Information/Sources) is pressed

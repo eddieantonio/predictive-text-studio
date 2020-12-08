@@ -1,5 +1,6 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
+  import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import BCP47Tag from "../components/BCP47Tag.svelte";
   import DownloadKMP from "../components/DownloadKMP.svelte";
   import worker from "../spawn-worker";
@@ -280,7 +281,11 @@
       </fieldset>
 
       <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>
+      <fieldset class="quick-start__step">
+        <legend>Or Get Values from a Google Sheet</legend>
+      </fieldset>
     </form>
+    <GoogleSheetsInput />
   </section>
 </main>
 
