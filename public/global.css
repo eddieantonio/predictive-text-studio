@@ -7,14 +7,16 @@
   --orange: #f18407;
   --orange-light: #fbc88f;
   --gray: #888888;
+  --gray-secondary-text: #515154;
   --gray-hover: #c5c5c5;
+  --gray-disabled: #949494;
   --gray-light: #d6d6d6;
   --gray-highlight: #e0e0e0;
   --gray-dark: #454545;
   --lite-white: #f1f1f1;
   --white: #ffffff;
-  --primary-blue: #0099ff;
-  --dark-blue: #0876c0;
+  --primary-blue: #0077cc;
+  --dark-blue: #054b7a;
 
   --default-text-color: #000;
 
@@ -28,15 +30,15 @@
   --xxs: 0.75em;
   --xs: 0.875em;
   --s: 1em;
-  --m: 1.125em; 
+  --m: 1.125em;
   --l: 1.25em;
   --xl: 1.5em;
   --xxl: 2.5em;
 
   /* Spacing and border variables */
-  --sb-xxs: 0.3125rem;
-  --sb-xs: 0.625rem;
-  --sb-s: 0.9375rem;
+  --sb-xxs: .3125rem;
+  --sb-xs: .625rem;
+  --sb-s: .9375rem;
   --sb-m: 1.25rem;
   --sb-l: 1.5625rem;
   --sb-xl: 1.875rem;
@@ -49,11 +51,18 @@ body {
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--main-font), sans-serif;
 }
 
-pre, code, samp {
+pre,
+code,
+samp {
   font-family: var(--mono-font), monospace;
 }
 
@@ -132,8 +141,11 @@ a.button:focus {
 /**
  * Utility classes for margin top
  */
-.mt-s {
+.mt-xs {
   margin-top: 10px;
+}
+.mt-s {
+  margin-top: 14px;
 }
 .mt-m {
   margin-top: 20px;
@@ -166,4 +178,3 @@ a.button:focus {
 .mb-xxl {
   margin-bottom: 50px;
 }
-

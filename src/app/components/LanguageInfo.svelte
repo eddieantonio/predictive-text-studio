@@ -1,6 +1,15 @@
 <script lang="ts">
   import InputField from "./InputField.svelte";
+  import AutoComplete from "../components/AutoComplete.svelte";
+  import worker from "../spawn-worker";
   export let properties: any; // TODO: I am not sure what type to change it to from any
+  // Any is used here to store temporary dynamic object
+  let tempObj: any = {};
+
+  function updateMetadata(event: CustomEvent) {
+    tempObj[event.detail.key] = event.detail.value;
+    worker.setProjectData(tempObj);
+  }
 </script>
 
 <style>
@@ -36,15 +45,12 @@
 
 <div class="language__info">
   <div class="language__info-left">
+    <AutoComplete on:message={updateMetadata} label="Language" subtext="" />
     <InputField
-      label="Language"
-      id="language"
-      value={properties.name}
-      subtext="BCP49: kwk-latn" />
-    <InputField
+      on:message={updateMetadata}
       label="Author or Organization"
-      id="author"
-      value={properties.author}
+      id="authorName"
+      value=""
       subtext="Shortcode: raeanne" />
     <InputField
       label="Dictionary Name"
@@ -52,9 +58,10 @@
       value={properties.dictionary_name}
       subtext="Model ID: raeanne.kwk.kwakwala" />
     <InputField
+      on:message={updateMetadata}
       label="Copyright"
       id="copyright"
-      value={properties.copyright}
+      value=""
       subtext="" />
   </div>
   <div class="language__info-right">

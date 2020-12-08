@@ -12,8 +12,7 @@
   }
 
   .download-component__link--disabled {
-    color: var(--gray-medium-dark);
-    opacity: 25%;
+    color: var(--gray-disabled);
     pointer-events: none;
     text-decoration: none;
   }

@@ -1,16 +1,17 @@
 <script lang="ts">
-  // props
-  export let colorLeft: string = "blue"; // optional
-  export let colorRight: string = "grey"; // optional
-  export let isOutlined: boolean = false; // optional
-  export let hasDropShadow: boolean = false; // optional
-  export let size: string = "medium"; // optional
-  export let leftText: string;
-  export let rightText: string;
-  export let dataCyLeft: string;
-  export let dataCyRight: string;
-  export let onClickLeft: (ev: MouseEvent) => void;
-  export let onClickRight: (ev: MouseEvent) => void;
+  type ClickFnType = () => void;
+
+  interface BtnAttributes {
+    color: string;
+    size: string;
+    text: string;
+    isOutlined: boolean;
+    hasDropShadow: boolean;
+    dataCy: string;
+    handleClick: ClickFnType;
+  }
+
+  export let splitBtns: BtnAttributes[];
 </script>
 
 <style>
@@ -34,16 +35,12 @@
 </style>
 
 <div class="split-button-layout">
-  <button
-    class="button button--{colorLeft} button--{size}"
-    class:button--shadow={hasDropShadow}
-    class:button--outline={isOutlined}
-    on:click={onClickLeft}
-    data-cy={dataCyLeft}>{leftText}</button>
-  <button
-    class="button button--{colorRight} button--{size}"
-    class:button--shadow={hasDropShadow}
-    class:button--outline={isOutlined}
-    on:click={onClickRight}
-    data-cy={dataCyRight}>{rightText}</button>
+  {#each splitBtns as setting}
+    <button
+      class="button button--{setting.color} button--{setting.size}"
+      class:button--shadow={setting.hasDropShadow}
+      class:button--outline={setting.isOutlined}
+      on:click={setting.handleClick}
+      data-cy={setting.dataCy}>{setting.text}</button>
+  {/each}
 </div>

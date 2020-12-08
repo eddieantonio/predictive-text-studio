@@ -27,7 +27,6 @@
   }
 
   const handleDrop = async (event: DragEvent) => {
-    dragEnterCounter = 0;
     let fileList: File[] = [];
 
     if (event.dataTransfer == null) {
@@ -52,6 +51,10 @@
     dragEnterCounter--;
   };
 
+  const handleDragOver = () => {
+    dragEnterCounter = 0;
+  };
+
   const handleChange = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
@@ -72,7 +75,6 @@
     min-width: 200px;
     border: 3px dashed var(--gray-light);
     border-radius: 5px;
-
     line-height: 1.2;
   }
 
@@ -108,6 +110,7 @@
   on:drop|preventDefault={handleDrop}
   on:dragenter|preventDefault={handleDragEnter}
   on:dragleave|preventDefault={handleDragLeave}
+  on:dragover|preventDefault={handleDragOver}
   data-cy="upload-dropzone">
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
   <span>Drag and drop here</span>

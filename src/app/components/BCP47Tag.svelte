@@ -16,6 +16,9 @@
 
 <InputField
   id={TAG_INPUT_ID}
+  size="large"
+  cyData="tag-input"
+  label="Step 1: Enter your languages"
   bind:value={tag}
   bind:error
   placeholder={'Enter the BCP 47 Tag'} />

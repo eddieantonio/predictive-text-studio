@@ -8,7 +8,8 @@
   let downloadURL = "";
 
   worker.onPackageCompileSuccess(
-    Comlink.proxy((kmp: ArrayBuffer) => {
+    Comlink.proxy(async () => {
+      const kmp = await worker.getKMPPackage();
       downloadURL = createURL(kmp);
     })
   );
@@ -270,7 +271,6 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <legend> Step 1: Enter your language </legend>
         <BCP47Tag />
       </fieldset>
 
@@ -292,6 +292,8 @@
 <footer class="footer">
   <p class="footer__copyright">
     <small>
+      <a href="/privacy">Privacy Policy</a>
+      <br />
       © 2020
       <a
         href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">

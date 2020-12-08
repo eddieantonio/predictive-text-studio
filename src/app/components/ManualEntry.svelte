@@ -53,9 +53,7 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      const numOfWordStored = await worker.addManualEntryDictionaryToProject(
-        tableData
-      );
+      await worker.addManualEntryDictionaryToProject(tableData);
     }
   };
 </script>

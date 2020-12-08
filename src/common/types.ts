@@ -23,3 +23,18 @@ export interface DictionaryEntry {
   word: string;
   count?: number;
 }
+
+export interface KeyboardDataWithTime {
+  /**
+   * Store bcp47Tag as the primarykey
+   */
+  bcp47Tag: string;
+  /**
+   * Keyboard Language of the bcp47Tag
+   */
+  language: string;
+  /**
+   * Timestamp of last updated time
+   */
+  timestamp: Date;
+}
