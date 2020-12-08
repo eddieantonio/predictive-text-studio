@@ -6,10 +6,11 @@
   import * as Comlink from "comlink";
   import AirDrop from "../components/AirDrop.svelte";
   let downloadURL = "";
+  let kmp: ArrayBuffer;
 
   worker.onPackageCompileSuccess(
     Comlink.proxy(async () => {
-      const kmp = await worker.getKMPPackage();
+      kmp = await worker.getKMPPackage();
       downloadURL = createURL(kmp);
     })
   );
@@ -278,7 +279,7 @@
         <legend> Step 2: Attach a word list </legend>
         <Upload />
         <DownloadKMP {downloadURL} />
-      <AirDrop {downloadURL} />
+        <AirDrop {kmp} />
       </fieldset>
 
       <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>

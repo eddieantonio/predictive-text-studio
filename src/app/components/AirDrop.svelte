@@ -1,43 +1,40 @@
 <script lang="ts">
-  export let downloadURL: string;
+  export let kmp: ArrayBuffer;
 
-  let sharedLink = {
-    title: "KMP Package",
-    text: "Share KMP Package via AirDrop.",
-    url: downloadURL,
+  let kmpFile = new File([kmp], "Example.kmp", { type: "application/zip" });
+
+  let shareData = {
+    files: [kmpFile],
+    title: "Example KMP",
+    text: "Share KMP package via AirDrop",
   };
 
-  const shareKMPLink = () => {
-    if (navigator.canShare) {
+  const shareKMPFile = () => {
+    if (navigator.share) {
       navigator
-        .share(sharedLink)
+        .share(shareData)
         .then(() => alert("Share was successful."))
-        .catch((error) => alert("Sharing failed", error));
+        .catch((error) => console.log("Sharing failed", error));
     } else {
-      alert(`Your browser doesn't support AirDrop.`);
+      alert(`Your browser doesn't support sharing KMP package via AirDrop.`);
     }
   };
 </script>
 
 <style>
-  .airdrop-component--disabled {
-    cursor: not-allowed;
-  }
-
   .airdrop-component__img--disabled {
+    cursor: not-allowed;
     pointer-events: none;
   }
 </style>
 
-<div
-  class="airdrop-component"
-  class:airdrop-component--disabled={downloadURL == ''}>
+<div class="airdrop-component">
   <p>Share the KMP package via</p>
   <img
-    class:airdrop-component__img--disabled={downloadURL == ''}
+    class:airdrop-component__img--disabled={kmp == undefined}
     width="48px"
     height="48px"
     alt="AirDrop"
     src="/assets/AirDrop_logo.svg"
-    on:click={shareKMPLink} />
+    on:click={shareKMPFile} />
 </div>
