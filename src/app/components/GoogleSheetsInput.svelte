@@ -56,12 +56,10 @@
    *  appropriately. After a sign-in, the API is called.
    */
   function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-      getValuesFromSpreadSheet();
-    } else {
+    if (!isSignedIn) {
       signInToGoogleAPI();
-      getValuesFromSpreadSheet();
     }
+    getValuesFromSpreadSheet();
   }
 
   /**
@@ -97,7 +95,6 @@
   async function getValuesFromSpreadSheet() {
     const wordListObject = [];
     const spreadsheetId = getSpreadsheetId() || "";
-    console.log(error);
     if (error) {
       return;
     }
@@ -131,7 +128,6 @@
     error = null;
 
     worker.readGoogleSheet(spreadsheetId, wordListObject);
-    console.log("completed");
   }
 </script>
 
