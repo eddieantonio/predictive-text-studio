@@ -1,7 +1,3 @@
-<script>
-  import Button from "../components/Button.svelte";
-</script>
-
 <style>
   .privacy {
     width: 50%;

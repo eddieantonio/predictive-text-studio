@@ -1,7 +1,6 @@
 <script lang="ts">
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
-  import Sidebar from "../components/Sidebar.svelte";
   import Button from "../components/Button.svelte";
   export let selectedButton: string = "information";
 
@@ -40,11 +39,6 @@
     ],
   };
 
-  interface LanguageProject {
-    id: number;
-    name: string;
-  }
-
   /**
    * Handles the click when a content button (Information/Sources) is pressed
    * Changes the selected button variable
@@ -76,10 +70,6 @@
     width: 100%;
     height: 100%;
     font-family: Cabin, sans-serif;
-  }
-
-  .languages__sidebar {
-    min-width: 75px;
   }
 
   .languages__container {
