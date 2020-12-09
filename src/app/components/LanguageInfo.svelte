@@ -3,12 +3,10 @@
   import AutoComplete from "../components/AutoComplete.svelte";
   import worker from "../spawn-worker";
   export let properties: any; // TODO: I am not sure what type to change it to from any
-  // Any is used here to store temporary dynamic object
-  let tempObj: any = {};
 
   function updateMetadata(event: CustomEvent) {
-    tempObj[event.detail.key] = event.detail.value;
-    worker.setProjectData(tempObj);
+    let { key, value } = event.detail;
+    worker.setProjectData({ [key]: value });
   }
 </script>
 
