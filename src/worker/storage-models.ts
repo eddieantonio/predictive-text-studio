@@ -62,7 +62,7 @@ export interface StoredProjectData {
 }
 
 export interface KeyboardData {
-  /**
+  /*
    * Store bcp47Tag as the primarykey
    */
   bcp47Tag: string;

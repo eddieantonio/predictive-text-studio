@@ -140,8 +140,13 @@ export default class Storage {
    */
   updateProjectData(metadata: { [key: string]: string }): Promise<void> {
     return this.db.transaction("readwrite", this.db.projectData, async () => {
-      const existingMetadata = await this.db.projectData.get(PACKAGE_ID);
-      const updatedMetadata = Object.assign(existingMetadata, metadata);
+      const existingMetadata:
+        | StoredProjectData
+        | undefined = await this.db.projectData.get(PACKAGE_ID);
+      const updatedMetadata = Object.assign(
+        existingMetadata || createInitialProjectData(),
+        metadata
+      );
       await this.db.projectData.put(updatedMetadata);
     });
   }
@@ -217,4 +222,18 @@ export default class Storage {
     }
     return kmpFile.package;
   }
+}
+
+function createInitialProjectData(): StoredProjectData {
+  return {
+    id: PACKAGE_ID,
+
+    authorName: "Unknown Author",
+
+    // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
+    // See: https://www.w3.org/International/questions/qa-no-language#undetermined
+    // See: https://tools.ietf.org/html/bcp47#section-3.4.1
+    bcp47Tag: "",
+    langName: "Unknown Language",
+  };
 }
