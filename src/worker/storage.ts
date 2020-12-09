@@ -140,15 +140,9 @@ export default class Storage {
    */
   updateProjectData(metadata: { [key: string]: string }): Promise<void> {
     return this.db.transaction("readwrite", this.db.projectData, async () => {
-      await this.db.projectData.put({
-        langName: metadata.langName,
-        bcp47Tag: metadata.bcp47Tag,
-        authorName: metadata.authorName,
-        modelID: metadata.modelID,
-        copyright: metadata.copyright,
-        version: metadata.version,
-        id: PACKAGE_ID,
-      });
+      const existingMetadata = await this.db.projectData.get(PACKAGE_ID);
+      const updatedMetadata = Object.assign(existingMetadata, metadata);
+      await this.db.projectData.put(updatedMetadata);
     });
   }
 
