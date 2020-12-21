@@ -1,7 +1,3 @@
-<script>
-  import Button from "../components/Button.svelte";
-</script>
-
 <style>
   .privacy {
     width: 50%;
@@ -28,11 +24,14 @@
       <a href="/" class="button button--blue">Back</a>
     </nav>
     <h2>Predictive Text Studio Privacy Policy</h2>
-    <p><strong>Effective as of:</strong> 11/12/2020</p>
+    <p>
+      <strong>Effective as of:</strong>
+      <time datetime="2020-12-08">December 8, 2020</time>
+    </p>
     <h3>Introduction</h3>
     <p>
-      These Privacy Policy (“Privacy Policy”) apply to the use of the website
-      and products provided by Predictive Text Stuio (hereinafter also referred
+      This Privacy Policy (“Privacy Policy”) applies to the use of the website
+      and products provided by Predictive Text Studio (hereinafter also referred
       as “we” or “us”).
     </p>
     <p>
@@ -138,24 +137,26 @@
       <a
         href="mailto:easantos+ptstudio@ualberta.ca">easantos+ptstudio@ualberta.ca</a>.
     </p>
-    <p>
-      a) You have the right to request a copy of the personal information we
-      process about you and to have any inaccuracies corrected.
-    </p>
-    <p>
-      b) You can ask for supplying, correcting or deleting personal information
-      held about you.
-    </p>
-    <p>
-      c) You can ask us to restrict, stop processing, or to delete your personal
-      data.
-    </p>
-    <p>d) You can withdraw your consent for data processing.</p>
-    <p>
-      e) Obtain a copy of your personal data, which you can use with another
-      service provider.
-    </p>
-    <p>f) Make a complaint to a Supervisory Authority.</p>
+    <ol type="a">
+      <li>
+        You have the right to request a copy of the personal information we
+        process about you and to have any inaccuracies corrected.
+      </li>
+      <li>
+        You can ask for supplying, correcting or deleting personal information
+        held about you.
+      </li>
+      <li>
+        You can ask us to restrict, stop processing, or to delete your personal
+        data.
+      </li>
+      <li>You can withdraw your consent for data processing.</li>
+      <li>
+        Obtain a copy of your personal data, which you can use with another
+        service provider.
+      </li>
+      <li>Make a complaint to a Supervisory Authority.</li>
+    </ol>
     <h3>Changes to this privacy policy</h3>
     <p>
       This Privacy Policy may be updated from time to time. We encourage you to

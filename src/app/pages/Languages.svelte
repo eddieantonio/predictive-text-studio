@@ -35,11 +35,6 @@
     ],
   };
 
-  interface LanguageProject {
-    id: number;
-    name: string;
-  }
-
   /**
    * Handles the click when a content button (Information/Sources) is pressed
    * Changes the selected button variable
@@ -71,10 +66,6 @@
     width: 100%;
     height: 100%;
     font-family: Cabin, sans-serif;
-  }
-
-  .languages__sidebar {
-    min-width: 75px;
   }
 
   .languages__container {

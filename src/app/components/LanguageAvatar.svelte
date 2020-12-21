@@ -16,16 +16,6 @@
   function getLanguageShorthand(): string {
     return name.substring(0, 1);
   }
-
-  /**
-   * Handles the click when a language is selected from the sidebar.
-   * Should change the selected language variable and change content in the Languages component.
-   * TODO: Replace stub
-   *
-   * @param {string} languageName - A the name of the language selected.
-   * @return {void}
-   */
-  const handleClick = (languageName: string): void => {};
 </script>
 
 <style>
@@ -59,11 +49,4 @@
   }
 </style>
 
-<div
-  class={className}
-  class:selected
-  on:click={() => {
-    handleClick(name);
-  }}>
-  {getLanguageShorthand()}
-</div>
+<div class={className} class:selected>{getLanguageShorthand()}</div>

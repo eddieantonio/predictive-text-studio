@@ -2,7 +2,6 @@
   import worker from "../spawn-worker";
 
   import InputField from "./InputField.svelte";
-  import Button from "./Button.svelte";
 
   var error = null;
   let googleSheetsURL = "";
@@ -65,7 +64,7 @@
   /**
    *  Sign in the user upon button click.
    */
-  function signInToGoogleAPI(event) {
+  function signInToGoogleAPI() {
     gapi.auth2.getAuthInstance().signIn();
   }
 
