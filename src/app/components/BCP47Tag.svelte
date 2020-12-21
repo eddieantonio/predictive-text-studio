@@ -5,7 +5,7 @@
 
   let errorMessage: string = "";
 
-  function onInputValue(event: CustomEvent) {
+  function validateAndSetLanguage(event: CustomEvent) {
     const inputValue = event.detail.value;
     const schema = bcp47.parse(inputValue);
     if (inputValue.length > 0 && schema.language !== null) {
@@ -20,7 +20,7 @@
 </script>
 
 <InputField
-  on:messageOnChange={onInputValue}
+  on:keytyped={validateAndSetLanguage}
   id="tag-input"
   size="large"
   cyData="tag-input"

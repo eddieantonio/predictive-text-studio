@@ -28,7 +28,7 @@
   function dispatchInputValueOnInput(event: Event) {
     const target = event.target as HTMLTextAreaElement;
     const cleanId = target.id.split("-").pop();
-    dispatch("messageOnChange", {
+    dispatch("keytyped", {
       key: cleanId,
       value: inputValue,
     });
