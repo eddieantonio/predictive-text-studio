@@ -43,7 +43,7 @@ How the branches work
 
 The [default branch][] is called **production**. Any code here is
 automatically tested, built, and deployed on the website (currently,
-<https://predictive-text-studio.eddieantonio.vercel.app/>).
+<https://predictivetext.studio/>).
 
 **Do not make changes directly to production!**
 
