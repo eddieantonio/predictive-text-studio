@@ -220,7 +220,7 @@
           Predictive Text Studio
         </h1>
         <p class="masthead__branding">
-          designed for 
+          designed for
           <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
         </p>
         <p class="masthead__description">
@@ -294,7 +294,7 @@
     <small>
       <a href="/privacy">Privacy Policy</a>
       <br />
-      © 2020
+      © 2020–{new Date().getFullYear()}
       <a
         href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">
         Eddie Antonio Santos and contributors</a>.</small>
