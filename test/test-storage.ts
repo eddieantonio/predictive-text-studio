@@ -161,6 +161,34 @@ test("retrieve project data from the database", async (t) => {
   t.is(version, "1.0.0");
 });
 
+test("update project data multiple times ", async (t) => {
+  const { storage } = t.context;
+
+  const languageName = "Makah";
+  const languageCode = "myh";
+  const author = "Eddie Antonio Santos";
+
+  /* Store the initial data */
+  await storage.updateProjectData({
+    langName: languageName,
+    bcp47Tag: languageCode,
+  });
+
+  const initialProject = await storage.fetchProjectData();
+  t.is(initialProject.langName, languageName);
+  t.is(initialProject.bcp47Tag, languageCode);
+  t.not(initialProject.authorName, author);
+
+  /* Update the data, but JUST the author! */
+  await storage.updateProjectData({ authorName: author });
+
+  const changedProject = await storage.fetchProjectData();
+  t.notDeepEqual(changedProject, initialProject);
+  t.is(changedProject.langName, initialProject.langName);
+  t.is(changedProject.bcp47Tag, initialProject.bcp47Tag);
+  t.is(changedProject.authorName, author);
+});
+
 test("save Keyman keyboard data with addKeyboardData", async (t) => {
   const { db, storage } = t.context;
 
