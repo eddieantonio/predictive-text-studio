@@ -6,17 +6,28 @@
   import worker from "../spawn-worker";
   import * as Comlink from "comlink";
   let downloadURL = "";
-
+  let languageStatus: boolean = false;
+  let continueReady: boolean = false;
   worker.onPackageCompileSuccess(
     Comlink.proxy(async () => {
       const kmp = await worker.getKMPPackage();
       downloadURL = createURL(kmp);
+      updateContinueStatus();
     })
   );
 
   function createURL(kmpFile: ArrayBuffer): string {
     const blob = new Blob([kmpFile], { type: "application/octet-stream" });
     return URL.createObjectURL(blob);
+  }
+
+  function updateContinueStatus() {
+    continueReady = languageStatus && downloadURL !== "" ? true : false;
+  }
+
+  function updateLanguageStatus(event: CustomEvent) {
+    languageStatus = event.detail.status;
+    updateContinueStatus();
   }
 </script>
 
@@ -159,9 +170,17 @@
     line-height: 1.5;
   }
 
-  .quick-start__submit {
+  .quick-start__submit-button {
     margin: 2rem 0;
     width: 100%;
+  }
+
+  .quick-start__submit-button--disabled {
+    background: var(--gray-disabled);
+    pointer-events: none;
+  }
+  .quick-start__submit-wrapper--disabled {
+    cursor: not-allowed;
   }
 
   .footer {
@@ -271,21 +290,30 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <BCP47Tag />
+        <BCP47Tag on:langauge={updateLanguageStatus} />
       </fieldset>
 
       <fieldset class="quick-start__step">
         <legend> Step 2: Attach a word list </legend>
-        <Upload />
+        <Upload/>
         <DownloadKMP {downloadURL} />
       </fieldset>
 
-      <button class="button button--primary button--shadow quick-start__submit" type="submit"> Upload </button>
       <fieldset class="quick-start__step">
         <legend>Or Get Values from a Google Sheet</legend>
       </fieldset>
+      <GoogleSheetsInput />
+      <div
+      class="quick-start__submit-wrapper"
+      class:quick-start__submit-wrapper--disabled={!continueReady}> 
+        <button
+        class="button button--primary button--shadow quick-start__submit-button" 
+        class:quick-start__submit-button--disabled={!continueReady}
+        type="submit"
+        data-cy="landing-page-continue-button"> Continue 
+        </button>
+      </div>
     </form>
-    <GoogleSheetsInput />
   </section>
 </main>
 

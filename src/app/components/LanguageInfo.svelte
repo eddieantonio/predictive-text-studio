@@ -6,7 +6,7 @@
   // Any is used here to store temporary dynamic object
   let tempObj: any = {};
 
-  function updateMetadata(event: CustomEvent) {
+  function onInputValue(event: CustomEvent) {
     tempObj[event.detail.key] = event.detail.value;
     worker.setProjectData(tempObj);
   }
@@ -45,9 +45,9 @@
 
 <div class="language__info">
   <div class="language__info-left">
-    <AutoComplete on:message={updateMetadata} label="Language" subtext="" />
+    <AutoComplete on:message={onInputValue} label="Language" subtext="" />
     <InputField
-      on:message={updateMetadata}
+      on:message={onInputValue}
       label="Author or Organization"
       id="authorName"
       subtext="Shortcode" />
@@ -56,7 +56,7 @@
       id="dictionaryName"
       subtext="Model ID" />
     <InputField
-      on:message={updateMetadata}
+      on:message={onInputValue}
       label="Copyright"
       id="copyright"
       subtext="" />

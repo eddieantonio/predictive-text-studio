@@ -13,6 +13,7 @@
   export let fullWidth: boolean = false;
   export let error: string = "";
   export let placeholder: string = "";
+
   let inputValue: string = "";
   const dispatch = createEventDispatcher();
 
