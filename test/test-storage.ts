@@ -167,6 +167,7 @@ test("update project data multiple times ", async (t) => {
   const languageName = "Makah";
   const languageCode = "myh";
   const author = "Eddie Antonio Santos";
+  const copyright = "2018 National Research Council Canada";
 
   /* Store the initial data */
   await storage.updateProjectData({
@@ -178,6 +179,7 @@ test("update project data multiple times ", async (t) => {
   t.is(initialProject.langName, languageName);
   t.is(initialProject.bcp47Tag, languageCode);
   t.not(initialProject.authorName, author);
+  t.not(initialProject.copyright, copyright);
 
   /* Update the data, but JUST the author! */
   await storage.updateProjectData({ authorName: author });
@@ -186,7 +188,21 @@ test("update project data multiple times ", async (t) => {
   t.notDeepEqual(changedProject, initialProject);
   t.is(changedProject.langName, initialProject.langName);
   t.is(changedProject.bcp47Tag, initialProject.bcp47Tag);
+  t.not(changedProject.authorName, initialProject.authorName);
   t.is(changedProject.authorName, author);
+  t.not(changedProject.copyright, copyright);
+
+  /* Now update the copyright */
+  await storage.updateProjectData({ copyright: copyright });
+
+  /* The final update should have all fields updated. */
+  const finalProject = await storage.fetchProjectData();
+  t.notDeepEqual(finalProject, changedProject);
+  t.is(finalProject.langName, changedProject.langName);
+  t.is(finalProject.bcp47Tag, changedProject.bcp47Tag);
+  t.is(finalProject.authorName, changedProject.authorName);
+  t.not(finalProject.copyright, changedProject.copyright);
+  t.is(finalProject.copyright, copyright);
 });
 
 test("save Keyman keyboard data with addKeyboardData", async (t) => {
