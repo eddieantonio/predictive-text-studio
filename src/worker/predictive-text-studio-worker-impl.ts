@@ -9,15 +9,6 @@ import { RelevantKmpOptions } from "@common/kmp-json-file";
 import { DictionaryEntry } from "@common/types";
 
 /**
- * The default model version. 1.0.0 also happens to be the minimum model
- * version that the Keyman team will publish.
- */
-const defaultVersion = "1.0.0";
-/**
- * The default copyright.
- */
-const defaultCopyright = "";
-/**
  * expiryThreshold is used to decide if keyboard data is too old
  * currently it is set to seven days in millisecond
  */
@@ -131,30 +122,15 @@ export class PredictiveTextStudioWorkerImpl
   setProjectData(
     metadata: Partial<Readonly<RelevantKmpOptions>>
   ): Promise<void> {
-    let langName = "";
-    let bcp47Tag = "";
-    if (metadata.languages == undefined) {
-      langName = "";
-      bcp47Tag = "";
-    } else {
-      langName = metadata.languages[0].name;
-      bcp47Tag = metadata.languages[0].id;
+    if (metadata.languages) {
+      const langName = metadata.languages[0].name;
+      const bcp47Tag = metadata.languages[0].id;
+      return this.storage.updateProjectData({ langName, bcp47Tag });
     }
 
-    const authorName = metadata.authorName || "UnknownAuthor";
-    const modelID = metadata.modelID || `${authorName}.${bcp47Tag}.${langName}`;
-    const copyright = metadata.copyright || defaultCopyright;
-    const version = metadata.version || defaultVersion;
-
-    const storedData = {
-      langName: langName,
-      bcp47Tag: bcp47Tag,
-      authorName: authorName,
-      modelID: modelID,
-      copyright: copyright,
-      version: version,
-    };
-    return this.storage.updateProjectData(storedData);
+    return this.storage.updateProjectData(
+      metadata as { [key: string]: string }
+    );
   }
 
   private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
