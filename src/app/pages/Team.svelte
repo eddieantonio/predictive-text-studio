@@ -36,6 +36,6 @@
 
   <section class="quick-start" id="get-started">
     <h2>Team Members</h2>
-    <TeamMemberProfile githubUserName={'ChrisChrisLoLo'}/>
+    <TeamMemberProfile githubUserName={'ChrisChrisLoLo'} />
   </section>
 </main>

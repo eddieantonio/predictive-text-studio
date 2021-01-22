@@ -13,5 +13,5 @@
   <Route path="/" component={LandingPage} />
   <Route path="languages" component={Languages} />
   <Route path="privacy" component={Privacy} />
-  <Route path="team" component={Team}/>
+  <Route path="team" component={Team} />
 </Router>
