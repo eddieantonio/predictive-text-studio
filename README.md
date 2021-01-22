@@ -12,5 +12,6 @@ setup your development environment.
 License
 -------
 
-Copyright © 2020 Eddie Antonio Santos. Licensed under the ISC License.
-See `LICENSE` for details.
+Copyright © 2020, 2021 National Research Council Canada/Conseil national
+de recherches Canada. Licensed under the MIT License. See `LICENSE` for
+details.
