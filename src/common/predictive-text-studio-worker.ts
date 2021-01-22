@@ -66,12 +66,6 @@ export interface PredictiveTextStudioWorker {
    */
   setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): void;
 
-  /**
-   * Updates the current project's BCP-47 tag.
-   * @deprecated
-   */
-  updateBCP47Tag(bcp47Tag: string): Promise<void>;
-
   ///////////////////////////////// Caches /////////////////////////////////
 
   /**

@@ -27,11 +27,6 @@ export class PredictiveTextStudioWorkerImpl
     this.getLanguageData();
   }
 
-  async updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    await this.storage.updateBCP47Tag(bcp47Tag);
-    return this.generateKMPFromStorage();
-  }
-
   async fetchLanguageDataFromService(): Promise<void> {
     this.keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
       languages.forEach(async (data) => {
