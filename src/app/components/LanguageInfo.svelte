@@ -2,7 +2,6 @@
   import InputField from "./InputField.svelte";
   import AutoComplete from "../components/AutoComplete.svelte";
   import worker from "../spawn-worker";
-  export let properties: any; // TODO: I am not sure what type to change it to from any
 
   function updateMetadata(event: CustomEvent) {
     let { key, value } = event.detail;
@@ -69,8 +68,6 @@
 
   <div class="language__info-right">
     <p class="label">Keyboard Preview</p>
-    <img
-      src="assets/iOS-10-Keyboard.jpg"
-      alt="An iOS keyboard in english" />
+    <img src="assets/iOS-10-Keyboard.jpg" alt="An iOS keyboard in english" />
   </div>
 </div>

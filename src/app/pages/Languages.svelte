@@ -12,7 +12,6 @@
         0
       );
     },
-    properties: {},
     sources: [
       {
         name: "dictionary.xlsx",
@@ -153,7 +152,7 @@
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo properties={languageInformation.properties} />
+          <LanguageInfo />
         {:else if selectedButton === 'sources'}
           <LanguageSources sources={languageInformation.sources} />
         {/if}
