@@ -3,22 +3,27 @@
   import * as bcp47 from "bcp-47";
   import worker from "../spawn-worker";
 
-  const TAG_INPUT_ID = "tag-input";
+  let errorMessage: string = "";
 
-  $: tag = "";
-  $: schema = bcp47.parse(tag);
-  $: validTag = tag === "" || (tag.length > 0 && schema.language !== null);
-  $: error = validTag ? "" : "Invalid BCP 47 Tag";
-  $: if (validTag) {
-    worker.setProjectData({ languages: [{ name: "", id: tag }] });
+  function validateAndSetLanguage(event: CustomEvent) {
+    const inputValue = event.detail.value;
+    const schema = bcp47.parse(inputValue);
+    if (inputValue.length > 0 && schema.language !== null) {
+      errorMessage = "";
+      worker.setProjectData({ languages: [{ name: "", id: inputValue }] });
+    } else if (inputValue.length == 0) {
+      errorMessage = "";
+    } else {
+      errorMessage = "Invalid BCP 47 Tag";
+    }
   }
 </script>
 
 <InputField
-  id={TAG_INPUT_ID}
+  on:keytyped={validateAndSetLanguage}
+  id="tag-input"
   size="large"
   cyData="tag-input"
   label="Step 1: Enter your languages"
-  bind:value={tag}
-  bind:error
+  error={errorMessage}
   placeholder={'Enter the BCP 47 Tag'} />
