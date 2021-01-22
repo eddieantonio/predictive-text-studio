@@ -1,20 +1,24 @@
 <script lang="ts">
   import TeamMemberProfile from "../components/TeamMemberProfile.svelte";
 
-  const coreMaintainerGithubUserNames: string[] = ['ChrisChrisLoLo']
-  const teamMemberGithubUserNames: string[] = ['ChrisChrisLoLo','ChrisChrisLoLo','ChrisChrisLoLo','ChrisChrisLoLo','ChrisChrisLoLo']
-
+  const coreMaintainerGithubUserNames: string[] = ["ChrisChrisLoLo"];
+  const teamMemberGithubUserNames: string[] = [
+    "ChrisChrisLoLo",
+    "ChrisChrisLoLo",
+    "ChrisChrisLoLo",
+    "ChrisChrisLoLo",
+    "ChrisChrisLoLo",
+  ];
 </script>
 
 <style>
-
-  .team-page{
+  .team-page {
     width: 75%;
     margin: auto;
     margin-top: 20px;
   }
 
-  .profile-container{
+  .profile-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -39,7 +43,7 @@
       <h2>Core Maintainers</h2>
       <div class="profile-container">
         {#each coreMaintainerGithubUserNames as githubUserName}
-          <TeamMemberProfile githubUserName={githubUserName} />
+          <TeamMemberProfile {githubUserName} />
         {/each}
       </div>
     </section>
@@ -48,7 +52,7 @@
       <h2>Team Members</h2>
       <div class="profile-container">
         {#each teamMemberGithubUserNames as githubUserName}
-          <TeamMemberProfile githubUserName={githubUserName} />
+          <TeamMemberProfile {githubUserName} />
         {/each}
       </div>
     </section>
