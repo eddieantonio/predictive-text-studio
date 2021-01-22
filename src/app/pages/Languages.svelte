@@ -12,10 +12,7 @@
         0
       );
     },
-    properties: {
-      keyboard_image:
-        "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg",
-    },
+    properties: {},
     sources: [
       {
         name: "dictionary.xlsx",
