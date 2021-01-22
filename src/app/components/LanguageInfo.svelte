@@ -70,7 +70,7 @@
   <div class="language__info-right">
     <p class="label">Keyboard Preview</p>
     <img
-      src="https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg"
+      src="assets/iOS-10-Keyboard.jpg"
       alt="An iOS keyboard in english" />
   </div>
 </div>
