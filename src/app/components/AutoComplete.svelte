@@ -11,7 +11,7 @@
   }
   export let label = "";
   export let subtext = "";
-  export let dataCy = "autocomplete-label";
+  export let cyData = "autocomplete-label";
 
   // To store filtered array
   let filtered: KeyboardDataWithTime[] = [];
@@ -172,7 +172,7 @@
     value={selected}
     type="text"
     on:input={filterAutocompleteSuggestions}
-    data-cy={dataCy} />
+    data-cy={cyData} />
   {#if show}
     <ul
       class="autocomplete__suggestion-list"
