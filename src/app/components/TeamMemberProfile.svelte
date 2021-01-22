@@ -14,7 +14,6 @@
   onMount(async () => {
     const res = await fetch(`https://api.github.com/users/${githubUserName}`);
     const githubUserJSON = await res.json();
-    console.log(res, githubUserJSON);
     githubUser = {
       avatarURL: githubUserJSON.avatar_url,
       login: githubUserJSON.login,
@@ -25,29 +24,26 @@
 </script>
 
 <style>
-  .split-button-layout {
+  .github-user-layout {
     display: flex;
-    padding: 3%;
-  }
-  button {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    padding-left: 3%;
+    padding-right: 3%;
     width: 160px;
-    margin: 0;
-    border-radius: 0;
   }
-  button:first-child {
-    border-top-left-radius: 0.625em;
-    border-bottom-left-radius: 0.625em;
-  }
-  button:last-child {
-    border-top-right-radius: 0.625em;
-    border-bottom-right-radius: 0.625em;
+  img {
+    width: 160px;
+    border-radius: 2%;
   }
 </style>
 
-<div class="split-button-layout">
+<div class="github-user-layout">
   {#if githubUser}
-    <p>{githubUser.name}</p>
     <img src={githubUser.avatarURL} alt={`${githubUser.name}'s avatar`} />
-    <p>@<a href={githubUser.htmlURL}>{githubUser.login}</a></p>
+    <p>{githubUser.name}</p>
+    <a href={githubUser.htmlURL}>@{githubUser.login}</a>
   {/if}
 </div>
