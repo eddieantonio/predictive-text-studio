@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   import InputField from "./InputField.svelte";
   import AutoComplete from "../components/AutoComplete.svelte";
@@ -14,7 +14,7 @@
 
     authorName = storedProjectData.authorName;
     languageName = storedProjectData.langName;
-    copyright = storedProjectData.copyright;
+    copyright = storedProjectData.copyright || "";
   });
 
   function updateMetadata(event: CustomEvent) {
