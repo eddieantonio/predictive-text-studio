@@ -67,7 +67,6 @@
     "exceljs": "~3.5.0",
     "googleapis": "^61.0.0",
     "jszip": "^3.5.0",
-    "svelte-awesome": "^2.3.0",
     "svelte-routing": "^1.4.2",
     "tslib": "^2.0.1"
   },

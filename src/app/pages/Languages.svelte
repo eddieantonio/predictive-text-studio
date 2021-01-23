@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Icon from "svelte-awesome";
-  import { angleLeft } from "svelte-awesome/icons";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
@@ -116,12 +114,6 @@
   .languages__container--content {
     margin-top: 25px;
   }
-
-  a.button {
-    display: flex;
-    align-items: center;
-    width: fit-content;
-  }
 </style>
 
 <!--
@@ -132,8 +124,10 @@
 <main>
   <div class="languages">
     <div class="languages__container">
-      <a href="/" class="button button--grey button--outline mt-xxl">
-        <Icon data={angleLeft} scale="1.5" />Go back
+      <a href="/">
+        <span class="button button--grey button--outline mt-xxl">
+          Go back to main page
+        </span>
       </a>
       <header class="languages__container--header">
         <div>
