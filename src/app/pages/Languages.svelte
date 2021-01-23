@@ -120,6 +120,11 @@
 <main>
   <div class="languages">
     <div class="languages__container">
+      <a href="/">
+        <span class="button button--grey button--outline mt-xxl">
+          Go back to main page
+        </span>
+      </a>
       <header class="languages__container--header">
         <div>
           <h1>Predictive Text Studio</h1>
