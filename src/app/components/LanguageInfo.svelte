@@ -3,12 +3,10 @@
   import AutoComplete from "../components/AutoComplete.svelte";
   import worker from "../spawn-worker";
   export let properties: any; // TODO: I am not sure what type to change it to from any
-  // Any is used here to store temporary dynamic object
-  let tempObj: any = {};
 
-  function onInputValue(event: CustomEvent) {
-    tempObj[event.detail.key] = event.detail.value;
-    worker.setProjectData(tempObj);
+  function updateMetadata(event: CustomEvent) {
+    let { key, value } = event.detail;
+    worker.setProjectData({ [key]: value });
   }
 </script>
 
@@ -45,22 +43,31 @@
 
 <div class="language__info">
   <div class="language__info-left">
-    <AutoComplete on:message={onInputValue} label="Language" subtext="" />
+
+    <AutoComplete
+      label="Language"
+      subtext=""
+      cyData="input-language-name"
+      on:message={updateMetadata} />
     <InputField
-      on:message={onInputValue}
       label="Author or Organization"
+      subtext="Shortcode"
       id="authorName"
-      subtext="Shortcode" />
+      cyData="input-author-name"
+      on:message={updateMetadata} />
     <InputField
       label="Dictionary Name"
+      subtext="Model ID"
       id="dictionaryName"
-      subtext="Model ID" />
+      cyData="input-dictionary-name" />
     <InputField
-      on:message={onInputValue}
+      on:message={updateMetadata}
       label="Copyright"
       id="copyright"
+      cyData="input-copyright"
       subtext="" />
   </div>
+
   <div class="language__info-right">
     <p class="label">Keyboard Preview</p>
     <img src={properties.keyboard_image} alt="An iOS keyboard in english" />
