@@ -28,8 +28,13 @@
     continueReady = languageStatus && downloadURL !== "";
   }
 
-  function updateLanguageStatus(event: CustomEvent) {
+  // TODO: rename function; it does more than update language status
+  function setLanguage(event: CustomEvent) {
+    const languages = event.detail.value;
     languageStatus = event.detail.status;
+    if (languageStatus) {
+      worker.setProjectData({ languages });
+    }
     updateContinueStatus();
   }
 
@@ -333,7 +338,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start" >
       <fieldset class="quick-start__step">
-        <LanguageNameInput on:message={updateLanguageStatus} label="Step 1: Enter your language" subtext="" bold={false} />
+        <LanguageNameInput on:message={setLanguage} label="Step 1: Enter your language" subtext="" bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">

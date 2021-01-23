@@ -29,13 +29,13 @@
   function selectLanguage(name, bcp47Tag) {
     subtext = bcp47Tag;
 
+    // TODO: why... it it just key/value?
     dispatch("message", {
       key: "languages",
       value: [{ name, id: bcp47Tag }],
       status: true,
     });
   }
-
 </script>
 
 <style>
@@ -106,6 +106,7 @@
     bind:selectedItem={selected}
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
-    BCP47Tag: {subtext || ''}
+    BCP47Tag:
+    {subtext || ''}
   </p>
 </div>
