@@ -183,9 +183,9 @@ cy.get("[data-cy=download-button]").click()
 Cypress: use .only to concentrate on a few tests
 ------------------------------------------------
 
-`describe()`, `context()`, and `it()` can be modified with `.only` so
-that ONLY that test runs. This is useful when you're in the process of
-testing a feature or debugging a failing test:
+`describe()`, `context()`, and `it()` [can be modified with
+`.only`][it.only] so that ONLY that test runs. This is useful when
+you're in the process of testing a feature or debugging a failing test:
 
 ```javacript
 it.only("this is the test that I'm working on", function () {
@@ -201,6 +201,8 @@ Caveat: **Always delete `.only` before marking your PR for review!**
 
 A PR will not be accepted if it has `.only()` anywhere in the test
 suite.
+
+[it.only]: https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests.html#Excluding-and-Including-Tests
 
 
 Cypress: Disable smooth scroll on the landing page
