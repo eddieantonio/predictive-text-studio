@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Link } from "svelte-routing";
-  import ArrowLeft from "svelte-icons/fa/FaArrowLeft.svelte";
   import IoIosArrowBack from "svelte-icons/io/IoIosArrowBack.svelte";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
