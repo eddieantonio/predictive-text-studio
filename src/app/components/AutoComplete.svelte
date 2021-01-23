@@ -11,6 +11,7 @@
   }
   export let label = "";
   export let subtext = "";
+  export let bold = true;
   // To store filtered array
   let filtered: KeyboardDataWithTime[] = [];
   // To store Keyman Keyboard data
@@ -74,6 +75,7 @@
     dispatch("message", {
       key: "languages",
       value: [{ name: selected, id: subtext }],
+      status: true,
     });
   }
 
@@ -81,7 +83,7 @@
     return a - n * Math.floor(a / n);
   };
 
-  // Up/Down arraow
+  // Up/Down arrow
   function handleKeydown({ key }: KeyboardEvent) {
     if (key === keyboardKey.Down) {
       index += 1;
@@ -115,6 +117,11 @@
     font-family: var(--main-font), sans-serif;
     font-weight: bold;
     font-size: var(--xs);
+  }
+  .autocomplete__label__normal {
+    font: var(--main-font);
+    font-size: var(--s);
+    font-weight: normal;
   }
   .autocomplete__input {
     font-family: var(--secondary-font), sans-serif;
@@ -163,7 +170,11 @@
 <svelte:window on:keydown={handleKeydown} />
 <div class="autocomplete mb-m">
   {#if label !== ''}
-    <p class="autocomplete__label">{label}</p>
+    {#if bold}
+      <p class="autocomplete__label">{label}</p>
+    {:else}
+      <p class="autocomplete__label__normal">{label}</p>
+    {/if}
   {/if}
   <input
     class="autocomplete__input"
@@ -174,6 +185,7 @@
   {#if show}
     <ul
       class="autocomplete__suggestion-list"
+      data-cy="autocomplete__suggestion-list"
       use:clickOutside={closeSuggestion}>
       {#each filtered as result, i}
         <li

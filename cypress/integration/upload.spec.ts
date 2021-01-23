@@ -18,8 +18,12 @@ describe("Upload from the the landing page", function () {
 
   it("should find a button to press to upload a file", function () {
     // we need a valid bcp47Tag to update the packageInfo
-    cy.data("tag-input").scrollIntoView().should("be.visible");
-    cy.data("tag-input").type("zh");
+    cy.wait(3000);
+    cy.data("autocomplete-input").type("z");
+    cy.data("autocomplete__suggestion-list")
+      .should("be.visible")
+      .trigger("mouseover");
+    cy.data("autocomplete-suggestions").first().click();
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
@@ -28,12 +32,6 @@ describe("Upload from the the landing page", function () {
       .scrollIntoView()
       .contains("Browse file");
 
-    // Before we upload anything there should be no download link,
-    // and no file downloaded in our folder
-    cy.get("@quick-start")
-      .data("download-kmp")
-      .as("download-kmp")
-      .should("have.attr", "data-download-state", "disabled");
     cy.readFile(downloadedFilePath).should("not.exist");
 
     const filename = "sencoten-top-10.xlsx";

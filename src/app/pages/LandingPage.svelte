@@ -1,7 +1,6 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
   import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
-  import BCP47Tag from "../components/BCP47Tag.svelte";
   import worker from "../spawn-worker";
   import * as Comlink from "comlink";
   import AutoComplete from "../components/AutoComplete.svelte";
@@ -349,15 +348,14 @@
       {:else}
         <GoogleSheetsInput />
       {/if}
-      <div
-            class="quick-start__submit-wrapper"
-            class:quick-start__submit-wrapper--disabled={!continueReady}>
-      <button
+      <div class="quick-start__submit-wrapper"
+           class:quick-start__submit-wrapper--disabled={!continueReady}>
+        <button
               class="button button--primary button--shadow quick-start__submit-button"
               class:quick-start__submit-button--disabled={!continueReady}
               type="submit"
               data-cy="landing-page-continue-button"> Continue
-      </button>
+        </button>
     </div>
 
     </form>

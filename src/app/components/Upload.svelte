@@ -113,7 +113,7 @@
   on:dragover|preventDefault={handleDragOver}
   data-cy="upload-dropzone">
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
-  <span>Drag and drop here</span>
+  <span>Drag and drop an Excel .xlsx file here!</span>
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input
