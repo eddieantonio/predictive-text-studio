@@ -1,5 +1,6 @@
 <script lang="ts">
-  import IoIosArrowBack from "svelte-icons/io/IoIosArrowBack.svelte";
+  import Icon from "svelte-awesome";
+  import { arrowLeft, angleLeft, chevronLeft } from "svelte-awesome/icons";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
@@ -116,11 +117,10 @@
     margin-top: 25px;
   }
 
-  .icon {
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    margin-right: 0.3125em;
+  a.button {
+    display: flex;
+    align-items: center;
+    width: fit-content;
   }
 </style>
 
@@ -132,10 +132,8 @@
 <main>
   <div class="languages">
     <div class="languages__container">
-      <a href="/">
-        <span class="button button--grey button--outline mt-xxl">
-          <div class="icon"><IoIosArrowBack /></div>Go back
-        </span>
+      <a href="/" class="button button--grey button--outline mt-xxl">
+        <Icon data={angleLeft} scale="1.5" />Go back
       </a>
       <header class="languages__container--header">
         <div>
