@@ -54,6 +54,10 @@
     show = false;
     selected = data.language;
     subtext = data.bcp47Tag;
+    selectLanguage(selected, bcp47Tag);
+  }
+
+  function selectLanguage(name, bcp47Tag) {
     dispatch("message", {
       key: "languages",
       value: [{ name: selected, id: subtext }],
@@ -157,7 +161,10 @@
   {#if label !== ''}
     <p class="autocomplete__label" class:bold>{label}</p>
   {/if}
-  <AutoComplete items={knownLanguages} bind:selectedItem={selected} labelFieldName="language" />
+  <AutoComplete
+    items={knownLanguages}
+    bind:selectedItem={selected}
+    labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
     BCP47Tag:
     {subtext}
