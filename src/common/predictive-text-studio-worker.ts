@@ -51,7 +51,7 @@ export interface PredictiveTextStudioWorker {
    * Register a callback that is called when the KMP package has succesfully
    * compiled.
    */
-  onPackageCompileSuccess(callback: () => void): void;
+  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void;
 
   //////////////////////// Modify project metadata /////////////////////////
 

@@ -74,7 +74,7 @@ export class PredictiveTextStudioWorkerImpl
     } else {
       const kmpArrayBuffer = await linkStorageToKmp(this.storage);
       this.saveKMPPackage(kmpArrayBuffer);
-      this._emitPackageCompileSuccess();
+      this._emitPackageCompileSuccess(kmpArrayBuffer);
     }
   }
 
@@ -100,7 +100,7 @@ export class PredictiveTextStudioWorkerImpl
 
   private _emitPackageCompileStart: () => void = doNothing;
   private _emitPackageCompileError: (err: Error) => void = doNothing;
-  private _emitPackageCompileSuccess: () => void = doNothing;
+  private _emitPackageCompileSuccess: (kmp: ArrayBuffer) => void = doNothing;
 
   onPackageCompileStart(callback: () => void): void {
     this._emitPackageCompileStart = callback;
@@ -110,7 +110,7 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileError = callback;
   }
 
-  onPackageCompileSuccess(callback: () => void): void {
+  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void {
     this._emitPackageCompileSuccess = callback;
   }
 
