@@ -6,18 +6,25 @@ describe("Changing metadata in the language info page", function () {
 
     cy.visit("/languages");
 
-    cy.data("input-language-name").type(languageName).blur();
-    // TODO: remove force; requires a refactor and fix to the <Autocomplete> component
-    cy.data("input-author-name").type(authorName, { force: true });
-    cy.data("input-copyright").type(copyright);
+    cy.data("input-language-name").clear().type(languageName).blur();
+    cy.data("input-author-name").clear().type(authorName);
+    cy.data("input-copyright").clear().type(copyright);
+
+    // Wait for the settings to change in the database
+    // TODO: can we avoid waiting here?
+    cy.wait(1000);
 
     // Navigate away page...
     cy.visit("about:blank");
     // ...and then come back
     cy.visit("/languages");
 
-    cy.data("input-language-name").contains(languageName);
-    cy.data("input-author-name").contains(authorName);
-    cy.data("input-copyright").contains(copyright);
+    // Wait for the page to load completely
+    // TODO: can we avoid waiting here?
+    cy.wait(1000);
+
+    cy.data("input-language-name").its("value").should("be", languageName);
+    cy.data("input-author-name").its("value").should("be", authorName);
+    cy.data("input-copyright").its("value").should("be", copyright);
   });
 });
