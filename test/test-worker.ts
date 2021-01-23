@@ -20,8 +20,7 @@ test("it should set project data and update to the database", async (t) => {
     authorName: authorName,
   } as StoredProjectData;
 
-  const storageStub = new Storage();
-  sinon.stub(storageStub, "fetchKeyboardData").returns(Promise.resolve([]));
+  const storageStub = storageWithStubbedKeyboardData();
 
   sinon
     .stub(storageStub, "fetchProjectData")
@@ -33,6 +32,12 @@ test("it should set project data and update to the database", async (t) => {
   });
   t.deepEqual(await storageStub.fetchProjectData(), testStoredProjectData);
 });
+
+function storageWithStubbedKeyboardData() {
+  const storage = new Storage();
+  sinon.stub(storage, "fetchKeyboardData").returns(Promise.resolve([]));
+  return storage;
+}
 
 test.todo(
   "Add dictionary to database and should return how many words were added"
