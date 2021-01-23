@@ -6,28 +6,18 @@
 
   import type { KeyboardDataWithTime } from "@common/types";
 
-  enum keyboardKey {
-    Up = "ArrowUp",
-    Down = "ArrowDown",
-    Enter = "Enter",
-  }
   export let label = "";
   export let subtext = "";
   export let bold: boolean = true;
   export let cyData = "autocomplete-label";
 
-  // To store filtered array
-  let filtered: KeyboardDataWithTime[] = [];
-  // To store Keyman Keyboard data
-  let knownLanguages: KeyboardDataWithTime[] = [];
   // To store selected language
   // TODO: rename to selectedLanguage
   export let selected: string = "";
 
-  // Toggle to show search list
-  let show = false;
-  // Index of focus element
-  let index = -1;
+  // To store Keyman Keyboard data
+  let knownLanguages: KeyboardDataWithTime[] = [];
+
   const dispatch = createEventDispatcher();
 
   $: selectLanguage(selected.language, selected.bcp47Tag);
@@ -36,66 +26,16 @@
     knownLanguages = await worker.getDataFromStorage();
   });
 
-  // Does a prefix search with autocomplete suggestions.
-  function filterAutocompleteSuggestions(event: Event) {
-    show = true;
-    filtered = knownLanguages.filter((element) => {
-      // Using regular expressing for search method
-      const target = event.target as HTMLTextAreaElement;
-      const regExp = new RegExp("^" + target.value.toUpperCase());
-      return regExp.test(element.language.toUpperCase());
-    });
-  }
-
-  function closeSuggestion() {
-    show = false;
-  }
-
-  // On select item in list
-  function selectedList(data: KeyboardDataWithTime) {
-    show = false;
-    selected = data.language;
-    subtext = data.bcp47Tag;
-    selectLanguage(selected, bcp47Tag);
-  }
-
   function selectLanguage(name, bcp47Tag) {
+    subtext = bcp47Tag;
+
     dispatch("message", {
       key: "languages",
-      value: [{ name: selected, id: subtext }],
+      value: [{ name, id: bcp47Tag }],
       status: true,
     });
   }
 
-  const mod = (a: number, n: number) => {
-    return a - n * Math.floor(a / n);
-  };
-
-  // Up/Down arrow
-  function handleKeydown(e: KeyboardEvent) {
-    const { key } = e;
-    if (key === keyboardKey.Down) {
-      index += 1;
-    } else if (key === keyboardKey.Up) {
-      if (index == -1) {
-        index = -1;
-      } else {
-        index -= 1;
-      }
-    } else if (key === keyboardKey.Enter) {
-      e.preventDefault();
-      selectedList(filtered[index]);
-    } else {
-      /* Not a key we care about */
-      return;
-    }
-
-    const numberOfSuggestions = document.getElementsByClassName(
-      "autocomplete__suggestion-item"
-    ).length;
-
-    index = numberOfSuggestions > 0 ? mod(index, numberOfSuggestions) : 0;
-  }
 </script>
 
 <style>
@@ -157,9 +97,7 @@
   }
 </style>
 
-<svelte:window on:keydown={handleKeydown} />
-
-<div class="autocomplete mb-m" on:focusout={closeSuggestion} data-cy={cyData}>
+<div class="autocomplete mb-m" data-cy={cyData}>
   {#if label !== ''}
     <p class="autocomplete__label" class:bold>{label}</p>
   {/if}
@@ -168,7 +106,6 @@
     bind:selectedItem={selected}
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
-    BCP47Tag:
-    {subtext}
+    BCP47Tag: {subtext || ''}
   </p>
 </div>
