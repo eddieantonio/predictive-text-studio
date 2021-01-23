@@ -294,6 +294,8 @@
     <small>
       <a href="/privacy">Privacy Policy</a>
       <br />
+      <a href="/team" data-cy="team-page-link">About the Team</a>
+      <br />
       © 2020–{new Date().getFullYear()}
       <a
         href="https://github.com/eddieantonio/predictive-text-studio/graphs/contributors">

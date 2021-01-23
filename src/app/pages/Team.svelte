@@ -1,14 +1,8 @@
 <script lang="ts">
   import TeamMemberProfile from "../components/TeamMemberProfile.svelte";
 
-  const coreMaintainerGithubUserNames: string[] = ["ChrisChrisLoLo"];
-  const teamMemberGithubUserNames: string[] = [
-    "ChrisChrisLoLo",
-    "ChrisChrisLoLo",
-    "ChrisChrisLoLo",
-    "ChrisChrisLoLo",
-    "ChrisChrisLoLo",
-  ];
+  const coreMaintainerGithubUserNames: string[] = [];
+  const teamMemberGithubUserNames: string[] = ["ChrisChrisLoLo"];
 </script>
 
 <style>
@@ -23,10 +17,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    /* justify-content: center;
-    text-align: center;
-    padding: 3%;
-    width: 160px; */
   }
 </style>
 

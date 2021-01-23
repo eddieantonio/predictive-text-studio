@@ -32,18 +32,25 @@
     padding: 1rem;
     padding-left: 3%;
     padding-right: 3%;
-    width: 160px;
+    width: 10rem;
   }
   img {
-    width: 160px;
+    width: 10rem;
     border-radius: 2%;
+  }
+  p.profile-name {
+    margin: 0.25rem;
   }
 </style>
 
 <div class="github-user-layout">
   {#if githubUser}
-    <img src={githubUser.avatarURL} alt={`${githubUser.name}'s avatar`} />
-    <p>{githubUser.name}</p>
-    <a href={githubUser.htmlURL}>@{githubUser.login}</a>
+    <a href={githubUser.htmlURL} data-cy="contributor-image-{githubUser.login}">
+      <img src={githubUser.avatarURL} alt={`${githubUser.name}'s avatar`} />
+    </a>
+    <p class=profile-name>{githubUser.name}</p>
+    <a href={githubUser.htmlURL} data-cy="contributor-handle-{githubUser.login}">@{githubUser.login}</a>
+  {:else}
+    <p cy->@{githubUserName}</p>
   {/if}
 </div>
