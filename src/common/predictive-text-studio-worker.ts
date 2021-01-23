@@ -74,13 +74,4 @@ export interface PredictiveTextStudioWorker {
   // TODO: rename to getCachedKeyboardCatalog or something
   // The current name is way too generic for such a specific functionality
   getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
-
-  /**
-   * Retrieve the compiled KMP package from database
-   *
-   * Must be called in the callback to onPackageCompileSuccess()
-   *
-   * @deprecated
-   */
-  getKMPPackage(): Promise<ArrayBuffer>;
 }

@@ -131,8 +131,4 @@ export class PredictiveTextStudioWorkerImpl
   private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
     return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
-
-  async getKMPPackage(): Promise<ArrayBuffer> {
-    return this.storage.fetchCompiledKMPFile();
-  }
 }
