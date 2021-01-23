@@ -2,8 +2,8 @@ import * as Excel from "exceljs";
 import { WordList } from "@common/types";
 import { DictionaryEntry } from "@common/types";
 
-const WORD: number = 1;
-const COUNT: number = 2;
+const WORD = 1;
+const COUNT = 2;
 
 export async function readExcel(
   excelFile: ArrayBuffer | Uint8Array
@@ -27,7 +27,7 @@ export async function readExcel(
 
   const wordlist: WordList = [];
   worksheet.eachRow((row) => {
-    if(shouldRowBeConverted(row)){
+    if (shouldRowBeConverted(row)) {
       const word = row.getCell(WORD).text || "";
       const count = asNonNegativeInteger(row.getCell(COUNT).text || 1);
       wordlist.push([word, count]);
@@ -41,9 +41,10 @@ export async function readExcel(
  * Returns a boolean if the row should be converted.
  * The row should not be converted if it is a header row or a commented out row.
  */
-function shouldRowBeConverted(row: Excel.Row): boolean{
-  const isHeaderRow = row.number === 1 && row.getCell(COUNT).text.toLowerCase().includes('count');
-  const isCommentRow = row.getCell(WORD).text === '#';
+function shouldRowBeConverted(row: Excel.Row): boolean {
+  const isHeaderRow =
+    row.number === 1 && row.getCell(COUNT).text.toLowerCase().includes("count");
+  const isCommentRow = row.getCell(WORD).text === "#";
   return !isHeaderRow && !isCommentRow;
 }
 

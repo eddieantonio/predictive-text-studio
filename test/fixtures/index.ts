@@ -27,20 +27,20 @@ export const exampleWordlist: WordList = [
 
 /**
  * Words that should match WordlistHeaderAndHashes_en-US.xlsx
- * 
+ *
  * The excel file has any header rows and commented out rows removed
  * from the wordlist
  */
- export const wordlistHeaderAndHashesResult: WordList = [
-  ["this",100],
-  ["is",5],
-  ["a",10],
-  ["sheet",8],
-  ["with",2],
-  ["headers",3],
-  ["and",33],
-  ["hashes",44]
-]
+export const wordlistHeaderAndHashesResult: WordList = [
+  ["this", 100],
+  ["is", 5],
+  ["a", 10],
+  ["sheet", 8],
+  ["with", 2],
+  ["headers", 3],
+  ["and", 33],
+  ["hashes", 44],
+];
 
 export const testStoredProjectData = {
   id: 1,

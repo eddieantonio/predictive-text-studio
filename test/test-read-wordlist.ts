@@ -7,7 +7,9 @@ import { pathToFixture } from "./helpers";
 import { exampleWordlist, wordlistHeaderAndHashesResult } from "./fixtures";
 
 const exampleExcelFilePath = pathToFixture("ExampleWordlist.xlsx");
-const exampleExcelHeadersFilePath = pathToFixture("WordlistHeaderAndHashes_en-US.xlsx") 
+const exampleExcelHeadersFilePath = pathToFixture(
+  "WordlistHeaderAndHashes_en-US.xlsx"
+);
 
 test("it should return a wordlist given an Excel file", async (t) => {
   t.deepEqual(
