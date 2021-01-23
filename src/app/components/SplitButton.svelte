@@ -9,6 +9,7 @@
     hasDropShadow: boolean;
     dataCy: string;
     handleClick: ClickFnType;
+    type: string;
   }
 
   export let splitBtns: BtnAttributes[];
@@ -41,6 +42,7 @@
       class:button--shadow={setting.hasDropShadow}
       class:button--outline={setting.isOutlined}
       on:click={setting.handleClick}
+      type={setting.type}
       data-cy={setting.dataCy}>{setting.text}</button>
   {/each}
 </div>

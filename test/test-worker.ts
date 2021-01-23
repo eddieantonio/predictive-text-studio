@@ -1,32 +1,46 @@
-import { KeymanAPI } from "@worker/keyman-api-service";
-import test from "ava";
+import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 import * as sinon from "sinon";
+import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
+import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
+import test from "ava";
+
 import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
-import Storage from "@worker/storage";
-import { StoredProjectData } from "@worker/storage-models";
+
 global.fetch = require("node-fetch");
 
 test("it should set project data and update to the database", async (t) => {
-  const testStoredProjectData = {
-    id: 1,
-    langName: "English",
-    bcp47Tag: "en",
-    authorName: "UnknownAuthor",
-  } as StoredProjectData;
-  const keymanAPI = new KeymanAPI();
-  const storageStub = new Storage();
-  sinon.stub(storageStub, "fetchKeyboardData").returns(Promise.resolve([]));
-  sinon
-    .stub(storageStub, "fetchProjectData")
-    .returns(Promise.resolve(testStoredProjectData));
-  const workerWrapper = new PredictiveTextStudioWorkerImpl(
-    storageStub,
-    keymanAPI
-  );
-  const metadata = { languages: [{ name: "English", id: "en" }] };
-  workerWrapper.setProjectData(metadata);
-  t.is(await storageStub.fetchProjectData(), testStoredProjectData);
+  // TODO: there's WAY too much stubbing here where it really doesn't need to
+  // be. Try to replace stubbing with something better...
+
+  const languageName = "Kanienʼkehá꞉";
+  const languageTag = "moh";
+  const authorName = "Aidan";
+
+  const storageStub = storageWithStubbedKeyboardData();
+  const worker = new PredictiveTextStudioWorkerImpl(storageStub);
+
+  await worker.setProjectData({
+    languages: [{ name: languageName, id: languageTag }],
+  });
+  await worker.setProjectData({ authorName });
+
+  const data = await worker.fetchAllCurrentProjectMetadata();
+
+  t.is(data.langName, languageName);
+  t.is(data.bcp47Tag, languageTag);
+  t.is(data.authorName, authorName);
 });
+
+function storageWithStubbedKeyboardData() {
+  const db = new PredictiveTextStudioDexie({
+    indexedDB: new FDBFactory(),
+    IDBKeyRange,
+  });
+
+  const storage = new Storage(db);
+  sinon.stub(storage, "fetchKeyboardData").returns(Promise.resolve([]));
+  return storage;
+}
 
 test.todo(
   "Add dictionary to database and should return how many words were added"

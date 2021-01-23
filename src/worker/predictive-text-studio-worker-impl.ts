@@ -6,7 +6,7 @@ import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
 import { WordList } from "@common/types";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
-import { DictionaryEntry } from "@common/types";
+import { DictionaryEntry, ProjectMetadata } from "@common/types";
 
 /**
  * expiryThreshold is used to decide if keyboard data is too old
@@ -25,11 +25,6 @@ export class PredictiveTextStudioWorkerImpl
     private keymanAPI = new KeymanAPI()
   ) {
     this.getLanguageData();
-  }
-
-  async updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    await this.storage.updateBCP47Tag(bcp47Tag);
-    return this.generateKMPFromStorage();
   }
 
   async fetchLanguageDataFromService(): Promise<void> {
@@ -79,7 +74,7 @@ export class PredictiveTextStudioWorkerImpl
     } else {
       const kmpArrayBuffer = await linkStorageToKmp(this.storage);
       this.saveKMPPackage(kmpArrayBuffer);
-      this._emitPackageCompileSuccess();
+      this._emitPackageCompileSuccess(kmpArrayBuffer);
     }
   }
 
@@ -111,7 +106,7 @@ export class PredictiveTextStudioWorkerImpl
 
   private _emitPackageCompileStart: () => void = doNothing;
   private _emitPackageCompileError: (err: Error) => void = doNothing;
-  private _emitPackageCompileSuccess: () => void = doNothing;
+  private _emitPackageCompileSuccess: (kmp: ArrayBuffer) => void = doNothing;
 
   onPackageCompileStart(callback: () => void): void {
     this._emitPackageCompileStart = callback;
@@ -121,7 +116,7 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileError = callback;
   }
 
-  onPackageCompileSuccess(callback: () => void): void {
+  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void {
     this._emitPackageCompileSuccess = callback;
   }
 
@@ -139,11 +134,14 @@ export class PredictiveTextStudioWorkerImpl
     );
   }
 
-  private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
-    return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
+  async fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata> {
+    const result = await this.storage.fetchProjectData();
+    // ProjectMetadata does not have this, so remove the property!
+    delete result.id;
+    return result;
   }
 
-  async getKMPPackage(): Promise<ArrayBuffer> {
-    return this.storage.fetchCompiledKMPFile();
+  private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
+    return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
 }

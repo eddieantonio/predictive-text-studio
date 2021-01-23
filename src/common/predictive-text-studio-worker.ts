@@ -1,5 +1,9 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
-import type { DictionaryEntry, KeyboardDataWithTime } from "./types";
+import type {
+  DictionaryEntry,
+  KeyboardDataWithTime,
+  ProjectMetadata,
+} from "./types";
 
 /**
  * This interface establishes a communication protocol between the UI thread and the worker thread
@@ -8,20 +12,17 @@ import type { DictionaryEntry, KeyboardDataWithTime } from "./types";
 import type { WordList } from "@common/types";
 
 export interface PredictiveTextStudioWorker {
-  /**
-   * Update the valid BCP4-7 tag to worker, this will affect the kmp file
-   * @param bcp47Tag
-   */
-  updateBCP47Tag(bcp47Tag: string): Promise<void>;
+  /////////////////////// Modify dictionary sources ////////////////////////
 
   /**
-   * Save a google sheet into IndexedDB
+   * Save a Google Sheet to the current project
    */
   readGoogleSheet(name: string, wordList: WordList): Promise<ArrayBuffer>;
 
   /**
    * Compile the lexical model using files in the IndexedDB
    * Take a dictionary source and store it.
+   *
    * @param name the dictionary source name — typically the uploaded filename.
    * @param contents the actual file itself
    * @return {number} how many words were added by this source
@@ -36,6 +37,8 @@ export interface PredictiveTextStudioWorker {
     name: string;
     data: DictionaryEntry[];
   }): Promise<number>;
+
+  ///////////////////////////// Event handlers /////////////////////////////
 
   /**
    * Register a callback that is called directly before the KMP package is
@@ -52,7 +55,9 @@ export interface PredictiveTextStudioWorker {
    * Register a callback that is called when the KMP package has succesfully
    * compiled.
    */
-  onPackageCompileSuccess(callback: () => void): void;
+  onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void;
+
+  ////////////////////// Manipulate project metadata ///////////////////////
 
   /**
    * Sets optional and required metadata such as BCP-47, language name, author
@@ -63,15 +68,21 @@ export interface PredictiveTextStudioWorker {
    *
    * @see RelevantKmpOptions
    */
-  setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): void;
+  setProjectData(
+    metadata: Partial<Readonly<RelevantKmpOptions>>
+  ): Promise<void>;
+
+  /**
+   * Returns all of the current project's metadata.
+   */
+  fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata>;
+
+  ///////////////////////////////// Caches /////////////////////////////////
 
   /**
    * Retrieving Keyman keyboard data from the IndexedDB storage
    */
+  // TODO: rename to getCachedKeyboardCatalog or something
+  // The current name is way too generic for such a specific functionality
   getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
-
-  /**
-   * Retrieve the compiled KMP package from database
-   */
-  getKMPPackage(): Promise<ArrayBuffer>;
 }

@@ -1,8 +1,21 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
   import InputField from "./InputField.svelte";
   import AutoComplete from "../components/AutoComplete.svelte";
   import worker from "../spawn-worker";
-  export let properties: any; // TODO: I am not sure what type to change it to from any
+
+  let authorName: string = "";
+  let languageName: string = "";
+  let copyright: string = "";
+
+  onMount(async () => {
+    const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
+
+    authorName = storedProjectData.authorName;
+    languageName = storedProjectData.langName;
+    copyright = storedProjectData.copyright || "";
+  });
 
   function updateMetadata(event: CustomEvent) {
     let { key, value } = event.detail;
@@ -47,12 +60,14 @@
       label="Language"
       subtext=""
       cyData="input-language-name"
+      bind:selected={languageName}
       on:message={updateMetadata} />
     <InputField
       label="Author or Organization"
       subtext="Shortcode"
       id="authorName"
       cyData="input-author-name"
+      bind:inputValue={authorName}
       on:message={updateMetadata} />
     <InputField
       label="Dictionary Name"
@@ -63,12 +78,13 @@
       on:message={updateMetadata}
       label="Copyright"
       id="copyright"
+      bind:inputValue={copyright}
       cyData="input-copyright"
       subtext="" />
   </div>
 
   <div class="language__info-right">
     <p class="label">Keyboard Preview</p>
-    <img src={properties.keyboard_image} alt="An iOS keyboard in english" />
+    <img src="assets/iOS-10-Keyboard.jpg" alt="An iOS keyboard in english" />
   </div>
 </div>

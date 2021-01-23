@@ -21,6 +21,7 @@
       hasDropShadow: false,
       dataCy: "add-sources-splitbtn-upload",
       handleClick: uploadSourcesFromFile,
+      type: "submit",
     },
     {
       color: "grey",
@@ -30,6 +31,7 @@
       hasDropShadow: false,
       dataCy: "add-sources-splitbtn-direct-entry",
       handleClick: directEntrySources,
+      type: "submit",
     },
   ];
   // Manual Entry
