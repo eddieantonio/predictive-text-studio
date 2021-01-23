@@ -42,9 +42,6 @@ export async function readTSV(TSVFile: File): Promise<WordList> {
   return new Promise((resolve, reject) => {
     const wordlist: WordList = [];
 
-    // eslint-disable-next-line no-console
-    console.log("Read CSV");
-
     const reader = new FileReader();
     reader.addEventListener("load", (event: ProgressEvent<FileReader>) => {
       if (event.target && typeof event.target.result === "string") {
