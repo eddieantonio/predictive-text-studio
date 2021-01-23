@@ -48,8 +48,10 @@
     <a href={githubUser.htmlURL} data-cy="contributor-image-{githubUser.login}">
       <img src={githubUser.avatarURL} alt={`${githubUser.name}'s avatar`} />
     </a>
-    <p class=profile-name>{githubUser.name}</p>
-    <a href={githubUser.htmlURL} data-cy="contributor-handle-{githubUser.login}">@{githubUser.login}</a>
+    <p class="profile-name">{githubUser.name}</p>
+    <a
+      href={githubUser.htmlURL}
+      data-cy="contributor-handle-{githubUser.login}">@{githubUser.login}</a>
   {:else}
     <p cy->@{githubUserName}</p>
   {/if}
