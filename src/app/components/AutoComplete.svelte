@@ -48,28 +48,6 @@
     show = false;
   }
 
-  // If anywhere on the screen is clicked
-  // Derived from https://github.com/rster2002/svelte-outside-click
-  function clickOutside(node: HTMLUListElement, onEventFunction: Function) {
-    const handleClick = (event: MouseEvent) => {
-      // If the language does not exist in Keyman database
-      dispatch("message", {
-        key: "languages",
-        value: [{ name: inputText, id: "" }],
-      });
-      const path = event.composedPath();
-      if (!path.includes(node)) {
-        onEventFunction();
-      }
-    };
-    document.addEventListener("click", handleClick);
-    return {
-      destroy() {
-        document.removeEventListener("click", handleClick);
-      },
-    };
-  }
-
   // On select item in list
   function selectedList(data: KeyboardDataWithTime) {
     show = false;
@@ -173,7 +151,8 @@
 </style>
 
 <svelte:window on:keydown={handleKeydown} />
-<div class="autocomplete mb-m">
+
+<div class="autocomplete mb-m" on:focusout={closeSuggestion}>
   {#if label !== ''}
     <p class="autocomplete__label" class:bold>{label}</p>
   {/if}
@@ -182,13 +161,11 @@
     value={selected}
     type="text"
     on:input={filterAutocompleteSuggestions}
-    on:blur={closeSuggestion}
     data-cy={cyData} />
   {#if show}
     <ul
       class="autocomplete__suggestion-list"
-      data-cy="autocomplete__suggestion-list"
-      use:clickOutside={closeSuggestion}>
+      data-cy="autocomplete__suggestion-list">
       {#each filtered as result, i}
         <li
           class="autocomplete__suggestion-item"
