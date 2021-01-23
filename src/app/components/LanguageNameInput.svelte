@@ -30,6 +30,8 @@
   let index = -1;
   const dispatch = createEventDispatcher();
 
+  $: selectLanguage(selected.language, selected.bcp47Tag);
+
   onMount(async () => {
     knownLanguages = await worker.getDataFromStorage();
   });
