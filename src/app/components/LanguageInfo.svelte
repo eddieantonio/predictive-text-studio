@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
 
   import InputField from "./InputField.svelte";
-  import AutoComplete from "../components/AutoComplete.svelte";
+  import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import worker from "../spawn-worker";
 
   let authorName: string = "";
@@ -56,7 +56,7 @@
 
 <div class="language__info">
   <div class="language__info-left">
-    <AutoComplete
+    <LanguageNameInput
       label="Language"
       subtext=""
       cyData="input-language-name"

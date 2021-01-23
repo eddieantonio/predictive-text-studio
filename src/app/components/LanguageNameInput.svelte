@@ -24,8 +24,6 @@
   let show = false;
   // Index of focus element
   let index = -1;
-  // To store input text
-  let inputText: string = "";
   const dispatch = createEventDispatcher();
 
   onMount(async () => {
@@ -39,7 +37,6 @@
       // Using regular expressing for search method
       const target = event.target as HTMLTextAreaElement;
       const regExp = new RegExp("^" + target.value.toUpperCase());
-      inputText = target.value;
       return regExp.test(element.language.toUpperCase());
     });
   }

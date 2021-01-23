@@ -3,7 +3,7 @@
   import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import worker from "../spawn-worker";
   import * as Comlink from "comlink";
-  import AutoComplete from "../components/AutoComplete.svelte";
+  import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import SplitButton from "../components/SplitButton.svelte";
 
   let downloadURL = "";
@@ -333,7 +333,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start" >
       <fieldset class="quick-start__step">
-        <AutoComplete on:message={updateLanguageStatus} label="Step 1: Enter your language" subtext="" bold={false} />
+        <LanguageNameInput on:message={updateLanguageStatus} label="Step 1: Enter your language" subtext="" bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
