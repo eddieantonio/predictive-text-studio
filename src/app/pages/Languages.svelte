@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from "svelte-awesome";
-  import { arrowLeft, angleLeft, chevronLeft } from "svelte-awesome/icons";
+  import { angleLeft } from "svelte-awesome/icons";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
