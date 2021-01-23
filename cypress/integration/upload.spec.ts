@@ -20,7 +20,7 @@ describe("Upload from the the landing page", function () {
   it.skip("should find a button to press to upload a file", function () {
     // we need a valid bcp47Tag to update the packageInfo
     cy.wait(3000);
-    cy.data("autocomplete-input").type("z");
+    cy.data("autocomplete-label").type("z");
     cy.data("autocomplete__suggestion-list")
       .should("be.visible")
       .trigger("mouseover");

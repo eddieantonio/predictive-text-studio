@@ -43,7 +43,6 @@
 
 <div class="language__info">
   <div class="language__info-left">
-
     <AutoComplete
       label="Language"
       subtext=""

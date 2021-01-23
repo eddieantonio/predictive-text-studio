@@ -30,7 +30,7 @@ describe("Upload from the the landing page", () => {
     cy.data("landing-page-continue-button")
       .scrollIntoView()
       .should("be.visible");
-    cy.data("autocomplete-input").type("zh");
+    cy.data("autocomplete-label").type("zh");
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
@@ -39,8 +39,8 @@ describe("Upload from the the landing page", () => {
 
   it("should disable to continue if only file is provided", () => {
     // we need a valid bcp47Tag to update the packageInfo
-    cy.data("autocomplete-input").scrollIntoView().should("be.visible");
-    cy.data("autocomplete-input").type("zh");
+    cy.data("autocomplete-label").scrollIntoView().should("be.visible");
+    cy.data("autocomplete-label").type("zh");
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
@@ -77,7 +77,7 @@ describe("Upload from the the landing page", () => {
   it.skip("should enable to continue if both language and file are provided", () => {
     // Step 1: Provide correct language
     cy.wait(3000);
-    cy.data("autocomplete-input").type("z");
+    cy.data("autocomplete-label").type("z");
     cy.data("autocomplete__suggestion-list")
       .should("be.visible")
       .trigger("mouseover");
