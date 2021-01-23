@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Link } from "svelte-routing";
   import IoIosArrowBack from "svelte-icons/io/IoIosArrowBack.svelte";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
@@ -133,11 +132,11 @@
 <main>
   <div class="languages">
     <div class="languages__container">
-      <Link to="/">
+      <a href="/">
         <span class="button button--grey button--outline mt-xxl">
           <div class="icon"><IoIosArrowBack /></div>Go back
         </span>
-      </Link>
+      </a>
       <header class="languages__container--header">
         <div>
           <h1>Predictive Text Studio</h1>
