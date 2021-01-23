@@ -1,7 +1,11 @@
-import test from "ava";
+import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 import * as sinon from "sinon";
+import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
+import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
+import test from "ava";
+
 import { PredictiveTextStudioWorkerImpl } from "@worker/predictive-text-studio-worker-impl";
-import Storage from "@worker/storage";
+
 global.fetch = require("node-fetch");
 
 test("it should set project data and update to the database", async (t) => {
@@ -28,7 +32,12 @@ test("it should set project data and update to the database", async (t) => {
 });
 
 function storageWithStubbedKeyboardData() {
-  const storage = new Storage();
+  const db = new PredictiveTextStudioDexie({
+    indexedDB: new FDBFactory(),
+    IDBKeyRange,
+  });
+
+  const storage = new Storage(db);
   sinon.stub(storage, "fetchKeyboardData").returns(Promise.resolve([]));
   return storage;
 }
