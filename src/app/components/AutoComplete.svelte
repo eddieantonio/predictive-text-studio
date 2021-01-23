@@ -27,6 +27,7 @@
   // To store input text
   let inputText: string = "";
   const dispatch = createEventDispatcher();
+
   onMount(async () => {
     results = await worker.getDataFromStorage();
   });
@@ -119,13 +120,14 @@
   }
   .autocomplete__label {
     font-family: var(--main-font), sans-serif;
+    font-size: var(--s);
+    font-weight: normal;
+  }
+  .autocomplete__label--bold {
     font-weight: bold;
     font-size: var(--xs);
   }
   .autocomplete__label__normal {
-    font: var(--main-font);
-    font-size: var(--s);
-    font-weight: normal;
   }
   .autocomplete__input {
     font-family: var(--secondary-font), sans-serif;
@@ -175,7 +177,7 @@
 <div class="autocomplete mb-m">
   {#if label !== ''}
     {#if bold}
-      <p class="autocomplete__label">{label}</p>
+      <p class="autocomplete__label autocomplete__label--bold">{label}</p>
     {:else}
       <p class="autocomplete__label__normal">{label}</p>
     {/if}
