@@ -14,7 +14,7 @@
   // TODO: these should go in a different file:
   worker.onPackageCompileSuccess(
     Comlink.proxy(async (kmp: ArrayBuffer) => {
-      downloadURL = createURL(kmp)
+      downloadURL = createURL(kmp);
       updateContinueStatus();
     })
   );
