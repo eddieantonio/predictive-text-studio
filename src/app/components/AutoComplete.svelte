@@ -172,6 +172,7 @@
     value={selected}
     type="text"
     on:input={filterAutocompleteSuggestions}
+    on:blur={closeSuggestion}
     data-cy={cyData} />
   {#if show}
     <ul
