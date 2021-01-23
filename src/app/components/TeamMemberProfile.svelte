@@ -28,11 +28,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     padding: 1rem;
     padding-left: 3%;
     padding-right: 3%;
     width: 10rem;
+
+    text-align: center;
   }
   img {
     width: 10rem;

@@ -9,7 +9,7 @@
   .team-page {
     width: 75%;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 1.5em;
   }
 
   .profile-container {
