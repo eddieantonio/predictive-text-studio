@@ -2,12 +2,16 @@
   import Upload from "../components/Upload.svelte";
   import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import BCP47Tag from "../components/BCP47Tag.svelte";
-  import DownloadKMP from "../components/DownloadKMP.svelte";
   import worker from "../spawn-worker";
   import * as Comlink from "comlink";
+  import AutoComplete from "../components/AutoComplete.svelte";
+  import SplitButton from "../components/SplitButton.svelte";
+
   let downloadURL = "";
   let languageStatus: boolean = false;
   let continueReady: boolean = false;
+  let uploadFile: boolean = true;
+
   worker.onPackageCompileSuccess(
     Comlink.proxy(async () => {
       const kmp = await worker.getKMPPackage();
@@ -22,13 +26,45 @@
   }
 
   function updateContinueStatus() {
-    continueReady = languageStatus && downloadURL !== "" ? true : false;
+    continueReady = languageStatus && downloadURL !== "";
   }
 
   function updateLanguageStatus(event: CustomEvent) {
     languageStatus = event.detail.status;
     updateContinueStatus();
   }
+
+  // Split Button
+  const uploadFromFile = () => {
+    uploadFile = true;
+  };
+
+  const UploadFromGoogleSheets = () => {
+    uploadFile = false;
+  };
+
+  let splitBtns = [
+    {
+      color: "blue",
+      size: "small",
+      text: "Upload File",
+      isOutlined: false,
+      hasDropShadow: false,
+      dataCy: "landing-splitbtn-upload",
+      handleClick: uploadFromFile,
+      type: "button",
+    },
+    {
+      color: "grey",
+      size: "small",
+      text: "Google Sheets URL",
+      isOutlined: false,
+      hasDropShadow: false,
+      dataCy: "landing-splitbtn-google-sheets",
+      handleClick: UploadFromGoogleSheets,
+      type: "button",
+    },
+  ];
 </script>
 
 <style>
@@ -215,6 +251,14 @@
     padding-bottom: 10px;
   }
 
+  .split-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
   @keyframes descend {
     0% {
       opacity: 20%;
@@ -288,31 +332,34 @@
 
   <section id="get-started" class="quick-start">
     <!-- TODO: should not use hard coded URL! -->
-    <form action="/languages" data-cy="quick-start">
-      <fieldset class="quick-start__step">
-        <BCP47Tag on:langauge={updateLanguageStatus} />
+    <form action="/languages" data-cy="quick-start" onkeydown={"return event.key !== 'Enter'"}>
+      <fieldset class="quick-start__step" disabled="">
+        <AutoComplete on:message={updateLanguageStatus} label="Step 1: Enter your language" subtext="" bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
-        <legend> Step 2: Attach a word list </legend>
-        <Upload/>
-        <DownloadKMP {downloadURL} />
+        <legend>Step 2: Add a word list</legend>
       </fieldset>
 
-      <fieldset class="quick-start__step">
-        <legend>Or Get Values from a Google Sheet</legend>
-      </fieldset>
-      <GoogleSheetsInput />
-      <div
-      class="quick-start__submit-wrapper"
-      class:quick-start__submit-wrapper--disabled={!continueReady}> 
-        <button
-        class="button button--primary button--shadow quick-start__submit-button" 
-        class:quick-start__submit-button--disabled={!continueReady}
-        type="submit"
-        data-cy="landing-page-continue-button"> Continue 
-        </button>
+      <div class="split-container">
+        <SplitButton {splitBtns} />
       </div>
+      {#if uploadFile}
+        <Upload/>
+      {:else}
+        <GoogleSheetsInput />
+      {/if}
+      <div
+            class="quick-start__submit-wrapper"
+            class:quick-start__submit-wrapper--disabled={!continueReady}>
+      <button
+              class="button button--primary button--shadow quick-start__submit-button"
+              class:quick-start__submit-button--disabled={!continueReady}
+              type="submit"
+              data-cy="landing-page-continue-button"> Continue
+      </button>
+    </div>
+
     </form>
   </section>
 </main>
