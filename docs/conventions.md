@@ -140,6 +140,74 @@ guide](https://github.com/airbnb/javascript#naming-conventions) for
 naming conventions.
 
 
+Cypress: Use `[data-cy]` and `cy.data()`
+----------------------------------------
+
+> This is derived from [Cypress Best Practices]
+
+Instead of using IDs, classes, the `name=` attribute, or the element's
+inner text to select an element in Cypress (using `cy.get()` or
+`cy.contains()`), do the following.
+
+### Add the `data-cy` attribute to the element you want to target
+
+Add the `data-cy="..."` attribute with a descriptive name of your
+choice. For example, I added `data-cy="download-button"` here:
+
+```html
+<button id="my-button" class="button button--primary" data-cy="download-button">
+    Download!
+</button>
+```
+
+### Select using `cy.get("[data-cy=.."])` or `cy.data()`
+
+Now select the element using `cy.data()`
+
+```javascript
+cy.data("download-button").click()
+```
+
+`cy.data()` is **non-standard command** that is defined in
+[`/cypress/support/commands.js`][Custom commands].
+
+It is equivalent to the following:
+
+```javascript
+cy.get("[data-cy=download-button]").click()
+```
+
+
+[Cypress Best Practices]: https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements
+[Custom commands]: ../cypress/support/commands.js
+
+
+Cypress: Disable smooth scroll on the landing page
+--------------------------------------------------
+
+Smooth scroll is really nifty, but as of Cypress 5.x, it introduces all
+kinds of issues in tests.
+
+If you're testing pages with smooth scrolling (e.g., the landing page
+currently has smooth scrolling enabled) run this custom command
+immediately after `cy.visit()`ing the page:
+
+```javascript
+cy.disableSmoothScroll()
+```
+
+This is a [custom command][Custom commands] that disables smooth
+scrolling for the current page, and allows tests to run normally!
+
+If you're writing many tests for a page that uses smooth scrolling, you
+might want to consider using a `beforeEach()` block:
+
+```javascript
+cy.visit("/");
+cy.disableSmoothScroll();
+```
+
+
 CSS: ordering declarations in CSS rulesets
 ------------------------------------------
 
@@ -303,3 +371,35 @@ button {
     border: 0px;
 }
 ```
+
+
+Svelte: keep script sections as small as possible
+-------------------------------------------------
+
+It's temping to write a lot of code in the `<script>` of a Svelte
+component. However, in our current project configuration, it causes
+a few issues:
+
+ 1. TypeScript type checking is NOT done during compilation of the
+    Svelte files due to [technical limitations][svelte-ts]. Instead,
+    type checking needs to be done at a later stage by running
+    `svelte-check` (automatically run by `yarn run validate`).
+ 2. Source mapping does not work properly with Svelte files, which makes
+    using the debugger a pain.
+
+### Solution
+
+Refactor so that the majority of your logic can go into standalone `.ts`
+TypeScript files.
+
+Here's how to do it:
+
+ 1. write tests for your Svelte component (probably using Cypress)
+ 2. implement your component in one large Svelte component.
+ 3. Commit! Make sure your component is working as expected and commit
+    the working code.
+ 4. Refactor! Try to get as much of the implement in the `.svelte` file
+    into functions that do _not_ modify local variables.
+ 5. One-by-one, extract these functions into a standalone `.ts` file.
+
+[svelte-ts]: https://svelte.dev/blog/svelte-and-typescript#What_does_it_mean_to_support_TypeScript_in_Svelte
