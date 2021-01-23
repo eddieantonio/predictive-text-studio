@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { Link } from "svelte-routing";
+  import ArrowLeft from "svelte-icons/fa/FaArrowLeft.svelte";
+  import IoIosArrowBack from "svelte-icons/io/IoIosArrowBack.svelte";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
@@ -114,6 +117,13 @@
   .languages__container--content {
     margin-top: 25px;
   }
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    margin-right: 0.3125em;
+  }
 </style>
 
 <!--
@@ -124,6 +134,11 @@
 <main>
   <div class="languages">
     <div class="languages__container">
+      <Link to="/">
+        <span class="button button--grey button--outline mt-xxl">
+          <div class="icon"><IoIosArrowBack /></div>Go back
+        </span>
+      </Link>
       <header class="languages__container--header">
         <div>
           <h1>Predictive Text Studio</h1>
