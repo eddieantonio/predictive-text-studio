@@ -123,11 +123,10 @@
     font-size: var(--s);
     font-weight: normal;
   }
-  .autocomplete__label--bold {
+  /* Scoped-style means that this generic name only exists within THIS file: */
+  .bold {
     font-weight: bold;
     font-size: var(--xs);
-  }
-  .autocomplete__label__normal {
   }
   .autocomplete__input {
     font-family: var(--secondary-font), sans-serif;
@@ -176,11 +175,7 @@
 <svelte:window on:keydown={handleKeydown} />
 <div class="autocomplete mb-m">
   {#if label !== ''}
-    {#if bold}
-      <p class="autocomplete__label autocomplete__label--bold">{label}</p>
-    {:else}
-      <p class="autocomplete__label__normal">{label}</p>
-    {/if}
+    <p class="autocomplete__label" class:bold>{label}</p>
   {/if}
   <input
     class="autocomplete__input"
