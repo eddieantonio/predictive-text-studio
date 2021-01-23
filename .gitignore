@@ -39,3 +39,6 @@ cypress/downloads/
 credentials.json
 token.json
 .env
+
+#IDE
+.idea
