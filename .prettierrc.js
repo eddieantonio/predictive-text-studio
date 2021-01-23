@@ -20,5 +20,5 @@ module.exports = {
   printWidth: 80,
   tabWidth: 2,
   svelteSortOrder: "scripts-styles-markup",
-  svelteIndentScriptAndStyle: true
+  svelteIndentScriptAndStyle: true,
 };

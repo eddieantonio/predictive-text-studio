@@ -11,6 +11,7 @@
   }
   export let label = "";
   export let subtext = "";
+  export let bold: boolean = true;
   export let cyData = "autocomplete-label";
 
   // To store filtered array
@@ -76,6 +77,7 @@
     dispatch("message", {
       key: "languages",
       value: [{ name: selected, id: subtext }],
+      status: true,
     });
   }
 
@@ -83,8 +85,9 @@
     return a - n * Math.floor(a / n);
   };
 
-  // Up/Down arraow
-  function handleKeydown({ key }: KeyboardEvent) {
+  // Up/Down arrow
+  function handleKeydown(e: KeyboardEvent) {
+    const { key } = e;
     if (key === keyboardKey.Down) {
       index += 1;
     } else if (key === keyboardKey.Up) {
@@ -94,6 +97,7 @@
         index -= 1;
       }
     } else if (key === keyboardKey.Enter) {
+      e.preventDefault();
       selectedList(filtered[index]);
     } else {
       /* Not a key we care about */
@@ -117,6 +121,11 @@
     font-family: var(--main-font), sans-serif;
     font-weight: bold;
     font-size: var(--xs);
+  }
+  .autocomplete__label__normal {
+    font: var(--main-font);
+    font-size: var(--s);
+    font-weight: normal;
   }
   .autocomplete__input {
     font-family: var(--secondary-font), sans-serif;
@@ -165,7 +174,11 @@
 <svelte:window on:keydown={handleKeydown} />
 <div class="autocomplete mb-m">
   {#if label !== ''}
-    <p class="autocomplete__label">{label}</p>
+    {#if bold}
+      <p class="autocomplete__label">{label}</p>
+    {:else}
+      <p class="autocomplete__label__normal">{label}</p>
+    {/if}
   {/if}
   <input
     class="autocomplete__input"
@@ -177,6 +190,7 @@
   {#if show}
     <ul
       class="autocomplete__suggestion-list"
+      data-cy="autocomplete__suggestion-list"
       use:clickOutside={closeSuggestion}>
       {#each filtered as result, i}
         <li

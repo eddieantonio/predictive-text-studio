@@ -161,5 +161,6 @@
     fullWidth={true} />
   <button
     class="button button--primary button--shadow quick-start__submit"
+    type="button"
     on:click={handleClientLoad}>Read Values</button>
 </div>

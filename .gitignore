@@ -40,5 +40,5 @@ credentials.json
 token.json
 .env
 
-#IDE
+# IDE
 .idea
