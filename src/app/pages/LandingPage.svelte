@@ -7,11 +7,9 @@
   import * as Comlink from "comlink";
   let downloadURL = "";
 
+  // TODO: these should go in a different file:
   worker.onPackageCompileSuccess(
-    Comlink.proxy(async () => {
-      const kmp = await worker.getKMPPackage();
-      downloadURL = createURL(kmp);
-    })
+    Comlink.proxy((kmp: ArrayBuffer) => (downloadURL = createURL(kmp)))
   );
 
   function createURL(kmpFile: ArrayBuffer): string {

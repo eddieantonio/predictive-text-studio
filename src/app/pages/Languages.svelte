@@ -12,10 +12,6 @@
         0
       );
     },
-    properties: {
-      keyboard_image:
-        "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg",
-    },
     sources: [
       {
         name: "dictionary.xlsx",
@@ -156,7 +152,7 @@
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo properties={languageInformation.properties} />
+          <LanguageInfo />
         {:else if selectedButton === 'sources'}
           <LanguageSources sources={languageInformation.sources} />
         {/if}

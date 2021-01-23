@@ -7,6 +7,13 @@ import {
   KMPPackageData,
 } from "./storage-models";
 const DB_NAME = "dictionary_sources";
+
+/**
+ * !!!!!!!!!!! IMPORTANT !!!!!!!!!!
+ *
+ * Increment this any time you make a change to the schema
+ * (defined below in PredictiveTextStudioDexie's constructor).
+ */
 const SCHEMA_VERSION = 4;
 
 /**
