@@ -1,5 +1,9 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
-import type { DictionaryEntry, KeyboardDataWithTime } from "./types";
+import type {
+  DictionaryEntry,
+  KeyboardDataWithTime,
+  ProjectMetadata,
+} from "./types";
 
 /**
  * This interface establishes a communication protocol between the UI thread and the worker thread
@@ -53,7 +57,7 @@ export interface PredictiveTextStudioWorker {
    */
   onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void;
 
-  //////////////////////// Modify project metadata /////////////////////////
+  ////////////////////// Manipulate project metadata ///////////////////////
 
   /**
    * Sets optional and required metadata such as BCP-47, language name, author
@@ -64,7 +68,14 @@ export interface PredictiveTextStudioWorker {
    *
    * @see RelevantKmpOptions
    */
-  setProjectData(metadata: Partial<Readonly<RelevantKmpOptions>>): void;
+  setProjectData(
+    metadata: Partial<Readonly<RelevantKmpOptions>>
+  ): Promise<void>;
+
+  /**
+   * Returns all of the current project's metadata.
+   */
+  fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata>;
 
   ///////////////////////////////// Caches /////////////////////////////////
 

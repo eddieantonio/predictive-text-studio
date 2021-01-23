@@ -19,10 +19,10 @@ test("it should set project data and update to the database", async (t) => {
   const storageStub = storageWithStubbedKeyboardData();
   const worker = new PredictiveTextStudioWorkerImpl(storageStub);
 
-  worker.setProjectData({
+  await worker.setProjectData({
     languages: [{ name: languageName, id: languageTag }],
   });
-  worker.setProjectData({ authorName });
+  await worker.setProjectData({ authorName });
 
   const data = await worker.fetchAllCurrentProjectMetadata();
 

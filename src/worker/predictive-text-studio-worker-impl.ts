@@ -6,7 +6,7 @@ import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
 import { WordList } from "@common/types";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
-import { DictionaryEntry } from "@common/types";
+import { DictionaryEntry, ProjectMetadata } from "@common/types";
 
 /**
  * expiryThreshold is used to decide if keyboard data is too old
@@ -126,6 +126,13 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.updateProjectData(
       metadata as { [key: string]: string }
     );
+  }
+
+  async fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata> {
+    const result = await this.storage.fetchProjectData();
+    // ProjectMetadata does not have this, so remove the property!
+    delete result.id;
+    return result;
   }
 
   private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
