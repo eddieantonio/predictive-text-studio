@@ -17,7 +17,7 @@
   // To store filtered array
   let filtered: KeyboardDataWithTime[] = [];
   // To store Keyman Keyboard data
-  let results: KeyboardDataWithTime[] = [];
+  let knownLanguages: KeyboardDataWithTime[] = [];
   // To store selected language
   export let selected: string = "";
   // Toggle to show search list
@@ -27,13 +27,13 @@
   const dispatch = createEventDispatcher();
 
   onMount(async () => {
-    results = await worker.getDataFromStorage();
+    knownLanguages = await worker.getDataFromStorage();
   });
 
   // Does a prefix search with autocomplete suggestions.
   function filterAutocompleteSuggestions(event: Event) {
     show = true;
-    filtered = results.filter((element) => {
+    filtered = knownLanguages.filter((element) => {
       // Using regular expressing for search method
       const target = event.target as HTMLTextAreaElement;
       const regExp = new RegExp("^" + target.value.toUpperCase());
