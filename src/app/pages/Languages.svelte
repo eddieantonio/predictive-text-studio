@@ -12,10 +12,6 @@
         0
       );
     },
-    properties: {
-      keyboard_image:
-        "https://media.idownloadblog.com/wp-content/uploads/2017/02/iOS-10-Keyboard.jpg",
-    },
     sources: [
       {
         name: "dictionary.xlsx",
@@ -124,6 +120,11 @@
 <main>
   <div class="languages">
     <div class="languages__container">
+      <a href="/">
+        <span class="button button--grey button--outline mt-xxl">
+          Go back to main page
+        </span>
+      </a>
       <header class="languages__container--header">
         <div>
           <h1>Predictive Text Studio</h1>
@@ -156,7 +157,7 @@
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo properties={languageInformation.properties} />
+          <LanguageInfo />
         {:else if selectedButton === 'sources'}
           <LanguageSources sources={languageInformation.sources} />
         {/if}

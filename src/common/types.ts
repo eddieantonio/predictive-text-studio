@@ -38,3 +38,29 @@ export interface KeyboardDataWithTime {
    */
   timestamp: Date;
 }
+
+/**
+ * Relevant metadata for a particular project.
+ *
+ */
+export interface ProjectMetadata {
+  /**
+   * The name of language. Could be different than what is fetched by an API.
+   */
+  langName: string;
+
+  /**
+   * The valid BCP-47 tag for the language.
+   */
+  bcp47Tag: string;
+
+  /**
+   * Who created the model?
+   */
+  authorName: string;
+
+  /**
+   * The model copyright.
+   */
+  copyright?: string;
+}

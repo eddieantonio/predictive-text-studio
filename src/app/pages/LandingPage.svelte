@@ -11,10 +11,10 @@
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
 
+  // TODO: these should go in a different file:
   worker.onPackageCompileSuccess(
-    Comlink.proxy(async () => {
-      const kmp = await worker.getKMPPackage();
-      downloadURL = createURL(kmp);
+    Comlink.proxy(async (kmp: ArrayBuffer) => {
+      downloadURL = createURL(kmp)
       updateContinueStatus();
     })
   );

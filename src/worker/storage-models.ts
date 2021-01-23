@@ -2,7 +2,8 @@
  * @file Interfaces used in storage
  */
 
-import { WordList } from "@common/types";
+import { WordList, ProjectMetadata } from "@common/types";
+
 /**
  * A word list stored in the database.
  */
@@ -23,7 +24,7 @@ export interface StoredWordList {
 /**
  * The information needed to create a KMP file
  */
-export interface StoredProjectData {
+export interface StoredProjectData extends ProjectMetadata {
   /**
    * Primary key. For now, there is only one project, with PACKAGE_ID as its
    * primary key.
@@ -31,29 +32,9 @@ export interface StoredProjectData {
   id?: number;
 
   /**
-   * The name of language. Could be different than what is fetched by an API.
-   */
-  langName: string;
-
-  /**
-   * The valid BCP-47 tag for the language.
-   */
-  bcp47Tag: string;
-
-  /**
-   * Who created the model?
-   */
-  authorName: string;
-
-  /**
    * A custom model ID string.
    */
   modelID?: string;
-
-  /**
-   * The model copyright.
-   */
-  copyright?: string;
 
   /**
    * The version number of the model.

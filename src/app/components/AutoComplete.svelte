@@ -19,7 +19,7 @@
   // To store Keyman Keyboard data
   let results: KeyboardDataWithTime[] = [];
   // To store selected language
-  let selected: string = "";
+  export let selected: string = "";
   // Toggle to show search list
   let show = false;
   // Index of focus element
@@ -185,6 +185,7 @@
     value={selected}
     type="text"
     on:input={filterAutocompleteSuggestions}
+    on:blur={closeSuggestion}
     data-cy={cyData} />
   {#if show}
     <ul

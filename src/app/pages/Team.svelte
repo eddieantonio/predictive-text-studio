@@ -2,7 +2,7 @@
   import TeamMemberProfile from "../components/TeamMemberProfile.svelte";
 
   const coreMaintainerGithubUserNames: string[] = [];
-  const teamMemberGithubUserNames: string[] = ["ChrisChrisLoLo"];
+  const teamMemberGithubUserNames: string[] = ["ChrisChrisLoLo", "zprobs"];
 </script>
 
 <style>
