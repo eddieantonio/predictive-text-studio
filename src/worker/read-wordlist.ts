@@ -26,6 +26,7 @@ export async function readExcel(
   }
 
   const wordlist: WordList = [];
+  
   worksheet.eachRow((row) => {
     if (shouldRowBeConverted(row)) {
       const word = row.getCell(WORD).text || "";
