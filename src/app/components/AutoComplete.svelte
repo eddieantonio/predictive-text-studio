@@ -11,7 +11,7 @@
   }
   export let label = "";
   export let subtext = "";
-  export let bold = true;
+  export let bold: boolean = true;
   // To store filtered array
   let filtered: KeyboardDataWithTime[] = [];
   // To store Keyman Keyboard data
@@ -84,7 +84,8 @@
   };
 
   // Up/Down arrow
-  function handleKeydown({ key }: KeyboardEvent) {
+  function handleKeydown(e: KeyboardEvent) {
+    const { key } = e;
     if (key === keyboardKey.Down) {
       index += 1;
     } else if (key === keyboardKey.Up) {
@@ -94,6 +95,7 @@
         index -= 1;
       }
     } else if (key === keyboardKey.Enter) {
+      e.preventDefault();
       selectedList(filtered[index]);
     } else {
       /* Not a key we care about */

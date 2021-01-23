@@ -331,8 +331,8 @@
 
   <section id="get-started" class="quick-start">
     <!-- TODO: should not use hard coded URL! -->
-    <form action="/languages" data-cy="quick-start" onkeydown={"return event.key !== 'Enter'"}>
-      <fieldset class="quick-start__step" disabled="">
+    <form action="/languages" data-cy="quick-start" >
+      <fieldset class="quick-start__step">
         <AutoComplete on:message={updateLanguageStatus} label="Step 1: Enter your language" subtext="" bold={false} />
       </fieldset>
 

@@ -35,11 +35,6 @@
     ],
   };
 
-  interface LanguageProject {
-    id: number;
-    name: string;
-  }
-
   /**
    * Handles the click when a content button (Information/Sources) is pressed
    * Changes the selected button variable
