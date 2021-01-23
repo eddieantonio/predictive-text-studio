@@ -33,6 +33,32 @@ export async function readExcel(
   return wordlist;
 }
 
+export async function readTSV(TSVFile: File): Promise<WordList> {
+  const wordlist: WordList = [];
+
+  const reader = new FileReader();
+  reader.addEventListener("load", (event: ProgressEvent<FileReader>) => {
+    if (event.target && typeof event.target.result === "string") {
+      // get file contents
+      const rows = event.target.result.split("\n");
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i].split("\t");
+        if (row.length !== 2) {
+          continue;
+        }
+        const word = row[0] || "";
+        const count = asNonNegativeInteger(row[1] || 1);
+        wordlist.push([word, count]);
+      }
+    } else {
+      throw new Error("Could not read TSV file");
+    }
+  });
+  reader.readAsText(TSVFile);
+
+  return wordlist;
+}
+
 /**
  * Returns a non-negative integer, or throws an error.
  */
