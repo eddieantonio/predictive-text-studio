@@ -6,7 +6,7 @@ describe("Changing metadata in the language info page", function () {
 
     cy.visit("/languages");
 
-    cy.data("input-language-name").clear().type(languageName).blur();
+    languageInput().clear().type(languageName).blur();
     cy.data("input-author-name").clear().type(authorName);
     cy.data("input-copyright").clear().type(copyright);
 
@@ -23,8 +23,12 @@ describe("Changing metadata in the language info page", function () {
     // TODO: can we avoid waiting here?
     cy.wait(1000);
 
-    cy.data("input-language-name").its("value").should("be", languageName);
+    languageInput().its("value").should("be", languageName);
     cy.data("input-author-name").its("value").should("be", authorName);
     cy.data("input-copyright").its("value").should("be", copyright);
   });
+
+  function languageInput() {
+    return cy.data("input-language-name").find("input");
+  }
 });

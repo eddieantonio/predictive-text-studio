@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
   import worker from "../spawn-worker";
   import { createEventDispatcher } from "svelte";
+  import AutoComplete from "simple-svelte-autocomplete";
+
   import type { KeyboardDataWithTime } from "@common/types";
 
   enum keyboardKey {
@@ -19,7 +21,9 @@
   // To store Keyman Keyboard data
   let knownLanguages: KeyboardDataWithTime[] = [];
   // To store selected language
+  // TODO: rename to selectedLanguage
   export let selected: string = "";
+
   // Toggle to show search list
   let show = false;
   // Index of focus element
@@ -149,30 +153,11 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="autocomplete mb-m" on:focusout={closeSuggestion}>
+<div class="autocomplete mb-m" on:focusout={closeSuggestion} data-cy={cyData}>
   {#if label !== ''}
     <p class="autocomplete__label" class:bold>{label}</p>
   {/if}
-  <input
-    class="autocomplete__input"
-    value={selected}
-    type="text"
-    on:input={filterAutocompleteSuggestions}
-    data-cy={cyData} />
-  {#if show}
-    <ul
-      class="autocomplete__suggestion-list"
-      data-cy="autocomplete__suggestion-list">
-      {#each filtered as result, i}
-        <li
-          class="autocomplete__suggestion-item"
-          class:autocomplete__suggestion-item--active={i == index}
-          data-cy="autocomplete-suggestions">
-          <div on:click={() => selectedList(result)}>{result.language}</div>
-        </li>
-      {/each}
-    </ul>
-  {/if}
+  <AutoComplete items={knownLanguages} bind:selectedItem={selected} labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
     BCP47Tag:
     {subtext}
