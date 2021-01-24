@@ -5,6 +5,7 @@
   import * as Comlink from "comlink";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import SplitButton from "../components/SplitButton.svelte";
+  import "../logic/im-not-sure-yet";
 
   let downloadURL = "";
   let languageStatus: boolean = false;
