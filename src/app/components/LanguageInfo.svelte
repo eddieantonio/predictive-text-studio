@@ -66,7 +66,7 @@
       label="Language"
       subtext=""
       cyData="input-language-name"
-      bind:selected={languageInfo}
+      bind:selectedLanguage={languageInfo}
       on:message={updateMetadata} />
     <InputField
       label="Author or Organization"
