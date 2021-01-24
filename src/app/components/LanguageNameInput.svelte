@@ -38,10 +38,6 @@
 </script>
 
 <style>
-  .autocomplete {
-    position: relative;
-    width: fit-content;
-  }
   .autocomplete__label {
     font-family: var(--main-font), sans-serif;
     font-size: var(--s);
@@ -57,14 +53,25 @@
     color: var(--gray);
     font-size: var(--xxs);
   }
+
+  /**
+   * Customize appearance of the internal autocomplete.
+   * See: https://github.com/pstanoev/simple-svelte-autocomplete/tree/6daf489771c908a497a660f4de44876cd98d7759#style-and-ui-options
+   */
+  :global(.autocomplete--full-width) {
+    /* the internal declaration is WAY more specific than this declaration, so
+     * use !important ¯\_(ツ)_/¯  */
+    display: block !important;
+  }
 </style>
 
-<div class="autocomplete mb-m" data-cy={cyData}>
+<div data-cy={cyData}>
   {#if label !== ''}
     <p class="autocomplete__label" class:bold>{label}</p>
   {/if}
   <AutoComplete
     items={knownLanguages}
+    className="autocomplete--full-width"
     bind:selectedItem={selected}
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
