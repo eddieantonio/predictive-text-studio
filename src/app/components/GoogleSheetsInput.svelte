@@ -7,8 +7,8 @@
   let googleSheetsURL = "";
 
   // Client ID and API key from the Developer Console
-  const CLIENT_ID = process.env.G_CLIENT_ID;
-  const API_KEY = process.env.G_API_KEY;
+  const CLIENT_ID = process.env.CLIENT_ID;
+  const API_KEY = process.env.API_KEY;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -31,6 +31,7 @@
    *  listeners.
    */
   function initClient() {
+    console.log(API_KEY, CLIENT_ID, DISCOVERY_DOCS, SCOPES)
     error = null;
     gapi.client
       .init({

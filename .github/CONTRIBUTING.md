@@ -78,6 +78,13 @@ Run this to build all the files
 
     yarn run build
 
+### Set up your Google Sheets API Key
+In order to test the Google Sheets functionality, you will need to create your own local API keys and save them into your own `.env` file.
+
+Perform the following steps:
+ 1. Go to https://developers.google.com/sheets/api/quickstart/js to get your API key and client ID
+ 2. Copy the `.env.template` file, replace the placeholder values with the ones you obtained above, and save it as `.env`
+
 ### Start the development environment
 
 To start development, run the following:
