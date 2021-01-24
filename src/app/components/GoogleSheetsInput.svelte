@@ -10,10 +10,6 @@
   const WORD = 0;
   const COUNT = 1;
 
-  // Client ID and API key from the Developer Console
-  // const CLIENT_ID = process.env.G_CLIENT_ID;
-  // const API_KEY = process.env.G_API_KEY;
-
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
     "https://sheets.googleapis.com/$discovery/rest?version=v4",
@@ -81,7 +77,7 @@
     googleSheetsURL = document.getElementById("input-googleSheetsURL").value;
 
     const googleSheetRegExp = RegExp(
-      "http(s)?://docs.google.com/spreadsheets/[a-z]{1}/[\\w-]+/[\\w#=-]+"
+      "http(s?)://docs.google.com/spreadsheets/[a-z]{1}/[\\w-]+/[\\w#=-]+"
     );
 
     if (googleSheetRegExp.test(googleSheetsURL)) {
@@ -133,7 +129,6 @@
     for (let i = 0; i < range.values.length; i++) {
       const row = range.values[i];
       if (shouldRowBeConverted(row)) {
-        console.log(row);
         const word = row[0];
         let wordCount = row[1];
         if (!wordCount) {
