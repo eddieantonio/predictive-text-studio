@@ -11,15 +11,18 @@
   export let cyData = "autocomplete-label";
 
   // To store selected language
-  // TODO: rename to selectedLanguage
   export let selected: KeyboardMetadata | undefined = undefined;
+  export let selectedLanguage: KeyboardMetadata | undefined = undefined;
+
+  // XXX: will remove soon...
+  $: selected = selectLanguage;
 
   // To store Keyman Keyboard data
   let knownLanguages: KeyboardMetadata[] = [];
 
   const dispatch = createEventDispatcher();
 
-  $: if (selected) selectLanguage(selected);
+  $: if (selectedLanguage) selectLanguage(selectedLanguage);
 
   onMount(async () => {
     knownLanguages = await worker.getDataFromStorage();
@@ -72,7 +75,7 @@
   <AutoComplete
     items={knownLanguages}
     className="autocomplete--full-width"
-    bind:selectedItem={selected}
+    bind:selectedItem={selectedLanguage}
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
     BCP47Tag:
