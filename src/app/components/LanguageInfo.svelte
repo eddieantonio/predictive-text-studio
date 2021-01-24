@@ -64,7 +64,6 @@
   <div class="language__info-left">
     <LanguageNameInput
       label="Language"
-      subtext=""
       cyData="input-language-name"
       bind:selectedLanguage={languageInfo}
       on:message={updateMetadata} />

@@ -338,7 +338,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start" >
       <fieldset class="quick-start__step">
-        <LanguageNameInput on:message={setLanguage} label="Step 1: Enter your language" subtext="" bold={false} />
+        <LanguageNameInput on:message={setLanguage} label="Step 1: Enter your language" bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">

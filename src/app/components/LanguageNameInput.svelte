@@ -5,23 +5,52 @@
   import worker from "../spawn-worker";
   import type { KeyboardMetadata } from "@common/types";
 
+  /**************************** External props ******************************/
+
+  /**
+   * What text should appear above the input.
+   */
   export let label = "";
-  export let subtext = "";
+  /**
+   * Whether the label should be bold or not.
+   */
   export let bold: boolean = true;
+
+  /**
+   * [data-cy] label (for Cypress tests)
+   */
   export let cyData = "autocomplete-label";
 
+  /**
+   * The language selected by this element.
+   */
   export let selectedLanguage: KeyboardMetadata | undefined = undefined;
 
-  // To store Keyman Keyboard data
-  let knownLanguages: KeyboardMetadata[] = [];
+  /************************** Internal variables ****************************/
 
+  /**
+   * Event dispatcher used to send "languages" message to parent components.
+   *
+   * Honestly, I think this is a weird design choice; we may want to redo this :/
+   */
   const dispatch = createEventDispatcher();
 
-  $: if (selectedLanguage) selectLanguage(selectedLanguage);
+  /**
+   * List of languages that will be autocompleted.
+   */
+  let knownLanguages: KeyboardMetadata[] = [];
 
-  onMount(async () => {
+  /**
+   * What text should appear below the input. In practice, this is the BCP-47
+   * tag.
+   */
+  let subtext = "";
+
+  onMount(async function loadLanguageListFromWorker() {
     knownLanguages = await worker.getDataFromStorage();
   });
+
+  $: if (selectedLanguage) selectLanguage(selectedLanguage);
 
   function selectLanguage({ language, bcp47Tag }: KeyboardMetadata) {
     subtext = bcp47Tag;
