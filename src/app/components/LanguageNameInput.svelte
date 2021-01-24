@@ -10,12 +10,7 @@
   export let bold: boolean = true;
   export let cyData = "autocomplete-label";
 
-  // To store selected language
-  export let selected: KeyboardMetadata | undefined = undefined;
   export let selectedLanguage: KeyboardMetadata | undefined = undefined;
-
-  // XXX: will remove soon...
-  $: selected = selectLanguage;
 
   // To store Keyman Keyboard data
   let knownLanguages: KeyboardMetadata[] = [];
