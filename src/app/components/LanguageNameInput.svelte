@@ -3,7 +3,7 @@
   import AutoComplete from "simple-svelte-autocomplete";
 
   import worker from "../spawn-worker";
-  import type { KeyboardDataWithTime } from "@common/types";
+  import type { KeyboardMetadata } from "@common/types";
 
   export let label = "";
   export let subtext = "";
@@ -12,10 +12,10 @@
 
   // To store selected language
   // TODO: rename to selectedLanguage
-  export let selected: KeyboardDataWithTime | undefined = undefined;
+  export let selected: KeyboardMetadata | undefined = undefined;
 
   // To store Keyman Keyboard data
-  let knownLanguages: KeyboardDataWithTime[] = [];
+  let knownLanguages: KeyboardMetadata[] = [];
 
   const dispatch = createEventDispatcher();
 

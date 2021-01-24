@@ -5,12 +5,11 @@
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import worker from "../spawn-worker";
 
-  import type { KeyboardDataWithTime } from "@common/types";
+  import type { KeyboardMetadata } from "@common/types";
 
-  let languageInfo: KeyboardDataWithTime = {
+  let languageInfo: KeyboardMetadata = {
     language: "",
     bcp47Tag: "",
-    timestamp: new Date, // wat?
   };
   let authorName: string = "";
   let copyright: string = "";
@@ -28,7 +27,6 @@
     let { key, value } = event.detail;
     worker.setProjectData({ [key]: value });
   }
-
 </script>
 
 <style>
