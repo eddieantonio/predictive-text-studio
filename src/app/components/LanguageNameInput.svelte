@@ -19,19 +19,19 @@
 
   const dispatch = createEventDispatcher();
 
-  $: if (selected) selectLanguage(selected.language, selected.bcp47Tag);
+  $: if (selected) selectLanguage(selected);
 
   onMount(async () => {
     knownLanguages = await worker.getDataFromStorage();
   });
 
-  function selectLanguage(name: string, bcp47Tag: string) {
+  function selectLanguage({ language, bcp47Tag }: KeyboardMetadata) {
     subtext = bcp47Tag;
 
     // TODO: why... it it just key/value?
     dispatch("message", {
       key: "languages",
-      value: [{ name, id: bcp47Tag }],
+      value: [{ language, id: bcp47Tag }],
       status: true,
     });
   }
