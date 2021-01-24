@@ -16,13 +16,10 @@
   worker.onPackageCompileSuccess(
     Comlink.proxy(async (kmp: ArrayBuffer) => {
       downloadURL = createURL(kmp);
-      updateContinueStatus();
     })
   );
 
-  function updateContinueStatus() {
-    continueReady = languageStatus && downloadURL !== "";
-  }
+  $: continueReady = languageStatus && Boolean(downloadURL);
 
   function setLanguage(event: CustomEvent) {
     const languages = event.detail.value;
@@ -30,7 +27,6 @@
     if (languageStatus) {
       worker.setProjectData({ languages });
     }
-    updateContinueStatus();
   }
 
   // Split Button
