@@ -31,7 +31,6 @@
    *  listeners.
    */
   function initClient() {
-    console.log(API_KEY, CLIENT_ID, DISCOVERY_DOCS, SCOPES)
     error = null;
     gapi.client
       .init({
