@@ -11,8 +11,8 @@ import * as child_process from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 
-import replace from '@rollup/plugin-replace';
-import { config as configDotenv } from 'dotenv';
+import replace from "@rollup/plugin-replace";
+import { config as configDotenv } from "dotenv";
 
 //////////////////////////////// Environment /////////////////////////////////
 const production = !process.env.ROLLUP_WATCH;
@@ -37,8 +37,8 @@ export const appConfiguration = {
     }),
 
     svelte({
-      dev: !production,
       preprocess: sveltePreprocess(),
+      emitCss: false,
     }),
 
     resolve({
