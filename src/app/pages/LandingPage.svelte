@@ -28,7 +28,6 @@
     continueReady = languageStatus && downloadURL !== "";
   }
 
-  // TODO: rename function; it does more than update language status
   function setLanguage(event: CustomEvent) {
     const languages = event.detail.value;
     languageStatus = event.detail.status;
