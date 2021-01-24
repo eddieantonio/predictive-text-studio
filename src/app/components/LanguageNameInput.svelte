@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import worker from "../spawn-worker";
-  import { createEventDispatcher } from "svelte";
+  import { onMount, createEventDispatcher } from "svelte";
   import AutoComplete from "simple-svelte-autocomplete";
 
+  import worker from "../spawn-worker";
   import type { KeyboardDataWithTime } from "@common/types";
 
   export let label = "";
@@ -13,20 +12,20 @@
 
   // To store selected language
   // TODO: rename to selectedLanguage
-  export let selected: string = "";
+  export let selected: KeyboardDataWithTime | undefined = undefined;
 
   // To store Keyman Keyboard data
   let knownLanguages: KeyboardDataWithTime[] = [];
 
   const dispatch = createEventDispatcher();
 
-  $: selectLanguage(selected.language, selected.bcp47Tag);
+  $: if (selected) selectLanguage(selected.language, selected.bcp47Tag);
 
   onMount(async () => {
     knownLanguages = await worker.getDataFromStorage();
   });
 
-  function selectLanguage(name, bcp47Tag) {
+  function selectLanguage(name: string, bcp47Tag: string) {
     subtext = bcp47Tag;
 
     // TODO: why... it it just key/value?
@@ -52,43 +51,6 @@
   .bold {
     font-weight: bold;
     font-size: var(--xs);
-  }
-  .autocomplete__input {
-    font-family: var(--secondary-font), sans-serif;
-    font-size: var(--m);
-    padding: var(--sb-xs);
-    border-radius: var(--sb-xs);
-    border-width: 1px;
-    border-color: var(--gray);
-  }
-  .autocomplete__suggestion-list {
-    position: absolute;
-    padding: 0 0 var(--sb-xs) 0;
-    margin: 0;
-    width: 100%;
-    height: 11rem;
-    overflow: scroll;
-    background: white;
-    box-shadow: 0px var(--sb-xs) var(--sb-m) rgba(0, 0, 0, 0.2);
-    border-radius: 0 0 var(--sb-xs) var(--sb-xs);
-    list-style-type: none;
-    text-decoration: none;
-    z-index: 5;
-  }
-  .autocomplete__suggestion-item {
-    font-size: var(--m);
-    font-style: bold;
-    padding: var(--sb-xs) var(--sb-s);
-    overflow: hidden;
-    border-right: solid var(--sb-s) rgba(0, 0, 0, 0);
-  }
-  .autocomplete__suggestion-item--active {
-    margin: 0;
-    background-color: var(--gray-highlight);
-  }
-  .autocomplete__suggestion-item:hover {
-    cursor: pointer;
-    background-color: var(--gray-highlight);
   }
   .autocomplete__subtext {
     font-family: var(--mono-font), monospace;

@@ -5,15 +5,22 @@
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import worker from "../spawn-worker";
 
+  import type { KeyboardDataWithTime } from "@common/types";
+
+  let languageInfo: KeyboardDataWithTime = {
+    language: "",
+    bcp47Tag: "",
+    timestamp: new Date, // wat?
+  };
   let authorName: string = "";
-  let languageName: string = "";
   let copyright: string = "";
 
   onMount(async () => {
     const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
 
     authorName = storedProjectData.authorName;
-    languageName = storedProjectData.langName;
+    languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
+    languageInfo.language = storedProjectData.langName;
     copyright = storedProjectData.copyright || "";
   });
 
@@ -21,6 +28,7 @@
     let { key, value } = event.detail;
     worker.setProjectData({ [key]: value });
   }
+
 </script>
 
 <style>
@@ -60,7 +68,7 @@
       label="Language"
       subtext=""
       cyData="input-language-name"
-      bind:selected={languageName}
+      bind:selected={languageInfo}
       on:message={updateMetadata} />
     <InputField
       label="Author or Organization"
