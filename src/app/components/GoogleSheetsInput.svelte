@@ -45,8 +45,7 @@
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         error = "Error: Could not connect to Google Sheets";
       });
   }
@@ -74,6 +73,7 @@
    *
    */
   function getSpreadsheetId() {
+    // TODO: should not use id; should make use of bindings
     googleSheetsURL = document.getElementById("input-googleSheetsURL").value;
 
     const googleSheetRegExp = RegExp(
@@ -129,8 +129,8 @@
     for (let i = 0; i < range.values.length; i++) {
       const row = range.values[i];
       if (shouldRowBeConverted(row)) {
-        const word = row[0];
-        let wordCount = row[1];
+        const word = row[WORD];
+        let wordCount = row[COUNT];
         if (!wordCount) {
           wordCount = 0;
         }
