@@ -1,23 +1,17 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
-  import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import worker from "../spawn-worker";
-  import * as Comlink from "comlink";
+  import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import SplitButton from "../components/SplitButton.svelte";
-  import { createURL } from "../logic/im-not-sure-yet";
   import { currentDownloadURL } from "../stores";
+  import { setupAutomaticCompilationAndDownloadURL } from "../logic/im-not-sure-yet";
 
   let languageStatus: boolean = false;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
 
-  // TODO: these should go in a different file:
-  worker.onPackageCompileSuccess(
-    Comlink.proxy(async (kmp: ArrayBuffer) => {
-      currentDownloadURL.set(createURL(kmp));
-    })
-  );
+  setupAutomaticCompilationAndDownloadURL();
 
   $: continueReady = languageStatus && Boolean($currentDownloadURL);
 
