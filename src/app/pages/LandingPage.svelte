@@ -5,13 +5,10 @@
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import SplitButton from "../components/SplitButton.svelte";
   import { currentDownloadURL } from "../stores";
-  import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
 
   let languageStatus: boolean = false;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
-
-  setupAutomaticCompilationAndDownloadURL();
 
   $: continueReady = languageStatus && Boolean($currentDownloadURL);
 
