@@ -77,7 +77,7 @@
     googleSheetsURL = document.getElementById("input-googleSheetsURL").value;
 
     const googleSheetRegExp = RegExp(
-      "http(s?)://docs.google.com/spreadsheets/[a-z]{1}/[\\w-]+/[\\w#=-]+"
+      "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
     );
 
     if (googleSheetRegExp.test(googleSheetsURL)) {
