@@ -32,8 +32,8 @@ export const appConfiguration = {
   },
   plugins: [
     replace({
-      "process.env.G_CLIENT_ID": JSON.stringify(process.env.CLIENT_ID),
-      "process.env.G_API_KEY": JSON.stringify(process.env.API_KEY),
+      CLIENT_ID: JSON.stringify(process.env.CLIENT_ID),
+      API_KEY: JSON.stringify(process.env.API_KEY),
     }),
 
     svelte({
