@@ -6,6 +6,7 @@
   var error = null;
   let googleSheetsURL = "";
 
+
   // Constants for checking headers
   const WORD = 0;
   const COUNT = 1;
