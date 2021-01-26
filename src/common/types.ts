@@ -24,15 +24,24 @@ export interface DictionaryEntry {
   count?: number;
 }
 
-export interface KeyboardDataWithTime {
+/**
+ * Stores information about a known keyboard layout.
+ */
+export interface KeyboardMetadata {
   /**
-   * Store bcp47Tag as the primarykey
+   * The tag of the keyboard. Includes language, but may also include script
+   * and region.
    */
   bcp47Tag: string;
+
   /**
-   * Keyboard Language of the bcp47Tag
+   * Plain English description of the language.
+   * Note: language community may NOT want to list the English name.
    */
   language: string;
+}
+
+export interface KeyboardDataWithTime extends KeyboardMetadata {
   /**
    * Timestamp of last updated time
    */
