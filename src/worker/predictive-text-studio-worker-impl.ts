@@ -84,9 +84,23 @@ export class PredictiveTextStudioWorkerImpl
   ): Promise<number> {
     let wordlist: WordList = [];
     if (/\.(tsv)$/i.test(name)) {
-      wordlist = await readTSV(contents);
-    } else {
+      // Read the file as a string
+      const TSVFileString: string = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener("load", (event: ProgressEvent<FileReader>) => {
+          if (event.target && typeof event.target.result === "string") {
+            resolve(event.target.result);
+          } else {
+            reject("Could not Read File");
+          }
+        });
+        reader.readAsText(contents);
+      });
+      wordlist = readTSV(TSVFileString);
+    } else if (/\.(xlsx)$/i.test(name)) {
       wordlist = await readExcel(await contents.arrayBuffer());
+    } else {
+      throw new Error("Invalid File Type. Please use either .tsv or .xlsx");
     }
 
     await this.storage.saveFile(name, wordlist);

@@ -11,6 +11,7 @@
   // However, as of right now, doing so on Chrome when dragging over nested element
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
   let dragEnterCounter = 0;
+  let error: Error | null  = null;
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
@@ -38,8 +39,13 @@
       // Use DataTransfer interface to access the file(s)
       fileList = Array.from(event.dataTransfer.files);
     }
-    for (let file of fileList) {
-      await worker.addDictionarySourceToProject(file.name, file);
+    try {
+      for (let file of fileList) {
+        await worker.addDictionarySourceToProject(file.name, file);
+      }
+      error = null;
+    } catch (e) {
+      error = e;
     }
   };
 
@@ -58,8 +64,13 @@
   const handleChange = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
-      for (let file of input.files) {
-        await worker.addDictionarySourceToProject(file.name, file);
+      try {
+        for (let file of input.files) {
+          await worker.addDictionarySourceToProject(file.name, file);
+        }
+        error = null;
+      } catch (e) {
+        error = e;
       }
     }
   };
@@ -102,6 +113,10 @@
     color: var(--blue);
     padding-bottom: 1em;
   }
+  .error {
+    background-color: #f8d7db;
+    color: #400000;
+  }
 </style>
 
 <div
@@ -113,7 +128,10 @@
   on:dragover|preventDefault={handleDragOver}
   data-cy="upload-dropzone">
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
-  <span>Drag and drop an Excel .xlsx file here!</span>
+  {#if error}
+    <p class:error>{error}</p>
+  {/if}
+  <span>Drag and drop an Excel .xlsx or TSV file here!</span>
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
   <input

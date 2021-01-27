@@ -38,31 +38,38 @@ export async function readExcel(
   return wordlist;
 }
 
-export async function readTSV(TSVFile: File): Promise<WordList> {
-  return new Promise((resolve, reject) => {
-    const wordlist: WordList = [];
+/**
+ * Function to read a TSV file with logic from keymanapp
+ * @param TSVFile UTF-8 String
+ */
+export function readTSV(TSVFile: string): WordList {
+  const wordlist: WordList = [];
+  // get file contents
+  const rows = TSVFile.split(/\u000d?\u000a/);
+  for (let i = 0; i < rows.length; i++) {
+    // Remove BOM from beginning of the string
+    rows[i] = rows[i].replace(/^\uFEFF/, "");
 
-    const reader = new FileReader();
-    reader.addEventListener("load", (event: ProgressEvent<FileReader>) => {
-      if (event.target && typeof event.target.result === "string") {
-        // get file contents
-        const rows = event.target.result.split("\n");
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i].split("\t");
-          if (row.length !== 2) {
-            continue;
-          }
-          const word = row[0] || "";
-          const count = asNonNegativeInteger(row[1] || 1);
-          wordlist.push([word, count]);
-          resolve(wordlist);
-        }
-      } else {
-        reject("Could not read TSV file");
-      }
-    });
-    reader.readAsText(TSVFile);
-  });
+    if (rows[i].startsWith("#") || rows[i] === "") {
+      continue; // skip comments and empty lines
+    }
+
+    // eslint-disable-next-line prefer-const
+    let [word, countText, _comment] = rows[i].split("\t");
+    word = word.normalize("NFC").trim();
+    countText = (countText || "").trim();
+
+    if (
+      word.toLowerCase().includes("word") &&
+      countText.toLowerCase().includes("count")
+    ) {
+      continue; // skip the first line with Headers
+    }
+
+    const count = asNonNegativeInteger(countText || 1);
+    wordlist.push([word, count]);
+  }
+  return wordlist;
 }
 
 /**
