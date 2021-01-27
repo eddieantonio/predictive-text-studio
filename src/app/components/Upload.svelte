@@ -11,7 +11,7 @@
   // However, as of right now, doing so on Chrome when dragging over nested element
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
   let dragEnterCounter = 0;
-  let error: Error | null  = null;
+  let error: Error | null = null;
 
   function fileFromDataTransferItem(items: DataTransferItemList): File[] {
     const fileList: File[] = [];
