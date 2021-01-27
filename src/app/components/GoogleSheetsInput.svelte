@@ -6,9 +6,10 @@
   var error = null;
   let googleSheetsURL = "";
 
-  // Client ID and API key from the Developer Console
-  const CLIENT_ID = process.env.G_CLIENT_ID;
-  const API_KEY = process.env.G_API_KEY;
+
+  // Constants for checking headers
+  const WORD = 0;
+  const COUNT = 1;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -73,10 +74,11 @@
    *
    */
   function getSpreadsheetId() {
-    googleSheetsURL = document.getElementById("googleSheetsURL").value;
+    // TODO: should not use id; should make use of bindings
+    googleSheetsURL = document.getElementById("input-googleSheetsURL").value;
 
     const googleSheetRegExp = RegExp(
-      "http(s?)://docs.google.com/spreadsheets/[a-z]+/[a-zA-z0-9]+/[a-zA-z0-9#=]+"
+      "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
     );
 
     if (googleSheetRegExp.test(googleSheetsURL)) {
@@ -84,6 +86,16 @@
     } else {
       error = `Error: The url ${googleSheetsURL} is not a valid Google Sheets URl. Please paste a valid one.`;
     }
+  }
+
+  /**
+   * Returns a boolean if the row should be converted.
+   * The row should not be converted if it is a header row or a commented out row.
+   */
+  function shouldRowBeConverted(row) {
+    const isHeaderRow = row[COUNT].toLowerCase().includes("count");
+    const isCommentRow = row[WORD] === "#";
+    return !isHeaderRow && !isCommentRow;
   }
 
   /**
@@ -102,7 +114,7 @@
     try {
       response = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
-        range: "A2:B",
+        range: "A1:B",
       });
     } catch {
       error = "Error: " + response.result.error.message;
@@ -117,12 +129,14 @@
 
     for (let i = 0; i < range.values.length; i++) {
       const row = range.values[i];
-      const word = row[0];
-      let wordCount = row[1];
-      if (!wordCount) {
-        wordCount = 0;
+      if (shouldRowBeConverted(row)) {
+        const word = row[WORD];
+        let wordCount = row[COUNT];
+        if (!wordCount) {
+          wordCount = 0;
+        }
+        wordListObject.push([word, wordCount]);
       }
-      wordListObject.push([word, wordCount]);
     }
     error = null;
 

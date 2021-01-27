@@ -2,18 +2,24 @@
   import { onMount } from "svelte";
 
   import InputField from "./InputField.svelte";
-  import AutoComplete from "../components/AutoComplete.svelte";
+  import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import worker from "../spawn-worker";
 
+  import type { KeyboardMetadata } from "@common/types";
+
+  let languageInfo: KeyboardMetadata = {
+    language: "",
+    bcp47Tag: "",
+  };
   let authorName: string = "";
-  let languageName: string = "";
   let copyright: string = "";
 
   onMount(async () => {
     const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
 
     authorName = storedProjectData.authorName;
-    languageName = storedProjectData.langName;
+    languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
+    languageInfo.language = storedProjectData.langName;
     copyright = storedProjectData.copyright || "";
   });
 
@@ -56,11 +62,11 @@
 
 <div class="language__info">
   <div class="language__info-left">
-    <AutoComplete
+    <LanguageNameInput
       label="Language"
       subtext=""
       cyData="input-language-name"
-      bind:selected={languageName}
+      bind:selected={languageInfo}
       on:message={updateMetadata} />
     <InputField
       label="Author or Organization"
