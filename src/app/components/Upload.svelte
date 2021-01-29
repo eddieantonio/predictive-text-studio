@@ -114,8 +114,8 @@
     padding-bottom: 1em;
   }
   .error {
-    background-color: #f8d7db;
-    color: #400000;
+    background-color: var(--error-bg-color);
+    color: var(--error-fg-color);
   }
 </style>
 
