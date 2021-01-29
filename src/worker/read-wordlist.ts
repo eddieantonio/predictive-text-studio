@@ -54,20 +54,19 @@ export function readTSV(TSVFile: string): WordList {
       continue; // skip comments and empty lines
     }
 
-    // eslint-disable-next-line prefer-const
-    let [word, countText, _comment] = rows[i].split("\t");
-    word = word.normalize("NFC").trim();
-    countText = (countText || "").trim();
+    const [word, countText] = rows[i].split("\t");
+    const wordNorm = word.normalize("NFC").trim();
+    const countTextTrim = (countText || "").trim();
 
     if (
-      word.toLowerCase().includes("word") &&
-      countText.toLowerCase().includes("count")
+      wordNorm.toLowerCase().includes("word") &&
+      countTextTrim.toLowerCase().includes("count")
     ) {
       continue; // skip the first line with Headers
     }
 
-    const count = asNonNegativeInteger(countText || 1);
-    wordlist.push([word, count]);
+    const count = asNonNegativeInteger(countTextTrim || 1);
+    wordlist.push([wordNorm, count]);
   }
   return wordlist;
 }
