@@ -1,6 +1,6 @@
 import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
-import { readExcel, readManualEntryData } from "./read-wordlist";
+import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
@@ -82,7 +82,27 @@ export class PredictiveTextStudioWorkerImpl
     name: string,
     contents: File
   ): Promise<number> {
-    const wordlist = await readExcel(await contents.arrayBuffer());
+    let wordlist: WordList = [];
+    if (/\.(tsv)$/i.test(name)) {
+      // Read the file as a string
+      const TSVFileString: string = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener("load", (event: ProgressEvent<FileReader>) => {
+          if (event.target && typeof event.target.result === "string") {
+            resolve(event.target.result);
+          } else {
+            reject("Could not Read File");
+          }
+        });
+        reader.readAsText(contents);
+      });
+      wordlist = readTSV(TSVFileString);
+    } else if (/\.(xlsx)$/i.test(name)) {
+      wordlist = await readExcel(await contents.arrayBuffer());
+    } else {
+      throw new Error("Invalid File Type. Please use either .tsv or .xlsx");
+    }
+
     await this.storage.saveFile(name, wordlist);
     this.generateKMPFromStorage();
     return wordlist.length;

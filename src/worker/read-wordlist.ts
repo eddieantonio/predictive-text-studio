@@ -39,6 +39,39 @@ export async function readExcel(
 }
 
 /**
+ * Function to read a TSV file with logic from keymanapp
+ * @param TSVFile UTF-8 String
+ */
+export function readTSV(TSVFile: string): WordList {
+  const wordlist: WordList = [];
+  // get file contents
+  const rows = TSVFile.split(/\u000d?\u000a/);
+  for (let i = 0; i < rows.length; i++) {
+    // Remove BOM from beginning of the string
+    rows[i] = rows[i].replace(/^\uFEFF/, "");
+
+    if (rows[i].startsWith("#") || rows[i] === "") {
+      continue; // skip comments and empty lines
+    }
+
+    const [word, countText] = rows[i].split("\t");
+    const wordNorm = word.normalize("NFC").trim();
+    const countTextTrim = (countText || "").trim();
+
+    if (
+      wordNorm.toLowerCase().includes("word") &&
+      countTextTrim.toLowerCase().includes("count")
+    ) {
+      continue; // skip the first line with Headers
+    }
+
+    const count = asNonNegativeInteger(countTextTrim || 1);
+    wordlist.push([wordNorm, count]);
+  }
+  return wordlist;
+}
+
+/**
  * Returns a boolean if the row should be converted.
  * The row should not be converted if it is a header row or a commented out row.
  */
