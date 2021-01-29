@@ -1,41 +1,23 @@
 <script lang="ts">
   import Upload from "../components/Upload.svelte";
-  import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import worker from "../spawn-worker";
-  import * as Comlink from "comlink";
+  import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import SplitButton from "../components/SplitButton.svelte";
+  import { currentDownloadURL } from "../stores";
 
-  let downloadURL = "";
   let languageStatus: boolean = false;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
 
-  // TODO: these should go in a different file:
-  worker.onPackageCompileSuccess(
-    Comlink.proxy(async (kmp: ArrayBuffer) => {
-      downloadURL = createURL(kmp);
-      updateContinueStatus();
-    })
-  );
+  $: continueReady = languageStatus && Boolean($currentDownloadURL);
 
-  function createURL(kmpFile: ArrayBuffer): string {
-    const blob = new Blob([kmpFile], { type: "application/octet-stream" });
-    return URL.createObjectURL(blob);
-  }
-
-  function updateContinueStatus() {
-    continueReady = languageStatus && downloadURL !== "";
-  }
-
-  // TODO: rename function; it does more than update language status
   function setLanguage(event: CustomEvent) {
     const languages = event.detail.value;
     languageStatus = event.detail.status;
     if (languageStatus) {
       worker.setProjectData({ languages });
     }
-    updateContinueStatus();
   }
 
   // Split Button
@@ -338,7 +320,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start" >
       <fieldset class="quick-start__step">
-        <LanguageNameInput on:message={setLanguage} label="Step 1: Enter your language" subtext="" bold={false} />
+        <LanguageNameInput on:message={setLanguage} label="Step 1: Enter your language" bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
