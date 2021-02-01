@@ -17,15 +17,14 @@ export function getAllFilesFromDragEvent(event: DragEvent): File[] {
 
 /**
  * Returns an array of files from the given event target, which is assumed to
- * be an <input type="file">
+ * be an <input type="file">.
  */
 export function filesFromInputElement(el: EventTarget | null): File[] {
   if (el === null) return [];
-  const input = el as HTMLInputElement;
+  if (!isFileInputElement(el)) return [];
+  if (!el.files) return [];
 
-  if (!input.files) return [];
-
-  return Array.from(input.files);
+  return Array.from(el.files);
 }
 
 /**
@@ -64,4 +63,12 @@ function filesFromDataTransferItems(items: DataTransferItemList): File[] {
   }
 
   return fileList;
+}
+
+/**
+ * Returns true when the given event.target is actually an HTMLInputElement
+ * with a filelist.
+ */
+function isFileInputElement(el: EventTarget): el is HTMLInputElement {
+  return "files" in el;
 }
