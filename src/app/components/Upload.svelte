@@ -1,5 +1,9 @@
 <script lang="ts">
-  import worker from "../spawn-worker";
+  import {
+    addAllFilesToCurrentProject,
+    filesFromDragEvent,
+    filesFromInputElement,
+  } from "../logic/upload";
   const UPLOAD_INPUT_ID = "upload-input";
 
   // Dragging over nested element in a drag-and-drop zone
@@ -13,67 +17,27 @@
   let dragEnterCounter = 0;
   let error: Error | null = null;
 
-  function fileFromDataTransferItem(items: DataTransferItemList): File[] {
-    const fileList: File[] = [];
-    for (let item of items) {
-      // If dropped items aren't files, reject them
-      if (item.kind === "file") {
-        const file = item.getAsFile();
-        if (file !== null) {
-          fileList.push(file);
-        }
-      }
-    }
-    return fileList;
+  async function uploadFilesFromDragAndDrop(event: DragEvent) {
+    dragEnterCounter = 0;
+    let fileList = filesFromDragEvent(event);
+    await uploadAllFilesOrDisplayError(fileList);
   }
 
-  const handleDrop = async (event: DragEvent) => {
-    let fileList: File[] = [];
+  async function uploadFilesFromInputElement(event: Event) {
+    const files = filesFromInputElement(event.target);
+    await uploadAllFilesOrDisplayError(files);
+  }
 
-    if (event.dataTransfer == null) {
-      return;
-    } else if (event.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      fileList = fileFromDataTransferItem(event.dataTransfer.items);
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      fileList = Array.from(event.dataTransfer.files);
-    }
+  async function uploadAllFilesOrDisplayError(files: File[]): Promise<void> {
+    if (files.length === 0) return;
+
+    error = null;
     try {
-      for (let file of fileList) {
-        await worker.addDictionarySourceToProject(file.name, file);
-      }
-      error = null;
+      await addAllFilesToCurrentProject(files);
     } catch (e) {
       error = e;
     }
-  };
-
-  const handleDragEnter = () => {
-    dragEnterCounter++;
-  };
-
-  const handleDragLeave = () => {
-    dragEnterCounter--;
-  };
-
-  const handleDragOver = () => {
-    dragEnterCounter = 0;
-  };
-
-  const handleChange = async (event: Event) => {
-    const input = event.target as HTMLInputElement;
-    if (input !== null && input.files) {
-      try {
-        for (let file of input.files) {
-          await worker.addDictionarySourceToProject(file.name, file);
-        }
-        error = null;
-      } catch (e) {
-        error = e;
-      }
-    }
-  };
+  }
 </script>
 
 <style>
@@ -122,11 +86,11 @@
 <div
   class="upload-zone"
   class:drag-over={dragEnterCounter > 0}
-  on:drop|preventDefault={handleDrop}
-  on:dragenter|preventDefault={handleDragEnter}
-  on:dragleave|preventDefault={handleDragLeave}
-  on:dragover|preventDefault={handleDragOver}
-  data-cy="upload-dropzone">
+  data-cy="upload-dropzone"
+  on:drop|preventDefault={uploadFilesFromDragAndDrop}
+  on:dragenter|preventDefault={() => void dragEnterCounter++}
+  on:dragleave={() => void dragEnterCounter--}
+  on:dragover|preventDefault={() => void (dragEnterCounter = 1)}>
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
   {#if error}
     <p class:error>{error}</p>
@@ -137,6 +101,6 @@
   <input
     id={UPLOAD_INPUT_ID}
     type="file"
-    on:change={handleChange}
+    on:change={uploadFilesFromInputElement}
     data-cy="upload-spreadsheet" />
 </div>
