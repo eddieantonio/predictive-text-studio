@@ -1,8 +1,7 @@
 <script lang="ts">
+  import type { DictionarySource } from "../types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
-  import LanguageSources, {
-    DictionarySource,
-  } from "../components/LanguageSources.svelte";
+  import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
   export let selectedButton: string = "information";
 
