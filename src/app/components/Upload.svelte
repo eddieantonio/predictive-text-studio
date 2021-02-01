@@ -23,6 +23,11 @@
     await uploadAllFilesOrDisplayError(fileList);
   }
 
+  async function uploadFilesFromInputElement(event: Event) {
+    const files = filesFromInputElement(event.target);
+    await uploadAllFilesOrDisplayError(files);
+  }
+
   const handleDragEnter = () => {
     dragEnterCounter++;
   };
@@ -33,11 +38,6 @@
 
   const handleDragOver = () => {
     dragEnterCounter = 1;
-  };
-
-  const handleChange = async (event: Event) => {
-    const files = filesFromInputElement(event.target);
-    await uploadAllFilesOrDisplayError(files);
   };
 
   async function uploadAllFilesOrDisplayError(files: File[]): Promise<void> {
@@ -113,6 +113,6 @@
   <input
     id={UPLOAD_INPUT_ID}
     type="file"
-    on:change={handleChange}
+    on:change={uploadFilesFromInputElement}
     data-cy="upload-spreadsheet" />
 </div>
