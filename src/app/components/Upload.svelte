@@ -1,6 +1,9 @@
 <script lang="ts">
   import worker from "../spawn-worker";
-  import { fileFromDataTransferItem } from "../logic/upload";
+  import {
+    fileFromDataTransferItem,
+    addAllFilesToCurrentProject,
+  } from "../logic/upload";
   const UPLOAD_INPUT_ID = "upload-input";
 
   // Dragging over nested element in a drag-and-drop zone
@@ -34,12 +37,6 @@
       error = e;
     }
   };
-
-  async function addAllFilesToCurrentProject(files: File[]) {
-    for (let file of fileList) {
-      await worker.addDictionarySourceToProject(file.name, file);
-    }
-  }
 
   const handleDragEnter = () => {
     dragEnterCounter++;

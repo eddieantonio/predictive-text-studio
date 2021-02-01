@@ -1,3 +1,5 @@
+import worker from "../spawn-worker";
+
 /**
  * Return File objects from a data transfer list (created by some drag
  * events).
@@ -18,4 +20,15 @@ export function fileFromDataTransferItem(items: DataTransferItemList): File[] {
   }
 
   return fileList;
+}
+
+/**
+ * Uploads all the given files to the current project.
+ */
+export async function addAllFilesToCurrentProject(
+  files: File[]
+): Promise<void> {
+  for (const file of files) {
+    await worker.addDictionarySourceToProject(file.name, file);
+  }
 }
