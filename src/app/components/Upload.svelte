@@ -18,15 +18,8 @@
 
   const handleDrop = async (event: DragEvent) => {
     dragEnterCounter = 0;
-
     let fileList = getAllFilesFromDragEvent(event);
-
-    try {
-      await addAllFilesToCurrentProject(fileList);
-      error = null;
-    } catch (e) {
-      error = e;
-    }
+    await uploadAllFilesOrDisplayError(fileList);
   };
 
   const handleDragEnter = () => {
@@ -44,14 +37,18 @@
   const handleChange = async (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
-      try {
-        await addAllFilesToCurrentProject(input.files);
-        error = null;
-      } catch (e) {
-        error = e;
-      }
+      await uploadAllFilesOrDisplayError(input.files);
     }
   };
+
+  async function uploadAllFilesOrDisplayError(files: File[] | FileList): Promise<void> {
+    error = null;
+    try {
+      await addAllFilesToCurrentProject(files);
+    } catch (e) {
+      error = e;
+    }
+  }
 </script>
 
 <style>
