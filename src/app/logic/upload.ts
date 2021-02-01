@@ -8,7 +8,7 @@ export function getAllFilesFromDragEvent(event: DragEvent): File[] {
     return [];
   } else if (event.dataTransfer.items) {
     // Use DataTransferItemList interface to access the file(s)
-    return fileFromDataTransferItem(event.dataTransfer.items);
+    return filesFromDataTransferItems(event.dataTransfer.items);
   } else {
     // Use DataTransfer interface to access the file(s)
     return Array.from(event.dataTransfer.files);
@@ -16,10 +16,26 @@ export function getAllFilesFromDragEvent(event: DragEvent): File[] {
 }
 
 /**
+ * Uploads all the given files to the current project.
+ */
+export async function addAllFilesToCurrentProject(
+  files: File[]
+): Promise<void> {
+  for (const file of files) {
+    await worker.addDictionarySourceToProject(file.name, file);
+  }
+}
+
+///////////////////////////// Internal functions /////////////////////////////
+
+/**
  * Return File objects from a data transfer list (created by some drag
  * events).
+ *
+ * See: https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItemList
+ * See: https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem
  */
-export function fileFromDataTransferItem(items: DataTransferItemList): File[] {
+function filesFromDataTransferItems(items: DataTransferItemList): File[] {
   const fileList: File[] = [];
 
   for (const item of items) {
@@ -35,15 +51,4 @@ export function fileFromDataTransferItem(items: DataTransferItemList): File[] {
   }
 
   return fileList;
-}
-
-/**
- * Uploads all the given files to the current project.
- */
-export async function addAllFilesToCurrentProject(
-  files: File[]
-): Promise<void> {
-  for (const file of files) {
-    await worker.addDictionarySourceToProject(file.name, file);
-  }
 }
