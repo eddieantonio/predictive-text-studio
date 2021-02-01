@@ -1,8 +1,8 @@
 <script lang="ts">
   import worker from "../spawn-worker";
   import {
-    fileFromDataTransferItem,
     addAllFilesToCurrentProject,
+    getAllFilesFromDragEvent,
   } from "../logic/upload";
   const UPLOAD_INPUT_ID = "upload-input";
 
@@ -27,18 +27,6 @@
       error = e;
     }
   };
-
-  function getAllFilesFromDragEvent(event: DragEvent): File[] {
-    if (!event.dataTransfer) {
-      return [];
-    } else if (event.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      return fileFromDataTransferItem(event.dataTransfer.items);
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      return Array.from(event.dataTransfer.files);
-    }
-  }
 
   const handleDragEnter = () => {
     dragEnterCounter++;
