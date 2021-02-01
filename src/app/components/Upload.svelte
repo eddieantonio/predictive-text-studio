@@ -40,9 +40,9 @@
     await uploadAllFilesOrDisplayError(files);
   };
 
-  async function uploadAllFilesOrDisplayError(
-    files: File[] | FileList
-  ): Promise<void> {
+  async function uploadAllFilesOrDisplayError(files: File[]): Promise<void> {
+    if (files.length === 0) return;
+
     error = null;
     try {
       await addAllFilesToCurrentProject(files);
