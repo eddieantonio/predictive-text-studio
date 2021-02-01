@@ -18,17 +18,7 @@
   let error: Error | null = null;
 
   const handleDrop = async (event: DragEvent) => {
-    let fileList: File[] = [];
-
-    if (event.dataTransfer == null) {
-      return;
-    } else if (event.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      fileList = fileFromDataTransferItem(event.dataTransfer.items);
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      fileList = Array.from(event.dataTransfer.files);
-    }
+    let fileList = getAllFilesFromDragEvent(event);
 
     try {
       await addAllFilesToCurrentProject(fileList);
@@ -37,6 +27,18 @@
       error = e;
     }
   };
+
+  function getAllFilesFromDragEvent(event: DragEvent): File[] {
+    if (!event.dataTransfer) {
+      return [];
+    } else if (event.dataTransfer.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      return fileFromDataTransferItem(event.dataTransfer.items);
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      return Array.from(event.dataTransfer.files);
+    }
+  }
 
   const handleDragEnter = () => {
     dragEnterCounter++;
