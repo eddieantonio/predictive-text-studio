@@ -28,18 +28,6 @@
     await uploadAllFilesOrDisplayError(files);
   }
 
-  const handleDragEnter = () => {
-    dragEnterCounter++;
-  };
-
-  const handleDragLeave = () => {
-    dragEnterCounter--;
-  };
-
-  const handleDragOver = () => {
-    dragEnterCounter = 1;
-  };
-
   async function uploadAllFilesOrDisplayError(files: File[]): Promise<void> {
     if (files.length === 0) return;
 
@@ -98,11 +86,11 @@
 <div
   class="upload-zone"
   class:drag-over={dragEnterCounter > 0}
+  data-cy="upload-dropzone"
   on:drop|preventDefault={uploadFilesFromDragAndDrop}
-  on:dragenter|preventDefault={handleDragEnter}
-  on:dragleave|preventDefault={handleDragLeave}
-  on:dragover|preventDefault={handleDragOver}
-  data-cy="upload-dropzone">
+  on:dragenter|preventDefault={() => void dragEnterCounter++}
+  on:dragleave={() => void dragEnterCounter--}
+  on:dragover|preventDefault={() => void (dragEnterCounter = 1)}>
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
   {#if error}
     <p class:error>{error}</p>
