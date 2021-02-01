@@ -1,11 +1,6 @@
 <script lang="ts">
   import AddSource from "./AddSource.svelte";
-  interface DictionarySource {
-    name: string;
-    size: number;
-    type: string;
-  }
-
+  import type { DictionarySource } from "../types";
   export let sources: DictionarySource[];
 
   /**

@@ -1,34 +1,24 @@
 <script lang="ts">
+  import type { DictionarySource } from "../types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
   export let selectedButton: string = "information";
 
   // Mock language data object - this would be read from localstorage/db
-  export let languageInformation = {
+  interface DictionaryInformation {
+    readonly wordCount: number;
+    sources: DictionarySource[];
+  }
+
+  export let languageInformation: DictionaryInformation = {
     get wordCount(): number {
       return languageInformation.sources.reduce(
-        (sum, source) => sum + Number(source.size),
+        (sum, source: DictionarySource) => sum + Number(source.size),
         0
       );
     },
-    sources: [
-      {
-        name: "dictionary.xlsx",
-        size: 78112,
-        type: "excel",
-      },
-      {
-        name: "Kinship Terms",
-        size: 32,
-        type: "direct entry",
-      },
-      {
-        name: "secondary_dictionary.xlsx",
-        size: 198,
-        type: "excel",
-      },
-    ],
+    sources: [],
   };
 
   /**
