@@ -1,5 +1,6 @@
 <script lang="ts">
   import worker from "../spawn-worker";
+  import { fileFromDataTransferItem } from "../logic/upload";
   const UPLOAD_INPUT_ID = "upload-input";
 
   // Dragging over nested element in a drag-and-drop zone
@@ -12,20 +13,6 @@
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
   let dragEnterCounter = 0;
   let error: Error | null = null;
-
-  function fileFromDataTransferItem(items: DataTransferItemList): File[] {
-    const fileList: File[] = [];
-    for (let item of items) {
-      // If dropped items aren't files, reject them
-      if (item.kind === "file") {
-        const file = item.getAsFile();
-        if (file !== null) {
-          fileList.push(file);
-        }
-      }
-    }
-    return fileList;
-  }
 
   const handleDrop = async (event: DragEvent) => {
     let fileList: File[] = [];
