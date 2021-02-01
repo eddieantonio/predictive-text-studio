@@ -26,15 +26,20 @@
       // Use DataTransfer interface to access the file(s)
       fileList = Array.from(event.dataTransfer.files);
     }
+
     try {
-      for (let file of fileList) {
-        await worker.addDictionarySourceToProject(file.name, file);
-      }
+      await addAllFilesToCurrentProject(fileList);
       error = null;
     } catch (e) {
       error = e;
     }
   };
+
+  async function addAllFilesToCurrentProject(files: File[]) {
+    for (let file of fileList) {
+      await worker.addDictionarySourceToProject(file.name, file);
+    }
+  }
 
   const handleDragEnter = () => {
     dragEnterCounter++;
