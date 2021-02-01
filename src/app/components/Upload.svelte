@@ -1,5 +1,4 @@
 <script lang="ts">
-  import worker from "../spawn-worker";
   import {
     addAllFilesToCurrentProject,
     getAllFilesFromDragEvent,
@@ -46,9 +45,7 @@
     const input = event.target as HTMLInputElement;
     if (input !== null && input.files) {
       try {
-        for (let file of input.files) {
-          await worker.addDictionarySourceToProject(file.name, file);
-        }
+        await addAllFilesToCurrentProject(input.files);
         error = null;
       } catch (e) {
         error = e;
