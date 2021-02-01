@@ -40,7 +40,6 @@ describe("Upload from the the landing page", () => {
   it("should disable to continue if only file is provided", () => {
     // we need a valid bcp47Tag to update the packageInfo
     cy.data("autocomplete-label").scrollIntoView().should("be.visible");
-    cy.data("autocomplete-label").type("zh");
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
