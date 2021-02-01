@@ -2,6 +2,7 @@
   import {
     addAllFilesToCurrentProject,
     getAllFilesFromDragEvent,
+    filesFromInputElement,
   } from "../logic/upload";
   const UPLOAD_INPUT_ID = "upload-input";
 
@@ -38,17 +39,6 @@
     const files = filesFromInputElement(event.target);
     await uploadAllFilesOrDisplayError(files);
   };
-
-  function filesFromInputElement(el: EventTarget | null): File[] {
-    if (el === null) return [];
-    const input = el as HTMLInputElement;
-
-    if (!input.files)
-      return [];
-
-    console.log({ files: input.files });
-    return Array.from(input.files);
-  }
 
   async function uploadAllFilesOrDisplayError(
     files: File[] | FileList

@@ -16,6 +16,19 @@ export function getAllFilesFromDragEvent(event: DragEvent): File[] {
 }
 
 /**
+ * Returns an array of files from the given event target, which is assumed to
+ * be an <input type="file">
+ */
+export function filesFromInputElement(el: EventTarget | null): File[] {
+  if (el === null) return [];
+  const input = el as HTMLInputElement;
+
+  if (!input.files) return [];
+
+  return Array.from(input.files);
+}
+
+/**
  * Uploads all the given files to the current project.
  */
 export async function addAllFilesToCurrentProject(
