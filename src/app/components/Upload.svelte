@@ -18,6 +18,8 @@
   let error: Error | null = null;
 
   const handleDrop = async (event: DragEvent) => {
+    dragEnterCounter = 0;
+
     let fileList = getAllFilesFromDragEvent(event);
 
     try {
@@ -37,7 +39,7 @@
   };
 
   const handleDragOver = () => {
-    dragEnterCounter = 0;
+    dragEnterCounter = 1;
   };
 
   const handleChange = async (event: Event) => {
