@@ -17,11 +17,11 @@
   let dragEnterCounter = 0;
   let error: Error | null = null;
 
-  const handleDrop = async (event: DragEvent) => {
+  async function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
     let fileList = getAllFilesFromDragEvent(event);
     await uploadAllFilesOrDisplayError(fileList);
-  };
+  }
 
   const handleDragEnter = () => {
     dragEnterCounter++;
@@ -98,7 +98,7 @@
 <div
   class="upload-zone"
   class:drag-over={dragEnterCounter > 0}
-  on:drop|preventDefault={handleDrop}
+  on:drop|preventDefault={uploadFilesFromDragAndDrop}
   on:dragenter|preventDefault={handleDragEnter}
   on:dragleave|preventDefault={handleDragLeave}
   on:dragover|preventDefault={handleDragOver}
