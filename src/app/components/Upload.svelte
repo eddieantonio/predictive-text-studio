@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     addAllFilesToCurrentProject,
-    getAllFilesFromDragEvent,
+    filesFromDragEvent,
     filesFromInputElement,
   } from "../logic/upload";
   const UPLOAD_INPUT_ID = "upload-input";
@@ -19,7 +19,7 @@
 
   async function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
-    let fileList = getAllFilesFromDragEvent(event);
+    let fileList = filesFromDragEvent(event);
     await uploadAllFilesOrDisplayError(fileList);
   }
 

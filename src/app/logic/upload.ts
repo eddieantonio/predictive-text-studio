@@ -3,7 +3,7 @@ import worker from "../spawn-worker";
 /**
  * Returns an array of all files uploaded from a drag-and-drop event.
  */
-export function getAllFilesFromDragEvent(event: DragEvent): File[] {
+export function filesFromDragEvent(event: DragEvent): File[] {
   if (!event.dataTransfer) {
     return [];
   } else if (event.dataTransfer.items) {
