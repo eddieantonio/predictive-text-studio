@@ -35,13 +35,24 @@
   };
 
   const handleChange = async (event: Event) => {
-    const input = event.target as HTMLInputElement;
-    if (input !== null && input.files) {
-      await uploadAllFilesOrDisplayError(input.files);
-    }
+    const files = filesFromInputElement(event.target);
+    await uploadAllFilesOrDisplayError(files);
   };
 
-  async function uploadAllFilesOrDisplayError(files: File[] | FileList): Promise<void> {
+  function filesFromInputElement(el: EventTarget | null): File[] {
+    if (el === null) return [];
+    const input = el as HTMLInputElement;
+
+    if (!input.files)
+      return [];
+
+    console.log({ files: input.files });
+    return Array.from(input.files);
+  }
+
+  async function uploadAllFilesOrDisplayError(
+    files: File[] | FileList
+  ): Promise<void> {
     error = null;
     try {
       await addAllFilesToCurrentProject(files);
