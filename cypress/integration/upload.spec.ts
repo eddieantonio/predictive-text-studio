@@ -1,9 +1,9 @@
 import "cypress-file-upload";
 
-const path = require("path");
+import path = require("path");
 
 describe("Upload from the the landing page", function () {
-  let downloadFolder;
+  let downloadFolder: string;
 
   before(() => {
     downloadFolder = Cypress.env("downloadFolder");
@@ -16,15 +16,16 @@ describe("Upload from the the landing page", function () {
     cy.disableSmoothScroll();
   });
 
-  // TODO: fix this test
-  it.skip("should find a button to press to upload a file", function () {
-    // we need a valid bcp47Tag to update the packageInfo
+  it("should find a button to press to upload a file", function () {
+    // HACK: wait for the language list to populate
     cy.wait(3000);
-    cy.data("autocomplete-label").type("z");
-    cy.data("autocomplete__suggestion-list")
-      .should("be.visible")
-      .trigger("mouseover");
-    cy.data("autocomplete-suggestions").first().click();
+
+    cy.data("download-kmp")
+      .as("download-kmp")
+      .should("have.attr", "data-download-state", "disabled");
+
+    // Select the first option (should be Straits Salish)
+    cy.data("autocomplete-label").type("straits").type("{enter}");
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
