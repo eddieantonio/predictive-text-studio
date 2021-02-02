@@ -58,8 +58,7 @@ export class PredictiveTextStudioWorkerImpl
     name: string,
     wordListObject: WordList
   ): Promise<ArrayBuffer> {
-    await this.storage.saveFile(name, wordListObject);
-    this.generateKMPFromStorage();
+    this.storage.saveFile(name, wordListObject);
     return await linkStorageToKmp(this.storage);
   }
 
