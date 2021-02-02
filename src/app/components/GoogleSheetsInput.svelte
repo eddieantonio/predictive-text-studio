@@ -46,8 +46,8 @@
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
-      .catch(() => {
-        error = "Error: Could not connect to Google Sheets";
+      .catch((e) => {
+        error = `Error: Could not connect to Google Sheets: ${e}`;
       });
   }
 
@@ -126,7 +126,7 @@
       error = "Error: No data found in the Google Sheet.";
       return;
     }
-
+    console.log('SUCCess')
     for (let i = 0; i < range.values.length; i++) {
       const row = range.values[i];
       if (shouldRowBeConverted(row)) {

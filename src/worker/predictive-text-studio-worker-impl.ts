@@ -58,7 +58,8 @@ export class PredictiveTextStudioWorkerImpl
     name: string,
     wordListObject: WordList
   ): Promise<ArrayBuffer> {
-    this.storage.saveFile(name, wordListObject);
+    await this.storage.saveFile(name, wordListObject);
+    this.generateKMPFromStorage();
     return await linkStorageToKmp(this.storage);
   }
 
@@ -94,6 +95,7 @@ export class PredictiveTextStudioWorkerImpl
   }): Promise<number> {
     const dictionaryName = tableData.name;
     const wordlist = readManualEntryData(tableData.data);
+    //this.generateKMPFromStorage(); ??????
     await this.storage.saveFile(dictionaryName, wordlist);
     return wordlist.length;
   }
