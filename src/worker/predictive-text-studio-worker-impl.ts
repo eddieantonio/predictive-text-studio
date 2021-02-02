@@ -95,7 +95,6 @@ export class PredictiveTextStudioWorkerImpl
   }): Promise<number> {
     const dictionaryName = tableData.name;
     const wordlist = readManualEntryData(tableData.data);
-    //this.generateKMPFromStorage(); ??????
     await this.storage.saveFile(dictionaryName, wordlist);
     return wordlist.length;
   }

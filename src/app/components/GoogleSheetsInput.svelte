@@ -6,6 +6,7 @@
   var error = null;
   let googleSheetsURL = "";
 
+
   // Constants for checking headers
   const WORD = 0;
   const COUNT = 1;
@@ -125,7 +126,7 @@
       error = "Error: No data found in the Google Sheet.";
       return;
     }
-    console.log("SUCCess");
+    
     for (let i = 0; i < range.values.length; i++) {
       const row = range.values[i];
       if (shouldRowBeConverted(row)) {
