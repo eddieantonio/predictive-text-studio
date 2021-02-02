@@ -40,14 +40,13 @@ describe("Upload from the the landing page", function () {
     cy.fixture(filename, "base64").then((fixture) => {
       const testFile = new File(
         [Cypress.Blob.base64StringToBlob(fixture)],
-        name
+        filename
       );
       const event = { dataTransfer: { files: [testFile] } };
 
       cy.get("@quick-start")
         .data("upload-dropzone")
         .trigger("dragenter", event);
-
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
