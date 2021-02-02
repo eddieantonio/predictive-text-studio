@@ -45,8 +45,8 @@
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
-      .catch(() => {
-        error = "Error: Could not connect to Google Sheets";
+      .catch((e) => {
+        error = `Error: Could not connect to Google Sheets: ${e}`;
       });
   }
 
