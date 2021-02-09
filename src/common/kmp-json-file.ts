@@ -138,6 +138,24 @@ export interface KmpJsonFileInfo {
   author?: KmpJsonFileInfoItem;
 }
 
+/**
+ * Describes the language supported by this lexical model.
+ */
+export interface KmpJsonFileLanguage {
+  /**
+   * A freeform string describing the language. Community members may not use
+   * the same term to describe their language as what's written on the web.
+   * E.g., "str" stands for "Straits Salish" but the W̱SÁNEĆ community calls
+   * their language "SENĆOŦEN".
+   */
+  name: string;
+  /**
+   * The BCP-47 tag of this lexical model. It **MUST** match with an existing
+   * Keyman keyboard.
+   */
+  id: string;
+}
+
 interface KmpJsonFileInfoItem {
   description: string;
   url?: string;
@@ -204,24 +222,6 @@ interface KmpJsonFileLexicalModel {
    * These MUST match an existing Keyman keyboard!
    */
   languages: KmpJsonFileLanguage[];
-}
-
-/**
- * Describes the language supported by this lexical model.
- */
-interface KmpJsonFileLanguage {
-  /**
-   * A freeform string describing the language. Community members may not use
-   * the same term to describe their language as what's written on the web.
-   * E.g., "str" stands for "Straits Salish" but the W̱SÁNEĆ community calls
-   * their language "SENĆOŦEN".
-   */
-  name: string;
-  /**
-   * The BCP-47 tag of this lexical model. It **MUST** match with an existing
-   * Keyman keyboard.
-   */
-  id: string;
 }
 
 /**
