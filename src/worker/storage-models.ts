@@ -2,7 +2,7 @@
  * @file Interfaces used in storage
  */
 
-import { WordList, ProjectMetadata } from "@common/types";
+import type { WordList, ProjectMetadata } from "@common/types";
 
 /**
  * A word list stored in the database.
