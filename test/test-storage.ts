@@ -82,7 +82,7 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
 
   // This weird line extracts ONLY the properties found in sources,
   // so that we can just deepEqual with sources!
-  files = files.map(({ name, wordlist }) => ({ name, wordlist }));
+  files = files.map(({ id, name, wordlist }) => ({ id, name, wordlist }));
   files.sort(byName);
 
   t.deepEqual(files, sources);
