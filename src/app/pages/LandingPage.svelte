@@ -3,6 +3,7 @@
   import worker from "../spawn-worker";
   import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
+  import DownloadKMP from "../components/DownloadKMP.svelte";
   import SplitButton from "../components/SplitButton.svelte";
   import { currentDownloadURL } from "../stores";
   import type { KeyboardMetadata } from "@common/types";
@@ -348,11 +349,13 @@
       {/if}
       <div class="quick-start__submit-wrapper"
            class:quick-start__submit-wrapper--disabled={!continueReady}>
+        <DownloadKMP downloadURL={$currentDownloadURL} />
+        <p> or </p>
         <button
               class="button button--primary button--shadow quick-start__submit-button"
               class:quick-start__submit-button--disabled={!continueReady}
               type="submit"
-              data-cy="landing-page-continue-button"> Continue
+              data-cy="landing-page-continue-button"> Customize
         </button>
     </div>
     </form>
