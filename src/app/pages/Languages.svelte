@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { StoredWordList } from "../types";
-  // import { StoredWordList } from "../../worker/storage-models.ts";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
@@ -14,16 +13,14 @@
     sources: StoredWordList[];
   }
 
-  let sources = [];
-
   export let languageInformation: DictionaryInformation = {
     get wordCount(): number {
       return languageInformation.sources.reduce(
-        (sum, source: StoredWordList) => sum + Number(source.size),
+        (sum, source: StoredWordList) => sum + Number(source.size || 0),
         0
       );
     },
-    sources,
+    sources: [],
   };
 
   onMount(async () => {

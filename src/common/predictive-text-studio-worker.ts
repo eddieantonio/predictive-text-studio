@@ -1,4 +1,5 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
+import type { StoredWordList } from "../worker/storage-models";
 import type {
   DictionaryEntry,
   KeyboardDataWithTime,
@@ -85,4 +86,9 @@ export interface PredictiveTextStudioWorker {
   // TODO: rename to getCachedKeyboardCatalog or something
   // The current name is way too generic for such a specific functionality
   getDataFromStorage(): Promise<KeyboardDataWithTime[]>;
+
+  /**
+   * Retrieving File data from the IndexedDB storage
+   */
+  getFilesFromStorage(): Promise<StoredWordList[]>;
 }
