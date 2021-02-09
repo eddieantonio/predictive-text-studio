@@ -4,7 +4,7 @@
 
   import worker from "../spawn-worker";
   import type { KeyboardMetadata } from "@common/types";
-import Bcp47Tag from "./BCP47Tag.svelte";
+  import Bcp47Tag from "./BCP47Tag.svelte";
 
   /**************************** External props ******************************/
 
@@ -27,7 +27,6 @@ import Bcp47Tag from "./BCP47Tag.svelte";
    */
   export let selectedLanguage: KeyboardMetadata | undefined = undefined;
 
-
   /************************** Internal variables ****************************/
 
   /**
@@ -38,7 +37,6 @@ import Bcp47Tag from "./BCP47Tag.svelte";
   onMount(async function loadLanguageListFromWorker() {
     knownLanguages = await worker.getDataFromStorage();
   });
-
 </script>
 
 <style>

@@ -5,28 +5,32 @@
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import SplitButton from "../components/SplitButton.svelte";
   import { currentDownloadURL } from "../stores";
-import type { KeyboardMetadata } from "@common/types";
-import type { RelevantKmpOptions } from "@common/kmp-json-file";
-
+  import type { KeyboardMetadata } from "@common/types";
+  import type { RelevantKmpOptions } from "@common/kmp-json-file";
 
   // let languageStatus: boolean = false;
-  let selectedLanguage: KeyboardMetadata | undefined = undefined; 
+  let selectedLanguage: KeyboardMetadata | undefined = undefined;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
 
-  $: continueReady = (selectedLanguage !== undefined) && Boolean($currentDownloadURL);
+  $: continueReady =
+    selectedLanguage !== undefined && Boolean($currentDownloadURL);
 
-  $: if(Boolean($currentDownloadURL)){
-    if(selectedLanguage === undefined){
-      selectedLanguage = {language:'Undefined Language', bcp47Tag:'und'};
+  $: if (Boolean($currentDownloadURL)) {
+    if (selectedLanguage === undefined) {
+      selectedLanguage = { language: "Undefined Language", bcp47Tag: "und" };
     }
   }
 
-  $: if(selectedLanguage !== undefined){
-    const options: Partial<Readonly<RelevantKmpOptions>> = {languages:[{name: selectedLanguage.language, id:selectedLanguage.bcp47Tag}]}
+  $: if (selectedLanguage !== undefined) {
+    const options: Partial<Readonly<RelevantKmpOptions>> = {
+      languages: [
+        { name: selectedLanguage.language, id: selectedLanguage.bcp47Tag },
+      ],
+    };
     worker.setProjectData(options);
   }
-  
+
   // Split Button
   const uploadFromFile = () => {
     uploadFile = true;
