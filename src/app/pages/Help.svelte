@@ -1,8 +1,5 @@
-<script lang="ts">
-</script>
-
 <style>
-  .team-page {
+  .help-page {
     width: 75%;
     margin: 1.5em auto auto;
   }
@@ -26,7 +23,7 @@
 
 <main>
   <nav class="nav-back"><a href="/" class="button button--blue">Back</a></nav>
-  <article class="team-page">
+  <article class="help-page">
     <header>
       <h1 class="header">What Do I Upload?</h1>
       <p>
@@ -75,16 +72,15 @@
         TSV stands for Tab Separated Values. Like Excel or Google Sheets, create
         a text file with "Word" in the first column and "Count" in the second
         column. For exhaustive details on how your file should look, please
-        visit the <a
+        visit the
+        <a
           href="https://help.keyman.com/developer/current-version/reference/file-types/tsv"
-          target="_blank">Keyman Website</a>. Make sure your file has a .tsv extension and upload it to the File
-        Uploader.
+          target="_blank">Keyman Website</a>. Make sure your file has a .tsv
+        extension and upload it to the File Uploader.
       </div>
       <div class="paragraph-container" style="margin-bottom: 5rem">
         <b>Example:</b>
-        <a
-          class="link"
-          href="../assets/ExampleWordlist.tsv">
+        <a class="link" href="../assets/ExampleWordlist.tsv">
           ExampleWordlist.tsv</a>
       </div>
     </section>
