@@ -1,4 +1,8 @@
-import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
+import {
+  KeyboardData,
+  KeyboardDataWithTime,
+  StoredWordList,
+} from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
@@ -39,6 +43,10 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.fetchKeyboardData();
   }
 
+  async getFilesFromStorage(): Promise<StoredWordList[]> {
+    return this.storage.fetchAllFiles();
+  }
+
   async getLanguageData(): Promise<void> {
     let dateDiff: number;
     const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
@@ -56,9 +64,9 @@ export class PredictiveTextStudioWorkerImpl
 
   async readGoogleSheet(
     name: string,
-    wordListObject: WordList
+    wordlist: WordList
   ): Promise<ArrayBuffer> {
-    this.storage.saveFile(name, wordListObject);
+    this.storage.saveFile({ name, wordlist });
     return await linkStorageToKmp(this.storage);
   }
 
@@ -82,6 +90,8 @@ export class PredictiveTextStudioWorkerImpl
     name: string,
     contents: File
   ): Promise<number> {
+    const size = contents.size;
+    const type = contents.name.split(".").pop();
     let wordlist: WordList = [];
     if (/\.(tsv)$/i.test(name)) {
       // Read the file as a string
@@ -102,8 +112,7 @@ export class PredictiveTextStudioWorkerImpl
     } else {
       throw new Error("Invalid File Type. Please use either .tsv or .xlsx");
     }
-
-    await this.storage.saveFile(name, wordlist);
+    await this.storage.saveFile({ name, wordlist, size, type });
     this.generateKMPFromStorage();
     return wordlist.length;
   }
@@ -114,7 +123,7 @@ export class PredictiveTextStudioWorkerImpl
   }): Promise<number> {
     const dictionaryName = tableData.name;
     const wordlist = readManualEntryData(tableData.data);
-    await this.storage.saveFile(dictionaryName, wordlist);
+    await this.storage.saveFile({ name: dictionaryName, wordlist });
     return wordlist.length;
   }
 

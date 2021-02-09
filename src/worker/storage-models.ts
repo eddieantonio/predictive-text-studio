@@ -19,6 +19,14 @@ export interface StoredWordList {
    * The actual contents of said file.
    */
   wordlist: WordList;
+  /**
+   * Size of the file in bytes.
+   */
+  size?: number;
+  /**
+   * File extension.
+   */
+  type?: string;
 }
 
 /**

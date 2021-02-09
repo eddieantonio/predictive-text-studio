@@ -1,25 +1,34 @@
 <script lang="ts">
-  import type { DictionarySource } from "../types";
+  import { onMount } from "svelte";
+  import type { StoredWordList } from "../types";
+  // import { StoredWordList } from "../../worker/storage-models.ts";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
+  import worker from "../spawn-worker";
   export let selectedButton: string = "information";
 
   // Mock language data object - this would be read from localstorage/db
   interface DictionaryInformation {
     readonly wordCount: number;
-    sources: DictionarySource[];
+    sources: StoredWordList[];
   }
+
+  let sources = [];
 
   export let languageInformation: DictionaryInformation = {
     get wordCount(): number {
       return languageInformation.sources.reduce(
-        (sum, source: DictionarySource) => sum + Number(source.size),
+        (sum, source: StoredWordList) => sum + Number(source.size),
         0
       );
     },
-    sources: [],
+    sources,
   };
+
+  onMount(async () => {
+    languageInformation.sources = await worker.getFilesFromStorage();
+  });
 
   /**
    * Handles the click when a content button (Information/Sources) is pressed

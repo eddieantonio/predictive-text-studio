@@ -39,7 +39,10 @@ test("storing a file", async (t) => {
   // At first, there's nothing in the DB:
   t.is(await db.files.count(), 0);
 
-  await storage.saveFile("ExampleWordlist.xlsx", exampleWordlist);
+  await storage.saveFile({
+    name: "ExampleWordlist.xlsx",
+    wordlist: exampleWordlist,
+  });
   // Now there's one file in the DB!
   t.is(await db.files.count(), 1);
 });
@@ -49,7 +52,7 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
 
   // Let's store a file that we will later try to fetch:
   const filename = "ExampleWordlist.xlsx";
-  await storage.saveFile(filename, exampleWordlist);
+  await storage.saveFile({ name: filename, wordlist: exampleWordlist });
 
   // We should find that it has been stored:
   const files = await storage.fetchAllFiles();
@@ -70,8 +73,8 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
 
   sources.sort(byName);
 
-  for (const { name, wordlist } of sources) {
-    await storage.saveFile(name, wordlist);
+  for (const source of sources) {
+    await storage.saveFile(source);
   }
 
   let files = await storage.fetchAllFiles();

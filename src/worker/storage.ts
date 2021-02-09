@@ -1,5 +1,4 @@
 import Dexie, { DexieOptions } from "dexie";
-import { WordList } from "@common/types";
 import {
   StoredWordList,
   StoredProjectData,
@@ -114,10 +113,10 @@ export default class Storage {
   /**
    * Saves a wordlist source file to storage.
    */
-  saveFile(name: string, wordlist: WordList): Promise<void> {
+  saveFile(file: StoredWordList): Promise<void> {
     return this.db.transaction("readwrite", this.db.files, async () => {
-      await this.db.files.where("name").equals(name).delete();
-      await this.db.files.put({ name, wordlist });
+      await this.db.files.where("name").equals(file.name).delete();
+      await this.db.files.put(file);
     });
   }
 
