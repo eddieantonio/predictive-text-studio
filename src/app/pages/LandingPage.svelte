@@ -246,6 +246,12 @@
     margin-bottom: 2rem;
   }
 
+  .inline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   @keyframes descend {
     0% {
       opacity: 20%;
@@ -325,7 +331,14 @@
       </fieldset>
 
       <fieldset class="quick-start__step">
-        <legend>Step 2: Add a word list</legend>
+        <div class="inline">
+          <legend>
+            Step 2: Add a word list
+          </legend>
+          <a  href="help" target="_blank">
+            Help
+          </a>
+        </div>
       </fieldset>
 
       <div class="split-container">
