@@ -73,8 +73,10 @@ describe("Upload from the the landing page", () => {
     // HACK: wait for the language list to populate
     cy.wait(3000);
 
-    cy.data("landing-page-continue-button")
-    .should("have.class","quick-start__submit-button--disabled");
+    cy.data("landing-page-continue-button").should(
+      "have.class",
+      "quick-start__submit-button--disabled"
+    );
 
     // Select the first option (should be Straits Salish)
     cy.data("autocomplete-label").type("straits").type("{enter}");
@@ -103,8 +105,8 @@ describe("Upload from the the landing page", () => {
     });
 
     cy.data("landing-page-continue-button")
-    .should("not.have.class","quick-start__submit-button--disabled")
-    .click();
+      .should("not.have.class", "quick-start__submit-button--disabled")
+      .click();
   });
 
   it("should set the BCP-47 tag to 'und' if only a file is uploaded", function () {
@@ -113,8 +115,10 @@ describe("Upload from the the landing page", () => {
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
-    cy.data("landing-page-continue-button")
-    .should("have.class","quick-start__submit-button--disabled");
+    cy.data("landing-page-continue-button").should(
+      "have.class",
+      "quick-start__submit-button--disabled"
+    );
 
     cy.data("quick-start")
       .as("quick-start")
@@ -137,11 +141,10 @@ describe("Upload from the the landing page", () => {
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
-    cy.data("autocomplete-subtext")
-    .contains("und")
+    cy.data("autocomplete-subtext").contains("und");
 
     cy.data("landing-page-continue-button")
-    .should("not.have.class","quick-start__submit-button--disabled")
-    .click();
+      .should("not.have.class", "quick-start__submit-button--disabled")
+      .click();
   });
 });
