@@ -1,7 +1,7 @@
 <style>
   .help-page {
     width: 75%;
-    margin: 1.5em auto auto;
+    margin: 1.5em auto 5rem;
   }
 
   .header {
@@ -12,7 +12,7 @@
     margin: 1rem 0 0 1rem;
   }
 
-  .paragraph-container {
+  p {
     margin: 1rem 0 1rem 0;
   }
 
@@ -36,10 +36,10 @@
     </header>
     <section>
       <h2>Excel</h2>
-      <div class="paragraph-container">
+      <p>
         Create an Excel file with "Word" in the A column and "Count" in the B
         column. You may upload the Excel file directly to the Upload Area.
-      </div>
+      </p>
       <div class="paragraph-container">
         <b>Example:</b>
         <a
@@ -50,25 +50,25 @@
 
     <section>
       <h2>Google Sheets</h2>
-      <div class="paragraph-container">
+      <p>
         Create a Google Sheets spreadsheet with "Word" in the A column and
         "Count" in the B column. When you have completed the spreadsheet press
         the "Share" button in the top right corner of the Google Sheets
         interface and copy a link which "Anyone on the internet with this link
         can view". You may now paste this link in the Google Sheets URL input.
-      </div>
-      <div class="paragraph-container">
+      </p>
+      <p>
         <b>Example:</b>
         <a
           class="link"
           target="_blank"
           href="https://docs.google.com/spreadsheets/d/1S773hm37v9-cJWsDEZAGTbLt2O6dXurZbHwj4wFkHhI/edit?usp=sharing">
           Google Sheet Link</a>
-      </div>
+      </p>
     </section>
     <section>
       <h2>TSV</h2>
-      <div class="paragraph-container">
+      <p>
         TSV stands for Tab Separated Values. Like Excel or Google Sheets, create
         a text file with "Word" in the first column and "Count" in the second
         column. For exhaustive details on how your file should look, please
@@ -77,12 +77,12 @@
           href="https://help.keyman.com/developer/current-version/reference/file-types/tsv"
           target="_blank">Keyman Website</a>. Make sure your file has a .tsv
         extension and upload it to the File Uploader.
-      </div>
-      <div class="paragraph-container" style="margin-bottom: 5rem">
+      </p>
+      <p>
         <b>Example:</b>
         <a class="link" href="../assets/ExampleWordlist.tsv">
           ExampleWordlist.tsv</a>
-      </div>
+      </p>
     </section>
   </article>
 </main>
