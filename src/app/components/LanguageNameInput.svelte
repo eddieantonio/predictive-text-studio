@@ -78,6 +78,6 @@
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
     BCP47Tag:
-    {selectedLanguage !== undefined ? selectedLanguage.bcp47Tag : ''}
+    {selectedLanguage?.bcp47Tag ?? ''}
   </p>
 </div>
