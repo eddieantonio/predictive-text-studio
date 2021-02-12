@@ -14,7 +14,7 @@
   let uploadFile: boolean = true;
 
   $: continueReady =
-    selectedLanguage !== undefined && Boolean($currentDownloadURL);
+    selectedLanguage && Boolean($currentDownloadURL);
 
   $: if (Boolean($currentDownloadURL)) {
     if (selectedLanguage === undefined) {
