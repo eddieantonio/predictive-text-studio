@@ -1,7 +1,7 @@
 <script lang="ts">
   import AddSource from "./AddSource.svelte";
-  import type { StoredWordList } from "@common/types";
-  export let sources: StoredWordList[];
+  import type { WordListSource } from "@common/types";
+  export let sources: WordListSource[];
 
   /**
    * Handles the click when the edit button is pressed.

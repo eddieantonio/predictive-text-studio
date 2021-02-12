@@ -1,5 +1,5 @@
 import type { RelevantKmpOptions } from "./kmp-json-file";
-import type { StoredWordList } from "@common/types";
+import type { StoredWordList } from "@worker/storage-models";
 import type {
   DictionaryEntry,
   KeyboardDataWithTime,

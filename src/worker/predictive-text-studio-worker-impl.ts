@@ -1,5 +1,8 @@
-import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
-import { StoredWordList } from "@common/types";
+import {
+  KeyboardData,
+  KeyboardDataWithTime,
+  StoredWordList,
+} from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
