@@ -1,6 +1,6 @@
 import Dexie, { DexieOptions } from "dexie";
+import { StoredWordList } from "@common/types";
 import {
-  StoredWordList,
   StoredProjectData,
   KeyboardDataWithTime,
   KMPPackageData,

@@ -4,7 +4,7 @@ import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
-import { WordList } from "@common/types";
+import { StoredWordList, WordList } from "@common/types";
 
 import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
@@ -42,6 +42,7 @@ test("storing a file", async (t) => {
   await storage.saveFile({
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
+    size: exampleWordlist.length,
   });
   // Now there's one file in the DB!
   t.is(await db.files.count(), 1);
@@ -52,7 +53,11 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
 
   // Let's store a file that we will later try to fetch:
   const filename = "ExampleWordlist.xlsx";
-  await storage.saveFile({ name: filename, wordlist: exampleWordlist });
+  await storage.saveFile({
+    name: filename,
+    wordlist: exampleWordlist,
+    size: exampleWordlist.length,
+  });
 
   // We should find that it has been stored:
   const files = await storage.fetchAllFiles();
@@ -67,8 +72,16 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
   const { storage } = t.context;
 
   const sources = [
-    { name: "ExampleWordlist.xlsx", wordlist: exampleWordlist },
-    { name: "[direct entry]", wordlist: [["ȻNEs", 12]] as WordList },
+    {
+      name: "ExampleWordlist.xlsx",
+      wordlist: exampleWordlist,
+      size: exampleWordlist.length,
+    },
+    {
+      name: "[direct entry]",
+      wordlist: [["ȻNEs", 12]] as WordList,
+      size: 1,
+    },
   ];
 
   sources.sort(byName);
@@ -77,12 +90,17 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
     await storage.saveFile(source);
   }
 
-  let files = await storage.fetchAllFiles();
+  let files: StoredWordList[] = await storage.fetchAllFiles();
   t.is(files.length, 2);
 
   // This weird line extracts ONLY the properties found in sources,
   // so that we can just deepEqual with sources!
-  files = files.map(({ id, name, wordlist }) => ({ id, name, wordlist }));
+  files = files.map(({ id, name, wordlist, size }) => ({
+    id,
+    name,
+    wordlist,
+    size,
+  }));
   files.sort(byName);
 
   t.deepEqual(files, sources);

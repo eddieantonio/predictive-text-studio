@@ -1,6 +1,6 @@
 <script lang="ts">
   import AddSource from "./AddSource.svelte";
-  import type { StoredWordList } from "../types";
+  import type { StoredWordList } from "@common/types";
   export let sources: StoredWordList[];
 
   /**

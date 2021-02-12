@@ -1,8 +1,5 @@
-import {
-  KeyboardData,
-  KeyboardDataWithTime,
-  StoredWordList,
-} from "./storage-models";
+import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
+import { StoredWordList } from "@common/types";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
@@ -66,7 +63,7 @@ export class PredictiveTextStudioWorkerImpl
     name: string,
     wordlist: WordList
   ): Promise<ArrayBuffer> {
-    this.storage.saveFile({ name, wordlist });
+    this.storage.saveFile({ name, wordlist, size: wordlist.length });
     return await linkStorageToKmp(this.storage);
   }
 
@@ -90,8 +87,6 @@ export class PredictiveTextStudioWorkerImpl
     name: string,
     contents: File
   ): Promise<number> {
-    const size = contents.size;
-    const type = contents.name.split(".").pop();
     let wordlist: WordList = [];
     if (/\.(tsv)$/i.test(name)) {
       // Read the file as a string
@@ -112,7 +107,7 @@ export class PredictiveTextStudioWorkerImpl
     } else {
       throw new Error("Invalid File Type. Please use either .tsv or .xlsx");
     }
-    await this.storage.saveFile({ name, wordlist, size, type });
+    await this.storage.saveFile({ name, wordlist, size: wordlist.length });
     this.generateKMPFromStorage();
     return wordlist.length;
   }
@@ -123,7 +118,11 @@ export class PredictiveTextStudioWorkerImpl
   }): Promise<number> {
     const dictionaryName = tableData.name;
     const wordlist = readManualEntryData(tableData.data);
-    await this.storage.saveFile({ name: dictionaryName, wordlist });
+    await this.storage.saveFile({
+      name: dictionaryName,
+      wordlist,
+      size: wordlist.length,
+    });
     return wordlist.length;
   }
 
