@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { onMount, createEventDispatcher } from "svelte";
+  import { onMount } from "svelte";
   import AutoComplete from "simple-svelte-autocomplete";
 
   import worker from "../spawn-worker";
   import type { KeyboardMetadata } from "@common/types";
-  import Bcp47Tag from "./BCP47Tag.svelte";
 
   /**************************** External props ******************************/
 
