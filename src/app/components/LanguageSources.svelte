@@ -18,6 +18,13 @@
    * @return {void}
    */
   const handleDelete = (): void => {};
+
+  const dict = {
+    "direct-entry": "Direct entry",
+    "google-sheets": "Google Sheets",
+    tsv: "TSV",
+    xlsx: ".xlsx",
+  };
 </script>
 
 <style>
@@ -101,7 +108,7 @@
       <tr>
         <td>{source.name}</td>
         <td>{source.size}</td>
-        <td>{source.type}</td>
+        <td>{dict[source.type]}</td>
         <td class="table__row--actions actions">
           <button
             class="actions__action btn--inline"
