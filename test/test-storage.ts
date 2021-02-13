@@ -5,7 +5,7 @@ import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { StoredWordList } from "@worker/storage-models";
-import { WordListSource, DictionarySourceType } from "@common/types";
+import { WordListSource } from "@common/types";
 
 import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
@@ -44,7 +44,7 @@ test("storing a file", async (t) => {
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
-    type: "xlsx" as DictionarySourceType,
+    type: "xlsx",
   });
   // Now there's one file in the DB!
   t.is(await db.files.count(), 1);
@@ -59,7 +59,7 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
     name: filename,
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
-    type: "xlsx" as DictionarySourceType,
+    type: "xlsx",
   });
 
   // We should find that it has been stored:

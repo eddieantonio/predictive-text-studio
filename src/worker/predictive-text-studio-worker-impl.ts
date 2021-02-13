@@ -111,10 +111,10 @@ export class PredictiveTextStudioWorkerImpl
         reader.readAsText(contents);
       });
       wordlist = readTSV(TSVFileString);
-      type = "tsv" as DictionarySourceType;
+      type = "tsv";
     } else if (/\.(xlsx)$/i.test(name)) {
       wordlist = await readExcel(await contents.arrayBuffer());
-      type = "xlsx" as DictionarySourceType;
+      type = "xlsx";
     } else {
       throw new Error("Invalid File Type. Please use either .tsv or .xlsx");
     }

@@ -19,7 +19,7 @@
    */
   const handleDelete = (): void => {};
 
-  const dict = {
+  const englishNameOf = {
     "direct-entry": "Direct entry",
     "google-sheets": "Google Sheets",
     tsv: "TSV",
@@ -108,7 +108,7 @@
       <tr>
         <td>{source.name}</td>
         <td>{source.size}</td>
-        <td>{dict[source.type]}</td>
+        <td>{englishNameOf[source.type]}</td>
         <td class="table__row--actions actions">
           <button
             class="actions__action btn--inline"
