@@ -5,7 +5,7 @@ import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { StoredWordList } from "@worker/storage-models";
-import { WordList } from "@common/types";
+import { WordListSource } from "@common/types";
 
 import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
@@ -44,6 +44,7 @@ test("storing a file", async (t) => {
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
+    type: "xlsx",
   });
   // Now there's one file in the DB!
   t.is(await db.files.count(), 1);
@@ -58,6 +59,7 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
     name: filename,
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
+    type: "xlsx",
   });
 
   // We should find that it has been stored:
@@ -72,16 +74,18 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
 test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
   const { storage } = t.context;
 
-  const sources = [
+  const sources: WordListSource[] = [
     {
       name: "ExampleWordlist.xlsx",
       wordlist: exampleWordlist,
       size: exampleWordlist.length,
+      type: "xlsx",
     },
     {
       name: "[direct entry]",
-      wordlist: [["ȻNEs", 12]] as WordList,
+      wordlist: [["ȻNEs", 12]],
       size: 1,
+      type: "direct-entry",
     },
   ];
 
@@ -96,11 +100,12 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
 
   // This weird line extracts ONLY the properties found in sources,
   // so that we can just deepEqual with sources!
-  files = files.map(({ id, name, wordlist, size }) => ({
+  files = files.map(({ id, name, wordlist, size, type }) => ({
     id,
     name,
     wordlist,
     size,
+    type,
   }));
   files.sort(byName);
 

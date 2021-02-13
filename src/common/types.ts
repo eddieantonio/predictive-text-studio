@@ -17,6 +17,15 @@ export type WordAndCount = [string, number];
 export type WordList = WordAndCount[];
 
 /**
+ * A dictionary source type.
+ */
+export type DictionarySourceType =
+  | "xlsx"
+  | "google-sheets"
+  | "tsv"
+  | "direct-entry";
+
+/**
  * A word list stored in the database.
  */
 export interface WordListSource {
@@ -35,7 +44,7 @@ export interface WordListSource {
   /**
    * Type of the file e.g. xlsx
    */
-  type?: string;
+  type: DictionarySourceType;
 }
 
 /**

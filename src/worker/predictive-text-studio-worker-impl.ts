@@ -8,7 +8,7 @@ import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
-import { WordList } from "@common/types";
+import { WordList, DictionarySourceType } from "@common/types";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
 import { DictionaryEntry, ProjectMetadata } from "@common/types";
 
@@ -66,7 +66,12 @@ export class PredictiveTextStudioWorkerImpl
     name: string,
     wordlist: WordList
   ): Promise<ArrayBuffer> {
-    this.storage.saveFile({ name, wordlist, size: wordlist.length });
+    this.storage.saveFile({
+      name,
+      wordlist,
+      size: wordlist.length,
+      type: "google-sheets",
+    });
     return await linkStorageToKmp(this.storage);
   }
 
@@ -91,6 +96,7 @@ export class PredictiveTextStudioWorkerImpl
     contents: File
   ): Promise<number> {
     let wordlist: WordList = [];
+    let type: DictionarySourceType;
     if (/\.(tsv)$/i.test(name)) {
       // Read the file as a string
       const TSVFileString: string = await new Promise((resolve, reject) => {
@@ -105,12 +111,19 @@ export class PredictiveTextStudioWorkerImpl
         reader.readAsText(contents);
       });
       wordlist = readTSV(TSVFileString);
+      type = "tsv";
     } else if (/\.(xlsx)$/i.test(name)) {
       wordlist = await readExcel(await contents.arrayBuffer());
+      type = "xlsx";
     } else {
       throw new Error("Invalid File Type. Please use either .tsv or .xlsx");
     }
-    await this.storage.saveFile({ name, wordlist, size: wordlist.length });
+    await this.storage.saveFile({
+      name,
+      wordlist,
+      size: wordlist.length,
+      type,
+    });
     this.generateKMPFromStorage();
     return wordlist.length;
   }
@@ -125,6 +138,7 @@ export class PredictiveTextStudioWorkerImpl
       name: dictionaryName,
       wordlist,
       size: wordlist.length,
+      type: "direct-entry",
     });
     return wordlist.length;
   }
