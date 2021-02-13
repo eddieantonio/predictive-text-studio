@@ -8,14 +8,6 @@ import {
 const DB_NAME = "dictionary_sources";
 
 /**
- * !!!!!!!!!!! IMPORTANT !!!!!!!!!!
- *
- * Increment this any time you make a change to the schema
- * (defined below in PredictiveTextStudioDexie's constructor).
- */
-const SCHEMA_VERSION = 4;
-
-/**
  * The key of the ONLY StoredPackageInfo record.
  */
 const PACKAGE_ID = 0;
@@ -28,7 +20,7 @@ export class PredictiveTextStudioDexie extends Dexie {
 
   constructor(options?: DexieOptions) {
     super(DB_NAME, options);
-    this.version(SCHEMA_VERSION).stores({
+    this.version(4).stores({
       /**
        * files Table Schema:
        *
@@ -89,6 +81,20 @@ export class PredictiveTextStudioDexie extends Dexie {
        */
       KMPFileData: "++id, package",
     });
+
+    /* Version 5: Add "size"  property to file table: */
+    this.version(5)
+      .stores({
+        files: "++id, name, wordlist, size",
+      })
+      .upgrade((transaction) => {
+        return transaction
+          .table("files")
+          .toCollection()
+          .modify((file: StoredWordList) => {
+            file.size = file.wordlist.length;
+          });
+      });
 
     /* The assignments are not required by the runtime, however, they are
      * necessary for proper type-checking. */
