@@ -2,7 +2,7 @@ import {
   KeyboardDataWithTime,
   StoredProjectData,
   StoredWordList,
-} from "./../../src/worker/storage-models";
+} from "@worker/storage-models";
 import type { WordList } from "@common/types";
 
 /**

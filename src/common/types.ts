@@ -17,6 +17,28 @@ export type WordAndCount = [string, number];
 export type WordList = WordAndCount[];
 
 /**
+ * A word list stored in the database.
+ */
+export interface WordListSource {
+  /**
+   * Typically the filename of the uploaded dictionary source.
+   */
+  name: string;
+  /**
+   * The actual contents of said file.
+   */
+  wordlist: WordList;
+  /**
+   * Size of the file in words.
+   */
+  size: number;
+  /**
+   * Type of the file e.g. xlsx
+   */
+  type?: string;
+}
+
+/**
  * A manually entered collection of words and their counts.
  */
 export interface DictionaryEntry {
