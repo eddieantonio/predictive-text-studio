@@ -5,7 +5,7 @@ import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { StoredWordList } from "@worker/storage-models";
-import { WordList, DictionarySourceType } from "@common/types";
+import { WordListSource, DictionarySourceType } from "@common/types";
 
 import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
@@ -74,18 +74,18 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
 test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
   const { storage } = t.context;
 
-  const sources = [
+  const sources: WordListSource[] = [
     {
       name: "ExampleWordlist.xlsx",
       wordlist: exampleWordlist,
       size: exampleWordlist.length,
-      type: "xlsx" as DictionarySourceType,
+      type: "xlsx",
     },
     {
       name: "[direct entry]",
-      wordlist: [["ȻNEs", 12]] as WordList,
+      wordlist: [["ȻNEs", 12]],
       size: 1,
-      type: "direct-entry" as DictionarySourceType,
+      type: "direct-entry",
     },
   ];
 
