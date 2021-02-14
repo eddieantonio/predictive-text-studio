@@ -3,12 +3,12 @@
  */
 
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
-import type { StoredWordList } from "../worker/storage-models";
 import type {
   DictionaryEntry,
   KeyboardDataWithTime,
   ProjectMetadata,
   WordList,
+  WordListSource,
 } from "@common/types";
 
 export interface PredictiveTextStudioWorker {
@@ -89,5 +89,5 @@ export interface PredictiveTextStudioWorker {
   /**
    * Retrieving File data from the IndexedDB storage
    */
-  getFilesFromStorage(): Promise<StoredWordList[]>;
+  getFilesFromStorage(): Promise<WordListSource[]>;
 }

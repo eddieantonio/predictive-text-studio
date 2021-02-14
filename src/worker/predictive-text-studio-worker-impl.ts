@@ -1,14 +1,10 @@
-import {
-  KeyboardData,
-  KeyboardDataWithTime,
-  StoredWordList,
-} from "./storage-models";
+import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
 import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import Storage from "./storage";
-import { WordList, DictionarySourceType } from "@common/types";
+import { WordList, WordListSource, DictionarySourceType } from "@common/types";
 import { RelevantKmpOptions } from "@common/kmp-json-file";
 import { DictionaryEntry, ProjectMetadata } from "@common/types";
 
@@ -43,7 +39,7 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.fetchKeyboardData();
   }
 
-  async getFilesFromStorage(): Promise<StoredWordList[]> {
+  async getFilesFromStorage(): Promise<WordListSource[]> {
     return this.storage.fetchAllFiles();
   }
 
