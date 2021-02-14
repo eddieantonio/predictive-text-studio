@@ -1,12 +1,18 @@
+import type { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
+import type { RelevantKmpOptions } from "@common/kmp-json-file";
+import type {
+  DictionaryEntry,
+  DictionarySourceType,
+  ProjectMetadata,
+  WordList,
+  WordListSource,
+} from "@common/types";
+
+import Storage from "./storage";
 import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
-import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
-import { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
-import Storage from "./storage";
-import { WordList, WordListSource, DictionarySourceType } from "@common/types";
-import { RelevantKmpOptions } from "@common/kmp-json-file";
-import { DictionaryEntry, ProjectMetadata } from "@common/types";
+import { readExcel, readManualEntryData, readTSV } from "./read-wordlist";
 
 /**
  * expiryThreshold is used to decide if keyboard data is too old
