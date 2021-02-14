@@ -1,16 +1,15 @@
-import type { RelevantKmpOptions } from "./kmp-json-file";
+/**
+ * This interface establishes a communication protocol between the UI thread and the worker thread
+ */
+
+import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type { StoredWordList } from "../worker/storage-models";
 import type {
   DictionaryEntry,
   KeyboardDataWithTime,
   ProjectMetadata,
-} from "./types";
-
-/**
- * This interface establishes a communication protocol between the UI thread and the worker thread
- */
-
-import type { WordList } from "@common/types";
+  WordList,
+} from "@common/types";
 
 export interface PredictiveTextStudioWorker {
   /////////////////////// Modify dictionary sources ////////////////////////
