@@ -9,6 +9,9 @@ For developers
 Please refer to [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for how to
 setup your development environment. 
 
+Please see the [architecture document](./docs/architecture.md) for an
+overview of the organization of this application.
+
 License
 -------
 

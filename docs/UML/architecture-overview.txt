@@ -1,0 +1,33 @@
+# Created using https://sequencediagram.org/ 
+
+participant App
+participant Worker
+database IndexedDB
+
+activate App
+App-->*Worker:<<spawn>>
+activate Worker
+deactivate App
+Worker->Worker:<<initialize>>
+deactivate Worker
+
+group upload data
+  [->App:
+  activate App
+  App->>Worker:upload data
+  deactivate App
+  activate Worker
+  Worker->IndexedDB:store data
+  activate IndexedDB
+  IndexedDB-->Worker:
+  deactivate IndexedDB
+  Worker->Worker:compile model
+  activate Worker
+  Worker<--Worker:.kmp file
+  deactivate Worker
+  Worker->>App:onPackageCompileSuccess
+  activate App
+  deactivate Worker
+  App->[:
+  deactivate App
+end
