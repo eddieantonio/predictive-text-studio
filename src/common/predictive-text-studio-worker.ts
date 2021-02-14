@@ -1,16 +1,15 @@
-import type { RelevantKmpOptions } from "./kmp-json-file";
-import type { StoredWordList } from "../worker/storage-models";
-import type {
-  DictionaryEntry,
-  KeyboardDataWithTime,
-  ProjectMetadata,
-} from "./types";
-
 /**
  * This interface establishes a communication protocol between the UI thread and the worker thread
  */
 
-import type { WordList } from "@common/types";
+import type { RelevantKmpOptions } from "@common/kmp-json-file";
+import type {
+  DictionaryEntry,
+  KeyboardDataWithTime,
+  ProjectMetadata,
+  WordList,
+  WordListSource,
+} from "@common/types";
 
 export interface PredictiveTextStudioWorker {
   /////////////////////// Modify dictionary sources ////////////////////////
@@ -90,5 +89,5 @@ export interface PredictiveTextStudioWorker {
   /**
    * Retrieving File data from the IndexedDB storage
    */
-  getFilesFromStorage(): Promise<StoredWordList[]>;
+  getFilesFromStorage(): Promise<WordListSource[]>;
 }
