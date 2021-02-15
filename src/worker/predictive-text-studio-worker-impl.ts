@@ -64,17 +64,14 @@ export class PredictiveTextStudioWorkerImpl
     }
   }
 
-  async readGoogleSheet(
-    name: string,
-    wordlist: WordList
-  ): Promise<ArrayBuffer> {
+  readGoogleSheet(name: string, wordlist: WordList): void {
     this.storage.saveFile({
       name,
       wordlist,
       size: wordlist.length,
       type: "google-sheets",
     });
-    return await linkStorageToKmp(this.storage);
+    this.generateKMPFromStorage();
   }
 
   private async generateKMPFromStorage(): Promise<void> {
