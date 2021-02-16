@@ -14,9 +14,6 @@
 
   $: rowDataFromManualEntry = tableData.data;
   $: validDictionary = validateTableData(tableData);
-  $: if (validDictionary) {
-    worker.addManualEntryDictionaryToProject(tableData);
-  }
 
   const validInput = (input: string): boolean => {
     return (

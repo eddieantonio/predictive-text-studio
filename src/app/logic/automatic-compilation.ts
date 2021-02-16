@@ -1,7 +1,7 @@
 import * as Comlink from "comlink";
 
 import worker from "../spawn-worker";
-import { currentDownloadURL } from "../stores";
+import { currentDownloadURL, compileSuccess } from "../stores";
 
 /**
  * Get the worker to automatically compile and update the download URL.
@@ -12,6 +12,22 @@ export function setupAutomaticCompilationAndDownloadURL(): void {
       currentDownloadURL.set(createURL(kmp));
     })
   );
+}
+
+/**
+ * Get the worker to signal when compilation is successful.
+ */
+export function setupCompilationSuccessSignal(): void {
+  worker.onPackageCompileStart(
+    Comlink.proxy(() => {
+      compileSuccess.set(false);
+    })
+  )
+  worker.onPackageCompileSuccess(
+    Comlink.proxy(() => {
+      compileSuccess.set(true);
+    })
+  )
 }
 
 /**

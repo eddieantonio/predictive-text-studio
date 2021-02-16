@@ -24,8 +24,8 @@
     align-items: center;
   }
   .button--disabled {
-      background: var(--gray-disabled);
-      pointer-events: none;
+    background: var(--gray-disabled);
+    pointer-events: none;
   }
 </style>
 

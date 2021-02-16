@@ -58,7 +58,7 @@
     // TODO: why... it it just key/value?
     dispatch("message", {
       key: "languages",
-      value: [{ language, id: bcp47Tag }],
+      value: [{ name: language, id: bcp47Tag }],
       status: true,
     });
   }

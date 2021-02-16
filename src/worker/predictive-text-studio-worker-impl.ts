@@ -77,7 +77,7 @@ export class PredictiveTextStudioWorkerImpl
     return await linkStorageToKmp(this.storage);
   }
 
-  private async generateKMPFromStorage(): Promise<void> {
+  async generateKMPFromStorage(): Promise<void> {
     // TODO: Parse multiple dictionary sources, right now just reading the first file
     this._emitPackageCompileStart();
 
@@ -142,6 +142,7 @@ export class PredictiveTextStudioWorkerImpl
       size: wordlist.length,
       type: "direct-entry",
     });
+    this.generateKMPFromStorage();
     return wordlist.length;
   }
 

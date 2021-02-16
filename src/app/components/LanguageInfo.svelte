@@ -7,14 +7,13 @@
 
   import type { KeyboardMetadata } from "@common/types";
 
-  export let setInfoReady = (state: boolean): void => {};
-
   let languageInfo: KeyboardMetadata = {
     language: "",
     bcp47Tag: "",
   };
   let authorName: string = "";
   let copyright: string = "";
+  let dictionaryName: string = "";
 
   onMount(async () => {
     const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
@@ -23,13 +22,13 @@
     languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
     languageInfo.language = storedProjectData.langName;
     copyright = storedProjectData.copyright || "";
+    dictionaryName = storedProjectData.dictionaryName || "";
   });
 
   async function updateMetadata(event: CustomEvent) {
     let { key, value } = event.detail;
-    setInfoReady(false);
     await worker.setProjectData({ [key]: value });
-    setInfoReady(true);
+    worker.generateKMPFromStorage();
   }
 </script>
 
@@ -82,7 +81,9 @@
       label="Dictionary Name"
       subtext="Model ID"
       id="dictionaryName"
-      cyData="input-dictionary-name" />
+      cyData="input-dictionary-name"
+      bind:inputValue={dictionaryName}
+      on:message={updateMetadata} />
     <InputField
       on:message={updateMetadata}
       label="Copyright"
