@@ -22,13 +22,17 @@
     }
   }
 
-  $: if (selectedLanguage !== undefined) {
-    const options: Partial<Readonly<RelevantKmpOptions>> = {
-      languages: [
-        { name: selectedLanguage.language, id: selectedLanguage.bcp47Tag },
-      ],
-    };
-    worker.setProjectData(options);
+  $: updateLanguage(selectedLanguage)
+
+  function updateLanguage(lang: KeyboardMetadata|undefined): void{
+    if (selectedLanguage !== undefined) {
+      const options: Partial<Readonly<RelevantKmpOptions>> = {
+        languages: [
+          { name: selectedLanguage.language, id: selectedLanguage.bcp47Tag },
+        ],
+      };
+      worker.setProjectData(options);
+    }
   }
 
   // Split Button
