@@ -22,12 +22,12 @@ export function setupCompilationSuccessSignal(): void {
     Comlink.proxy(() => {
       compileSuccess.set(false);
     })
-  )
+  );
   worker.onPackageCompileSuccess(
     Comlink.proxy(() => {
       compileSuccess.set(true);
     })
-  )
+  );
 }
 
 /**

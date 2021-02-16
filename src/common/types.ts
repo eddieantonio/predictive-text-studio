@@ -107,5 +107,5 @@ export interface ProjectMetadata {
   /**
    * The name of the Dictionary and Model ID
    */
-  dictionaryName?: string
+  dictionaryName?: string;
 }
