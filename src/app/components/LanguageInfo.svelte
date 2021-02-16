@@ -7,6 +7,8 @@
 
   import type { KeyboardMetadata } from "@common/types";
 
+  export let setInfoReady = (state: boolean): void => {};
+
   let languageInfo: KeyboardMetadata = {
     language: "",
     bcp47Tag: "",
@@ -23,9 +25,11 @@
     copyright = storedProjectData.copyright || "";
   });
 
-  function updateMetadata(event: CustomEvent) {
+  async function updateMetadata(event: CustomEvent) {
     let { key, value } = event.detail;
-    worker.setProjectData({ [key]: value });
+    setInfoReady(false);
+    await worker.setProjectData({ [key]: value });
+    setInfoReady(true);
   }
 </script>
 

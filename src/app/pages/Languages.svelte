@@ -5,7 +5,16 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
   import worker from "../spawn-worker";
+  import { currentDownloadURL } from "../stores";
+
   export let selectedButton: string = "information";
+  let infoReady: boolean = false;
+
+  $: downloadReady = infoReady && Boolean($currentDownloadURL);
+
+  function setInfoReady(state: boolean): void {
+    infoReady = state;
+  }
 
   // Mock language data object - this would be read from localstorage/db
   interface DictionaryInformation {
@@ -25,6 +34,7 @@
 
   onMount(async () => {
     languageInformation.sources = await worker.getFilesFromStorage();
+    infoReady = true;
   });
 
   /**
@@ -149,11 +159,12 @@
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
           dataCy="languages-download-btn"
+          enabled={downloadReady}
         >Download</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo />
+          <LanguageInfo setInfoReady={setInfoReady} />
         {:else if selectedButton === 'sources'}
           <LanguageSources sources={languageInformation.sources} />
         {/if}
