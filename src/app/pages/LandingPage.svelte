@@ -22,9 +22,9 @@
     }
   }
 
-  $: updateLanguage(selectedLanguage)
+  $: updateLanguage(selectedLanguage);
 
-  function updateLanguage(lang: KeyboardMetadata|undefined): void{
+  function updateLanguage(lang: KeyboardMetadata | undefined): void {
     if (selectedLanguage !== undefined) {
       const options: Partial<Readonly<RelevantKmpOptions>> = {
         languages: [
