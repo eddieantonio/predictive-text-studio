@@ -54,6 +54,14 @@ describe("Upload from the the landing page", function () {
       .should("have.attr", "data-download-state", "ready")
       .click();
 
-    cy.readFile(downloadedFilePath);
+    cy.readFile(downloadedFilePath, "binary")
+      .then((contents) => {
+        const JSZip = require("jszip");
+        return JSZip.loadAsync(contents);
+      })
+      .then((zip) => {
+        expect(zip.file("kmp.json")).to.not.be.null;
+        expect(zip.file(/[.]js$/)).to.have.lengthOf(1);
+      });
   });
 });
