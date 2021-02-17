@@ -1,3 +1,10 @@
+/**
+ * Declares the typing of custom commands
+ * See cypress/support/commands.js for the implementations.
+ */
+
+import JSZip = require("jszip");
+
 declare namespace Cypress {
   interface Chainable {
     /**
@@ -5,8 +12,9 @@ declare namespace Cypress {
      * folder, without an "are you sure?" prompt appearing.
      */
     allowUnlimitedDownloadsToFolder(downloadFolder: string): void;
+
     /**
-     * Disable css smooth scroll to avoid using "{ force:true }" in .type.
+     * Disable CSS smooth scroll to avoid using "{ force:true }" in .type.
      * See https://github.com/cypress-io/cypress/issues/3200
      * @example
      * cy.disableSmoothScroll()
@@ -22,5 +30,10 @@ declare namespace Cypress {
      * See: https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements
      */
     data(dataCy: string): Chainable;
+
+    /**
+     * Read a .zip file (or a .kmp file) from the downloads folder.
+     */
+    readZip(filename: string): Promise<JSZip>;
   }
 }
