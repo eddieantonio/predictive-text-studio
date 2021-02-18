@@ -6,18 +6,32 @@
   import DownloadKMP from "../components/DownloadKMP.svelte";
   import SplitButton from "../components/SplitButton.svelte";
   import { currentDownloadURL } from "../stores";
+  import type { KeyboardMetadata } from "@common/types";
+  import type { RelevantKmpOptions } from "@common/kmp-json-file";
 
-  let languageStatus: boolean = false;
+  let selectedLanguage: KeyboardMetadata | undefined = undefined;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
 
-  $: continueReady = languageStatus && Boolean($currentDownloadURL);
+  $: continueReady =
+    selectedLanguage !== undefined && Boolean($currentDownloadURL);
 
-  function setLanguage(event: CustomEvent) {
-    const languages = event.detail.value;
-    languageStatus = event.detail.status;
-    if (languageStatus) {
-      worker.setProjectData({ languages });
+  $: if (Boolean($currentDownloadURL)) {
+    if (selectedLanguage === undefined) {
+      selectedLanguage = { language: "Undefined Language", bcp47Tag: "und" };
+    }
+  }
+
+  $: updateLanguage(selectedLanguage);
+
+  function updateLanguage(lang: KeyboardMetadata | undefined): void {
+    if (selectedLanguage !== undefined) {
+      const options: Partial<Readonly<RelevantKmpOptions>> = {
+        languages: [
+          { name: selectedLanguage.language, id: selectedLanguage.bcp47Tag },
+        ],
+      };
+      worker.setProjectData(options);
     }
   }
 
@@ -327,7 +341,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start" >
       <fieldset class="quick-start__step">
-        <LanguageNameInput on:message={setLanguage} label="Step 1: Enter your language" bold={false} />
+        <LanguageNameInput bind:selectedLanguage={selectedLanguage} label="Step 1: Enter your language" bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
@@ -360,7 +374,6 @@
               data-cy="landing-page-continue-button"> Customize
         </button>
     </div>
-
     </form>
   </section>
 </main>

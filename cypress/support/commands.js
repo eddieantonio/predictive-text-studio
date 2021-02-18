@@ -56,3 +56,13 @@ Cypress.Commands.add("disableSmoothScroll", () => {
 Cypress.Commands.add("data", (dataCy) => {
   return cy.get(`[data-cy=${dataCy}]`);
 });
+
+/**
+ * Shortcut for cy.get("[data=NAME]")
+ */
+Cypress.Commands.add("readZip", (filename) => {
+  return cy.readFile(filename, "binary").then((contents) => {
+    const JSZip = require("jszip");
+    return JSZip.loadAsync(contents);
+  });
+});
