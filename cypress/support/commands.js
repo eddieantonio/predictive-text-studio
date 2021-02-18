@@ -1,3 +1,5 @@
+const JSZip = require("jszip");
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -62,7 +64,6 @@ Cypress.Commands.add("data", (dataCy) => {
  */
 Cypress.Commands.add("readZip", (filename) => {
   return cy.readFile(filename, "binary").then((contents) => {
-    const JSZip = require("jszip");
     return JSZip.loadAsync(contents);
   });
 });
