@@ -90,5 +90,4 @@ export interface PredictiveTextStudioWorker {
    * Retrieving File data from the IndexedDB storage
    */
   getFilesFromStorage(): Promise<WordListSource[]>;
-
 }

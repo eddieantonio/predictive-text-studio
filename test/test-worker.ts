@@ -49,7 +49,6 @@ test.todo(
 );
 
 test("it should recompile the KMP file after setting project data", async (t) => {
-
   const db = new PredictiveTextStudioDexie({
     indexedDB: new FDBFactory(),
     IDBKeyRange,
@@ -112,12 +111,11 @@ test("it should recompile the KMP file after setting project data", async (t) =>
         compileCount++;
         break;
       default:
-        t.fail("Too many compilations occurred")
+        t.fail("Too many compilations occurred");
     }
   });
 
   await worker.setProjectData({
     languages: [{ name: languageName, id: languageTag }],
   });
-
-})
+});

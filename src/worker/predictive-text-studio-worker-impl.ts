@@ -165,7 +165,6 @@ export class PredictiveTextStudioWorkerImpl
   setProjectData(
     metadata: Partial<Readonly<RelevantKmpOptions>>
   ): Promise<void> {
-
     if (metadata.languages) {
       const langName = metadata.languages[0].name;
       const bcp47Tag = metadata.languages[0].id;
@@ -177,10 +176,12 @@ export class PredictiveTextStudioWorkerImpl
       });
     }
     return new Promise<void>((resolve) => {
-      this.storage.updateProjectData(metadata as { [key: string]: string }).then(() => {
-        this.generateKMPFromStorage();
-        resolve();
-      });
+      this.storage
+        .updateProjectData(metadata as { [key: string]: string })
+        .then(() => {
+          this.generateKMPFromStorage();
+          resolve();
+        });
     });
   }
 
