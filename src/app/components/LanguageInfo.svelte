@@ -28,7 +28,6 @@
   async function updateMetadata(event: CustomEvent) {
     let { key, value } = event.detail;
     await worker.setProjectData({ [key]: value });
-    worker.generateKMPFromStorage();
   }
 </script>
 

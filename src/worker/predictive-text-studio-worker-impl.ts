@@ -77,7 +77,7 @@ export class PredictiveTextStudioWorkerImpl
     return await linkStorageToKmp(this.storage);
   }
 
-  async generateKMPFromStorage(): Promise<void> {
+  private async generateKMPFromStorage(): Promise<void> {
     // TODO: Parse multiple dictionary sources, right now just reading the first file
     this._emitPackageCompileStart();
 
@@ -165,15 +165,23 @@ export class PredictiveTextStudioWorkerImpl
   setProjectData(
     metadata: Partial<Readonly<RelevantKmpOptions>>
   ): Promise<void> {
+
     if (metadata.languages) {
       const langName = metadata.languages[0].name;
       const bcp47Tag = metadata.languages[0].id;
-      return this.storage.updateProjectData({ langName, bcp47Tag });
+      return new Promise<void>((resolve) => {
+        this.storage.updateProjectData({ langName, bcp47Tag }).then(() => {
+          this.generateKMPFromStorage();
+          resolve();
+        });
+      });
     }
-
-    return this.storage.updateProjectData(
-      metadata as { [key: string]: string }
-    );
+    return new Promise<void>((resolve) => {
+      this.storage.updateProjectData(metadata as { [key: string]: string }).then(() => {
+        this.generateKMPFromStorage();
+        resolve();
+      });
+    });
   }
 
   async fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata> {

@@ -91,10 +91,4 @@ export interface PredictiveTextStudioWorker {
    */
   getFilesFromStorage(): Promise<WordListSource[]>;
 
-  ///////////////////////////////// Compilation /////////////////////////////////
-
-  /**
-   * Compile saved files into KMP
-   */
-  generateKMPFromStorage(): Promise<void>;
 }
