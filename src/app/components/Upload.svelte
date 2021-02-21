@@ -14,26 +14,30 @@
   // This problem can also be solved by listening for dragOver
   // However, as of right now, doing so on Chrome when dragging over nested element
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
+  let files: File[] = [];
   let dragEnterCounter = 0;
   let error: Error | null = null;
 
   async function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
-    let fileList = filesFromDragEvent(event);
-    await uploadAllFilesOrDisplayError(fileList);
+    const filesDropped = filesFromDragEvent(event);
+    await uploadAllFilesOrDisplayError(filesDropped);
   }
 
   async function uploadFilesFromInputElement(event: Event) {
-    const files = filesFromInputElement(event.target);
-    await uploadAllFilesOrDisplayError(files);
+    const filesUploaded = filesFromInputElement(event.target);
+    await uploadAllFilesOrDisplayError(filesUploaded);
   }
 
-  async function uploadAllFilesOrDisplayError(files: File[]): Promise<void> {
-    if (files.length === 0) return;
+  async function uploadAllFilesOrDisplayError(
+    filesToSave: File[]
+  ): Promise<void> {
+    if (filesToSave.length === 0) return;
 
     error = null;
     try {
-      await addAllFilesToCurrentProject(files);
+      await addAllFilesToCurrentProject(filesToSave);
+      files = [...files, ...filesToSave];
     } catch (e) {
       error = e;
     }
@@ -77,6 +81,14 @@
     color: var(--blue);
     padding-bottom: 1em;
   }
+  .info {
+    display: flex;
+    margin-bottom: 0.5em;
+  }
+  .icon {
+    padding: 0 0.25em;
+    width: 1em;
+  }
   .error {
     background-color: var(--error-bg-color);
     color: var(--error-fg-color);
@@ -95,6 +107,15 @@
   {#if error}
     <p class:error>{error}</p>
   {/if}
+  {#each files as file}
+    <div class="info">
+      {file.name}
+      <img
+        class="icon"
+        src="icons/checked.svg"
+        alt="file uploaded successfully" />
+    </div>
+  {/each}
   <span>Drag and drop an Excel .xlsx or TSV file here!</span>
   <span>or</span>
   <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
