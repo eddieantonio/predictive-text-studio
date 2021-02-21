@@ -1,3 +1,5 @@
+const JSZip = require("jszip");
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -55,4 +57,13 @@ Cypress.Commands.add("disableSmoothScroll", () => {
  */
 Cypress.Commands.add("data", (dataCy) => {
   return cy.get(`[data-cy=${dataCy}]`);
+});
+
+/**
+ * Shortcut for cy.get("[data=NAME]")
+ */
+Cypress.Commands.add("readZip", (filename) => {
+  return cy.readFile(filename, "binary").then((contents) => {
+    return JSZip.loadAsync(contents);
+  });
 });
