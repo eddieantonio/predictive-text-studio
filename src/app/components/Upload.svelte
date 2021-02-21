@@ -20,22 +20,24 @@
 
   async function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
-    const file = filesFromDragEvent(event);
-    await uploadAllFilesOrDisplayError(file);
+    const filesDropped = filesFromDragEvent(event);
+    await uploadAllFilesOrDisplayError(filesDropped);
   }
 
   async function uploadFilesFromInputElement(event: Event) {
-    const file = filesFromInputElement(event.target);
-    await uploadAllFilesOrDisplayError(file);
+    const filesUploaded = filesFromInputElement(event.target);
+    await uploadAllFilesOrDisplayError(filesUploaded);
   }
 
-  async function uploadAllFilesOrDisplayError(file: File[]): Promise<void> {
-    if (file.length === 0) return;
+  async function uploadAllFilesOrDisplayError(
+    filesToSave: File[]
+  ): Promise<void> {
+    if (filesToSave.length === 0) return;
 
     error = null;
     try {
-      await addAllFilesToCurrentProject(file);
-      files = [...files, ...file];
+      await addAllFilesToCurrentProject(filesToSave);
+      files = [...files, ...filesToSave];
     } catch (e) {
       error = e;
     }
