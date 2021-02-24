@@ -163,7 +163,7 @@
   </script>
 </svelte:head>
 
-<div class="google-sheets">
+<div class="google-sheets" data-cy="google-sheets-input">
   {#if error}
     <p class:error>{error}</p>
   {/if}

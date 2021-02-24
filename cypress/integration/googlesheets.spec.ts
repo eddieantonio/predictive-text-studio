@@ -41,6 +41,10 @@ describe("Upload via Google Sheets API from the the landing page", function () {
     cy.get("#input-googleSheetsURL").type(googlesheetsURL);
     cy.get("button").contains("Read Values").click();
 
+    cy.wait(1000);
+
+    cy.data("google-sheets-input").should("not.contain", "Could not connect");
+
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
       .click();
