@@ -64,12 +64,6 @@
      * use !important ¯\_(ツ)_/¯  */
     display: block !important;
   }
-
-  /* @media (max-width: 768px) {
-    .autocomplete__label {
-      font-size: var(--xxs);
-    }
-  } */
 </style>
 
 <div data-cy={cyData}>
