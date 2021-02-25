@@ -32,7 +32,7 @@
 <style>
   .language__info {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
   }
 
   .language__info-left {
@@ -62,6 +62,10 @@
     }
     .language__info-right {
       margin: auto;
+    }
+    img {
+      width: 100%;
+      height: auto;
     }
   }
 </style>

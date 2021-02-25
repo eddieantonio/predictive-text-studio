@@ -49,6 +49,7 @@
 
 <style>
   main {
+    max-width: 1024px;
     min-height: 100vh;
   }
 
@@ -62,8 +63,7 @@
 
   .languages__container {
     margin: auto 2rem;
-    display: flex;
-    flex-direction: column;
+    width: calc(100vw - 4rem);
   }
 
   .languages__container--header {
@@ -104,7 +104,7 @@
   }
 
   .languages__container--content {
-    margin-top: 25px;
+    margin: 2rem auto;
   }
 
   @media (max-width: 425px) {
