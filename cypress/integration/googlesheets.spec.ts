@@ -17,6 +17,7 @@ describe("Upload via Google Sheets API from the the landing page", function () {
   });
 
   it("should find a button to press to upload a file", function () {
+    cy.onlyOn("localhost");
     // HACK: wait for the language list to populate
     cy.wait(3000);
 
