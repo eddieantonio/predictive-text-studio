@@ -61,7 +61,7 @@
   }
 
   .languages__container {
-    margin-left: 75px;
+    margin: auto 2rem;
     display: flex;
     flex-direction: column;
   }
@@ -105,6 +105,12 @@
 
   .languages__container--content {
     margin-top: 25px;
+  }
+
+  @media (max-width: 425px) {
+    .languages__container--actions {
+      display: block;
+    }
   }
 </style>
 
