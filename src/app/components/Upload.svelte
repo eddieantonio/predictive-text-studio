@@ -88,6 +88,7 @@
   .icon {
     padding: 0 0.25em;
     width: 1em;
+    height: 1.2em;
   }
   .error {
     background-color: var(--error-bg-color);

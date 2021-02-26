@@ -32,7 +32,7 @@
 <style>
   .language__info {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
   }
 
   .language__info-left {
@@ -43,9 +43,6 @@
 
   .language__info-right {
     margin-left: 300px;
-    display: flex;
-    flex-direction: column;
-    order: 2;
   }
 
   .label {
@@ -57,6 +54,19 @@
   img {
     width: auto;
     height: 200px;
+  }
+
+  @media (max-width: 768px) {
+    .language__info {
+      display: block;
+    }
+    .language__info-right {
+      margin: auto;
+    }
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 </style>
 
