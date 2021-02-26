@@ -13,24 +13,8 @@ jobs:
 
       - name: Fetch from Keyman API
         run: |
-          curl https://api.keyman.com/search?q= > src/app/output.json
+          curl https://api.keyman.com/search?q= > src/gen/cached-keyman-api.json
 
-      - name: Commit JSON output
-        id: commit
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "github-actions"
-          git add --all
-          if [-z "$(git status --porcelain)"]; then
-            echo "::set-output name=push::false"
-          else
-            git commit -m "Update Keyman API" -a
-            echo "::set-output name=push::true"
-          fi
-        shell: bash
-      
-      - name: Push changes
-        if: steps.commit.outputs.push == 'true'
-        uses: ad-m/github-push-action@master
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Update Keyman API
