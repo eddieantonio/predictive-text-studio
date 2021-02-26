@@ -1,6 +1,6 @@
 declare const DEVELOPMENT: boolean;
 
-let hasWarnedDev = false;
+let hasNotifiedDev = false;
 
 /**
  * Log an error in development mode.
@@ -12,14 +12,12 @@ let hasWarnedDev = false;
  */
 function logError(e: Error): void {
   if (DEVELOPMENT) {
-    console.error(e);
-  } else {
-    if (!hasWarnedDev) {
-      // Message warns the dev that logging is disabled
-      console.warn("Developer Logging Not Enabled");
-      hasWarnedDev = true;
+    if (!hasNotifiedDev) {
+      // Message to notify dev that logging is enabled
+      console.warn("Developer Logging Is Enabled");
+      hasNotifiedDev = true;
     }
-    // Do nothing
+    console.error(e);
   }
 }
 
