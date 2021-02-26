@@ -23,7 +23,7 @@
     align-items: center;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 768px) {
     .button {
       margin: 0.25rem auto;
       width: 100%;

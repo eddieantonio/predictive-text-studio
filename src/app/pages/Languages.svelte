@@ -48,8 +48,13 @@
 </script>
 
 <style>
+  :root {
+    --laptop: 1024px;
+    --margin: 4rem;
+    --gap: 8rem;
+  }
   main {
-    max-width: 1024px;
+    max-width: var(--laptop);
     min-height: 100vh;
   }
 
@@ -62,8 +67,8 @@
   }
 
   .languages__container {
-    margin: auto 2rem;
-    width: calc(100vw - 4rem);
+    margin: auto var(--margin);
+    width: calc(100vw - var(--gap));
   }
 
   .languages__container--header {
@@ -107,9 +112,15 @@
     margin: 2rem auto;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 768px) {
     .languages__container--actions {
       display: block;
+    }
+  }
+  @media (max-width: 425px) {
+    :root {
+      --margin: 2rem;
+      --gap: 4rem;
     }
   }
 </style>
