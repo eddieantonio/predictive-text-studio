@@ -1,0 +1,20 @@
+name: Cache Keyman API
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Fetch from Keyman API
+        run: |
+          curl https://api.keyman.com/search?q= > src/gen/cached-keyman-api.json
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update Keyman API
