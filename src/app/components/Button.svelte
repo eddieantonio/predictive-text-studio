@@ -22,6 +22,13 @@
     flex-direction: column;
     align-items: center;
   }
+
+  @media (max-width: 768px) {
+    .button {
+      margin: 0.25rem auto;
+      width: 100%;
+    }
+  }
 </style>
 
 <div class="button-layout">

@@ -34,6 +34,7 @@ export const appConfiguration = {
     replace({
       CLIENT_ID: JSON.stringify(process.env.CLIENT_ID),
       API_KEY: JSON.stringify(process.env.API_KEY),
+      DEVELOPMENT: watchMode === true
     }),
 
     svelte({
