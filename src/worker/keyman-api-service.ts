@@ -1,6 +1,9 @@
 import { SearchLanguage } from "./models";
 import { KeyboardData } from "./storage-models";
 
+const KEYMAN_KEYBOARDS_API =
+  "https://cache.predictivetext.studio/cached-keyman-api.json";
+
 /**
  * @file KeymanAPI class to implement all services provided by official Keyman API
  * Note: Currently this class is used for the functionality to fetch all existing keyboard languages
@@ -23,7 +26,7 @@ export class KeymanAPI {
 
   fetchLanaguageData(): Promise<KeyboardData[]> {
     let languages: KeyboardData[];
-    return fetch(this.url.href)
+    return fetch(KEYMAN_KEYBOARDS_API)
       .then((response) => response.json())
       .then((data: { languages: SearchLanguage[] }) => {
         languages = [];
