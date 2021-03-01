@@ -10,21 +10,16 @@ const KEYMAN_KEYBOARDS_API =
  * and more function(s) could be added in the future
  */
 export class KeymanAPI {
-  fetchLanaguageData(): Promise<KeyboardData[]> {
-    let languages: KeyboardData[];
-    return fetch(KEYMAN_KEYBOARDS_API)
-      .then((response) => response.json())
-      .then((data: { languages: SearchLanguage[] }) => {
-        languages = [];
-        data.languages.forEach((element) => {
-          languages.push({
-            bcp47Tag: element.id,
-            language: element.name,
-          });
-        });
-      })
-      .then(() => {
-        return languages;
+  async fetchLanaguageData(): Promise<KeyboardData[]> {
+    const languages: KeyboardData[] = [];
+    const response = await fetch(KEYMAN_KEYBOARDS_API);
+    const data: { languages: SearchLanguage[] } = await response.json();
+    data.languages.forEach((element) => {
+      languages.push({
+        bcp47Tag: element.id,
+        language: element.name,
       });
+    });
+    return languages;
   }
 }
