@@ -34,7 +34,7 @@
   let knownLanguages: KeyboardMetadata[] = [];
 
   onMount(async function loadLanguageListFromWorker() {
-    knownLanguages = await worker.getDataFromStorage();
+    knownLanguages = await worker.fetchCachedKeyboardLanguageList();
   });
 </script>
 
