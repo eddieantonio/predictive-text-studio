@@ -10,20 +10,6 @@ const KEYMAN_KEYBOARDS_API =
  * and more function(s) could be added in the future
  */
 export class KeymanAPI {
-  /**
-   * API configs
-   */
-  baseUrl = "https://api.keyman.com/search";
-  /**
-   * Query all languages data, doc: https://help.keyman.com/developer/cloud/search/1.0/
-   */
-  params = { q: "" };
-  url: URL;
-  constructor() {
-    this.url = new URL(this.baseUrl);
-    this.url.search = new URLSearchParams(this.params).toString();
-  }
-
   fetchLanaguageData(): Promise<KeyboardData[]> {
     let languages: KeyboardData[];
     return fetch(KEYMAN_KEYBOARDS_API)
