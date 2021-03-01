@@ -11,15 +11,10 @@ const KEYMAN_KEYBOARDS_API =
  */
 export class KeymanAPI {
   async fetchLanaguageData(): Promise<KeyboardData[]> {
-    const languages: KeyboardData[] = [];
     const response = await fetch(KEYMAN_KEYBOARDS_API);
     const data: { languages: SearchLanguage[] } = await response.json();
-    data.languages.forEach((element) => {
-      languages.push({
-        bcp47Tag: element.id,
-        language: element.name,
-      });
+    return data.languages.map((language) => {
+      return { bcp47Tag: language.id, language: language.name };
     });
-    return languages;
   }
 }
