@@ -172,7 +172,7 @@
         {#if selectedButton === 'information'}
           <LanguageInfo />
         {:else if selectedButton === 'sources'}
-          <LanguageSources sources={languageInformation.sources} />
+          <LanguageSources bind:sources={languageInformation.sources} />
         {/if}
       </div>
     </div>

@@ -130,6 +130,13 @@ export class PredictiveTextStudioWorkerImpl
     return wordlist.length;
   }
 
+  async removeDictionaryFromProject(
+    name:string
+  ): Promise<number> {
+    await this.storage.deleteFile(name);
+    return 1;
+  }
+
   async addManualEntryDictionaryToProject(tableData: {
     name: string;
     data: DictionaryEntry[];

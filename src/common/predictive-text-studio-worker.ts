@@ -30,6 +30,12 @@ export interface PredictiveTextStudioWorker {
   addDictionarySourceToProject(name: string, contents: File): Promise<number>;
 
   /**
+   * Remove a dictionary within the IndexedDB
+   * @param name the name of the wordlist to remove
+   */
+  removeDictionaryFromProject(name: string): Promise<number>;
+
+  /**
    * Store the manual entry data into the database
    * @param tableData Manual entry data
    */

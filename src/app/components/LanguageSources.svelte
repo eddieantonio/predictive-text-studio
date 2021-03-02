@@ -1,6 +1,7 @@
 <script lang="ts">
   import AddSource from "./AddSource.svelte";
   import type { WordListSource } from "@common/types";
+  import { removeDictionaryFromProject } from "../logic/delete";
   export let sources: WordListSource[];
 
   /**
@@ -13,11 +14,13 @@
 
   /**
    * Handles the click when the delete button is pressed.
-   * TODO: Replace stub
    *
    * @return {void}
    */
-  const handleDelete = (): void => {};
+  async function handleDelete(sourceToDelete:WordListSource): Promise<void>{
+    await removeDictionaryFromProject(sourceToDelete.name);
+    sources = sources.filter(source => source.name != sourceToDelete.name);
+  };
 
   const englishNameOf = {
     "direct-entry": "Direct entry",
@@ -107,7 +110,7 @@
             <button class="actions__action btn--inline" on:click={handleEdit}>
               <img src="/icons/edit.svg" alt="edit" />
             </button>
-            <button class="actions__action btn--inline" on:click={handleDelete}>
+            <button class="actions__action btn--inline" on:click={()=>handleDelete(source)}>
               <img src="/icons/delete.svg" alt="delete" />
             </button>
           </td>
