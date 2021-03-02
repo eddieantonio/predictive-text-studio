@@ -17,9 +17,6 @@ describe("Upload from the the landing page", function () {
   });
 
   it("should find a button to press to upload a file", function () {
-    // HACK: wait for the language list to populate
-    cy.wait(3000);
-
     cy.data("download-kmp")
       .as("download-kmp")
       .should("have.attr", "data-download-state", "disabled");
