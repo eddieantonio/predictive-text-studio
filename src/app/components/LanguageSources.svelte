@@ -17,10 +17,10 @@
    *
    * @return {void}
    */
-  async function handleDelete(sourceToDelete:WordListSource): Promise<void>{
+  async function handleDelete(sourceToDelete: WordListSource): Promise<void> {
     await removeDictionaryFromProject(sourceToDelete.name);
-    sources = sources.filter(source => source.name != sourceToDelete.name);
-  };
+    sources = sources.filter((source) => source.name != sourceToDelete.name);
+  }
 
   const englishNameOf = {
     "direct-entry": "Direct entry",
@@ -110,7 +110,9 @@
             <button class="actions__action btn--inline" on:click={handleEdit}>
               <img src="/icons/edit.svg" alt="edit" />
             </button>
-            <button class="actions__action btn--inline" on:click={()=>handleDelete(source)}>
+            <button
+              class="actions__action btn--inline"
+              on:click={() => handleDelete(source)}>
               <img src="/icons/delete.svg" alt="delete" />
             </button>
           </td>

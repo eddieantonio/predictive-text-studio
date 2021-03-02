@@ -130,9 +130,7 @@ export class PredictiveTextStudioWorkerImpl
     return wordlist.length;
   }
 
-  async removeDictionaryFromProject(
-    name:string
-  ): Promise<number> {
+  async removeDictionaryFromProject(name: string): Promise<number> {
     await this.storage.deleteFile(name);
     return 1;
   }
