@@ -56,7 +56,7 @@ test("it should recompile the KMP file after setting project data", async (t) =>
   const storage = new Storage(db);
   const worker = new PredictiveTextStudioWorkerImpl(storage);
 
-  // save a file so it can be compiled (?)
+  // save a file so it can be compiled
   await storage.saveFile({
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
@@ -64,7 +64,7 @@ test("it should recompile the KMP file after setting project data", async (t) =>
     type: "xlsx",
   });
 
-  // save project data so it can be compiled (?)
+  // save project data so it can be compiled
   const storedProjectData = {
     langName: "English",
     bcp47Tag: "en",
@@ -88,7 +88,7 @@ test("it should recompile the KMP file after setting project data", async (t) =>
   );
   worker.onPackageCompileError(
     Comlink.proxy((err) => {
-      t.fail("Compilation Failed");
+      t.fail(`Compilation Failed: ${err}`);
     })
   );
 
@@ -118,4 +118,6 @@ test("it should recompile the KMP file after setting project data", async (t) =>
   await worker.setProjectData({
     languages: [{ name: languageName, id: languageTag }],
   });
+
+  t.timeout(1000, "wait for compilation to occur");
 });
