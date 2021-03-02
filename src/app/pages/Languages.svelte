@@ -66,7 +66,13 @@
 </script>
 
 <style>
+  :root {
+    --laptop: 1024px;
+    --margin: 4rem;
+    --gap: 8rem;
+  }
   main {
+    max-width: var(--laptop);
     min-height: 100vh;
   }
 
@@ -79,9 +85,8 @@
   }
 
   .languages__container {
-    margin-left: 75px;
-    display: flex;
-    flex-direction: column;
+    margin: auto var(--margin);
+    width: calc(100vw - var(--gap));
   }
 
   .languages__container--header {
@@ -122,7 +127,19 @@
   }
 
   .languages__container--content {
-    margin-top: 25px;
+    margin: 2rem auto;
+  }
+
+  @media (max-width: 768px) {
+    .languages__container--actions {
+      display: block;
+    }
+  }
+  @media (max-width: 425px) {
+    :root {
+      --margin: 2rem;
+      --gap: 4rem;
+    }
   }
 </style>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, createEventDispatcher } from "svelte";
+  import { onMount } from "svelte";
   import AutoComplete from "simple-svelte-autocomplete";
 
   import worker from "../spawn-worker";
@@ -29,39 +29,13 @@
   /************************** Internal variables ****************************/
 
   /**
-   * Event dispatcher used to send "languages" message to parent components.
-   *
-   * Honestly, I think this is a weird design choice; we may want to redo this :/
-   */
-  const dispatch = createEventDispatcher();
-
-  /**
    * List of languages that will be autocompleted.
    */
   let knownLanguages: KeyboardMetadata[] = [];
 
-  /**
-   * What text should appear below the input. In practice, this is the BCP-47
-   * tag.
-   */
-  let subtext = "";
-
   onMount(async function loadLanguageListFromWorker() {
-    knownLanguages = await worker.getDataFromStorage();
+    knownLanguages = await worker.fetchCachedKeyboardLanguageList();
   });
-
-  $: if (selectedLanguage) selectLanguage(selectedLanguage);
-
-  function selectLanguage({ language, bcp47Tag }: KeyboardMetadata) {
-    subtext = bcp47Tag;
-
-    // TODO: why... it it just key/value?
-    dispatch("message", {
-      key: "languages",
-      value: [{ name: language, id: bcp47Tag }],
-      status: true,
-    });
-  }
 </script>
 
 <style>
@@ -103,6 +77,6 @@
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
     BCP47Tag:
-    {subtext || ''}
+    {selectedLanguage?.bcp47Tag ?? ''}
   </p>
 </div>

@@ -27,6 +27,13 @@
     background: var(--gray-disabled);
     pointer-events: none;
   }
+
+  @media (max-width: 768px) {
+    .button {
+      margin: 0.25rem auto;
+      width: 100%;
+    }
+  }
 </style>
 
 <div class="button-layout">

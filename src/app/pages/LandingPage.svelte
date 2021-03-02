@@ -6,18 +6,32 @@
   import DownloadKMP from "../components/DownloadKMP.svelte";
   import SplitButton from "../components/SplitButton.svelte";
   import { currentDownloadURL } from "../stores";
+  import type { KeyboardMetadata } from "@common/types";
+  import type { RelevantKmpOptions } from "@common/kmp-json-file";
 
-  let languageStatus: boolean = false;
+  let selectedLanguage: KeyboardMetadata | undefined = undefined;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
 
-  $: continueReady = languageStatus && Boolean($currentDownloadURL);
+  $: continueReady =
+    selectedLanguage !== undefined && Boolean($currentDownloadURL);
 
-  function setLanguage(event: CustomEvent) {
-    const languages = event.detail.value;
-    languageStatus = event.detail.status;
-    if (languageStatus) {
-      worker.setProjectData({ languages });
+  $: if (Boolean($currentDownloadURL)) {
+    if (selectedLanguage === undefined) {
+      selectedLanguage = { language: "Undefined Language", bcp47Tag: "und" };
+    }
+  }
+
+  $: updateLanguage(selectedLanguage);
+
+  function updateLanguage(lang: KeyboardMetadata | undefined): void {
+    if (selectedLanguage !== undefined) {
+      const options: Partial<Readonly<RelevantKmpOptions>> = {
+        languages: [
+          { name: selectedLanguage.language, id: selectedLanguage.bcp47Tag },
+        ],
+      };
+      worker.setProjectData(options);
     }
   }
 
@@ -78,9 +92,9 @@
 
   .masthead {
     /* These hacky variables are here */
-    --wave-height: 222px;
+    --wave-height: 333px;
     --masthead-space-top: 1rem;
-    --masthead-content-height: 13rem;
+    --masthead-content-height: 20rem;
     --masthead-solid-color-height: calc(
       var(--masthead-space-top) + var(--masthead-content-height)
     );
@@ -157,7 +171,7 @@
   .explanation__workflow {
     display: flex;
     justify-content: center;
-    margin-bottom: 2em;
+    margin: 0;
     font-weight: bold;
   }
 
@@ -170,7 +184,7 @@
   }
 
   .explanation__workflow__transform__arrow {
-    padding-top: 20px;
+    padding: 20px;
   }
 
   .explanation__workflow__image {
@@ -180,7 +194,7 @@
 
   .quick-start {
     margin: 9rem auto;
-    min-width: 20em;
+    padding: 1.5rem;
     max-width: var(--quick-start-max-width);
   }
 
@@ -189,7 +203,7 @@
     border: 0;
     padding: 0;
 
-    font-size: var(--xl);
+    font-size: var(--s);
     line-height: 1.5;
   }
 
@@ -230,8 +244,8 @@
 
   .block {
     display: block;
-
     margin: 1rem auto 2rem;
+    width: 1.5rem;
   }
 
   legend {
@@ -250,6 +264,25 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  @media (max-width: 768px) {
+    .masthead__content {
+      display: block;
+      min-width: auto;
+    }
+    .masthead__image {
+      position: absolute;
+      width: 50vw;
+      height: auto;
+      right: 5vw;
+    }
+    .explanation__workflow {
+      display: block;
+    }
+    .explanation__workflow__transform {
+      margin: auto;
+    }
   }
 
   @keyframes descend {
@@ -327,7 +360,7 @@
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start" >
       <fieldset class="quick-start__step">
-        <LanguageNameInput on:message={setLanguage} label="Step 1: Enter your language" bold={false} />
+        <LanguageNameInput bind:selectedLanguage={selectedLanguage} label="Step 1: Enter your language" bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
@@ -360,7 +393,6 @@
               data-cy="landing-page-continue-button"> Customize
         </button>
     </div>
-
     </form>
   </section>
 </main>

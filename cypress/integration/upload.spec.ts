@@ -17,9 +17,6 @@ describe("Upload from the the landing page", function () {
   });
 
   it("should find a button to press to upload a file", function () {
-    // HACK: wait for the language list to populate
-    cy.wait(3000);
-
     cy.data("download-kmp")
       .as("download-kmp")
       .should("have.attr", "data-download-state", "disabled");
@@ -54,6 +51,9 @@ describe("Upload from the the landing page", function () {
       .should("have.attr", "data-download-state", "ready")
       .click();
 
-    cy.readFile(downloadedFilePath);
+    cy.readZip(downloadedFilePath).then((zip) => {
+      expect(zip.file("kmp.json")).to.not.be.null;
+      expect(zip.file(/[.]js$/)).to.have.lengthOf(1);
+    });
   });
 });

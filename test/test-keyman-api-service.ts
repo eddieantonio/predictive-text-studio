@@ -12,7 +12,9 @@ test.before("keyman-api-service", () => {
 
 // Happy Path
 test("getLanaguageData to return fetch data from keyman API in an array", async (t) => {
-  nock("https://api.keyman.com").get("/search?q=").reply(200, responseBody);
+  nock("https://cache.predictivetext.studio")
+    .get("/cached-keyman-api.json")
+    .reply(200, responseBody);
   await keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
     t.is(languages.length, 3);
   });
@@ -20,8 +22,8 @@ test("getLanaguageData to return fetch data from keyman API in an array", async 
 
 // Sad Path
 test("getLanaguageData to catch the error", async (t) => {
-  nock("https://api.keyman.com")
-    .get("/search?q=")
+  nock("https://cache.predictivetext.studio")
+    .get("/cached-keyman-api.json")
     .replyWithError({ code: "System Error" });
   await t.throwsAsync(keymanAPI.fetchLanaguageData());
 });
