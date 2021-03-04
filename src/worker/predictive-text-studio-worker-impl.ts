@@ -162,7 +162,7 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileSuccess = callback;
   }
 
-  setProjectData(
+  async setProjectData(
     metadata: Partial<Readonly<RelevantKmpOptions>>
   ): Promise<void> {
     let data: { [key: string]: string };
@@ -174,12 +174,8 @@ export class PredictiveTextStudioWorkerImpl
       data = metadata as { [key: string]: string };
     }
 
-    return new Promise<void>((resolve) => {
-      this.storage.updateProjectData(data).then(() => {
-        this.generateKMPFromStorage();
-        resolve();
-      });
-    });
+    await this.storage.updateProjectData(data);
+    return this.generateKMPFromStorage();
   }
 
   async fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata> {
