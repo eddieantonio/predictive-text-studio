@@ -5,26 +5,18 @@ import { currentDownloadURL, compileSuccess } from "../stores";
 
 /**
  * Get the worker to automatically compile and update the download URL.
+ * Set store value according to compilation status
  */
 export function setupAutomaticCompilationAndDownloadURL(): void {
-  worker.onPackageCompileSuccess(
-    Comlink.proxy(async (kmp: ArrayBuffer) => {
-      currentDownloadURL.set(createURL(kmp));
-    })
-  );
-}
-
-/**
- * Get the worker to signal when compilation is successful.
- */
-export function setupCompilationSuccessSignal(): void {
   worker.onPackageCompileStart(
     Comlink.proxy(() => {
       compileSuccess.set(false);
     })
   );
+
   worker.onPackageCompileSuccess(
-    Comlink.proxy(() => {
+    Comlink.proxy(async (kmp: ArrayBuffer) => {
+      currentDownloadURL.set(createURL(kmp));
       compileSuccess.set(true);
     })
   );

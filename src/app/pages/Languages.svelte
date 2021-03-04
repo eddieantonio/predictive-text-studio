@@ -5,8 +5,8 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
   import worker from "../spawn-worker";
-  import { setupCompilationSuccessSignal } from "../logic/automatic-compilation";
   import { compileSuccess } from "../stores";
+  import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
 
   export let selectedButton: string = "information";
 
@@ -32,12 +32,12 @@
     languageInformation.sources = await worker.getFilesFromStorage();
   }
 
-  // listen to changes to the package compilation and recalculate word count
+  // listen to changes to the package compilation and enable download button accordingly
   $: downloadReady = $compileSuccess;
 
   onMount(() => {
-    setupCompilationSuccessSignal();
     getLanguageSources();
+    setupAutomaticCompilationAndDownloadURL();
   });
 
   /**
@@ -186,7 +186,10 @@
         {#if selectedButton === 'information'}
           <LanguageInfo />
         {:else if selectedButton === 'sources'}
-          <LanguageSources sources={languageInformation.sources} />
+          <LanguageSources
+            sources={languageInformation.sources}
+            getLanguageSources={getLanguageSources}
+          />
         {/if}
       </div>
     </div>

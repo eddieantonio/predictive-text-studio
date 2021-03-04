@@ -12,6 +12,11 @@
     data: DictionaryEntry[];
   };
 
+  /**
+   * Re-calculate word count
+   */
+  export let getLanguageSources = async () => {};
+
   $: rowDataFromManualEntry = tableData.data;
   $: validDictionary = validateTableData(tableData);
 
@@ -51,6 +56,7 @@
   const saveTableData = async () => {
     if (validDictionary) {
       await worker.addManualEntryDictionaryToProject(tableData);
+      getLanguageSources();
     }
   };
 </script>
