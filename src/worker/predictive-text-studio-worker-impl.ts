@@ -170,21 +170,16 @@ export class PredictiveTextStudioWorkerImpl
       const langName = metadata.languages[0].name;
       const bcp47Tag = metadata.languages[0].id;
       data = { langName, bcp47Tag };
-      return new Promise<void>((resolve) => {
-        this.storage.updateProjectData(data).then(() => {
-          this.generateKMPFromStorage();
-          resolve();
-        });
-      });
     } else {
       data = metadata as { [key: string]: string };
-      return new Promise<void>((resolve) => {
-        this.storage.updateProjectData(data).then(() => {
-          this.generateKMPFromStorage();
-          resolve();
-        });
-      });
     }
+
+    return new Promise<void>((resolve) => {
+      this.storage.updateProjectData(data).then(() => {
+        this.generateKMPFromStorage();
+        resolve();
+      });
+    });
   }
 
   async fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata> {
