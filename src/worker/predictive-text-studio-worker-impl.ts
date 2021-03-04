@@ -182,17 +182,18 @@ export class PredictiveTextStudioWorkerImpl
   }
 }
 
+/**
+ * The storage backend wants a slightly different data format than the
+ * RelevantKmpOptions interface provides.
+ */
 function toStorageFormat(
   metadata: Partial<Readonly<RelevantKmpOptions>>
 ): { [key: string]: string } {
-  let data: { [key: string]: string };
-
+  const data = Object.assign({}, metadata as { [key: string]: string });
   if (metadata.languages) {
-    const langName = metadata.languages[0].name;
-    const bcp47Tag = metadata.languages[0].id;
-    data = { langName, bcp47Tag };
-  } else {
-    data = metadata as { [key: string]: string };
+    data.langName = metadata.languages[0].name;
+    data.bcp47Tag = metadata.languages[0].id;
+    delete data.languages;
   }
 
   return data;
