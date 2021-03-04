@@ -122,6 +122,6 @@
   </div>
   <details data-cy="language-sources-add-sources">
     <summary>Add Source</summary>
-    <AddSource getLanguageSources={getLanguageSources} />
+    <AddSource {getLanguageSources} />
   </details>
 </div>

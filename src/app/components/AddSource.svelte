@@ -66,7 +66,7 @@
 </div>
 
 {#if manualEntry}
-  <ManualEntry getLanguageSources={getLanguageSources} {tableData} />
+  <ManualEntry {getLanguageSources} {tableData} />
 {:else}
-  <Upload getLanguageSources={getLanguageSources} />
+  <Upload {getLanguageSources} />
 {/if}
