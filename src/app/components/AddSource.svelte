@@ -3,6 +3,11 @@
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
 
+  /**
+   * Re-calculate word count
+   */
+  export let getLanguageSources = async () => {};
+
   // Split Button
   const uploadSourcesFromFile = () => {
     manualEntry = false;
@@ -61,7 +66,7 @@
 </div>
 
 {#if manualEntry}
-  <ManualEntry {tableData} />
+  <ManualEntry {getLanguageSources} {tableData} />
 {:else}
-  <Upload />
+  <Upload {getLanguageSources} />
 {/if}

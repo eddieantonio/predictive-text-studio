@@ -7,6 +7,7 @@
   export let size: string = "medium"; // optional
   export let subtext: string = ""; // optional
   export let dataCy: string = ""; // optional
+  export let enabled: boolean = true; // optional
   export let onClick: (ev: MouseEvent) => void;
 </script>
 
@@ -22,6 +23,10 @@
     flex-direction: column;
     align-items: center;
   }
+  .button--disabled {
+    background: var(--gray-disabled);
+    pointer-events: none;
+  }
 
   @media (max-width: 768px) {
     .button {
@@ -36,6 +41,7 @@
     class="button button--{color} button--{size}"
     class:button--shadow={hasDropShadow}
     class:button--outline={isOutlined}
+    class:button--disabled={!enabled}
     {type}
     on:click={onClick}
     data-cy={dataCy}><slot /></button>

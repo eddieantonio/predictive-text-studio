@@ -4,6 +4,11 @@
   export let sources: WordListSource[];
 
   /**
+   * Re-calculate word count
+   */
+  export let getLanguageSources = async () => {};
+
+  /**
    * Handles the click when the edit button is pressed.
    * TODO: Replace stub
    *
@@ -117,6 +122,6 @@
   </div>
   <details data-cy="language-sources-add-sources">
     <summary>Add Source</summary>
-    <AddSource />
+    <AddSource {getLanguageSources} />
   </details>
 </div>
