@@ -33,12 +33,7 @@
   }
 
   // listen to changes to the package compilation and recalculate word count
-  compileSuccess.subscribe((currentValue) => {
-    downloadReady = currentValue;
-    if (currentValue) {
-      getLanguageSources();
-    }
-  });
+  $: downloadReady = $compileSuccess;
 
   onMount(() => {
     setupCompilationSuccessSignal();
