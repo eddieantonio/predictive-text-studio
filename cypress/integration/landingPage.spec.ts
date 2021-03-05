@@ -70,9 +70,6 @@ describe("Upload from the the landing page", () => {
   });
 
   it("should have the 'customize' button enabled after uploading a file and selecting a language", function () {
-    // HACK: wait for the language list to populate
-    cy.wait(3000);
-
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
@@ -110,9 +107,6 @@ describe("Upload from the the landing page", () => {
   });
 
   it("should set the BCP-47 tag to 'und' if only a file is uploaded", function () {
-    // HACK: wait for the language list to populate
-    cy.wait(3000);
-
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
     cy.data("landing-page-continue-button").should(

@@ -21,7 +21,7 @@
     padding: 3%;
   }
   button {
-    width: 160px;
+    flex: 1;
     margin: 0;
     border-radius: 0;
   }

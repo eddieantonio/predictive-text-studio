@@ -13,6 +13,10 @@
   };
   let authorName: string = "";
   let copyright: string = "";
+  let dictionaryName: string = "";
+
+  // prevent triggering compilation twice
+  let listenForMetaDataChanges: boolean = false;
 
   onMount(async () => {
     const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
@@ -21,18 +25,34 @@
     languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
     languageInfo.language = storedProjectData.langName;
     copyright = storedProjectData.copyright || "";
+    dictionaryName = storedProjectData.dictionaryName || "";
+
+    listenForMetaDataChanges = true;
   });
 
-  function updateMetadata(event: CustomEvent) {
-    let { key, value } = event.detail;
+  $: if (languageInfo && listenForMetaDataChanges) {
+    updateMetadata("languages", [
+      { name: languageInfo.language, id: languageInfo.bcp47Tag },
+    ]);
+  }
+
+  function updateMetadata(key: any, value: any) {
     worker.setProjectData({ [key]: value });
+  }
+
+  /**
+   * Triggered by onBlur event from InputField
+   */
+  function onBlurListener(event: CustomEvent) {
+    let { key, value } = event.detail;
+    updateMetadata(key, value);
   }
 </script>
 
 <style>
   .language__info {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
   }
 
   .language__info-left {
@@ -43,9 +63,6 @@
 
   .language__info-right {
     margin-left: 300px;
-    display: flex;
-    flex-direction: column;
-    order: 2;
   }
 
   .label {
@@ -58,6 +75,19 @@
     width: auto;
     height: 200px;
   }
+
+  @media (max-width: 768px) {
+    .language__info {
+      display: block;
+    }
+    .language__info-right {
+      margin: auto;
+    }
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
 </style>
 
 <div class="language__info">
@@ -65,22 +95,23 @@
     <LanguageNameInput
       label="Language"
       cyData="input-language-name"
-      bind:selectedLanguage={languageInfo}
-      on:message={updateMetadata} />
+      bind:selectedLanguage={languageInfo} />
     <InputField
       label="Author or Organization"
       subtext="Shortcode"
       id="authorName"
       cyData="input-author-name"
       bind:inputValue={authorName}
-      on:message={updateMetadata} />
+      on:message={onBlurListener} />
     <InputField
       label="Dictionary Name"
       subtext="Model ID"
       id="dictionaryName"
-      cyData="input-dictionary-name" />
+      cyData="input-dictionary-name"
+      bind:inputValue={dictionaryName}
+      on:message={onBlurListener} />
     <InputField
-      on:message={updateMetadata}
+      on:message={onBlurListener}
       label="Copyright"
       id="copyright"
       bind:inputValue={copyright}

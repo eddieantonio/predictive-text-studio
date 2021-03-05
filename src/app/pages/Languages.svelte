@@ -5,7 +5,12 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
   import worker from "../spawn-worker";
+  import { compileSuccess } from "../stores";
+  import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
+
   export let selectedButton: string = "information";
+
+  let downloadReady: boolean = true;
 
   // Mock language data object - this would be read from localstorage/db
   interface DictionaryInformation {
@@ -23,8 +28,16 @@
     sources: [],
   };
 
-  onMount(async () => {
+  async function getLanguageSources() {
     languageInformation.sources = await worker.getFilesFromStorage();
+  }
+
+  // listen to changes to the package compilation and enable download button accordingly
+  $: downloadReady = $compileSuccess;
+
+  onMount(() => {
+    getLanguageSources();
+    setupAutomaticCompilationAndDownloadURL();
   });
 
   /**
@@ -48,7 +61,13 @@
 </script>
 
 <style>
+  :root {
+    --laptop: 1024px;
+    --margin: 4rem;
+    --gap: 8rem;
+  }
   main {
+    max-width: var(--laptop);
     min-height: 100vh;
   }
 
@@ -61,9 +80,8 @@
   }
 
   .languages__container {
-    margin-left: 75px;
-    display: flex;
-    flex-direction: column;
+    margin: auto var(--margin);
+    width: calc(100vw - var(--gap));
   }
 
   .languages__container--header {
@@ -104,7 +122,19 @@
   }
 
   .languages__container--content {
-    margin-top: 25px;
+    margin: 2rem auto;
+  }
+
+  @media (max-width: 768px) {
+    .languages__container--actions {
+      display: block;
+    }
+  }
+  @media (max-width: 425px) {
+    :root {
+      --margin: 2rem;
+      --gap: 4rem;
+    }
   }
 </style>
 
@@ -149,13 +179,17 @@
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
           dataCy="languages-download-btn"
+          enabled={downloadReady}
         >Download</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
           <LanguageInfo />
         {:else if selectedButton === 'sources'}
-          <LanguageSources sources={languageInformation.sources} />
+          <LanguageSources
+            sources={languageInformation.sources}
+            getLanguageSources={getLanguageSources}
+          />
         {/if}
       </div>
     </div>

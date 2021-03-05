@@ -1,11 +1,15 @@
 <script lang="ts">
   import TeamMemberProfile from "../components/TeamMemberProfile.svelte";
 
-  const coreMaintainerGithubUserNames: string[] = [];
+  const coreMaintainerGithubUserNames: string[] = ["eddieantonio"];
   const teamMemberGithubUserNames: string[] = [
     "ChrisChrisLoLo",
     "yehee",
     "zprobs",
+    "Xuechunqiu",
+    "IanSeng",
+    "pranavnarang",
+    "jienius",
   ];
 </script>
 

@@ -53,11 +53,13 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        * | copyright        |
        * +------------------+
+       * | dictionaryName   |
+       * +------------------+
        * | version          |
        * +------------------+
        */
       projectData:
-        "++id, langName, bcp47Tag, authorName, modelID, copyright, version",
+        "++id, langName, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
       /**
        * KMP keyboardData Table Scehma
        * +------------------+

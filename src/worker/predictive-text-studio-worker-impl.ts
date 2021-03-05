@@ -41,7 +41,7 @@ export class PredictiveTextStudioWorkerImpl
     });
   }
 
-  async getDataFromStorage(): Promise<KeyboardDataWithTime[]> {
+  async fetchCachedKeyboardLanguageList(): Promise<KeyboardDataWithTime[]> {
     return this.storage.fetchKeyboardData();
   }
 
@@ -139,6 +139,7 @@ export class PredictiveTextStudioWorkerImpl
       size: wordlist.length,
       type: "direct-entry",
     });
+    this.generateKMPFromStorage();
     return wordlist.length;
   }
 
@@ -158,18 +159,12 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileSuccess = callback;
   }
 
-  setProjectData(
+  async setProjectData(
     metadata: Partial<Readonly<RelevantKmpOptions>>
   ): Promise<void> {
-    if (metadata.languages) {
-      const langName = metadata.languages[0].name;
-      const bcp47Tag = metadata.languages[0].id;
-      return this.storage.updateProjectData({ langName, bcp47Tag });
-    }
-
-    return this.storage.updateProjectData(
-      metadata as { [key: string]: string }
-    );
+    const data = toStorageFormat(metadata);
+    await this.storage.updateProjectData(data);
+    return this.generateKMPFromStorage();
   }
 
   async fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata> {
@@ -182,4 +177,21 @@ export class PredictiveTextStudioWorkerImpl
   private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
     return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
+}
+
+/**
+ * The storage backend wants a slightly different data format than the
+ * RelevantKmpOptions interface provides.
+ */
+function toStorageFormat(
+  metadata: Partial<Readonly<RelevantKmpOptions>>
+): { [key: string]: string } {
+  const data = Object.assign({}, metadata as { [key: string]: string });
+  if (metadata.languages) {
+    data.langName = metadata.languages[0].name;
+    data.bcp47Tag = metadata.languages[0].id;
+    delete data.languages;
+  }
+
+  return data;
 }

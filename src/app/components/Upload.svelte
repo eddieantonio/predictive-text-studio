@@ -18,6 +18,11 @@
   let dragEnterCounter = 0;
   let error: Error | null = null;
 
+  /**
+   * Re-calculate word count
+   */
+  export let getLanguageSources = async () => {};
+
   async function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
     const filesDropped = filesFromDragEvent(event);
@@ -38,6 +43,7 @@
     try {
       await addAllFilesToCurrentProject(filesToSave);
       files = [...files, ...filesToSave];
+      getLanguageSources();
     } catch (e) {
       error = e;
     }
@@ -88,6 +94,7 @@
   .icon {
     padding: 0 0.25em;
     width: 1em;
+    height: 1.2em;
   }
   .error {
     background-color: var(--error-bg-color);
