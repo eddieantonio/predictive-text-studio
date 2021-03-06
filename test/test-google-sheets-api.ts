@@ -22,65 +22,63 @@ const TOKEN_PATH = pathToFixture("token.json");
  */
 function authorize(credentials: any, callback: any) {
   const { client_secret, client_id, redirect_uri } = credentials;
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uri
-  );
+  const auth = new google.auth.OAuth2(client_id, client_secret, redirect_uri);
 
   // Read access token from JSON file.
   fs.readFile(TOKEN_PATH, { encoding: "utf-8" }, (err: any, token: string) => {
     if (err) {
+      const authURL = auth.generateAuthUrl({
+        access_type: "offline",
+        scope: SCOPES,
+      });
       console.error(
-        `${TOKEN_PATH} is missing: follow the instruction on https://github.com/eddieantonio/predictive-text-studio/blob/production/.github/CONTRIBUTING.md`
+        `${TOKEN_PATH} is missing: Authorize this app by visiting ${authURL}.`,
+        "Follow the instruction on https://github.com/eddieantonio/predictive-text-studio/blob/production/.github/CONTRIBUTING.md"
       );
+    } else {
+      auth.setCredentials(JSON.parse(token));
+      callback(auth);
     }
-    oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
   });
 }
 
 test.cb("it should fetch wordlist from Google Sheets API", (t) => {
-  authorize(
-    {
-      client_secret: process.env.CLIENT_SECRET,
-      client_id: process.env.CLIENT_ID,
-      redirect_uri: process.env.REDIRECT_URI,
-    },
-    (auth: any) => {
-      const sheets = google.sheets({ version: "v4", auth });
-      const spreadsheetId = process.env.GOOGLESHEETS_ID || "";
-      sheets.spreadsheets.values.get(
-        {
-          spreadsheetId,
-          range: "A1:B",
-        },
-        async (err, res: any) => {
-          if (err) {
-            const authURL = auth.generateAuthUrl({
-              access_type: "offline",
-              scope: SCOPES,
-            });
-            return t.fail(
-              `The API returned an error: ${err}. Authorize this app by visiting ${authURL}.`
-            );
-          }
-          const rows = res.data.values;
-          t.not(rows.length, 0);
-          const { name, wordlist, size, type } = await readGoogleSheet(
+  try {
+    authorize(
+      {
+        client_secret: process.env.CLIENT_SECRET,
+        client_id: process.env.CLIENT_ID,
+        redirect_uri: process.env.REDIRECT_URI,
+      },
+      (auth: any) => {
+        const sheets = google.sheets({ version: "v4", auth });
+        const spreadsheetId = process.env.GOOGLESHEETS_ID || "";
+        sheets.spreadsheets.values.get(
+          {
             spreadsheetId,
-            rows
-          );
-          t.is(name, spreadsheetId);
-          t.deepEqual(wordlist, [
-            ["hello", 1],
-            ["world", 2],
-          ]);
-          t.is(size, 2);
-          t.is(type, "google-sheets");
-          t.end();
-        }
-      );
-    }
-  );
+            range: "A1:B",
+          },
+          async (err, res: any) => {
+            if (err) throw err;
+            const rows = res.data.values;
+            t.not(rows.length, 0);
+            const { name, wordlist, size, type } = await readGoogleSheet(
+              spreadsheetId,
+              rows
+            );
+            t.is(name, spreadsheetId);
+            t.deepEqual(wordlist, [
+              ["hello", 1],
+              ["world", 2],
+            ]);
+            t.is(size, 2);
+            t.is(type, "google-sheets");
+            t.end();
+          }
+        );
+      }
+    );
+  } catch (err) {
+    return t.fail(err.message);
+  }
 });
