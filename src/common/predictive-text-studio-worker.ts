@@ -7,7 +7,6 @@ import type {
   DictionaryEntry,
   KeyboardDataWithTime,
   ProjectMetadata,
-  // WordList,
   WordListSource,
 } from "@common/types";
 

@@ -31,6 +31,3 @@ jobs:
           build: yarn run build
           start: yarn start
           wait-on: 'http://localhost:5000'
-        env:
-          API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
-          CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
