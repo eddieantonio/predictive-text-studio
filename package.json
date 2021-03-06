@@ -62,6 +62,7 @@
   "dependencies": {
     "@predictive-text-studio/lexical-model-compiler": "^14.0.0-alpha.0",
     "bcp-47": "^1.0.7",
+    "chalk": "^4.1.0",
     "comlink": "^4.3.0",
     "dexie": "^3.0.2",
     "dotenv": "^8.2.0",
@@ -82,7 +83,10 @@
     "require": [
       "ts-node/register",
       "tsconfig-paths/register"
-    ]
+    ],
+    "environmentVariables": {
+      "FORCE_COLOR": "1"
+    }
   },
   "husky": {
     "hooks": {
