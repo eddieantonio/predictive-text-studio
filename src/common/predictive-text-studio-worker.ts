@@ -7,7 +7,7 @@ import type {
   DictionaryEntry,
   KeyboardDataWithTime,
   ProjectMetadata,
-  WordList,
+  // WordList,
   WordListSource,
 } from "@common/types";
 
@@ -17,7 +17,7 @@ export interface PredictiveTextStudioWorker {
   /**
    * Save a Google Sheet to the current project
    */
-  readGoogleSheet(name: string, wordList: WordList): void;
+  readGoogleSheet(name: string, rows: string[][]): Promise<void>;
 
   /**
    * Compile the lexical model using files in the IndexedDB

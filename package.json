@@ -16,6 +16,7 @@
     "prettier": "prettier --write '{src,test,cypress}/**/*.{ts,svelte}'",
     "start": "sirv public -s",
     "test": "ava",
+    "test:ci": "ava --match='!*Google*'",
     "validate": "svelte-check"
   },
   "devDependencies": {

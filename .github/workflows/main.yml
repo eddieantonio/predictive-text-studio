@@ -18,7 +18,7 @@ jobs:
       - name: 🗿  Svelte Check
         run: yarn run validate
       - name: 🚀  Ava tests
-        run: yarn run test
+        run: yarn run test:ci
 
   end-to-end-tests:
     runs-on: ubuntu-latest
