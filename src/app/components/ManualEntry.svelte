@@ -9,6 +9,10 @@
     wordlist: WordList;
   };
 
+  /**
+   * Re-calculate word count
+   */
+  export let getLanguageSources = async () => {};
   $: rowDataFromManualEntry = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
   $: if (validDictionary) {
@@ -53,6 +57,7 @@
         tableData.name,
         tableData.wordlist
       );
+      getLanguageSources();
     }
   };
 </script>

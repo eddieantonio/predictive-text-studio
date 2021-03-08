@@ -111,4 +111,9 @@ export interface ProjectMetadata {
    * The model copyright.
    */
   copyright?: string;
+
+  /**
+   * The name of the Dictionary and Model ID
+   */
+  dictionaryName?: string;
 }

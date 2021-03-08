@@ -5,7 +5,12 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
   import worker from "../spawn-worker";
+  import { compileSuccess } from "../stores";
+  import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
+
   export let selectedButton: string = "information";
+
+  let downloadReady: boolean = true;
 
   // Mock language data object - this would be read from localstorage/db
   interface DictionaryInformation {
@@ -23,8 +28,16 @@
     sources: [],
   };
 
-  onMount(async () => {
+  async function getLanguageSources() {
     languageInformation.sources = await worker.getFilesFromStorage();
+  }
+
+  // listen to changes to the package compilation and enable download button accordingly
+  $: downloadReady = $compileSuccess;
+
+  onMount(() => {
+    getLanguageSources();
+    setupAutomaticCompilationAndDownloadURL();
   });
 
   /**
@@ -166,13 +179,17 @@
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
           dataCy="languages-download-btn"
+          enabled={downloadReady}
         >Download</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
           <LanguageInfo />
         {:else if selectedButton === 'sources'}
-          <LanguageSources bind:sources={languageInformation.sources} />
+          <LanguageSources
+            bind:sources={languageInformation.sources}
+            getLanguageSources={getLanguageSources}
+          />
         {/if}
       </div>
     </div>
