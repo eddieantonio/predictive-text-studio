@@ -1,21 +1,18 @@
 <script lang="ts">
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
-
-  interface DictionaryEntry {
-    word: string;
-    count?: number;
-  }
+  import type { WordAndCount, WordList } from "@common/types";
+  import { WordAndCountInd } from "@common/types";
 
   export let tableData: {
     name: string;
-    data: DictionaryEntry[];
+    wordlist: WordList;
   };
 
-  $: rowDataFromManualEntry = tableData.data;
-  $: validDictionary = validateTableData(tableData);
+  $: rowDataFromManualEntry = tableData.wordlist;
+  $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
   $: if (validDictionary) {
-    worker.addManualEntryDictionaryToProject(tableData);
+    worker.addManualEntryDictionaryToProject(tableData.name, tableData.wordlist);
   }
 
   const validInput = (input: string): boolean => {
@@ -27,16 +24,11 @@
     );
   };
 
-  const validateTableData = (tableData: {
-    name: string;
-    data: DictionaryEntry[];
-  }): boolean => {
-    const name = tableData.name;
+  const validateTableData = (name:string, wordlist:WordList): boolean => {
     const validTitle = validInput(name);
 
-    const rowsData = tableData.data;
-    const validRows = rowsData.every((rowData) => {
-      return validInput(rowData.word);
+    const validRows = wordlist.every((wordAndCount: WordAndCount) => {
+      return validInput(wordAndCount[WordAndCountInd.WORD]);
     });
     return validTitle && validRows;
   };
@@ -47,13 +39,14 @@
   };
 
   const addNewRow = (): void => {
-    rowDataFromManualEntry.push({ word: "" });
+    const newEntry: WordAndCount = ["",0]
+    rowDataFromManualEntry.push(newEntry);
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
   const saveTableData = async () => {
     if (validDictionary) {
-      await worker.addManualEntryDictionaryToProject(tableData);
+      await worker.addManualEntryDictionaryToProject(tableData.name, tableData.wordlist);
     }
   };
 </script>
@@ -172,7 +165,7 @@
         <td>
           <input
             type="text"
-            bind:value={row.word}
+            bind:value={row[WordAndCountInd.WORD]}
             required
             data-cy="manual-entry-input-word" />
         </td>
@@ -181,7 +174,7 @@
             type="number"
             min="0"
             placeholder="Optional"
-            bind:value={row.count}
+            bind:value={row[WordAndCountInd.COUNT]}
             data-cy="manual-entry-input-count" />
         </td>
         <td>

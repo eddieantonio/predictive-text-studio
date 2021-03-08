@@ -1,6 +1,5 @@
 import * as Excel from "exceljs";
 import { WordList } from "@common/types";
-import { DictionaryEntry } from "@common/types";
 
 const WORD = 1;
 const COUNT = 2;
@@ -95,11 +94,11 @@ function asNonNegativeInteger(x: unknown): number {
   return n;
 }
 
-export function readManualEntryData(contents: DictionaryEntry[]): WordList {
-  const wordlist: WordList = contents.map((row) => {
-    const word = row.word;
-    const count = asNonNegativeInteger(row.count || 0);
-    return [word, count];
-  });
-  return wordlist;
-}
+// export function readManualEntryData(contents: DictionaryEntry[]): WordList {
+//   const wordlist: WordList = contents.map((row) => {
+//     const word = row.word;
+//     const count = asNonNegativeInteger(row.count || 0);
+//     return [word, count];
+//   });
+//   return wordlist;
+// }
