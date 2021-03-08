@@ -9,7 +9,7 @@ export type WordAndCount = [string, number];
  */
 export enum WordAndCountInd {
   WORD = 0,
-  COUNT = 1
+  COUNT = 1,
 }
 
 /**

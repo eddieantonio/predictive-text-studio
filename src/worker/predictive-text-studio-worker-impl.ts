@@ -134,9 +134,10 @@ export class PredictiveTextStudioWorkerImpl
     return 1;
   }
 
-  async addManualEntryDictionaryToProject (
-    name:string, wordlist: WordList
-  ) : Promise<number> {
+  async addManualEntryDictionaryToProject(
+    name: string,
+    wordlist: WordList
+  ): Promise<number> {
     await this.storage.saveFile({
       name: name,
       wordlist,

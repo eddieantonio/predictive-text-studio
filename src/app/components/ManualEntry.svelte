@@ -12,7 +12,10 @@
   $: rowDataFromManualEntry = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
   $: if (validDictionary) {
-    worker.addManualEntryDictionaryToProject(tableData.name, tableData.wordlist);
+    worker.addManualEntryDictionaryToProject(
+      tableData.name,
+      tableData.wordlist
+    );
   }
 
   const validInput = (input: string): boolean => {
@@ -24,7 +27,7 @@
     );
   };
 
-  const validateTableData = (name:string, wordlist:WordList): boolean => {
+  const validateTableData = (name: string, wordlist: WordList): boolean => {
     const validTitle = validInput(name);
 
     const validRows = wordlist.every((wordAndCount: WordAndCount) => {
@@ -39,14 +42,17 @@
   };
 
   const addNewRow = (): void => {
-    const newEntry: WordAndCount = ["",0]
+    const newEntry: WordAndCount = ["", 0];
     rowDataFromManualEntry.push(newEntry);
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
   const saveTableData = async () => {
     if (validDictionary) {
-      await worker.addManualEntryDictionaryToProject(tableData.name, tableData.wordlist);
+      await worker.addManualEntryDictionaryToProject(
+        tableData.name,
+        tableData.wordlist
+      );
     }
   };
 </script>
