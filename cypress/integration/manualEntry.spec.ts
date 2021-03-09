@@ -19,7 +19,7 @@ describe("Adding sources by direct entry", function () {
     cy.data("manual-entry-input-word").type("Hello");
     cy.data("manual-entry-input-count").clear().type("112");
     // delete the entry
-    cy.data("language-source-delete").click();
+    cy.data("language-source-delete").first().click();
   });
 
   it("should create and later edit a manual entry source", function () {
@@ -39,7 +39,7 @@ describe("Adding sources by direct entry", function () {
 
     // edit the entry
     cy.data("languages-sources-btn").contains("Sources").click();
-    cy.data("language-source-edit").click();
+    cy.data("language-source-edit").first().click();
 
     cy.data("manual-entry-input-tablename").first().should("be.disabled");
     cy.data("manual-entry-input-word").first().type("World");
