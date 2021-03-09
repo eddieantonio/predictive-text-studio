@@ -2,7 +2,7 @@
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
-import type { WordList, WordListSource } from "@common/types";
+  import type { WordList, WordListSource } from "@common/types";
 
   /**
    * Re-calculate word count
@@ -42,12 +42,12 @@ import type { WordList, WordListSource } from "@common/types";
   ];
   // Manual Entry
   let manualEntry: boolean = false;
-  let initialWordlist: WordList = [["",0]];
+  let initialWordlist: WordList = [["", 0]];
   let tableData: WordListSource = {
     name: "",
     wordlist: initialWordlist,
-    size:0,
-    type: "direct-entry"
+    size: 0,
+    type: "direct-entry",
   };
 </script>
 
@@ -66,7 +66,7 @@ import type { WordList, WordListSource } from "@common/types";
 </div>
 
 {#if manualEntry}
-  <ManualEntry getLanguageSources={getLanguageSources} tableData={tableData} />
+  <ManualEntry {getLanguageSources} {tableData} />
 {:else}
-  <Upload getLanguageSources={getLanguageSources} />
+  <Upload {getLanguageSources} />
 {/if}

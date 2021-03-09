@@ -30,11 +30,14 @@ export interface PredictiveTextStudioWorker {
 
   /**
    * Updates a dictionary within the IndexedDB
-   * @param originalDictionaryName 
-   * @param newDictionary 
+   * @param originalDictionaryName
+   * @param newDictionary
    * @return {number} the count of words in the source
    */
-  updateDictionaryInProject(originalDictionaryName: string, newDictionary: WordListSource): Promise<number>;
+  updateDictionaryInProject(
+    originalDictionaryName: string,
+    newDictionary: WordListSource
+  ): Promise<number>;
 
   /**
    * Remove a dictionary within the IndexedDB

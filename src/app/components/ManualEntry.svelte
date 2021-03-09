@@ -55,12 +55,9 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      if (isEditingSource){
-        console.log(originalTableName)
-        await worker.updateDictionaryInProject(
-          originalTableName,
-          tableData
-        );
+      if (isEditingSource) {
+        console.log(originalTableName);
+        await worker.updateDictionaryInProject(originalTableName, tableData);
         originalTableName = tableData.name;
       } else {
         await worker.addManualEntryDictionaryToProject(

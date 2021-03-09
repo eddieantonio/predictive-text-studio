@@ -2,7 +2,7 @@
   import AddSource from "./AddSource.svelte";
   import type { WordListSource } from "@common/types";
   import { removeDictionaryFromProject } from "../logic/delete";
-import ManualEntry from "./ManualEntry.svelte";
+  import ManualEntry from "./ManualEntry.svelte";
   export let sources: WordListSource[];
 
   /**
@@ -10,7 +10,7 @@ import ManualEntry from "./ManualEntry.svelte";
    */
   export let getLanguageSources: Function;
 
-  let sourceBeingEdited: WordListSource|null = null;
+  let sourceBeingEdited: WordListSource | null = null;
 
   /**
    * Handles the click when the edit button is pressed.
@@ -18,7 +18,7 @@ import ManualEntry from "./ManualEntry.svelte";
    *
    * @return {void}
    */
-  function handleEdit(sourceToEdit: WordListSource): void{
+  function handleEdit(sourceToEdit: WordListSource): void {
     sourceBeingEdited = sourceToEdit;
   }
 
@@ -118,7 +118,9 @@ import ManualEntry from "./ManualEntry.svelte";
           <td>{source.size}</td>
           <td>{englishNameOf[source.type]}</td>
           <td class="table__row--actions actions">
-            <button class="actions__action btn--inline" on:click={() => handleEdit(source)}>
+            <button
+              class="actions__action btn--inline"
+              on:click={() => handleEdit(source)}>
               <img src="/icons/edit.svg" alt="edit" />
             </button>
             <button
@@ -131,7 +133,10 @@ import ManualEntry from "./ManualEntry.svelte";
       {/each}
     </table>
     {#if sourceBeingEdited !== null}
-      <ManualEntry tableData={sourceBeingEdited} getLanguageSources={getLanguageSources} isEditingSource={true}/>
+      <ManualEntry
+        tableData={sourceBeingEdited}
+        {getLanguageSources}
+        isEditingSource={true} />
     {/if}
   </div>
   <details data-cy="language-sources-add-sources">
