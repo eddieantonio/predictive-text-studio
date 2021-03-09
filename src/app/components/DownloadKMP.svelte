@@ -23,7 +23,7 @@
   class:download-component--disabled={downloadURL == ''}>
   <a
     href={downloadURL ? downloadURL : '#'}
-    download="Example.kmp"
+    download="Predictive-Text-Studio-Dictionary.kmp"
     class="download-component__link"
     class:download-component__link--disabled={downloadURL == ''}
     data-cy="download-kmp"

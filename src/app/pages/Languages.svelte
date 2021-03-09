@@ -58,7 +58,7 @@
   const handleDownload = async () => {
     let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
 
-    if (!dictionaryName) dictionaryName = "Example";
+    if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
 
     const anchor = document.createElement("a");
     anchor.href = $currentDownloadURL;
@@ -67,6 +67,8 @@
 
     // Auto click on a element, trigger the file download
     anchor.click();
+
+    anchor.remove();
   };
 </script>
 
