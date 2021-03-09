@@ -60,7 +60,10 @@ describe("Upload from the the landing page and Download KMP", function () {
   it("should download kmp file from languages download button", function () {
     cy.visit("/languages");
 
-    const downloadedFilePath = path.join(downloadFolder, "Predictive-Text-Studio-Dictionary.kmp");
+    const downloadedFilePath = path.join(
+      downloadFolder,
+      "Predictive-Text-Studio-Dictionary.kmp"
+    );
 
     cy.readFile(downloadedFilePath).should("not.exist");
 
