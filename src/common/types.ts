@@ -55,14 +55,6 @@ export interface WordListSource {
   type: DictionarySourceType;
 }
 
-// /**
-//  * A manually entered collection of words and their counts.
-//  */
-// export interface DictionaryEntry {
-//   word: string;
-//   count?: number;
-// }
-
 /**
  * Stores information about a known keyboard layout.
  */

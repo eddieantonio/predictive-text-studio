@@ -120,12 +120,14 @@
           <td class="table__row--actions actions">
             <button
               class="actions__action btn--inline"
-              on:click={() => handleEdit(source)}>
+              on:click={() => handleEdit(source)}
+              data-cy="language-source-edit">
               <img src="/icons/edit.svg" alt="edit" />
             </button>
             <button
               class="actions__action btn--inline"
-              on:click={() => handleDelete(source)}>
+              on:click={() => handleDelete(source)}
+              data-cy="language-source-delete">
               <img src="/icons/delete.svg" alt="delete" />
             </button>
           </td>

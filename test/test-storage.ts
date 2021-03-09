@@ -50,6 +50,63 @@ test("storing a file", async (t) => {
   t.is(await db.files.count(), 1);
 });
 
+test("deleting a file", async (t) => {
+  const { db, storage } = t.context;
+
+  // Create a file
+  t.is(await db.files.count(), 0);
+
+  await storage.saveFile({
+    name: "ExampleWordlist.xlsx",
+    wordlist: exampleWordlist,
+    size: exampleWordlist.length,
+    type: "xlsx",
+  });
+
+  t.is(await db.files.count(), 1);
+
+  // Delete it
+  await storage.deleteFile("ExampleWordlist.xlsx");
+
+  // There should be no file remaining
+  t.is(await db.files.count(), 0);
+});
+
+test("editing a file", async (t) => {
+  const { db, storage } = t.context;
+
+  // Create a file
+  t.is(await db.files.count(), 0);
+
+  await storage.saveFile({
+    name: "ExampleWordlist.xlsx",
+    wordlist: exampleWordlist,
+    size: exampleWordlist.length,
+    type: "xlsx",
+  });
+
+  t.is(await db.files.count(), 1);
+
+  const newWordList = exampleWordlist.concat(["NEW_WORD", 22]);
+
+  // Edit it
+  await storage.saveFile({
+    name: "ExampleWordlist.xlsx",
+    wordlist: newWordList,
+    size: newWordList.length,
+    type: "xlsx",
+  });
+
+  // Check that the wordlist has been modified:
+  const files = await storage.fetchAllFiles();
+  t.is(files.length, 1);
+
+  const file = files[0];
+  t.is(file.name, "ExampleWordlist.xlsx");
+  t.deepEqual(file.wordlist, newWordList);
+  t.notDeepEqual(file.wordlist, exampleWordlist);
+});
+
 test("retrieving one file with .fetchAllFiles()", async (t) => {
   const { storage } = t.context;
 
