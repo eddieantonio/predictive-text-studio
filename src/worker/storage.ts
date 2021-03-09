@@ -129,22 +129,6 @@ export default class Storage {
   }
 
   /**
-   * Updates a wordlist source file to storage.
-   * Removes the old entry and writes a new one to storage.
-   * @param name
-   * @returns
-   */
-  updateFile(
-    oldFileName: string,
-    newStoredWordList: StoredWordList
-  ): Promise<void> {
-    return this.db.transaction("readwrite", this.db.files, async () => {
-      await this.db.files.where("name").equals(oldFileName).delete();
-      await this.db.files.put(newStoredWordList);
-    });
-  }
-
-  /**
    * Deletes a wordlist source file from storage.
    */
   deleteFile(name: string): Promise<void> {

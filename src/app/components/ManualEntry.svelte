@@ -6,21 +6,20 @@
 
   export let tableData: WordListSource;
 
-  let originalTableName = tableData.name;
-
   /**
    * Re-calculate word count
    */
   export let getLanguageSources: Function;
 
   /**
-   * Determines if this component is editing a source.
+   * Disables being able to edit the title
+   * We no longer need this conditional if we work with IndexedDB IDs
    */
   export let isEditingSource: boolean = false;
 
   $: rowDataFromManualEntry = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
-  $: if (validDictionary) {
+  $: if (validateTableData(tableData.name, tableData.wordlist)) {
     saveTableData();
   }
 
@@ -55,16 +54,10 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      if (isEditingSource) {
-        console.log(originalTableName);
-        await worker.updateDictionaryInProject(originalTableName, tableData);
-        originalTableName = tableData.name;
-      } else {
-        await worker.addManualEntryDictionaryToProject(
-          tableData.name,
-          tableData.wordlist
-        );
-      }
+      await worker.addManualEntryDictionaryToProject(
+        tableData.name,
+        tableData.wordlist
+      );
       getLanguageSources();
     }
   };
@@ -168,6 +161,7 @@
     <input
       type="text"
       bind:value={tableData.name}
+      disabled={isEditingSource}
       required
       data-cy="manual-entry-input-tablename" />
   </div>

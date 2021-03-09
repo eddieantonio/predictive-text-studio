@@ -136,7 +136,7 @@
       <ManualEntry
         tableData={sourceBeingEdited}
         {getLanguageSources}
-        isEditingSource={true} />
+        isEditingSource={true}/>
     {/if}
   </div>
   <details data-cy="language-sources-add-sources">
