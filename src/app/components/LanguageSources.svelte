@@ -2,12 +2,15 @@
   import AddSource from "./AddSource.svelte";
   import type { WordListSource } from "@common/types";
   import { removeDictionaryFromProject } from "../logic/delete";
+import ManualEntry from "./ManualEntry.svelte";
   export let sources: WordListSource[];
 
   /**
    * Re-calculate word count
    */
-  export let getLanguageSources = async () => {};
+  export let getLanguageSources: Function;
+
+  let sourceBeingEdited: WordListSource|null = null;
 
   /**
    * Handles the click when the edit button is pressed.
@@ -15,7 +18,9 @@
    *
    * @return {void}
    */
-  const handleEdit = (): void => {};
+  function handleEdit(sourceToEdit: WordListSource): void{
+    sourceBeingEdited = sourceToEdit;
+  }
 
   /**
    * Handles the click when the delete button is pressed.
@@ -81,6 +86,7 @@
     padding: 0;
     border: 0;
     background-color: transparent;
+    cursor: pointer;
   }
 
   img {
@@ -112,7 +118,7 @@
           <td>{source.size}</td>
           <td>{englishNameOf[source.type]}</td>
           <td class="table__row--actions actions">
-            <button class="actions__action btn--inline" on:click={handleEdit}>
+            <button class="actions__action btn--inline" on:click={() => handleEdit(source)}>
               <img src="/icons/edit.svg" alt="edit" />
             </button>
             <button
@@ -124,6 +130,9 @@
         </tr>
       {/each}
     </table>
+    {#if sourceBeingEdited !== null}
+      <ManualEntry tableData={sourceBeingEdited} getLanguageSources={getLanguageSources} isEditingSource={true}/>
+    {/if}
   </div>
   <details data-cy="language-sources-add-sources">
     <summary>Add Source</summary>

@@ -1,25 +1,27 @@
 <script lang="ts">
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
-  import type { WordAndCount, WordList } from "@common/types";
+  import type { WordAndCount, WordList, WordListSource } from "@common/types";
   import { WordAndCountInd } from "@common/types";
 
-  export let tableData: {
-    name: string;
-    wordlist: WordList;
-  };
+  export let tableData: WordListSource;
+
+  let originalTableName = tableData.name;
 
   /**
    * Re-calculate word count
    */
-  export let getLanguageSources = async () => {};
+  export let getLanguageSources: Function;
+
+  /**
+   * Determines if this component is editing a source.
+   */
+  export let isEditingSource: boolean = false;
+
   $: rowDataFromManualEntry = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
   $: if (validDictionary) {
-    worker.addManualEntryDictionaryToProject(
-      tableData.name,
-      tableData.wordlist
-    );
+    saveTableData();
   }
 
   const validInput = (input: string): boolean => {
@@ -53,10 +55,19 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      await worker.addManualEntryDictionaryToProject(
-        tableData.name,
-        tableData.wordlist
-      );
+      if (isEditingSource){
+        console.log(originalTableName)
+        await worker.updateDictionaryInProject(
+          originalTableName,
+          tableData
+        );
+        originalTableName = tableData.name;
+      } else {
+        await worker.addManualEntryDictionaryToProject(
+          tableData.name,
+          tableData.wordlist
+        );
+      }
       getLanguageSources();
     }
   };

@@ -29,6 +29,14 @@ export interface PredictiveTextStudioWorker {
   addDictionarySourceToProject(name: string, contents: File): Promise<number>;
 
   /**
+   * Updates a dictionary within the IndexedDB
+   * @param originalDictionaryName 
+   * @param newDictionary 
+   * @return {number} the count of words in the source
+   */
+  updateDictionaryInProject(originalDictionaryName: string, newDictionary: WordListSource): Promise<number>;
+
+  /**
    * Remove a dictionary within the IndexedDB
    * @param name the name of the wordlist to remove
    */

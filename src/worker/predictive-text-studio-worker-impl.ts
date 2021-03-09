@@ -129,6 +129,11 @@ export class PredictiveTextStudioWorkerImpl
     return wordlist.length;
   }
 
+  async updateDictionaryInProject(originalDictionaryName: string, newDictionary: WordListSource): Promise<number>{
+    await this.storage.updateFile(originalDictionaryName, newDictionary);
+    return newDictionary.size;
+  }
+
   async removeDictionaryFromProject(name: string): Promise<number> {
     await this.storage.deleteFile(name);
     return 1;
