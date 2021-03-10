@@ -5,7 +5,7 @@
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
   import worker from "../spawn-worker";
-  import { compileSuccess } from "../stores";
+  import { compileSuccess, currentDownloadURL } from "../stores";
   import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
 
   export let selectedButton: string = "information";
@@ -52,12 +52,24 @@
   };
 
   /**
-   * Handles the click when the download language button is pressed. Should download a .kmp file.
-   * TODO: Replace stub
-   *
+   * Handles the click when the download language button is pressed. downloads a .kmp file.
    * @return {void}
    */
-  const handleDownload = (): void => {};
+  const handleDownload = async () => {
+    let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
+
+    if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
+
+    const anchor = document.createElement("a");
+    anchor.href = $currentDownloadURL;
+    anchor.target = "_blank";
+    anchor.download = `${dictionaryName}.kmp`;
+
+    // Auto click on a element, trigger the file download
+    anchor.click();
+
+    anchor.remove();
+  };
 </script>
 
 <style>
