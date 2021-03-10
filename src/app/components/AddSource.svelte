@@ -2,11 +2,12 @@
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
+  import type { WordList, WordListSource } from "@common/types";
 
   /**
    * Re-calculate word count
    */
-  export let getLanguageSources = async () => {};
+  export let getLanguageSources: Function;
 
   // Split Button
   const uploadSourcesFromFile = () => {
@@ -41,13 +42,12 @@
   ];
   // Manual Entry
   let manualEntry: boolean = false;
-  let tableData = {
+  let initialWordlist: WordList = [["", 0]];
+  let tableData: WordListSource = {
     name: "",
-    data: [
-      {
-        word: "",
-      },
-    ],
+    wordlist: initialWordlist,
+    size: 0,
+    type: "direct-entry",
   };
 </script>
 

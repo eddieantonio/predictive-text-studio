@@ -187,7 +187,7 @@
           <LanguageInfo />
         {:else if selectedButton === 'sources'}
           <LanguageSources
-            sources={languageInformation.sources}
+            bind:sources={languageInformation.sources}
             getLanguageSources={getLanguageSources}
           />
         {/if}

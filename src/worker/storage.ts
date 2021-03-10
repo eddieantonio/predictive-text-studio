@@ -129,11 +129,20 @@ export default class Storage {
   }
 
   /**
+   * Deletes a wordlist source file from storage.
+   */
+  deleteFile(name: string): Promise<void> {
+    return this.db.transaction("readwrite", this.db.files, async () => {
+      await this.db.files.where("name").equals(name).delete();
+    });
+  }
+
+  /**
    * Retrieves every file in the database as a list of {name, contents}
-   * objects.
+   * objects. Sorts the files by name.
    */
   fetchAllFiles(): Promise<StoredWordList[]> {
-    return this.db.files.toArray();
+    return this.db.files.orderBy("name").toArray();
   }
 
   /**

@@ -5,6 +5,14 @@
 export type WordAndCount = [string, number];
 
 /**
+ * A set of constants to get the Word and Count
+ */
+export enum WordAndCountInd {
+  WORD = 0,
+  COUNT = 1,
+}
+
+/**
  * A collection of words and their counts.
  *
  * This list can be used to create a
@@ -45,14 +53,6 @@ export interface WordListSource {
    * Type of the file e.g. xlsx
    */
   type: DictionarySourceType;
-}
-
-/**
- * A manually entered collection of words and their counts.
- */
-export interface DictionaryEntry {
-  word: string;
-  count?: number;
 }
 
 /**
