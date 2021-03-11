@@ -2,7 +2,7 @@ import "cypress-file-upload";
 
 import path = require("path");
 
-describe("Upload from the the landing page", function () {
+describe("Upload from the the landing page and Download KMP", function () {
   let downloadFolder: string;
 
   before(() => {
@@ -55,5 +55,24 @@ describe("Upload from the the landing page", function () {
       expect(zip.file("kmp.json")).to.not.be.null;
       expect(zip.file(/[.]js$/)).to.have.lengthOf(1);
     });
+  });
+
+  it("should download kmp file from languages download button", function () {
+    cy.visit("/languages");
+
+    const downloadedFilePath = path.join(
+      downloadFolder,
+      "Predictive-Text-Studio-Dictionary.kmp"
+    );
+
+    cy.readFile(downloadedFilePath).should("not.exist");
+
+    cy.data("languages-download-btn").scrollIntoView().should("be.visible");
+
+    cy.data("languages-download-btn")
+      .should("not.have.class", "button--disabled")
+      .click();
+
+    cy.readFile(downloadedFilePath).should("exist");
   });
 });

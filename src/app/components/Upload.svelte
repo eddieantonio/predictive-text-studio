@@ -21,7 +21,7 @@
   /**
    * Re-calculate word count
    */
-  export let getLanguageSources = async () => {};
+  export let getLanguageSources: Function = () => {};
 
   async function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;

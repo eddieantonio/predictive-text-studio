@@ -4,7 +4,6 @@
 
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
-  DictionaryEntry,
   KeyboardDataWithTime,
   ProjectMetadata,
   WordListSource,
@@ -29,13 +28,20 @@ export interface PredictiveTextStudioWorker {
   addDictionarySourceToProject(name: string, contents: File): Promise<number>;
 
   /**
-   * Store the manual entry data into the database
-   * @param tableData Manual entry data
+   * Remove a dictionary within the IndexedDB
+   * @param name the name of the wordlist to remove
    */
-  addManualEntryDictionaryToProject(tableData: {
-    name: string;
-    data: DictionaryEntry[];
-  }): Promise<number>;
+  removeDictionaryFromProject(name: string): Promise<number>;
+
+  /**
+   * Store the manual entry data into the database
+   * @param name the name of the dictionary souce
+   * @param wordlist Manual entry data
+   */
+  addManualEntryDictionaryToProject(
+    name: string,
+    wordlist: WordList
+  ): Promise<number>;
 
   ///////////////////////////// Event handlers /////////////////////////////
 

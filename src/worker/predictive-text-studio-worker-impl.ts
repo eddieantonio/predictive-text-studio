@@ -1,7 +1,6 @@
 import type { PredictiveTextStudioWorker } from "@common/predictive-text-studio-worker";
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
-  DictionaryEntry,
   DictionarySourceType,
   ProjectMetadata,
   WordList,
@@ -12,12 +11,7 @@ import Storage from "./storage";
 import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
-import {
-  readExcel,
-  readManualEntryData,
-  readTSV,
-  readGoogleSheet,
-} from "./read-wordlist";
+import { readExcel, readTSV, readGoogleSheet } from "./read-wordlist";
 
 /**
  * expiryThreshold is used to decide if keyboard data is too old
@@ -128,14 +122,17 @@ export class PredictiveTextStudioWorkerImpl
     return wordlist.length;
   }
 
-  async addManualEntryDictionaryToProject(tableData: {
-    name: string;
-    data: DictionaryEntry[];
-  }): Promise<number> {
-    const dictionaryName = tableData.name;
-    const wordlist = readManualEntryData(tableData.data);
+  async removeDictionaryFromProject(name: string): Promise<number> {
+    await this.storage.deleteFile(name);
+    return 1;
+  }
+
+  async addManualEntryDictionaryToProject(
+    name: string,
+    wordlist: WordList
+  ): Promise<number> {
     await this.storage.saveFile({
-      name: dictionaryName,
+      name: name,
       wordlist,
       size: wordlist.length,
       type: "direct-entry",

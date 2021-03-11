@@ -1,24 +1,27 @@
 <script lang="ts">
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
+  import type { WordAndCount, WordList, WordListSource } from "@common/types";
+  import { WordAndCountInd } from "@common/types";
 
-  interface DictionaryEntry {
-    word: string;
-    count?: number;
-  }
-
-  export let tableData: {
-    name: string;
-    data: DictionaryEntry[];
-  };
+  export let tableData: WordListSource;
 
   /**
    * Re-calculate word count
    */
-  export let getLanguageSources = async () => {};
+  export let getLanguageSources: Function;
 
-  $: rowDataFromManualEntry = tableData.data;
-  $: validDictionary = validateTableData(tableData);
+  /**
+   * Disables being able to edit the title
+   * We no longer need this conditional if we work with IndexedDB IDs
+   */
+  export let isEditingSource: boolean = false;
+
+  $: rowDataFromManualEntry = tableData.wordlist;
+  $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
+  $: if (validateTableData(tableData.name, tableData.wordlist)) {
+    saveTableData();
+  }
 
   const validInput = (input: string): boolean => {
     return (
@@ -29,16 +32,11 @@
     );
   };
 
-  const validateTableData = (tableData: {
-    name: string;
-    data: DictionaryEntry[];
-  }): boolean => {
-    const name = tableData.name;
+  const validateTableData = (name: string, wordlist: WordList): boolean => {
     const validTitle = validInput(name);
 
-    const rowsData = tableData.data;
-    const validRows = rowsData.every((rowData) => {
-      return validInput(rowData.word);
+    const validRows = wordlist.every((wordAndCount: WordAndCount) => {
+      return validInput(wordAndCount[WordAndCountInd.WORD]);
     });
     return validTitle && validRows;
   };
@@ -49,13 +47,17 @@
   };
 
   const addNewRow = (): void => {
-    rowDataFromManualEntry.push({ word: "" });
+    const newEntry: WordAndCount = ["", 0];
+    rowDataFromManualEntry.push(newEntry);
     rowDataFromManualEntry = rowDataFromManualEntry;
   };
 
   const saveTableData = async () => {
     if (validDictionary) {
-      await worker.addManualEntryDictionaryToProject(tableData);
+      await worker.addManualEntryDictionaryToProject(
+        tableData.name,
+        tableData.wordlist
+      );
       getLanguageSources();
     }
   };
@@ -159,6 +161,7 @@
     <input
       type="text"
       bind:value={tableData.name}
+      disabled={isEditingSource}
       required
       data-cy="manual-entry-input-tablename" />
   </div>
@@ -175,7 +178,7 @@
         <td>
           <input
             type="text"
-            bind:value={row.word}
+            bind:value={row[WordAndCountInd.WORD]}
             required
             data-cy="manual-entry-input-word" />
         </td>
@@ -184,7 +187,7 @@
             type="number"
             min="0"
             placeholder="Optional"
-            bind:value={row.count}
+            bind:value={row[WordAndCountInd.COUNT]}
             data-cy="manual-entry-input-count" />
         </td>
         <td>

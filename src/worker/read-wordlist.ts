@@ -108,7 +108,7 @@ export function readManualEntryData(contents: DictionaryEntry[]): WordList {
  * Returns a boolean if the row should be converted.
  * The row should not be converted if it is a header row or a commented out row.
  */
-export function shouldRowBeConvertedGoogleSheets(row: string[]): boolean {
+function shouldRowBeConvertedGoogleSheets(row: string[]): boolean {
   const isHeaderRow = row[1].toLowerCase().includes("count");
   const isCommentRow = row[0] === "#";
   return !isHeaderRow && !isCommentRow;
