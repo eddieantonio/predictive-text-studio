@@ -7,6 +7,7 @@ import type {
   KeyboardDataWithTime,
   ProjectMetadata,
   WordListSource,
+  WordList,
 } from "@common/types";
 
 export interface PredictiveTextStudioWorker {
