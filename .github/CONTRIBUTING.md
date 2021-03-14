@@ -108,6 +108,44 @@ With the server running as above (with `yarn start`), run this to open
 
     yarn run cy
 
+### Run AVA unit tests
+You can also run unit tests under `/test`:
+
+    yarn test
+
+#### Test Google Sheets API integration
+In order to test Google Sheets API integration workflow, you will need `test/fixtures/credentials.json` and `test/fixtures/token.json`.
+
+`credentials.json`
+
+```json
+{
+    "client_secret": YOUR_CLIENT_SECRET,
+    "client_id": YOUR_CLIENT_ID,
+    "redirect_uri": "http://localhost:5000"
+}
+```
+
+`token.json`: run `yarn test` to get the authentication URL e.g. ``. You need to authenticate yourself to get the code. Once you have the code,
+access tokens can be obtained by running below command:
+
+    curl \
+    --request POST \
+    --data "code=<YOUR_CODE>&client_id=<YOUR_CLIENT_ID>&client_secret=<YOUR_CLIENT_SECRET>&redirect_uri=http://localhost:5000&grant_type=authorization_code" \
+    https://accounts.google.com/o/oauth2/token
+
+You will need to replace `code`, `client_id`, and `client_secret`. The response should follow the below template:
+
+```json
+{
+    "access_token": YOUR_ACCESS_TOKEN,
+    "expires_in": YOUR_EXPIRES_IN,
+    "refresh_token": YOUR_REFRESH_TOKEN,
+    "scope": "https://www.googleapis.com/auth/spreadsheets.readonly",
+    "token_type": "Bearer"
+}
+```
+which should be saved as `token.json`.
 
 Coding Conventions
 ------------------

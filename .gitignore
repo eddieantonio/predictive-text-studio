@@ -36,8 +36,8 @@ cypress/downloads/
 .DS_Store
 
 # Google Sheets Credentials
-credentials.json
-token.json
+test/fixtures/credentials.json
+test/fixtures/token.json
 .env
 
 # IDE

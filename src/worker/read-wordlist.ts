@@ -1,5 +1,6 @@
 import * as Excel from "exceljs";
 import { WordList } from "@common/types";
+import { StoredWordList } from "@worker/storage-models";
 
 const WORD = 1;
 const COUNT = 2;
@@ -92,4 +93,38 @@ function asNonNegativeInteger(x: unknown): number {
   }
 
   return n;
+}
+
+/**
+ * Returns a boolean if the row should be converted.
+ * The row should not be converted if it is a header row or a commented out row.
+ */
+function shouldRowBeConvertedGoogleSheets(row: string[]): boolean {
+  const isHeaderRow = row[1].toLowerCase().includes("count");
+  const isCommentRow = row[0] === "#";
+  return !isHeaderRow && !isCommentRow;
+}
+
+export async function readGoogleSheet(
+  name: string,
+  rows: string[][]
+): Promise<StoredWordList> {
+  const wordlist: WordList = [];
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    if (shouldRowBeConvertedGoogleSheets(row)) {
+      const word = row[0];
+      let wordCount = Number(row[1]);
+      if (!wordCount) {
+        wordCount = 0;
+      }
+      wordlist.push([word, wordCount]);
+    }
+  }
+  return {
+    name,
+    wordlist,
+    size: wordlist.length,
+    type: "google-sheets",
+  };
 }

@@ -1,14 +1,9 @@
 <script>
   import worker from "../spawn-worker";
-
   import InputField from "./InputField.svelte";
 
-  var error = null;
+  let error = null;
   let googleSheetsURL = "";
-
-  // Constants for checking headers
-  const WORD = 0;
-  const COUNT = 1;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -41,9 +36,9 @@
       })
       .then(() => {
         // Listen for sign-in state changes.
-        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        gapi.auth2.getAuthInstance().isSignedIn.listen(readGoogleSheet);
         // Handle the initial sign-in state.
-        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        readGoogleSheet(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
       .catch((e) => {
         error = `Error: Could not connect to Google Sheets: ${e}`;
@@ -54,23 +49,27 @@
    *  Called when the signed in status changes, to update the UI
    *  appropriately. After a sign-in, the API is called.
    */
-  function updateSigninStatus(isSignedIn) {
+  async function readGoogleSheet(isSignedIn) {
     if (!isSignedIn) {
-      signInToGoogleAPI();
+      gapi.auth2.getAuthInstance().signIn();
     }
-    getValuesFromSpreadSheet();
-  }
-
-  /**
-   *  Sign in the user upon button click.
-   */
-  function signInToGoogleAPI() {
-    gapi.auth2.getAuthInstance().signIn();
+    try {
+      const spreadsheetId = getSpreadsheetId(googleSheetsURL) || "";
+      const {
+        result: { values },
+      } = await gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: spreadsheetId,
+        range: "A1:B",
+      });
+      worker.readGoogleSheet(spreadsheetId, values);
+    } catch (err) {
+      error = "Error: " + err.message;
+      return;
+    }
   }
 
   /**
    * Gets the unique spreadsheet ID from a Google Sheet URL
-   *
    */
   function getSpreadsheetId() {
     // TODO: should not use id; should make use of bindings
@@ -85,61 +84,6 @@
     } else {
       error = `Error: The url ${googleSheetsURL} is not a valid Google Sheets URl. Please paste a valid one.`;
     }
-  }
-
-  /**
-   * Returns a boolean if the row should be converted.
-   * The row should not be converted if it is a header row or a commented out row.
-   */
-  function shouldRowBeConverted(row) {
-    const isHeaderRow = row[COUNT].toLowerCase().includes("count");
-    const isCommentRow = row[WORD] === "#";
-    return !isHeaderRow && !isCommentRow;
-  }
-
-  /**
-   * Read word and count form storage
-   * Sample: https://docs.google.com/spreadsheets/d/1lzHxoMWHpdGecby4d0y15AVf80csA7iNkaMMEL54Q7g/edit#gid=0
-   */
-
-  async function getValuesFromSpreadSheet() {
-    const wordListObject = [];
-    const spreadsheetId = getSpreadsheetId() || "";
-    if (error) {
-      return;
-    }
-
-    let response;
-    try {
-      response = await gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: spreadsheetId,
-        range: "A1:B",
-      });
-    } catch {
-      error = "Error: " + response.result.error.message;
-      return;
-    }
-
-    const range = response.result;
-    if (range.values.length <= 0) {
-      error = "Error: No data found in the Google Sheet.";
-      return;
-    }
-
-    for (let i = 0; i < range.values.length; i++) {
-      const row = range.values[i];
-      if (shouldRowBeConverted(row)) {
-        const word = row[WORD];
-        let wordCount = row[COUNT];
-        if (!wordCount) {
-          wordCount = 0;
-        }
-        wordListObject.push([word, wordCount]);
-      }
-    }
-    error = null;
-
-    worker.readGoogleSheet(spreadsheetId, wordListObject);
   }
 </script>
 
@@ -163,7 +107,7 @@
   </script>
 </svelte:head>
 
-<div class="google-sheets">
+<div class="google-sheets" data-cy="google-sheets-input">
   {#if error}
     <p class:error>{error}</p>
   {/if}

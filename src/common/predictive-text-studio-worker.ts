@@ -6,8 +6,8 @@ import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
   KeyboardDataWithTime,
   ProjectMetadata,
-  WordList,
   WordListSource,
+  WordList,
 } from "@common/types";
 
 export interface PredictiveTextStudioWorker {
@@ -16,7 +16,7 @@ export interface PredictiveTextStudioWorker {
   /**
    * Save a Google Sheet to the current project
    */
-  readGoogleSheet(name: string, wordList: WordList): Promise<ArrayBuffer>;
+  readGoogleSheet(name: string, rows: string[][]): Promise<void>;
 
   /**
    * Compile the lexical model using files in the IndexedDB

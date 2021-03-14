@@ -11,7 +11,7 @@ import Storage from "./storage";
 import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
 import { KeymanAPI } from "./keyman-api-service";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
-import { readExcel, readTSV } from "./read-wordlist";
+import { readExcel, readTSV, readGoogleSheet } from "./read-wordlist";
 
 /**
  * expiryThreshold is used to decide if keyboard data is too old
@@ -63,17 +63,10 @@ export class PredictiveTextStudioWorkerImpl
     }
   }
 
-  async readGoogleSheet(
-    name: string,
-    wordlist: WordList
-  ): Promise<ArrayBuffer> {
-    this.storage.saveFile({
-      name,
-      wordlist,
-      size: wordlist.length,
-      type: "google-sheets",
-    });
-    return await linkStorageToKmp(this.storage);
+  async readGoogleSheet(name: string, rows: string[][]): Promise<void> {
+    const source = await readGoogleSheet(name, rows);
+    this.storage.saveFile(source);
+    this.generateKMPFromStorage();
   }
 
   private async generateKMPFromStorage(): Promise<void> {
