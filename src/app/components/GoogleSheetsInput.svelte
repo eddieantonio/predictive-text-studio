@@ -65,6 +65,7 @@
       const spreadsheetRange = `${mapDecToColLetters(
         Math.min(wordColumnInd, countColumnInd)
       )}1:${mapDecToColLetters(Math.max(wordColumnInd, countColumnInd))}`;
+
       const spreadsheetId = getSpreadsheetId(googleSheetsURL) || "";
       const {
         result: { values },
@@ -73,8 +74,8 @@
         range: spreadsheetRange,
       });
       const settings = {
-        wordColumnInd: wordColumnInd,
-        countColumnInd: countColumnInd,
+        wordColInd: wordColumnInd,
+        countColInd: countColumnInd,
       };
       worker.readGoogleSheet(spreadsheetId, values, settings);
     } catch (err) {

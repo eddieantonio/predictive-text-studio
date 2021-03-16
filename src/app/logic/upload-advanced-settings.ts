@@ -33,6 +33,7 @@ export function mapDecToColLetters(columnDecimal: number): string {
  * Maps a letter representation of a spreadsheet column to a decimal one
  * Is only exported for testing.
  * Developers should favor using `getColIndexFromString` over this function.
+ * Note that columns start at 0, which is not immediately compatible with Excel
  * @param columnLetters the letter representation of the column
  * @returns the decimal representation of a column (e.g. 2)
  */
@@ -41,8 +42,7 @@ export function mapColLettersToDec(columnLetters: string): number {
     logError(new Error("Cannot pass in an empty string!"));
   }
   return (
-    columnLetters.split("").reduce((r, a) => r * 26 + parseInt(a, 36) - 9, 0) -
-    1
+    columnLetters.split("").reduce((r, a) => r * 26 + parseInt(a, 36) - 9, 0) - 1
   );
 }
 

@@ -3,7 +3,7 @@ import {
   StoredProjectData,
   StoredWordList,
 } from "@worker/storage-models";
-import type { WordList } from "@common/types";
+import type { UploadSettings, WordList } from "@common/types";
 
 /**
  * Top 10 words from Timothy Montler's SENĆOŦEN wordlist.
@@ -85,3 +85,8 @@ export const keymanKeyboardDataStub: KeyboardDataWithTime[] = [
     timestamp: new Date(),
   },
 ];
+
+export const defaultUploadSettings: UploadSettings = {
+  wordColInd:0,
+  countColInd:1
+}
