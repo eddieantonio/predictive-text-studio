@@ -72,7 +72,10 @@
         spreadsheetId: spreadsheetId,
         range: spreadsheetRange,
       });
-      const settings = {wordColumnInd:wordColumnInd, countColumnInd:countColumnInd}
+      const settings = {
+        wordColumnInd: wordColumnInd,
+        countColumnInd: countColumnInd,
+      };
       worker.readGoogleSheet(spreadsheetId, values, settings);
     } catch (err) {
       error = "Error: " + err.message;

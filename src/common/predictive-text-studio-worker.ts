@@ -17,7 +17,11 @@ export interface PredictiveTextStudioWorker {
   /**
    * Save a Google Sheet to the current project
    */
-  readGoogleSheet(name: string, rows: string[][], settings:UploadSettings): Promise<void>;
+  readGoogleSheet(
+    name: string,
+    rows: string[][],
+    settings: UploadSettings
+  ): Promise<void>;
 
   /**
    * Compile the lexical model using files in the IndexedDB
@@ -28,7 +32,11 @@ export interface PredictiveTextStudioWorker {
    * @param settings the settings of what should occur when adding a dictionary source to a project
    * @return {number} how many words were added by this source
    */
-  addDictionarySourceToProject(name: string, contents: File, settings: UploadSettings): Promise<number>;
+  addDictionarySourceToProject(
+    name: string,
+    contents: File,
+    settings: UploadSettings
+  ): Promise<number>;
 
   /**
    * Remove a dictionary within the IndexedDB

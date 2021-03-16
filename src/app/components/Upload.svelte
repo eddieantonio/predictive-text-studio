@@ -46,7 +46,10 @@
 
     error = null;
     try {
-      await addAllFilesToCurrentProject(filesToSave, {wordColInd: wordColumnInd, countColInd: countColumnInd});
+      await addAllFilesToCurrentProject(filesToSave, {
+        wordColInd: wordColumnInd,
+        countColInd: countColumnInd,
+      });
       files = [...files, ...filesToSave];
       getLanguageSources();
     } catch (e) {

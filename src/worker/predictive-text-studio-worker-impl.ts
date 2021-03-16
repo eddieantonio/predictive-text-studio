@@ -64,7 +64,11 @@ export class PredictiveTextStudioWorkerImpl
     }
   }
 
-  async readGoogleSheet(name: string, rows: string[][], settings:UploadSettings): Promise<void> {
+  async readGoogleSheet(
+    name: string,
+    rows: string[][],
+    settings: UploadSettings
+  ): Promise<void> {
     const source = await readGoogleSheet(name, rows, settings);
     this.storage.saveFile(source);
     this.generateKMPFromStorage();

@@ -28,7 +28,9 @@ export async function readExcel(
   worksheet.eachRow((row) => {
     if (shouldRowBeConverted(row, settings)) {
       const word = row.getCell(settings.wordColInd).text || "";
-      const count = asNonNegativeInteger(row.getCell(settings.countColInd).text || 1);
+      const count = asNonNegativeInteger(
+        row.getCell(settings.countColInd).text || 1
+      );
       wordlist.push([word, count]);
     }
   });
@@ -73,9 +75,13 @@ export function readTSV(TSVFile: string): WordList {
  * Returns a boolean if the row should be converted.
  * The row should not be converted if it is a header row or a commented out row.
  */
-function shouldRowBeConverted(row: Excel.Row, settings:UploadSettings): boolean {
+function shouldRowBeConverted(
+  row: Excel.Row,
+  settings: UploadSettings
+): boolean {
   const isHeaderRow =
-    row.number === 1 && row.getCell(settings.countColInd).text.toLowerCase().includes("count");
+    row.number === 1 &&
+    row.getCell(settings.countColInd).text.toLowerCase().includes("count");
   const isCommentRow = row.getCell(settings.wordColInd).text === "#";
   return !isHeaderRow && !isCommentRow;
 }
@@ -97,7 +103,10 @@ function asNonNegativeInteger(x: unknown): number {
  * Returns a boolean if the row should be converted.
  * The row should not be converted if it is a header row or a commented out row.
  */
-function shouldRowBeConvertedGoogleSheets(row: string[], settings:UploadSettings): boolean {
+function shouldRowBeConvertedGoogleSheets(
+  row: string[],
+  settings: UploadSettings
+): boolean {
   const isHeaderRow = row[settings.countColInd].toLowerCase().includes("count");
   const isCommentRow = row[settings.wordColInd] === "#";
   return !isHeaderRow && !isCommentRow;
