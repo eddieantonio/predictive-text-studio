@@ -3,6 +3,7 @@ import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
   DictionarySourceType,
   ProjectMetadata,
+  UploadSettings,
   WordList,
   WordListSource,
 } from "@common/types";
@@ -63,8 +64,8 @@ export class PredictiveTextStudioWorkerImpl
     }
   }
 
-  async readGoogleSheet(name: string, rows: string[][]): Promise<void> {
-    const source = await readGoogleSheet(name, rows);
+  async readGoogleSheet(name: string, rows: string[][], settings:UploadSettings): Promise<void> {
+    const source = await readGoogleSheet(name, rows, settings);
     this.storage.saveFile(source);
     this.generateKMPFromStorage();
   }
@@ -87,7 +88,8 @@ export class PredictiveTextStudioWorkerImpl
 
   async addDictionarySourceToProject(
     name: string,
-    contents: File
+    contents: File,
+    settings: UploadSettings
   ): Promise<number> {
     let wordlist: WordList = [];
     let type: DictionarySourceType;
@@ -107,7 +109,7 @@ export class PredictiveTextStudioWorkerImpl
       wordlist = readTSV(TSVFileString);
       type = "tsv";
     } else if (/\.(xlsx)$/i.test(name)) {
-      wordlist = await readExcel(await contents.arrayBuffer());
+      wordlist = await readExcel(await contents.arrayBuffer(), settings);
       type = "xlsx";
     } else {
       throw new Error("Invalid File Type. Please use either .tsv or .xlsx");
