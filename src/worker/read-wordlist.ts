@@ -27,9 +27,9 @@ export async function readExcel(
 
   worksheet.eachRow((row) => {
     if (shouldRowBeConverted(row, settings)) {
-      const word = row.getCell(settings.wordColInd+1).text || "";
+      const word = row.getCell(settings.wordColInd + 1).text || "";
       const count = asNonNegativeInteger(
-        row.getCell(settings.countColInd+1).text || 1
+        row.getCell(settings.countColInd + 1).text || 1
       );
       wordlist.push([word, count]);
     }
@@ -81,8 +81,11 @@ function shouldRowBeConverted(
 ): boolean {
   const isHeaderRow =
     row.number === 1 &&
-    row.getCell(settings.countColInd+1).text.toLowerCase().includes("count");
-  const isCommentRow = row.getCell(settings.wordColInd+1).text === "#";
+    row
+      .getCell(settings.countColInd + 1)
+      .text.toLowerCase()
+      .includes("count");
+  const isCommentRow = row.getCell(settings.wordColInd + 1).text === "#";
   return !isHeaderRow && !isCommentRow;
 }
 

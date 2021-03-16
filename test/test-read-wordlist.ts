@@ -45,10 +45,10 @@ test("it should remove the headers and commented rows in an Excel file", async (
 
 test("it should read custom rows and columns in an Excel file", async (t) => {
   t.deepEqual(
-    await readExcel(
-      fs.readFileSync(exampleExcelCustomColsFilePath),
-      {wordColInd:1, countColInd:3}
-    ),
+    await readExcel(fs.readFileSync(exampleExcelCustomColsFilePath), {
+      wordColInd: 1,
+      countColInd: 3,
+    }),
     wordlistCustomColumnsResult
   );
 });

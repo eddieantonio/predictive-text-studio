@@ -49,8 +49,8 @@ export const wordlistHeaderAndHashesResult: WordList = [
  */
 export const wordlistCustomColumnsResult: WordList = [
   ["коала", 1],
-  ["考拉", 2]
-]
+  ["考拉", 2],
+];
 
 export const testStoredProjectData = {
   id: 1,
