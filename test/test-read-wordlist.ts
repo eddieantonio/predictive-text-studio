@@ -4,7 +4,11 @@ import * as fs from "fs";
 import { readExcel, readTSV } from "@worker/read-wordlist";
 
 import { pathToFixture } from "./helpers";
-import { exampleWordlist, wordlistHeaderAndHashesResult, defaultUploadSettings } from "./fixtures";
+import {
+  exampleWordlist,
+  wordlistHeaderAndHashesResult,
+  defaultUploadSettings,
+} from "./fixtures";
 
 const exampleExcelFilePath = pathToFixture("ExampleWordlist.xlsx");
 const exampleTSVFilePath = pathToFixture("ExampleWordlist.tsv");
@@ -17,14 +21,20 @@ const exampleTSVHeadersFilePath = pathToFixture(
 
 test("it should return a wordlist given an Excel file", async (t) => {
   t.deepEqual(
-    await readExcel(fs.readFileSync(exampleExcelFilePath), defaultUploadSettings),
+    await readExcel(
+      fs.readFileSync(exampleExcelFilePath),
+      defaultUploadSettings
+    ),
     exampleWordlist
   );
 });
 
 test("it should remove the headers and commented rows in an Excel file", async (t) => {
   t.deepEqual(
-    await readExcel(fs.readFileSync(exampleExcelHeadersFilePath), defaultUploadSettings),
+    await readExcel(
+      fs.readFileSync(exampleExcelHeadersFilePath),
+      defaultUploadSettings
+    ),
     wordlistHeaderAndHashesResult
   );
 });

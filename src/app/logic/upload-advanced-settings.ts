@@ -42,7 +42,8 @@ export function mapColLettersToDec(columnLetters: string): number {
     logError(new Error("Cannot pass in an empty string!"));
   }
   return (
-    columnLetters.split("").reduce((r, a) => r * 26 + parseInt(a, 36) - 9, 0) - 1
+    columnLetters.split("").reduce((r, a) => r * 26 + parseInt(a, 36) - 9, 0) -
+    1
   );
 }
 

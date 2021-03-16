@@ -87,6 +87,6 @@ export const keymanKeyboardDataStub: KeyboardDataWithTime[] = [
 ];
 
 export const defaultUploadSettings: UploadSettings = {
-  wordColInd:0,
-  countColInd:1
-}
+  wordColInd: 0,
+  countColInd: 1,
+};
