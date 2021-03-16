@@ -1,5 +1,5 @@
 <script>
-  import { mapDecToColLetters } from "logic/upload-advanced-settings";
+  import { mapDecToColLetters } from "../logic/upload-advanced-settings";
 
   import worker from "../spawn-worker";
   import InputField from "./InputField.svelte";
