@@ -7,7 +7,7 @@ import { logError } from "@common/logging";
  */
 export function mapDecToColLetters(columnDecimal: number): string {
   if (columnDecimal < 0) {
-    logError(new Error('You cannot pass in negative values!'))
+    logError(new Error("You cannot pass in negative values!"));
   }
 
   let dividend = columnDecimal + 1;
@@ -21,7 +21,9 @@ export function mapDecToColLetters(columnDecimal: number): string {
   }
 
   if (colLetters.length == 0) {
-    logError(new Error('No letters could be generated from the given column decimal!'))
+    logError(
+      new Error("No letters could be generated from the given column decimal!")
+    );
   }
 
   return colLetters;
@@ -35,10 +37,13 @@ export function mapDecToColLetters(columnDecimal: number): string {
  * @returns the decimal representation of a column (e.g. 2)
  */
 export function mapColLettersToDec(columnLetters: string): number {
-  if (columnLetters === '') {
-    logError(new Error('Cannot pass in an empty string!'))
+  if (columnLetters === "") {
+    logError(new Error("Cannot pass in an empty string!"));
   }
-  return columnLetters.split('').reduce((r, a) => r * 26 + parseInt(a, 36) - 9, 0) - 1;
+  return (
+    columnLetters.split("").reduce((r, a) => r * 26 + parseInt(a, 36) - 9, 0) -
+    1
+  );
 }
 
 /**
@@ -47,8 +52,11 @@ export function mapColLettersToDec(columnLetters: string): number {
  * @param defaultColValue The default value a column should be if the input is bad
  * @returns the decimal version of the column if the input is valid, returns the default value otherwise
  */
-export function getColIndexFromString(inputColLetters: string, defaultColValue: number): number {
-  if (inputColLetters === '') {
+export function getColIndexFromString(
+  inputColLetters: string,
+  defaultColValue: number
+): number {
+  if (inputColLetters === "") {
     return defaultColValue;
   } else {
     return mapColLettersToDec(inputColLetters);
