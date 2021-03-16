@@ -1,9 +1,16 @@
 <script>
+  import { mapDecToColLetters } from "logic/upload-advanced-settings";
+
   import worker from "../spawn-worker";
   import InputField from "./InputField.svelte";
+  import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
 
   let error = null;
   let googleSheetsURL = "";
+
+  // The state that determines what columns are to be used on upload
+  let wordColumnInd = 0;
+  let countColumnInd = 1;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -54,12 +61,16 @@
       gapi.auth2.getAuthInstance().signIn();
     }
     try {
+      // Create a range of the spreadsheet that includes both columns
+      const spreadsheetRange = `${mapDecToColLetters(
+        Math.min(wordColumnInd, countColumnInd)
+      )}1:${mapDecToColLetters(Math.max(wordColumnInd, countColumnInd))}`;
       const spreadsheetId = getSpreadsheetId(googleSheetsURL) || "";
       const {
         result: { values },
       } = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
-        range: "A1:B",
+        range: spreadsheetRange,
       });
       worker.readGoogleSheet(spreadsheetId, values);
     } catch (err) {
@@ -107,6 +118,7 @@
   </script>
 </svelte:head>
 
+<UploadAdvancedInput bind:wordColumnInd bind:countColumnInd />
 <div class="google-sheets" data-cy="google-sheets-input">
   {#if error}
     <p class:error>{error}</p>
@@ -114,7 +126,7 @@
   <InputField
     label="Google Sheets URL"
     id="googleSheetsURL"
-    bind:value={googleSheetsURL}
+    bind:inputValue={googleSheetsURL}
     fullWidth={true} />
   <button
     class="button button--primary button--shadow quick-start__submit"
