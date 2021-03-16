@@ -42,6 +42,16 @@ export const wordlistHeaderAndHashesResult: WordList = [
   ["hashes", 44],
 ];
 
+/**
+ * Words that should match WordlistCustomColumns-2-4.xlsx
+ *
+ * The excel file has its words in column B and its counts in column D
+ */
+export const wordlistCustomColumnsResult: WordList = [
+  ["коала", 1],
+  ["考拉", 2]
+]
+
 export const testStoredProjectData = {
   id: 1,
   langName: "English",

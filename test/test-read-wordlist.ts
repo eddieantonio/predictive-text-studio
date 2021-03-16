@@ -8,12 +8,16 @@ import {
   exampleWordlist,
   wordlistHeaderAndHashesResult,
   defaultUploadSettings,
+  wordlistCustomColumnsResult,
 } from "./fixtures";
 
 const exampleExcelFilePath = pathToFixture("ExampleWordlist.xlsx");
 const exampleTSVFilePath = pathToFixture("ExampleWordlist.tsv");
 const exampleExcelHeadersFilePath = pathToFixture(
   "WordlistHeaderAndHashes_en-US.xlsx"
+);
+const exampleExcelCustomColsFilePath = pathToFixture(
+  "WordlistCustomColumns-2-4.xlsx"
 );
 const exampleTSVHeadersFilePath = pathToFixture(
   "WordlistHeaderAndHashes_en-US.tsv"
@@ -36,6 +40,16 @@ test("it should remove the headers and commented rows in an Excel file", async (
       defaultUploadSettings
     ),
     wordlistHeaderAndHashesResult
+  );
+});
+
+test("it should read custom rows and columns in an Excel file", async (t) => {
+  t.deepEqual(
+    await readExcel(
+      fs.readFileSync(exampleExcelCustomColsFilePath),
+      {wordColInd:1, countColInd:3}
+    ),
+    wordlistCustomColumnsResult
   );
 });
 

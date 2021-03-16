@@ -115,11 +115,11 @@ export interface ProjectMetadata {
  */
 export interface UploadSettings {
   /**
-   * The index of the word column
+   * The index of the word column. Starts at 0. Needs to be converted to a letter for it to work with Excel
    */
   wordColInd: number;
   /**
-   * The index of the count column
+   * The index of the count column. Starts at 0. Needs to be converted to a letter for it to work with Excel
    */
   countColInd: number;
 }
