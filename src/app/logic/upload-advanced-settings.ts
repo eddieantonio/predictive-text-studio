@@ -49,6 +49,7 @@ export function mapColLettersToDec(columnLetters: string): number {
 
 /**
  * Takes a series of column letters and attempts to convert it into a decimal.
+ * Note that columns start at 0, which is not immediately compatible with Excel.
  * @param inputColLetters A series of letters for the column. Expected to be user-inputted
  * @param defaultColValue The default value a column should be if the input is bad
  * @returns the decimal version of the column if the input is valid, returns the default value otherwise
