@@ -175,6 +175,14 @@ export class PredictiveTextStudioWorkerImpl
   private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
     return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
+
+  async exportProjectData(): Promise<Blob> {
+    return this.storage.exportProjectData();
+  }
+
+  async importProjectData(data: Blob): Promise<void> {
+    return this.storage.importProjectData(data);
+  }
 }
 
 /**

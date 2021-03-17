@@ -1,4 +1,5 @@
 import Dexie, { DexieOptions } from "dexie";
+import { exportDB, importInto } from "dexie-export-import";
 import {
   StoredWordList,
   StoredProjectData,
@@ -245,6 +246,14 @@ export default class Storage {
     }
     return kmpFile.package;
   }
+
+  async exportProjectData(): Promise<Blob> {
+    return await exportDB(this.db);
+  }
+
+  async importProjectData(data: Blob): Promise<void> {
+    await importInto(this.db, data, { overwriteValues: true });
+  }
 }
 
 function createInitialProjectData(): StoredProjectData {
@@ -253,7 +262,7 @@ function createInitialProjectData(): StoredProjectData {
 
     authorName: "Unknown Author",
 
-    // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
+    // An empty string indicates "language unknown" in XML/HTML as in <html lang="">
     // See: https://www.w3.org/International/questions/qa-no-language#undetermined
     // See: https://tools.ietf.org/html/bcp47#section-3.4.1
     bcp47Tag: "",

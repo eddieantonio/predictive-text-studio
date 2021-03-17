@@ -18,7 +18,7 @@
   // prevent triggering compilation twice
   let listenForMetaDataChanges: boolean = false;
 
-  onMount(async () => {
+  export async function getMetadata() {
     const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
 
     authorName = storedProjectData.authorName;
@@ -28,7 +28,9 @@
     dictionaryName = storedProjectData.dictionaryName || "";
 
     listenForMetaDataChanges = true;
-  });
+  }
+
+  onMount(getMetadata);
 
   $: if (languageInfo && listenForMetaDataChanges) {
     updateMetadata("languages", [
@@ -47,6 +49,7 @@
     let { key, value } = event.detail;
     updateMetadata(key, value);
   }
+
 </script>
 
 <style>

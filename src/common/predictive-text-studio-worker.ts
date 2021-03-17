@@ -95,4 +95,14 @@ export interface PredictiveTextStudioWorker {
    * Retrieving File data from the IndexedDB storage
    */
   getFilesFromStorage(): Promise<WordListSource[]>;
+
+  /**
+   * Generates a JSON file of the current IndexedDB
+   */
+  exportProjectData(): Promise<Blob>;
+
+  /**
+   * Imports data from a JSON file generated using exportProjectData()
+   */
+  importProjectData(data: Blob): Promise<void>;
 }
