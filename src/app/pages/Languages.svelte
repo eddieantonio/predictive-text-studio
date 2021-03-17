@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, SvelteComponent } from "svelte";
+  import { onMount } from "svelte";
   import type { WordListSource } from "@common/types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";

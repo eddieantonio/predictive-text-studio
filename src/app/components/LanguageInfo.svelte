@@ -49,7 +49,6 @@
     let { key, value } = event.detail;
     updateMetadata(key, value);
   }
-
 </script>
 
 <style>
