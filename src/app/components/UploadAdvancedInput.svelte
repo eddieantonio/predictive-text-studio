@@ -26,19 +26,30 @@
 </script>
 
 <style>
+  #settings-disclaimer {
+    font-size: var(--xs);
+    color: var(--gray);
+  }
 </style>
 
 <div class="mb-s">
   <details data-cy="upload-advance-settings">
     <summary>Advanced options</summary>
+    <p id="settings-disclaimer">
+      *Only works with .xlsx files and Google Sheets
+    </p>
     <InputField
       label="Spreadsheet Word Column"
       id="wordColumnIndexInput"
+      placeholder={mapDecToColLetters(wordColumnInd)}
+      error={wordColumnLetters ? '' : `No custom word column specified! Defaulting to ${mapDecToColLetters(wordColumnInd)}`}
       bind:inputValue={wordColumnLetters}
       fullWidth={true} />
     <InputField
       label="Spreadsheet Count Column"
       id="countColumnIndexInput"
+      placeholder={mapDecToColLetters(countColumnInd)}
+      error={countColumnLetters ? '' : `No custom count column specified! Defaulting to ${mapDecToColLetters(countColumnInd)}`}
       bind:inputValue={countColumnLetters}
       fullWidth={true} />
   </details>
