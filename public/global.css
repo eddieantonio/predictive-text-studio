@@ -140,6 +140,14 @@ a.button:focus {
   padding: .625rem 3.75rem;
 }
 
+* {
+  outline: none;
+}
+
+*:focus {
+  outline: none;
+}
+
 /**
  * Utility classes for margin top
  */

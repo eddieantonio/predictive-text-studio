@@ -7,6 +7,11 @@
   export let tableData: WordListSource;
 
   /**
+   * Close table
+   */
+  export let closeTable: Function;
+
+  /**
    * Re-calculate word count
    */
   export let getLanguageSources: Function;
@@ -86,7 +91,6 @@
 
   table {
     border-collapse: collapse;
-    width: 1400px;
     margin-top: 1.875rem;
     margin-bottom: 3.125rem;
     box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.1);
@@ -94,7 +98,7 @@
 
   th {
     vertical-align: middle;
-    padding: 1.25rem 0 1.25rem 1.25rem;
+    padding: 1.25rem;
     background-color: var(--lite-white);
     text-align: center;
   }
@@ -129,6 +133,7 @@
     padding: 0;
     border: 0;
     background-color: transparent;
+    cursor: pointer;
     font-size: 1em;
   }
 
@@ -152,6 +157,10 @@
     align-items: center;
     justify-content: center;
     padding: 1%;
+  }
+
+  img {
+    width: var(--s);
   }
 </style>
 
@@ -194,7 +203,9 @@
           <button
             class="btn--inline"
             on:click={() => deleteRow(i)}
-            data-cy="manual-entry-delete">Delete</button>
+            data-cy="manual-entry-delete">
+            <img src="/icons/delete.svg" alt="delete" />
+          </button>
         </td>
       </tr>
     {/each}
@@ -217,6 +228,15 @@
       onClick={saveTableData}
       dataCy="add-sources-save-btn">
       Save
+    </Button>
+    <Button
+      type="submit"
+      color="grey"
+      isOutlined
+      size="large"
+      onClick={() => closeTable()}
+      dataCy="add-sources-save-btn">
+      Close
     </Button>
   </div>
 </form>

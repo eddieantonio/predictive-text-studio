@@ -66,7 +66,10 @@
 </div>
 
 {#if manualEntry}
-  <ManualEntry {getLanguageSources} {tableData} />
+  <ManualEntry
+    {getLanguageSources}
+    {tableData}
+    closeTable={uploadSourcesFromFile} />
 {:else}
   <Upload {getLanguageSources} />
 {/if}

@@ -38,6 +38,10 @@
     tsv: "TSV",
     xlsx: ".xlsx",
   };
+
+  export const closeTable = () => {
+    sourceBeingEdited = null;
+  };
 </script>
 
 <style>
@@ -138,7 +142,8 @@
       <ManualEntry
         tableData={sourceBeingEdited}
         {getLanguageSources}
-        isEditingSource={true} />
+        isEditingSource={true}
+        {closeTable} />
     {/if}
   </div>
   <details data-cy="language-sources-add-sources">
