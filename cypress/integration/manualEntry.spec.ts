@@ -61,7 +61,7 @@ describe("Adding sources by direct entry", function () {
     cy.data("manual-entry-input-word").type("Hello");
     cy.data("manual-entry-input-count").clear().type("112");
 
-    cy.data("manual-entry-delete").contains("Delete").click();
+    cy.data("manual-entry-delete").click();
     //TODO: Current row should be deleted
 
     cy.data("language-sources-add-sources").contains("Add Source").click();
