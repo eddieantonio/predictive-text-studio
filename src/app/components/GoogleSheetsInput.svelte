@@ -9,8 +9,8 @@
   let googleSheetsURL = "";
 
   // The state that determines what columns are to be used on upload
-  let wordColumnInd = 0;
-  let countColumnInd = 1;
+  let wordColInd = 0;
+  let countColInd = 1;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -63,8 +63,8 @@
     try {
       // Create a range of the spreadsheet that includes both columns
       const spreadsheetRange = `${mapDecToColLetters(
-        Math.min(wordColumnInd, countColumnInd)
-      )}1:${mapDecToColLetters(Math.max(wordColumnInd, countColumnInd))}`;
+        Math.min(wordColInd, countColInd)
+      )}1:${mapDecToColLetters(Math.max(wordColInd, countColInd))}`;
 
       const spreadsheetId = getSpreadsheetId(googleSheetsURL) || "";
       const {
@@ -74,8 +74,8 @@
         range: spreadsheetRange,
       });
       const settings = {
-        wordColInd: wordColumnInd,
-        countColInd: countColumnInd,
+        wordColInd,
+        countColInd,
       };
       worker.readGoogleSheet(spreadsheetId, values, settings);
     } catch (err) {
@@ -88,9 +88,6 @@
    * Gets the unique spreadsheet ID from a Google Sheet URL
    */
   function getSpreadsheetId() {
-    // TODO: should not use id; should make use of bindings
-    googleSheetsURL = document.getElementById("input-googleSheetsURL").value;
-
     const googleSheetRegExp = RegExp(
       "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
     );
@@ -123,7 +120,7 @@
   </script>
 </svelte:head>
 
-<UploadAdvancedInput bind:wordColumnInd bind:countColumnInd />
+<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div class="google-sheets" data-cy="google-sheets-input">
   {#if error}
     <p class:error>{error}</p>

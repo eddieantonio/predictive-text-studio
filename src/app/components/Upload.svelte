@@ -20,8 +20,8 @@
   let error: Error | null = null;
 
   // The state that determines what columns are to be used on upload
-  let wordColumnInd: number = 0;
-  let countColumnInd: number = 1;
+  let wordColInd: number = 0;
+  let countColInd: number = 1;
 
   /**
    * Re-calculate word count
@@ -47,8 +47,8 @@
     error = null;
     try {
       await addAllFilesToCurrentProject(filesToSave, {
-        wordColInd: wordColumnInd,
-        countColInd: countColumnInd,
+        wordColInd,
+        countColInd,
       });
       files = [...files, ...filesToSave];
       getLanguageSources();
@@ -110,7 +110,7 @@
   }
 </style>
 
-<UploadAdvancedInput bind:wordColumnInd bind:countColumnInd />
+<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div
   class="upload-zone"
   class:drag-over={dragEnterCounter > 0}

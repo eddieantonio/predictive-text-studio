@@ -6,21 +6,21 @@
   } from "../logic/upload-advanced-settings";
 
   // props
-  export let wordColumnInd: number;
-  export let countColumnInd: number;
+  export let wordColInd: number;
+  export let countColInd: number;
 
   const DEFAULT_WORD_INDEX = 0;
   const DEFAULT_COUNT_INDEX = 1;
 
-  let wordColumnLetters: string = mapDecToColLetters(wordColumnInd);
-  let countColumnLetters: string = mapDecToColLetters(countColumnInd);
+  let wordColLetters: string = mapDecToColLetters(wordColInd);
+  let countColLetters: string = mapDecToColLetters(countColInd);
 
-  $: wordColumnInd = getColIndexFromString(
-    wordColumnLetters,
+  $: wordColInd = getColIndexFromString(
+    wordColLetters,
     DEFAULT_WORD_INDEX
   );
-  $: countColumnInd = getColIndexFromString(
-    countColumnLetters,
+  $: countColInd = getColIndexFromString(
+    countColLetters,
     DEFAULT_COUNT_INDEX
   );
 </script>
@@ -41,16 +41,16 @@
     <InputField
       label="Spreadsheet Word Column"
       id="wordColumnIndexInput"
-      placeholder={mapDecToColLetters(wordColumnInd)}
-      error={wordColumnLetters ? '' : `No custom word column specified! Defaulting to ${mapDecToColLetters(wordColumnInd)}`}
-      bind:inputValue={wordColumnLetters}
+      placeholder={mapDecToColLetters(wordColInd)}
+      error={wordColLetters ? '' : `No custom word column specified! Defaulting to ${mapDecToColLetters(wordColInd)}`}
+      bind:inputValue={wordColLetters}
       fullWidth={true} />
     <InputField
       label="Spreadsheet Count Column"
       id="countColumnIndexInput"
-      placeholder={mapDecToColLetters(countColumnInd)}
-      error={countColumnLetters ? '' : `No custom count column specified! Defaulting to ${mapDecToColLetters(countColumnInd)}`}
-      bind:inputValue={countColumnLetters}
+      placeholder={mapDecToColLetters(countColInd)}
+      error={countColLetters ? '' : `No custom count column specified! Defaulting to ${mapDecToColLetters(countColInd)}`}
+      bind:inputValue={countColLetters}
       fullWidth={true} />
   </details>
 </div>
