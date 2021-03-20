@@ -15,14 +15,8 @@
   let wordColLetters: string = mapDecToColLetters(wordColInd);
   let countColLetters: string = mapDecToColLetters(countColInd);
 
-  $: wordColInd = getColIndexFromString(
-    wordColLetters,
-    DEFAULT_WORD_INDEX
-  );
-  $: countColInd = getColIndexFromString(
-    countColLetters,
-    DEFAULT_COUNT_INDEX
-  );
+  $: wordColInd = getColIndexFromString(wordColLetters, DEFAULT_WORD_INDEX);
+  $: countColInd = getColIndexFromString(countColLetters, DEFAULT_COUNT_INDEX);
 </script>
 
 <style>
