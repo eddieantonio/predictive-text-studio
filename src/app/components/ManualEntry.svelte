@@ -51,8 +51,8 @@
     wordlist = wordlist;
   };
 
-  const addRowIfAbsent = (i: number) => (e: any) => {
-    wordlist[i][WordAndCountInd.WORD] = e.target.value;
+  const handleInput = (i: number, col: number) => (e: any) => {
+    wordlist[i][col] = e.target.value;
     if (i === wordlist.length - 1) addRow();
   };
 
@@ -195,7 +195,7 @@
         <td>
           <input
             type="text"
-            on:input={addRowIfAbsent(i)}
+            on:input={handleInput(i, WordAndCountInd.WORD)}
             value={row[WordAndCountInd.WORD]}
             required
             data-cy="manual-entry-input-word" />
@@ -205,7 +205,8 @@
             type="number"
             min="0"
             placeholder="Optional"
-            bind:value={row[WordAndCountInd.COUNT]}
+            on:input={handleInput(i, WordAndCountInd.COUNT)}
+            value={row[WordAndCountInd.COUNT]}
             data-cy="manual-entry-input-count" />
         </td>
         <td>
