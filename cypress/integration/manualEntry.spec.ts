@@ -22,7 +22,7 @@ describe("Adding sources by direct entry", function () {
     cy.data("language-source-delete").first().click();
   });
 
-  it.skip("should create and later edit a manual entry source", function () {
+  it("should create and later edit a manual entry source", function () {
     // create the manual entry
     cy.data("language-sources-add-sources")
       .contains("Add Source")
@@ -36,6 +36,7 @@ describe("Adding sources by direct entry", function () {
     cy.data("manual-entry-input-tablename").type("Common Greetings");
     cy.data("manual-entry-input-word").first().type("Hello");
     cy.data("manual-entry-input-count").first().clear().type("112");
+    cy.data("manual-entry-delete").last().click();
     cy.data("add-sources-save-btn").contains("Save").click();
 
     cy.wait(500);

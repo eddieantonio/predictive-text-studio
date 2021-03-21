@@ -58,11 +58,18 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      await worker.updateManualEntryDictionaryToProject(
-        tableData.id,
-        tableData.name,
-        tableData.wordlist
-      );
+      if (tableData.id) {
+        await worker.updateManualEntryDictionaryToProject(
+          tableData.id,
+          tableData.name,
+          tableData.wordlist
+        );
+      } else {
+        await worker.addManualEntryDictionaryToProject(
+          tableData.name,
+          tableData.wordlist
+        );
+      }
       getLanguageSources();
     }
   };
