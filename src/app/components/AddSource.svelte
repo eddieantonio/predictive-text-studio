@@ -42,7 +42,7 @@
   ];
   // Manual Entry
   let manualEntry: boolean = false;
-  let initialWordlist: WordList = [["", 0]];
+  let initialWordlist: WordList = [];
   let tableData: WordListSource = {
     name: "",
     wordlist: initialWordlist,

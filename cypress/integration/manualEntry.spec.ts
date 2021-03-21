@@ -16,8 +16,8 @@ describe("Adding sources by direct entry", function () {
       .click()
       .scrollIntoView();
     cy.data("manual-entry-input-tablename").type("Common Greetings");
-    cy.data("manual-entry-input-word").type("Hello");
-    cy.data("manual-entry-input-count").clear().type("112");
+    cy.data("manual-entry-input-word").first().type("Hello");
+    cy.data("manual-entry-input-count").first().clear().type("112");
     // delete the entry
     cy.data("language-source-delete").first().click();
   });
@@ -34,8 +34,8 @@ describe("Adding sources by direct entry", function () {
       .click()
       .scrollIntoView();
     cy.data("manual-entry-input-tablename").type("Common Greetings");
-    cy.data("manual-entry-input-word").type("Hello");
-    cy.data("manual-entry-input-count").clear().type("112");
+    cy.data("manual-entry-input-word").first().type("Hello");
+    cy.data("manual-entry-input-count").first().clear().type("112");
     cy.data("add-sources-save-btn").contains("Save").click();
 
     cy.wait(500);
@@ -60,10 +60,10 @@ describe("Adding sources by direct entry", function () {
       .click()
       .scrollIntoView();
     cy.data("manual-entry-input-tablename").type("Common Greetings");
-    cy.data("manual-entry-input-word").type("Hello");
-    cy.data("manual-entry-input-count").clear().type("112");
+    cy.data("manual-entry-input-word").first().type("Hello");
+    cy.data("manual-entry-input-count").first().clear().type("112");
 
-    cy.data("manual-entry-delete").click();
+    cy.data("manual-entry-delete").first().click();
     //TODO: Current row should be deleted
 
     cy.data("language-sources-add-sources").contains("Add Source").click();

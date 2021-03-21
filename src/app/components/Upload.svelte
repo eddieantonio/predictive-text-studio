@@ -20,6 +20,8 @@
 
   /**
    * Re-calculate word count
+   *
+   * Note: A default behavior set to "no action" since no re-calculation is required on landing page.
    */
   export let getLanguageSources: Function = () => {};
 

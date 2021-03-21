@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
   import type { WordAndCount, WordList, WordListSource } from "@common/types";
@@ -16,7 +17,7 @@
    */
   export let getLanguageSources: Function;
 
-  $: rowDataFromManualEntry = tableData.wordlist;
+  $: wordlist = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
   $: if (validateTableData(tableData.name, tableData.wordlist)) {
     saveTableData();
@@ -33,7 +34,6 @@
 
   const validateTableData = (name: string, wordlist: WordList): boolean => {
     const validTitle = validInput(name);
-
     const validRows = wordlist.every((wordAndCount: WordAndCount) => {
       return validInput(wordAndCount[WordAndCountInd.WORD]);
     });
@@ -41,14 +41,19 @@
   };
 
   const deleteRow = (i: number): void => {
-    rowDataFromManualEntry.splice(i, 1);
-    rowDataFromManualEntry = rowDataFromManualEntry;
+    wordlist.splice(i, 1);
+    wordlist = wordlist;
   };
 
-  const addNewRow = (): void => {
+  const addRow = (): void => {
     const newEntry: WordAndCount = ["", 0];
-    rowDataFromManualEntry.push(newEntry);
-    rowDataFromManualEntry = rowDataFromManualEntry;
+    wordlist.push(newEntry);
+    wordlist = wordlist;
+  };
+
+  const addRowIfAbsent = (i: number) => (e: any) => {
+    wordlist[i][WordAndCountInd.WORD] = e.target.value;
+    if (i === wordlist.length - 1) addRow();
   };
 
   const saveTableData = async () => {
@@ -61,6 +66,8 @@
       getLanguageSources();
     }
   };
+
+  onMount(addRow);
 </script>
 
 <style>
@@ -175,13 +182,13 @@
       <th>Count</th>
       <th>Action</th>
     </thead>
-
-    {#each rowDataFromManualEntry as row, i (i)}
+    {#each wordlist as row, i (i)}
       <tr>
         <td>
           <input
             type="text"
-            bind:value={row[WordAndCountInd.WORD]}
+            on:input={addRowIfAbsent(i)}
+            value={row[WordAndCountInd.WORD]}
             required
             data-cy="manual-entry-input-word" />
         </td>
@@ -207,7 +214,7 @@
       <td colspan="3">
         <button
           class="btn--inline"
-          on:click={addNewRow}
+          on:click={addRow}
           data-cy="manual-entry-add-row">Add Row</button>
       </td>
     </tr>
@@ -229,7 +236,7 @@
       isOutlined
       size="large"
       onClick={() => closeTable()}
-      dataCy="add-sources-save-btn">
+      dataCy="add-sources-close-btn">
       Close
     </Button>
   </div>
