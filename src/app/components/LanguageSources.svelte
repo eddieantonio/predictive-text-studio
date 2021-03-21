@@ -10,7 +10,7 @@
    */
   export let getLanguageSources: Function;
 
-  let sourceBeingEdited: WordListSource | null = null;
+  let selected: WordListSource | null = null;
 
   /**
    * Handles the click when the edit button is pressed.
@@ -19,7 +19,7 @@
    * @return {void}
    */
   function handleEdit(sourceToEdit: WordListSource): void {
-    sourceBeingEdited = sourceToEdit;
+    selected = sourceToEdit;
   }
 
   /**
@@ -40,7 +40,7 @@
   };
 
   export const closeTable = () => {
-    sourceBeingEdited = null;
+    selected = null;
   };
 </script>
 
@@ -138,12 +138,8 @@
         </tr>
       {/each}
     </table>
-    {#if sourceBeingEdited !== null}
-      <ManualEntry
-        tableData={sourceBeingEdited}
-        {getLanguageSources}
-        isEditingSource={true}
-        {closeTable} />
+    {#if selected !== null}
+      <ManualEntry tableData={selected} {getLanguageSources} {closeTable} />
     {/if}
   </div>
   <details data-cy="language-sources-add-sources">

@@ -16,12 +16,6 @@
    */
   export let getLanguageSources: Function;
 
-  /**
-   * Disables being able to edit the title
-   * We no longer need this conditional if we work with IndexedDB IDs
-   */
-  export let isEditingSource: boolean = false;
-
   $: rowDataFromManualEntry = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
   $: if (validateTableData(tableData.name, tableData.wordlist)) {
@@ -60,6 +54,7 @@
   const saveTableData = async () => {
     if (validDictionary) {
       await worker.addManualEntryDictionaryToProject(
+        tableData.id,
         tableData.name,
         tableData.wordlist
       );
@@ -170,7 +165,6 @@
     <input
       type="text"
       bind:value={tableData.name}
-      disabled={isEditingSource}
       required
       data-cy="manual-entry-input-tablename" />
   </div>

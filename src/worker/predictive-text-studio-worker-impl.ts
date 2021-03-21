@@ -128,11 +128,13 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   async addManualEntryDictionaryToProject(
+    id: number,
     name: string,
     wordlist: WordList
   ): Promise<number> {
     await this.storage.saveFile({
-      name: name,
+      id,
+      name,
       wordlist,
       size: wordlist.length,
       type: "direct-entry",

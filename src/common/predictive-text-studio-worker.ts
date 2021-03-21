@@ -40,6 +40,7 @@ export interface PredictiveTextStudioWorker {
    * @param wordlist Manual entry data
    */
   addManualEntryDictionaryToProject(
+    id: number | undefined,
     name: string,
     wordlist: WordList
   ): Promise<number>;
