@@ -128,6 +128,20 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   async addManualEntryDictionaryToProject(
+    name: string,
+    wordlist: WordList
+  ): Promise<number> {
+    await this.storage.saveFile({
+      name,
+      wordlist,
+      size: wordlist.length,
+      type: "direct-entry",
+    });
+    this.generateKMPFromStorage();
+    return wordlist.length;
+  }
+
+  async updateManualEntryDictionaryToProject(
     id: number,
     name: string,
     wordlist: WordList

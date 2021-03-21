@@ -53,7 +53,7 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      await worker.addManualEntryDictionaryToProject(
+      await worker.updateManualEntryDictionaryToProject(
         tableData.id,
         tableData.name,
         tableData.wordlist
