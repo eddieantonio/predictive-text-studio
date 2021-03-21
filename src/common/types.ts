@@ -109,3 +109,19 @@ export interface ProjectMetadata {
    */
   dictionaryName?: string;
 }
+
+/**
+ * Information that relates to any advanced settings when uploading a file
+ */
+export interface UploadSettings {
+  /**
+   * The index of the word column. Starts at 0.
+   * Can be converted to a letter or incremented by one for it to work with Excel
+   */
+  wordColInd: number;
+  /**
+   * The index of the count column. Starts at 0.
+   * Can be converted to a letter or incremented by one for it to work with Excel
+   */
+  countColInd: number;
+}
