@@ -7,6 +7,7 @@ import { google } from "googleapis";
 import { readGoogleSheet } from "@worker/read-wordlist";
 import { pathToFixture } from "./helpers";
 import type { GlobalOptions } from "googleapis-common";
+import { defaultUploadSettings } from "./fixtures";
 
 dot.config({ path: path.join(__dirname, "../.env") });
 const error = c.bold.red;
@@ -124,7 +125,8 @@ test.cb("it should fetch wordlist from Google Sheets API", (t) => {
             t.not(rows.length, 0);
             const { name, wordlist, size, type } = await readGoogleSheet(
               spreadsheetId,
-              rows
+              rows,
+              defaultUploadSettings
             );
             t.is(name, spreadsheetId);
             // this will probably show up poorly in your editor:

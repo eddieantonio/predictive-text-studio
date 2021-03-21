@@ -3,7 +3,7 @@ import {
   StoredProjectData,
   StoredWordList,
 } from "@worker/storage-models";
-import type { WordList } from "@common/types";
+import type { UploadSettings, WordList } from "@common/types";
 
 /**
  * Top 10 words from Timothy Montler's SENĆOŦEN wordlist.
@@ -40,6 +40,16 @@ export const wordlistHeaderAndHashesResult: WordList = [
   ["headers", 3],
   ["and", 33],
   ["hashes", 44],
+];
+
+/**
+ * Words that should match WordlistCustomColumns-2-4.xlsx
+ *
+ * The excel file has its words in column B and its counts in column D
+ */
+export const wordlistCustomColumnsResult: WordList = [
+  ["коала", 1],
+  ["考拉", 2],
 ];
 
 export const testStoredProjectData = {
@@ -85,3 +95,8 @@ export const keymanKeyboardDataStub: KeyboardDataWithTime[] = [
     timestamp: new Date(),
   },
 ];
+
+export const defaultUploadSettings: UploadSettings = {
+  wordColInd: 0,
+  countColInd: 1,
+};
