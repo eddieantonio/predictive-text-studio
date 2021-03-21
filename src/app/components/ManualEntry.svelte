@@ -151,6 +151,7 @@
 
   input:focus {
     background-color: var(--lite-white);
+    border-color: var(--primary-blue);
   }
 
   .save-zone {
