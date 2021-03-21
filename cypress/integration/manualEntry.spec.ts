@@ -41,7 +41,6 @@ describe("Adding sources by direct entry", function () {
     cy.data("languages-sources-btn").contains("Sources").click();
     cy.data("language-source-edit").first().click();
 
-    cy.data("manual-entry-input-tablename").first().should("be.disabled");
     cy.data("manual-entry-input-word").first().type("World");
     cy.data("manual-entry-input-count").first().clear().type("113");
   });
