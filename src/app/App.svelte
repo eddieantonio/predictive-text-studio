@@ -14,7 +14,7 @@
   addMessages("kr", kr);
   init({ initialLocale: "en" });
 
-  locale.set("kr");
+  // locale.set("kr");
   // Used for SSR. A falsy value is ignored by the Router.
   export let url = "";
 </script>
