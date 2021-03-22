@@ -1,4 +1,5 @@
 <script>
+  import { addMessages, init, locale } from "svelte-i18n";
   import { Router, Route } from "svelte-routing";
   import LandingPage from "./pages/LandingPage.svelte";
   import Languages from "./pages/Languages.svelte";
@@ -6,6 +7,14 @@
   import Team from "./pages/Team.svelte";
   import Help from "./pages/Help.svelte";
 
+  import en from "./lang/en";
+  import kr from "./lang/kr";
+
+  addMessages("en", en);
+  addMessages("kr", kr);
+  init({ initialLocale: "en" });
+
+  locale.set("kr");
   // Used for SSR. A falsy value is ignored by the Router.
   export let url = "";
 </script>
