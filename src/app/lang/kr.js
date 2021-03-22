@@ -6,7 +6,7 @@ export default {
     excel: "엑셀",
     google_sheets: "Google 스프레드시트",
     tsv: "TSV",
-    example: "Example",
+    example: "예시",
   },
   page: {
     help: {
@@ -23,8 +23,8 @@ export default {
     },
     main: {
       title: "Predictive Text Studio에 오신 것을 환영합니다",
-      prediction: "자동 완성 단어를",
       add: " ",
+      prediction: "자동 완성 단어를",
       and: "추가하고",
       autocorrect: "자동으로",
       to_your_language: "당신의 언어로 고쳐보세요",

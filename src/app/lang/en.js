@@ -1,26 +1,28 @@
 export default {
+  common: {
+    name: "Predictive Text Studio",
+    back: "Back",
+    help: "Help",
+    excel: "Excel",
+    google_sheets: "Google Sheets",
+    tsv: "TSV",
+    example: "Example",
+  },
   page: {
     help: {
-      back: "Back",
-      head: "What Do I Upload?",
+      title: "What Do I Upload?",
       intro:
         'Predictive Text Studio uses the spreadsheet you provide to customize the words in your keyboard\'s dictionary. The "Word" column contains frequently used words in your language that you would like to add to your dictionary. The "Count" column gives the amount of times or frequency that a word appears in your text.',
-      excel: "Excel",
       excel_instruction:
         'Create an Excel file with "Word" in the A column and "Count" in the B column. You may upload the Excel file directly to the Upload Area.',
-      google_sheets: "Google Sheets",
       google_sheets_instruction:
         'Create a Google Sheets spreadsheet with "Word" in the A column and "Count" in the B column. When you have completed the spreadsheet press the "Share" button in the top right corner of the Google Sheets interface and copy a link which "Anyone on the internet with this link can view". You may now paste this link in the Google Sheets URL input.',
-      tsv: "TSV",
       tsv_instruction:
         'TSV stands for Tab Separated Values. Like Excel or Google Sheets, create a text file with "Word" in the first column and "Count" in the second column. Make sure your file has a .tsv extension and upload it to the File Uploader. For exhaustive details on how your file should look, please visit the',
       keyman: "Keyman Website",
-      example: "Example",
     },
     main: {
       title: "Welcome to Predictive Text Studio",
-      name: "Predictive Text Studio",
-      designed_for: "designed for",
       add: "Add",
       prediction: "prediction",
       and: "and",
@@ -29,21 +31,17 @@ export default {
       get_started: "Get started",
       step_one: "Step 1: Enter your language",
       step_two: "Step 2: Add a word list",
-      help: "Help",
       customize: "Customize",
       privacy_policy: "Privacy Policy",
       about_the_team: "About the Team",
     },
     lang: {
       go_back_to_main_page: "Go back to main page",
-      name: "Predictive Text Studio",
-      designed_for: "designed for",
       information: "Information",
       sources: "Sources",
       download: "Download",
     },
     privacy: {
-      back: "Back",
       title: "Predictive Text Studio Privacy Policy",
       effective_as_of: "Effective as of",
       date: "December 8, 2020",
@@ -120,7 +118,6 @@ export default {
       },
     },
     team: {
-      back: "Back",
       title: "Team",
       intro: "These are people who have contributed to the project",
       core_maintainers: "Core Maintainers",
