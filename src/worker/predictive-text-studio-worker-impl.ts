@@ -192,7 +192,7 @@ function toStorageFormat(
 ): { [key: string]: string } {
   const data = Object.assign({}, metadata as { [key: string]: string });
   if (metadata.languages) {
-    data.langName = metadata.languages[0].name;
+    data.language = metadata.languages[0].name;
     data.bcp47Tag = metadata.languages[0].id;
     delete data.languages;
   }

@@ -25,7 +25,7 @@ test("it should set project data and update to the database", async (t) => {
 
   const data = await worker.fetchAllCurrentProjectMetadata();
 
-  t.is(data.langName, languageName);
+  t.is(data.language, languageName);
   t.is(data.bcp47Tag, languageTag);
   t.is(data.authorName, authorName);
 });

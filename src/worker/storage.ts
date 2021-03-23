@@ -43,7 +43,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        * | id (primary key) |
        * +------------------+
-       * | langName         |
+       * | language         |
        * +------------------+
        * | bcp47Tag         |
        * +------------------+
@@ -59,7 +59,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        */
       projectData:
-        "++id, langName, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
+        "++id, language, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
       /**
        * KMP keyboardData Table Scehma
        * +------------------+
@@ -152,7 +152,7 @@ export default class Storage {
     return this.db.transaction("readwrite", this.db.projectData, async () => {
       const currentData = (await this.db.projectData.get({
         id: PACKAGE_ID,
-      })) || { langName: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
+      })) || { language: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
       currentData.bcp47Tag = bcp47Tag;
       await this.db.projectData.put(currentData);
     });
@@ -257,6 +257,6 @@ function createInitialProjectData(): StoredProjectData {
     // See: https://www.w3.org/International/questions/qa-no-language#undetermined
     // See: https://tools.ietf.org/html/bcp47#section-3.4.1
     bcp47Tag: "",
-    langName: "Unknown Language",
+    language: "Unknown Language",
   };
 }

@@ -205,7 +205,7 @@ test("update the project data to database", async (t) => {
   // At first, nothing in the DB
   t.is(await db.projectData.count(), 0);
   const storedProjectData = {
-    langName: "English",
+    language: "English",
     bcp47Tag: "en",
     authorName: "example",
     modelID: "unknownAuthor.en.example",
@@ -221,7 +221,7 @@ test("update the project data to database", async (t) => {
 test("retrieve project data from the database", async (t) => {
   const { storage } = t.context;
   const storedProjectData = {
-    langName: "English",
+    language: "English",
     bcp47Tag: "en",
     authorName: "example",
     modelID: "unknownAuthor.en.example",
@@ -231,8 +231,8 @@ test("retrieve project data from the database", async (t) => {
   await storage.updateProjectData(storedProjectData);
 
   const projectData = await storage.fetchProjectData();
-  const langName = projectData.langName;
-  t.is(langName, "English");
+  const language = projectData.language;
+  t.is(language, "English");
   const bcp47Tag = projectData.bcp47Tag;
   t.is(bcp47Tag, "en");
   const authorName = projectData.authorName;
@@ -255,12 +255,12 @@ test("update project data multiple times ", async (t) => {
 
   /* Store the initial data */
   await storage.updateProjectData({
-    langName: languageName,
+    language: languageName,
     bcp47Tag: languageCode,
   });
 
   const initialProject = await storage.fetchProjectData();
-  t.is(initialProject.langName, languageName);
+  t.is(initialProject.language, languageName);
   t.is(initialProject.bcp47Tag, languageCode);
   t.not(initialProject.authorName, author);
   t.not(initialProject.copyright, copyright);
@@ -270,7 +270,7 @@ test("update project data multiple times ", async (t) => {
 
   const changedProject = await storage.fetchProjectData();
   t.notDeepEqual(changedProject, initialProject);
-  t.is(changedProject.langName, initialProject.langName);
+  t.is(changedProject.language, initialProject.language);
   t.is(changedProject.bcp47Tag, initialProject.bcp47Tag);
   t.not(changedProject.authorName, initialProject.authorName);
   t.is(changedProject.authorName, author);
@@ -282,7 +282,7 @@ test("update project data multiple times ", async (t) => {
   /* The final update should have all fields updated. */
   const finalProject = await storage.fetchProjectData();
   t.notDeepEqual(finalProject, changedProject);
-  t.is(finalProject.langName, changedProject.langName);
+  t.is(finalProject.language, changedProject.language);
   t.is(finalProject.bcp47Tag, changedProject.bcp47Tag);
   t.is(finalProject.authorName, changedProject.authorName);
   t.not(finalProject.copyright, changedProject.copyright);

@@ -8,10 +8,15 @@
   import { currentDownloadURL } from "../stores";
   import type { KeyboardMetadata } from "@common/types";
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
+  // import { onMount } from "svelte";
 
   let selectedLanguage: KeyboardMetadata | undefined = undefined;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
+
+  // onMount(async () => {
+	// 	selectedLanguage = await worker.fetchCachedKeyboardLanguageList();
+	// });
 
   $: continueReady =
     selectedLanguage !== undefined && Boolean($currentDownloadURL);
