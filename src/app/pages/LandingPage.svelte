@@ -8,15 +8,20 @@
   import { currentDownloadURL } from "../stores";
   import type { KeyboardMetadata } from "@common/types";
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
-  // import { onMount } from "svelte";
+  import { onMount } from "svelte";
 
   let selectedLanguage: KeyboardMetadata | undefined = undefined;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
+  let isProjectInProgress: boolean = false;
 
-  // onMount(async () => {
-	// 	selectedLanguage = await worker.fetchCachedKeyboardLanguageList();
-	// });
+  onMount(async () => {
+    selectedLanguage = await worker.fetchAllCurrentProjectMetadata();
+    isProjectInProgress = selectedLanguage !== undefined;
+    // TODO: Boolean($currentDownloadURL) will always be false here
+    // Ideally we want to see if $currentDownloadURL is available here when
+    // determining if the project is complete
+  });
 
   $: continueReady =
     selectedLanguage !== undefined && Boolean($currentDownloadURL);
@@ -197,6 +202,19 @@
     min-width: 200px;
   }
 
+  .card {
+    border-radius: 0.5em;
+    padding: 1.5rem;
+  }
+
+  .card__info {
+    background-color: #e3f3ff;
+  }
+
+  .card__existing-project {
+    margin-bottom: var(--s);
+  }
+
   .quick-start {
     margin: 9rem auto;
     padding: 1.5rem;
@@ -362,6 +380,24 @@
   </section>
 
   <section id="get-started" class="quick-start">
+    {#if isProjectInProgress && continueReady}
+      <div
+        id="project-exists-info"
+        class="card card__info card__existing-project"
+        data-cy="existing-project-card">
+        <form action="/languages">
+          <h3>You already have a project started!</h3>
+          <p>Would you like to continue?</p>
+          <button
+            class="button button--primary quick-start__submit-button"
+            class:quick-start__submit-button--disabled={!continueReady}
+            type="submit"
+            data-cy="existing-project-continue-button">
+            Continue
+          </button>
+        </form>
+      </div>
+    {/if}
     <!-- TODO: should not use hard coded URL! -->
     <form action="/languages" data-cy="quick-start" >
       <fieldset class="quick-start__step">
