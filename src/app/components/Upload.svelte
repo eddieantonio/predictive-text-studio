@@ -4,6 +4,7 @@
     filesFromDragEvent,
     filesFromInputElement,
   } from "../logic/upload";
+  import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
   // Dragging over nested element in a drag-and-drop zone
@@ -17,6 +18,10 @@
   let files: File[] = [];
   let dragEnterCounter = 0;
   let error: Error | null = null;
+
+  // The state that determines what columns are to be used on upload
+  let wordColInd: number = 0;
+  let countColInd: number = 1;
 
   /**
    * Re-calculate word count
@@ -41,7 +46,10 @@
 
     error = null;
     try {
-      await addAllFilesToCurrentProject(filesToSave);
+      await addAllFilesToCurrentProject(filesToSave, {
+        wordColInd,
+        countColInd,
+      });
       files = [...files, ...filesToSave];
       getLanguageSources();
     } catch (e) {
@@ -102,6 +110,7 @@
   }
 </style>
 
+<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div
   class="upload-zone"
   class:drag-over={dragEnterCounter > 0}

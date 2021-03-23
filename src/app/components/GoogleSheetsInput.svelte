@@ -1,9 +1,16 @@
 <script>
+  import { mapDecToColLetters } from "../logic/upload-advanced-settings";
+
   import worker from "../spawn-worker";
   import InputField from "./InputField.svelte";
+  import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
 
   let error = null;
   let googleSheetsURL = "";
+
+  // The state that determines what columns are to be used on upload
+  let wordColInd = 0;
+  let countColInd = 1;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -54,14 +61,23 @@
       gapi.auth2.getAuthInstance().signIn();
     }
     try {
+      // Create a range of the spreadsheet that includes both columns
+      const spreadsheetRange = `${mapDecToColLetters(
+        Math.min(wordColInd, countColInd)
+      )}1:${mapDecToColLetters(Math.max(wordColInd, countColInd))}`;
+
       const spreadsheetId = getSpreadsheetId(googleSheetsURL) || "";
       const {
         result: { values },
       } = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
-        range: "A1:B",
+        range: spreadsheetRange,
       });
-      worker.readGoogleSheet(spreadsheetId, values);
+      const settings = {
+        wordColInd,
+        countColInd,
+      };
+      worker.readGoogleSheet(spreadsheetId, values, settings);
     } catch (err) {
       error = "Error: " + err.message;
       return;
@@ -72,9 +88,6 @@
    * Gets the unique spreadsheet ID from a Google Sheet URL
    */
   function getSpreadsheetId() {
-    // TODO: should not use id; should make use of bindings
-    googleSheetsURL = document.getElementById("input-googleSheetsURL").value;
-
     const googleSheetRegExp = RegExp(
       "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
     );
@@ -107,6 +120,7 @@
   </script>
 </svelte:head>
 
+<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div class="google-sheets" data-cy="google-sheets-input">
   {#if error}
     <p class:error>{error}</p>
@@ -114,7 +128,7 @@
   <InputField
     label="Google Sheets URL"
     id="googleSheetsURL"
-    bind:value={googleSheetsURL}
+    bind:inputValue={googleSheetsURL}
     fullWidth={true} />
   <button
     class="button button--primary button--shadow quick-start__submit"

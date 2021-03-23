@@ -1,12 +1,10 @@
 import * as Excel from "exceljs";
-import { WordList } from "@common/types";
+import { UploadSettings, WordList } from "@common/types";
 import { StoredWordList } from "@worker/storage-models";
 
-const WORD = 1;
-const COUNT = 2;
-
 export async function readExcel(
-  excelFile: ArrayBuffer | Uint8Array
+  excelFile: ArrayBuffer | Uint8Array,
+  settings: UploadSettings
 ): Promise<WordList> {
   const workbook = new Excel.Workbook();
   await workbook.xlsx.load(excelFile);
@@ -28,9 +26,11 @@ export async function readExcel(
   const wordlist: WordList = [];
 
   worksheet.eachRow((row) => {
-    if (shouldRowBeConverted(row)) {
-      const word = row.getCell(WORD).text || "";
-      const count = asNonNegativeInteger(row.getCell(COUNT).text || 1);
+    if (shouldRowBeConverted(row, settings)) {
+      const word = row.getCell(settings.wordColInd + 1).text || "";
+      const count = asNonNegativeInteger(
+        row.getCell(settings.countColInd + 1).text || 1
+      );
       wordlist.push([word, count]);
     }
   });
@@ -75,10 +75,17 @@ export function readTSV(TSVFile: string): WordList {
  * Returns a boolean if the row should be converted.
  * The row should not be converted if it is a header row or a commented out row.
  */
-function shouldRowBeConverted(row: Excel.Row): boolean {
+function shouldRowBeConverted(
+  row: Excel.Row,
+  settings: UploadSettings
+): boolean {
   const isHeaderRow =
-    row.number === 1 && row.getCell(COUNT).text.toLowerCase().includes("count");
-  const isCommentRow = row.getCell(WORD).text === "#";
+    row.number === 1 &&
+    row
+      .getCell(settings.countColInd + 1)
+      .text.toLowerCase()
+      .includes("count");
+  const isCommentRow = row.getCell(settings.wordColInd + 1).text === "#";
   return !isHeaderRow && !isCommentRow;
 }
 
@@ -99,22 +106,26 @@ function asNonNegativeInteger(x: unknown): number {
  * Returns a boolean if the row should be converted.
  * The row should not be converted if it is a header row or a commented out row.
  */
-function shouldRowBeConvertedGoogleSheets(row: string[]): boolean {
-  const isHeaderRow = row[1].toLowerCase().includes("count");
-  const isCommentRow = row[0] === "#";
+function shouldRowBeConvertedGoogleSheets(
+  row: string[],
+  settings: UploadSettings
+): boolean {
+  const isHeaderRow = row[settings.countColInd].toLowerCase().includes("count");
+  const isCommentRow = row[settings.wordColInd] === "#";
   return !isHeaderRow && !isCommentRow;
 }
 
 export async function readGoogleSheet(
   name: string,
-  rows: string[][]
+  rows: string[][],
+  settings: UploadSettings
 ): Promise<StoredWordList> {
   const wordlist: WordList = [];
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    if (shouldRowBeConvertedGoogleSheets(row)) {
-      const word = row[0];
-      let wordCount = Number(row[1]);
+    if (shouldRowBeConvertedGoogleSheets(row, settings)) {
+      const word = row[settings.wordColInd];
+      let wordCount = Number(row[settings.countColInd]);
       if (!wordCount) {
         wordCount = 0;
       }
