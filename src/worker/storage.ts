@@ -1,10 +1,10 @@
 import Dexie, { DexieOptions } from "dexie";
-import { exportDB, importInto } from "dexie-export-import";
 import {
   StoredWordList,
   StoredProjectData,
   KeyboardDataWithTime,
   KMPPackageData,
+  ExportedProjectData,
 } from "./storage-models";
 const DB_NAME = "dictionary_sources";
 
@@ -247,12 +247,34 @@ export default class Storage {
     return kmpFile.package;
   }
 
+  /**
+   * Export projectData and Files as a json file
+   */
   async exportProjectData(): Promise<Blob> {
-    return await exportDB(this.db);
+    const projectData: StoredProjectData = await this.fetchProjectData();
+    const files: StoredWordList[] = await this.fetchAllFiles();
+
+    const projectString = JSON.stringify({ projectData, files });
+    return new Blob([projectString], { type: "application/json" });
   }
 
+  /**
+   * Import projectData and Files that have previously been exported
+   * @param data json file of format: ExportedProjectData
+   */
   async importProjectData(data: Blob): Promise<void> {
-    await importInto(this.db, data, { overwriteValues: true });
+    const text = await data.text();
+    const { projectData, files }: ExportedProjectData = JSON.parse(text);
+    if (projectData) {
+      await this.db.transaction("readwrite", this.db.projectData, async () => {
+        await this.db.projectData.put(projectData);
+      });
+    }
+    if (files) {
+      await this.db.transaction("readwrite", this.db.files, async () => {
+        await this.db.files.bulkPut(files);
+      });
+    }
   }
 }
 

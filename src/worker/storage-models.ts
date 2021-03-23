@@ -52,3 +52,8 @@ export interface KMPPackageData {
   /** The compiled KMP package */
   package: ArrayBuffer;
 }
+
+export interface ExportedProjectData {
+  projectData: StoredProjectData;
+  files: StoredWordList[];
+}
