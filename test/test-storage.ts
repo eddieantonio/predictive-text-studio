@@ -4,7 +4,7 @@ import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
-import { StoredWordList } from "@worker/storage-models";
+import { ExportedProjectData, StoredWordList } from "@worker/storage-models";
 import { WordListSource } from "@common/types";
 
 import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
@@ -341,4 +341,67 @@ test("retrieve the KMP package from the database", async (t) => {
 
   const kmpRetrieved = await storage.fetchCompiledKMPFile();
   t.assert(kmpRetrieved instanceof ArrayBuffer);
+});
+
+test("exporting project data", async (t) => {
+  const { storage } = t.context;
+
+  const fileData: StoredWordList = {
+    name: "ExampleWordlist.xlsx",
+    wordlist: exampleWordlist,
+    size: exampleWordlist.length,
+    type: "xlsx",
+  };
+
+  await storage.saveFile(fileData);
+
+  const storedProjectData = {
+    langName: "English",
+    bcp47Tag: "en",
+    authorName: "example",
+    modelID: "unknownAuthor.en.example",
+    copyright: "©",
+    version: "1.0.0",
+  };
+  await storage.updateProjectData(storedProjectData);
+
+  const data = await storage.exportProjectData();
+
+  const { projectData, files }: ExportedProjectData = JSON.parse(data);
+
+  delete projectData.id;
+
+  t.deepEqual(projectData, storedProjectData);
+  t.deepEqual(files[0], fileData);
+});
+
+test("importing project data", async (t) => {
+  const { storage } = t.context;
+
+  const fileString =
+    '{"projectData":{"id":0,"authorName":"example","bcp47Tag":"en","langName":"English","modelID":"unknownAuthor.en.example","copyright":"©","version":"1.0.0"},"files":[{"name":"ExampleWordlist.xlsx","wordlist":[["TŦE",13644],["E",9134],["SEN",4816],["Ȼ",3479],["SW̱",2621],["NIȽ",2314],["U¸",2298],["I¸",1988],["ȻSE",1925],["I",1884]],"size":10,"type":"xlsx","id":1}]}';
+
+  await storage.importProjectData(fileString);
+
+  // We should find that it has been stored:
+  const files = await storage.fetchAllFiles();
+  t.is(files.length, 1);
+
+  const file = files[0];
+  t.is(file.name, "ExampleWordlist.xlsx");
+  t.deepEqual(file.wordlist, exampleWordlist);
+
+  const projectData = await storage.fetchProjectData();
+  const langName = projectData.langName;
+  t.is(langName, "English");
+  const bcp47Tag = projectData.bcp47Tag;
+  t.is(bcp47Tag, "en");
+  const authorName = projectData.authorName;
+  t.is(authorName, "example");
+  const modelID = projectData.modelID;
+  t.is(modelID, "unknownAuthor.en.example");
+  const copyright = projectData.copyright;
+  t.is(copyright, "©");
+  const version = projectData.version;
+  t.is(version, "1.0.0");
 });

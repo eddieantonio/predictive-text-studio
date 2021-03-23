@@ -87,8 +87,9 @@
    * Handles downloading the files and metadata stored in IndexedDB
    */
   const handleExport = async (): Promise<void> => {
-    const data = await worker.exportProjectData();
-    const url = URL.createObjectURL(data);
+    const dataString = await worker.exportProjectData();
+    const file = new Blob([dataString], { type: "application/json" });
+    const url = URL.createObjectURL(file);
     createAnchor(url, "Predictive-Text-Studio-Project.json");
   };
 
@@ -103,7 +104,8 @@
     input.addEventListener("change", async () => {
       const files = input.files;
       if (!files || files.length < 1) return;
-      await worker.importProjectData(files[0]);
+      const fileString = await files[0].text();
+      await worker.importProjectData(fileString);
       // load in the new metaData if languageInfo is in focus
       if (languageInfo) languageInfo.getMetadata();
       getLanguageSources();

@@ -176,11 +176,11 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
 
-  async exportProjectData(): Promise<Blob> {
+  async exportProjectData(): Promise<string> {
     return this.storage.exportProjectData();
   }
 
-  async importProjectData(data: Blob): Promise<void> {
+  async importProjectData(data: string): Promise<void> {
     return this.storage.importProjectData(data);
   }
 }

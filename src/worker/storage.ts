@@ -248,23 +248,20 @@ export default class Storage {
   }
 
   /**
-   * Export projectData and Files as a json file
+   * Export projectData and Files as a json string
    */
-  async exportProjectData(): Promise<Blob> {
+  async exportProjectData(): Promise<string> {
     const projectData: StoredProjectData = await this.fetchProjectData();
     const files: StoredWordList[] = await this.fetchAllFiles();
-
-    const projectString = JSON.stringify({ projectData, files });
-    return new Blob([projectString], { type: "application/json" });
+    return  JSON.stringify({ projectData, files });
   }
 
   /**
    * Import projectData and Files that have previously been exported
-   * @param data json file of format: ExportedProjectData
+   * @param data json string of format: ExportedProjectData
    */
-  async importProjectData(data: Blob): Promise<void> {
-    const text = await data.text();
-    const { projectData, files }: ExportedProjectData = JSON.parse(text);
+  async importProjectData(data: string): Promise<void> {
+    const { projectData, files }: ExportedProjectData = JSON.parse(data);
     if (projectData) {
       await this.db.transaction("readwrite", this.db.projectData, async () => {
         await this.db.projectData.put(projectData);

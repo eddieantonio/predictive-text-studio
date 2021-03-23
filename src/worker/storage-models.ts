@@ -55,5 +55,5 @@ export interface KMPPackageData {
 
 export interface ExportedProjectData {
   projectData: StoredProjectData;
-  files: StoredWordList[];
+  files: WordListSource[];
 }

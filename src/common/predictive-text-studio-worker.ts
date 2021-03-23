@@ -97,12 +97,12 @@ export interface PredictiveTextStudioWorker {
   getFilesFromStorage(): Promise<WordListSource[]>;
 
   /**
-   * Generates a JSON file of the current IndexedDB
+   * Generates a JSON string of the current IndexedDB
    */
-  exportProjectData(): Promise<Blob>;
+  exportProjectData(): Promise<string>;
 
   /**
-   * Imports data from a JSON file generated using exportProjectData()
+   * Imports data from a JSON string generated using exportProjectData()
    */
-  importProjectData(data: Blob): Promise<void>;
+  importProjectData(data: string): Promise<void>;
 }
