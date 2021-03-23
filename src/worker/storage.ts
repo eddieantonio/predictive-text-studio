@@ -253,7 +253,7 @@ export default class Storage {
   async exportProjectData(): Promise<string> {
     const projectData: StoredProjectData = await this.fetchProjectData();
     const files: StoredWordList[] = await this.fetchAllFiles();
-    return  JSON.stringify({ projectData, files });
+    return JSON.stringify({ projectData, files });
   }
 
   /**
