@@ -9,6 +9,7 @@
   import type { KeyboardMetadata } from "@common/types";
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
   import { onMount } from "svelte";
+  import { PAGE_URLS } from "./page-urls";
 
   let selectedLanguage: KeyboardMetadata | undefined = undefined;
   let continueReady: boolean = false;
@@ -385,7 +386,7 @@
         id="project-exists-info"
         class="card card__info card__existing-project"
         data-cy="existing-project-card">
-        <form action="/languages">
+        <form action={PAGE_URLS.languages}>
           <h3>You already have a project started!</h3>
           <p>Would you like to continue?</p>
           <button
@@ -398,20 +399,18 @@
         </form>
       </div>
     {/if}
-    <!-- TODO: should not use hard coded URL! -->
-    <form action="/languages" data-cy="quick-start" >
+    <form action={PAGE_URLS.languages} data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <LanguageNameInput bind:selectedLanguage={selectedLanguage} label="Step 1: Enter your language" bold={false} />
+        <LanguageNameInput
+          bind:selectedLanguage
+          label="Step 1: Enter your language"
+          bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
         <div class="inline">
-          <legend>
-            Step 2: Add a word list
-          </legend>
-          <a  href="help" target="_blank">
-            Help
-          </a>
+          <legend>Step 2: Add a word list</legend>
+          <a href="help" target="_blank"> Help </a>
         </div>
       </fieldset>
 
@@ -419,21 +418,23 @@
         <SplitButton {splitBtns} />
       </div>
       {#if uploadFile}
-        <Upload/>
+        <Upload />
       {:else}
         <GoogleSheetsInput />
       {/if}
-      <div class="quick-start__submit-wrapper"
-           class:quick-start__submit-wrapper--disabled={!continueReady}>
+      <div
+        class="quick-start__submit-wrapper"
+        class:quick-start__submit-wrapper--disabled={!continueReady}>
         <DownloadKMP downloadURL={$currentDownloadURL} />
-        <p> or </p>
+        <p>or</p>
         <button
-              class="button button--primary button--shadow quick-start__submit-button"
-              class:quick-start__submit-button--disabled={!continueReady}
-              type="submit"
-              data-cy="landing-page-continue-button"> Customize
+          class="button button--primary button--shadow quick-start__submit-button"
+          class:quick-start__submit-button--disabled={!continueReady}
+          type="submit"
+          data-cy="landing-page-continue-button">
+          Customize
         </button>
-    </div>
+      </div>
     </form>
   </section>
 </main>
@@ -441,13 +442,14 @@
 <footer class="footer">
   <p class="footer__copyright">
     <small>
-      <a href="/privacy">Privacy Policy</a>
+      <a href={PAGE_URLS.privacy}>Privacy Policy</a>
       <br />
-      <a href="/team" data-cy="team-page-link">About the Team</a>
+      <a href={PAGE_URLS.team} data-cy="team-page-link">About the Team</a>
       <br />
       © 2020–{new Date().getFullYear()}
       <a
         href="https://nrc.canada.ca/en/research-development/research-collaboration/programs/canadian-indigenous-languages-technology-project">
-        National Research Council Canada</a>.</small>
+        National Research Council Canada</a>.
+    </small>
   </p>
 </footer>

@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { PAGE_URLS } from "./page-urls";
+</script>
+
 <style>
   .help-page {
     width: 75%;
@@ -22,7 +26,9 @@
 </style>
 
 <main>
-  <nav class="nav-back"><a href="/" class="button button--blue">Back</a></nav>
+  <nav class="nav-back">
+    <a href={PAGE_URLS.home} class="button button--blue">Back</a>
+  </nav>
   <article class="help-page">
     <header>
       <h1 class="header">What Do I Upload?</h1>
