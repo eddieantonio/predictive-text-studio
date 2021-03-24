@@ -142,5 +142,4 @@ describe("Upload from the the landing page", () => {
       .should("not.have.class", "quick-start__submit-button--disabled")
       .click();
   });
-
 });
