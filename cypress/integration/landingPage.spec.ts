@@ -107,39 +107,39 @@ describe("Upload from the the landing page", () => {
   });
 
   // TODO: Removed due to bug #280. Should be re-introduced once bug #280 is resolved
-  // it("should set the BCP-47 tag to 'und' if only a file is uploaded", function () {
-  //   const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
+  it("should set the BCP-47 tag to 'und' if only a file is uploaded", function () {
+    const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
-  //   cy.data("landing-page-continue-button").should(
-  //     "have.class",
-  //     "quick-start__submit-button--disabled"
-  //   );
+    cy.data("landing-page-continue-button").should(
+      "have.class",
+      "quick-start__submit-button--disabled"
+    );
 
-  //   cy.data("quick-start")
-  //     .as("quick-start")
-  //     .scrollIntoView()
-  //     .contains("Browse file");
+    cy.data("quick-start")
+      .as("quick-start")
+      .scrollIntoView()
+      .contains("Browse file");
 
-  //   cy.readFile(downloadedFilePath).should("not.exist");
+    cy.readFile(downloadedFilePath).should("not.exist");
 
-  //   const filename = "sencoten-top-10.xlsx";
-  //   cy.fixture(filename, "base64").then((fixture) => {
-  //     const testFile = new File(
-  //       [Cypress.Blob.base64StringToBlob(fixture)],
-  //       filename
-  //     );
-  //     const event = { dataTransfer: { files: [testFile] } };
+    const filename = "sencoten-top-10.xlsx";
+    cy.fixture(filename, "base64").then((fixture) => {
+      const testFile = new File(
+        [Cypress.Blob.base64StringToBlob(fixture)],
+        filename
+      );
+      const event = { dataTransfer: { files: [testFile] } };
 
-  //     cy.get("@quick-start")
-  //       .data("upload-dropzone")
-  //       .trigger("dragenter", event);
-  //     cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
-  //   });
+      cy.get("@quick-start")
+        .data("upload-dropzone")
+        .trigger("dragenter", event);
+      cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
+    });
 
-  //   cy.data("autocomplete-subtext").contains("und");
+    cy.data("autocomplete-subtext").contains("und");
 
-  //   cy.data("landing-page-continue-button")
-  //     .should("not.have.class", "quick-start__submit-button--disabled")
-  //     .click();
-  // });
+    cy.data("landing-page-continue-button")
+      .should("not.have.class", "quick-start__submit-button--disabled")
+      .click();
+  });
 });
