@@ -23,6 +23,9 @@ test("it should set project data and update to the database", async (t) => {
   });
   await worker.setProjectData({ authorName });
 
+  const doesExist = await worker.doesProjectExist();
+  t.is(doesExist, true);
+
   const data = await worker.fetchAllCurrentProjectMetadata();
 
   t.is(data.language, languageName);

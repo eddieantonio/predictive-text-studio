@@ -17,11 +17,13 @@
   let isProjectInProgress: boolean = false;
 
   onMount(async () => {
-    selectedLanguage = await worker.fetchAllCurrentProjectMetadata();
-    isProjectInProgress = selectedLanguage !== undefined;
-    // TODO: Boolean($currentDownloadURL) will always be false here
-    // Ideally we want to see if $currentDownloadURL is available here when
-    // determining if the project is complete
+    if(await worker.doesProjectExist()){
+      selectedLanguage = await worker.fetchAllCurrentProjectMetadata();
+      isProjectInProgress = selectedLanguage !== undefined;
+      // TODO: Boolean($currentDownloadURL) will always be false here
+      // Ideally we want to see if $currentDownloadURL is available here when
+      // determining if the project is complete
+    }
   });
 
   $: continueReady =

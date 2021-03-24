@@ -93,6 +93,11 @@ export interface PredictiveTextStudioWorker {
    */
   fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata>;
 
+  /**
+   * Returns whether or not a project currently exists
+   */
+  doesProjectExist(): Promise<boolean>;
+
   ///////////////////////////////// Caches /////////////////////////////////
 
   /**

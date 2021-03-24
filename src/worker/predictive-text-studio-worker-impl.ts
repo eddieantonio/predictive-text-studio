@@ -178,6 +178,10 @@ export class PredictiveTextStudioWorkerImpl
     return result;
   }
 
+  async doesProjectExist(): Promise<boolean> {
+    return this.storage.doesProjectExist();
+  }
+
   private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
     return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }

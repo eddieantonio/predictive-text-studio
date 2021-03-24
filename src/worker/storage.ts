@@ -1,4 +1,5 @@
 import Dexie, { DexieOptions } from "dexie";
+import { datacatalog } from "googleapis/build/src/apis/datacatalog";
 import {
   StoredWordList,
   StoredProjectData,
@@ -172,6 +173,17 @@ export default class Storage {
       );
       await this.db.projectData.put(updatedMetadata);
     });
+  }
+
+  /**
+   * Checks if a project currently exists
+   */
+  async doesProjectExist(): Promise<boolean> {
+    const projectData = await this.db.projectData
+      .where(":id")
+      .equals(PACKAGE_ID)
+      .first();
+    return projectData !== undefined;
   }
 
   /**

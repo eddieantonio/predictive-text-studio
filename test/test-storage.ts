@@ -245,6 +245,28 @@ test("retrieve project data from the database", async (t) => {
   t.is(version, "1.0.0");
 });
 
+test("retrieve if project exists in database", async (t) => {
+  const { storage } = t.context;
+
+  let doesProjectExist: boolean;
+
+  doesProjectExist = await storage.doesProjectExist();
+  t.is(doesProjectExist, false);
+
+  const storedProjectData = {
+    language: "English",
+    bcp47Tag: "en",
+    authorName: "example",
+    modelID: "unknownAuthor.en.example",
+    copyright: "©",
+    version: "1.0.0",
+  };
+  await storage.updateProjectData(storedProjectData);
+
+  doesProjectExist = await storage.doesProjectExist();
+  t.is(doesProjectExist, true);
+});
+
 test("update project data multiple times ", async (t) => {
   const { storage } = t.context;
 
