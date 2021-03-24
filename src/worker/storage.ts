@@ -1,5 +1,4 @@
 import Dexie, { DexieOptions } from "dexie";
-import { datacatalog } from "googleapis/build/src/apis/datacatalog";
 import {
   StoredWordList,
   StoredProjectData,
