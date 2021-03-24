@@ -56,7 +56,7 @@
    * Handles the click when the download language button is pressed. downloads a .kmp file.
    * @return {void}
    */
-  const handleDownload = async () => {
+  const handleDownload = async (): Promise<void> => {
     let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
 
     if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
@@ -201,7 +201,7 @@
         {:else if selectedButton === 'sources'}
           <LanguageSources
             bind:sources={languageInformation.sources}
-            getLanguageSources={getLanguageSources}
+            {getLanguageSources}
           />
         {/if}
       </div>
