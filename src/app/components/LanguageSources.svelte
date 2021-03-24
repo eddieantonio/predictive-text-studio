@@ -10,7 +10,7 @@
    */
   export let getLanguageSources: Function;
 
-  let sourceBeingEdited: WordListSource | null = null;
+  let selected: WordListSource | null = null;
 
   /**
    * Handles the click when the edit button is pressed.
@@ -19,7 +19,7 @@
    * @return {void}
    */
   function handleEdit(sourceToEdit: WordListSource): void {
-    sourceBeingEdited = sourceToEdit;
+    selected = sourceToEdit;
   }
 
   /**
@@ -38,27 +38,38 @@
     tsv: "TSV",
     xlsx: ".xlsx",
   };
+
+  export const closeTable = () => {
+    selected = null;
+  };
 </script>
 
 <style>
   th {
     text-align: left;
-    background-color: var(--lite-white);
-    padding: 20px 0px 20px 20px;
+    background-color: var(--gray-light);
+    padding: 20px;
   }
 
   table {
     border-collapse: collapse;
     margin-bottom: 100px;
     box-shadow: 0px 25px 40px 0px rgba(0, 0, 0, 0.1);
+    text-align: center;
   }
 
   tr {
     border-bottom: 1pt solid var(--lite-white);
   }
 
+  tr.selected,
+  tr:hover,
+  tr:active {
+    background: var(--lite-white);
+  }
+
   td {
-    padding: 10px 0px 10px 20px;
+    padding: 10px;
     color: var(--gray-dark);
   }
 
@@ -69,11 +80,16 @@
     border-top-right-radius: 10px;
     padding: 20px;
   }
+
   tr:last-of-type td:first-of-type {
     border-bottom-left-radius: 10px;
   }
   tr:last-of-type td:last-of-type {
     border-bottom-right-radius: 10px;
+  }
+
+  td:first-of-type {
+    text-align: left;
   }
 
   .actions__action:not(:first-of-type) {
@@ -113,7 +129,7 @@
       </thead>
 
       {#each sources as source}
-        <tr>
+        <tr class:selected={source.id === selected?.id}>
           <td>{source.name}</td>
           <td>{source.size}</td>
           <td>{englishNameOf[source.type]}</td>
@@ -134,11 +150,8 @@
         </tr>
       {/each}
     </table>
-    {#if sourceBeingEdited !== null}
-      <ManualEntry
-        tableData={sourceBeingEdited}
-        {getLanguageSources}
-        isEditingSource={true} />
+    {#if selected !== null}
+      <ManualEntry tableData={selected} {getLanguageSources} {closeTable} />
     {/if}
   </div>
   <details data-cy="language-sources-add-sources">

@@ -42,7 +42,7 @@
   ];
   // Manual Entry
   let manualEntry: boolean = false;
-  let initialWordlist: WordList = [["", 0]];
+  let initialWordlist: WordList = [];
   let tableData: WordListSource = {
     name: "",
     wordlist: initialWordlist,
@@ -66,7 +66,10 @@
 </div>
 
 {#if manualEntry}
-  <ManualEntry {getLanguageSources} {tableData} />
+  <ManualEntry
+    {getLanguageSources}
+    {tableData}
+    closeTable={uploadSourcesFromFile} />
 {:else}
   <Upload {getLanguageSources} />
 {/if}
