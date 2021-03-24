@@ -17,7 +17,7 @@
   let isProjectInProgress: boolean = false;
 
   onMount(async () => {
-    if(await worker.doesProjectExist()){
+    if (await worker.doesProjectExist()) {
       selectedLanguage = await worker.fetchAllCurrentProjectMetadata();
       isProjectInProgress = selectedLanguage !== undefined;
       // TODO: Boolean($currentDownloadURL) will always be false here
