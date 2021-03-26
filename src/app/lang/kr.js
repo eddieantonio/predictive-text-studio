@@ -55,59 +55,59 @@ export default {
           "이 개인 정보 보호 정책에는 다음에 대한 중요한 정보가 포함되어 있으므로주의 깊게 읽으시기 바랍니다.",
         ],
         policies: [
-          "What information we may collect about you;",
-          "How we will use the information we collect about you;",
-          "Whether we will disclose your details to anyone else; and",
-          "Your choices and rights regarding the personal information you have provided to us.",
+          "귀하에 대해 수집 할 수있는 정보;",
+          "귀하에 대해 수집 한 정보를 사용하는 방법;",
+          "귀하의 세부 정보를 다른 사람에게 공개할지 여부; 그리고",
+          "귀하가 당사에 제공 한 개인 정보에 대한 귀하의 선택 및 권리.",
         ],
         foot: [
-          "The Services may contain links to services owned and operated by third parties. We may also use some third-parties software or products to provide you with the Service properly. If we do so and provide third-parties of any personal data you can be sure the transfer is legal and secured. These third-party services may have their own privacy policies and we recommend that you review them. They will govern the use of personal information that you submit or which is collected by cookies and other tracking technologies whilst using these services. We do not accept any responsibility or liability for the privacy practices of such third party services and your use of these is at your own risk.",
-          "We may make changes to this Privacy Policy in the future. You should check this page from time to time to ensure you are aware of any changes. Where appropriate we may notify you of such changes.",
+          "서비스에는 제 3자가 소유하고 운영하는 서비스에 대한 링크가 포함될 수 있습니다. 또한 귀하에게 서비스를 적절하게 제공하기 위해 일부 제 3 자 소프트웨어 또는 제품을 사용할 수 있습니다. 그렇게하고 개인 데이터의 제 3 자에게 제공하는 경우 전송이 합법적이고 안전하다는 것을 확신 할 수 있습니다. 이러한 제 3 자 서비스에는 자체 개인 정보 보호 정책이있을 수 있으며 검토 할 것을 권장합니다. 이러한 서비스를 사용하는 동안 귀하가 제출하거나 쿠키 및 기타 추적 기술에 의해 수집되는 개인 정보의 사용에 적용됩니다. 당사는 그러한 제 3 자 서비스의 개인 정보 보호 관행에 대해 어떠한 책임도지지 않으며 이러한 서비스의 사용은 귀하의 책임입니다.",
+          "당사는 향후이 개인 정보 보호 정책을 변경할 수 있습니다. 변경 사항을 알고 있는지 확인하기 위해이 페이지를 수시로 확인해야합니다. 적절한 경우 당사는 그러한 변경 사항을 귀하에게 통지 할 수 있습니다.",
         ],
       },
       information: {
-        title: "Information we may collect about you",
+        title: "귀하에 대해 수집 할 수있는 정보",
         main:
-          "We do not collect or store any of the data you supply to us while using the Service or website. All data is stored locally on your browser.",
+          "당사는 서비스 또는 웹 사이트를 사용하는 동안 귀하가 당사에 제공 한 데이터를 수집하거나 저장하지 않습니다. 모든 데이터는 브라우저에 로컬로 저장됩니다.",
       },
       personal_data: {
-        title: "Collecting, processing and using personal data",
-        main: "We do not store or process any personal data.",
+        title: "개인 데이터 수집, 처리 및 사용",
+        main: "우리는 개인 데이터를 저장하거나 처리하지 않습니다.",
       },
       purpose_of_processing: {
-        title: "Why we collect information about you - purpose of processing",
+        title: "귀하에 대한 정보를 수집하는 이유-처리 목적",
         main:
-          "We will use information you provide for delivering our Services to you under the terms of use agreed between us. The processing of information in this way is necessary for us to provide you the Service properly and to ensure the features function properly so that you have the best Service possible.",
+          "당사는 당사간에 합의 된 사용 약관에 따라 귀하에게 서비스를 제공하기 위해 귀하가 제공 한 정보를 사용합니다. 이러한 방식으로 정보를 처리하는 것은 당사가 귀하에게 서비스를 적절하게 제공하고 귀하가 가능한 최상의 서비스를받을 수 있도록 기능이 올바르게 작동하는지 확인하는 데 필요합니다.",
       },
       cookies: {
-        title: "Cookies and Web Beacons",
-        main: "We do not use cookies or web beacons.",
+        title: "쿠키 및 웹 비콘",
+        main: "우리는 쿠키 나 웹 비콘을 사용하지 않습니다.",
       },
       log_files: {
-        title: "Log files",
-        main: "Log files do not contain any personal data.",
+        title: "로그 파일",
+        main: "로그 파일에는 개인 데이터가 포함되어 있지 않습니다.",
       },
       children: {
-        title: "Children personal data",
+        title: "아동 개인 데이터",
         main:
-          "We do not collect personal information from anyone including those under the age of 18. We encourage parents and legal guardians to monitor their children’s Internet usage and to help enforce this Policy by instructing their children never to provide personal information through the websites or Services.",
+          "당사는 18 세 미만을 포함하여 누구로부터도 개인 정보를 수집하지 않습니다. 부모 및 법적 보호자는 자녀의 인터넷 사용을 모니터링하고 자녀에게 웹 사이트 또는 서비스를 통해 개인 정보를 제공하지 않도록 지시하여 본 정책을 시행하도록 권장합니다.",
       },
       data_transmission: {
-        title: "Data transmission",
-        main: "We do not transmit you data.",
+        title: "데이터 전송",
+        main: "우리는 귀하의 데이터를 전송하지 않습니다.",
       },
       your_rights: {
-        title: "Your rights",
+        title: "귀하의 권리",
         main:
-          "You have the following rights over the way your personal data are processed.",
-        request: "To make a request, please let us know by sending an email to",
+          "귀하는 귀하의 개인 데이터가 처리되는 방식에 대해 다음과 같은 권리가 있습니다.",
+        request: "요청을 하려면 다음 주소로 이메일을 보내주십시오.",
         rights: [
-          "You have the right to request a copy of the personal information we process about you and to have any inaccuracies corrected.",
-          "You can ask for supplying, correcting or deleting personal information held about you.",
-          "You can ask us to restrict, stop processing, or to delete your personal data.",
-          "You can withdraw your consent for data processing.",
-          "Obtain a copy of your personal data, which you can use with another service provider.",
-          "Make a complaint to a Supervisory Authority.",
+          "귀하는 당사가 귀하에 대해 처리하는 개인 정보의 사본을 요청하고 정확하지 않은 정보를 수정할 권리가 있습니다.",
+          "귀하는 귀하에 대해 보유한 개인 정보의 제공, 정정 또는 삭제를 요청할 수 있습니다.",
+          "귀하는 당사에 귀하의 개인 데이터를 제한, 처리 중지 또는 삭제하도록 요청할 수 있습니다.",
+          "데이터 처리에 대한 동의를 철회 할 수 있습니다.",
+          "다른 서비스 제공 업체에서 사용할 수있는 개인 데이터 사본을 확보하십시오.",
+          "감독 기관에 불만을 제기하십시오.",
         ],
       },
       changes_to_policy: {
