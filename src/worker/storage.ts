@@ -105,10 +105,13 @@ export class PredictiveTextStudioDexie extends Dexie {
           "++id, language, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
       })
       .upgrade((transaction) => {
-        return transaction.table("projectData").toCollection().modify((project) => {
-          project.language = project.langName;
-          delete project.langName;
-        });
+        return transaction
+          .table("projectData")
+          .toCollection()
+          .modify((project) => {
+            project.language = project.langName;
+            delete project.langName;
+          });
       });
 
     /* The assignments are not required by the runtime, however, they are
