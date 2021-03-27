@@ -59,7 +59,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        */
       projectData:
-        "++id, language, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
+        "++id, langName, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
       /**
        * KMP keyboardData Table Scehma
        * +------------------+
@@ -67,7 +67,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        * | bcp47Tag         |
        * +------------------+
-       * | language         |
+       * | langName         |
        * +------------------+
        * | timestamp        |
        * +------------------+
@@ -84,7 +84,7 @@ export class PredictiveTextStudioDexie extends Dexie {
       KMPFileData: "++id, package",
     });
 
-    /* Version 5: Add "size"  property to file table: */
+    /* Version 5: Add "size" property to file table: */
     this.version(5)
       .stores({
         files: "++id, name, wordlist, size",
@@ -96,6 +96,19 @@ export class PredictiveTextStudioDexie extends Dexie {
           .modify((file: StoredWordList) => {
             file.size = file.wordlist.length;
           });
+      });
+
+    /* Version 6: Conver the `langName` property to `language` in the project table */
+    this.version(6)
+      .stores({
+        projectData:
+          "++id, language, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
+      })
+      .upgrade((transaction) => {
+        return transaction.table("projectData").toCollection().modify((project) => {
+          project.language = project.langName;
+          delete project.langName;
+        });
       });
 
     /* The assignments are not required by the runtime, however, they are
