@@ -43,7 +43,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        * | id (primary key) |
        * +------------------+
-       * | language         |
+       * | langName         |
        * +------------------+
        * | bcp47Tag         |
        * +------------------+
@@ -67,7 +67,7 @@ export class PredictiveTextStudioDexie extends Dexie {
        * +------------------+
        * | bcp47Tag         |
        * +------------------+
-       * | langName         |
+       * | language         |
        * +------------------+
        * | timestamp        |
        * +------------------+
