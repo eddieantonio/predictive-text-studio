@@ -1,5 +1,5 @@
 <script>
-  import { init, dictionary, getLocaleFromNavigator } from "svelte-i18n";
+  import { init, dictionary } from "svelte-i18n";
   import { Router, Route } from "svelte-routing";
   import LandingPage from "./pages/LandingPage.svelte";
   import Languages from "./pages/Languages.svelte";
@@ -8,12 +8,14 @@
   import Help from "./pages/Help.svelte";
 
   import en from "./lang/en";
-  import kr from "./lang/kr";
+  import ko from "./lang/ko";
 
-  dictionary.set({ en, kr });
+  const [initialLocale] = window.navigator.languages;
+
+  dictionary.set({ en, ko });
   init({
-    fallbackLocale: "kr",
-    initialLocale: getLocaleFromNavigator(),
+    fallbackLocale: "en",
+    initialLocale,
   });
 
   // Used for SSR. A falsy value is ignored by the Router.
