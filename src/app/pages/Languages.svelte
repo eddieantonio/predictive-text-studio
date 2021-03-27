@@ -94,9 +94,9 @@
   };
 
   /**
-   * Programmatically triggering a file upload
+   * Programmatically triggering a file upload and importing project
    */
-  const createInput = (): void => {
+  const handleImport = (): void => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", ".json");
@@ -255,7 +255,7 @@
         {/if}
       </div>
       <div class="languages__container--footer">
-        <Button onClick={createInput}>Import Project Data</Button>
+        <Button onClick={handleImport}>Import Project Data</Button>
         <Button onClick={handleExport}>Export Project Data</Button>
       </div>
     </div>
