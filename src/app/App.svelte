@@ -7,12 +7,11 @@
   import Team from "./pages/Team.svelte";
   import Help from "./pages/Help.svelte";
 
-  import en from "./lang/en";
-  import ko from "./lang/ko";
+  import { locales } from "./lang";
 
   const [initialLocale] = window.navigator.languages;
 
-  dictionary.set({ en, ko });
+  dictionary.set(locales);
   init({
     fallbackLocale: "en",
     initialLocale,

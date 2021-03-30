@@ -1,6 +1,8 @@
+import type Localization from "./localization";
+
 export default {
   common: {
-    name: "Predictive Text Studio",
+    app_name: "Predictive Text Studio",
     back: "뒤로가기",
     help: "도움말",
     excel: "엑셀",
@@ -41,7 +43,8 @@ export default {
     keyboard_preview_alt: "iOS 영문 키보드",
     add_source: "소스 추가",
     add_row: "행 추가",
-    drag_and_drop: "Excel .xlsx 또는 TSV 파일을 여기로 드래그해서 업로드 하세요!",
+    drag_and_drop:
+      "Excel .xlsx 또는 TSV 파일을 여기로 드래그해서 업로드 하세요!",
     browse_file: "파일 찾아보기",
     advanced_options: "고급 옵션",
     only_works_with: "* .xlsx 파일 및 Google 스프레드 시트에서만 작동합니다",
@@ -174,4 +177,4 @@ export default {
       team_members: "개발팀",
     },
   },
-};
+} as Localization;
