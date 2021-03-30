@@ -65,6 +65,7 @@ export default {
     },
     main: {
       title: "Welcome to Predictive Text Studio",
+      designed_for: "Designed for",
       add: "Add",
       prediction: "prediction",
       and: "and",
