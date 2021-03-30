@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
@@ -176,7 +177,7 @@
 
 <form class="language__sources-manual-entry" on:submit|preventDefault>
   <div class="language__sources-manual-entry-tablename">
-    <h4>Table Name</h4>
+    <h4>{$_('common.table_name')}</h4>
     <input
       type="text"
       bind:value={tableData.name}
@@ -186,9 +187,9 @@
 
   <table id="manual-entry-table">
     <thead>
-      <th>Word</th>
-      <th>Count</th>
-      <th>Action</th>
+      <th>{$_('common.word')}</th>
+      <th>{$_('common.count')}</th>
+      <th>{$_('common.actions')}</th>
     </thead>
     {#each wordlist as row, i (i)}
       <tr>
@@ -204,7 +205,7 @@
           <input
             type="number"
             min="0"
-            placeholder="Optional"
+            placeholder={$_('common.optional')}
             on:input={handleInput(i, WordAndCountInd.COUNT)}
             value={row[WordAndCountInd.COUNT]}
             data-cy="manual-entry-input-count" />
@@ -224,7 +225,7 @@
         <button
           class="btn--inline"
           on:click={addRow}
-          data-cy="manual-entry-add-row">Add Row</button>
+          data-cy="manual-entry-add-row">{$_('input.add_row')}</button>
       </td>
     </tr>
   </table>
@@ -237,7 +238,7 @@
       size="large"
       onClick={saveTableData}
       dataCy="add-sources-save-btn">
-      Save
+      {$_('common.save')}
     </Button>
     <Button
       type="submit"
@@ -246,7 +247,7 @@
       size="large"
       onClick={() => closeTable()}
       dataCy="add-sources-close-btn">
-      Close
+      {$_('common.close')}
     </Button>
   </div>
 </form>

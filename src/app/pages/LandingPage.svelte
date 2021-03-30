@@ -295,7 +295,7 @@
 </style>
 
 <svelte:head>
-  <title>Welcome to Predictive Text Studio</title>
+  <title>{$_('page.main.title')}</title>
   <meta
     name="description"
     content="Add prediction and autocorrect to your language" />
@@ -382,7 +382,7 @@
       <div class="quick-start__submit-wrapper"
            class:quick-start__submit-wrapper--disabled={!continueReady}>
         <DownloadKMP downloadURL={$currentDownloadURL} />
-        <p> or </p>
+        <p>{$_('common.or')}</p>
         <button
           class="button button--primary button--shadow quick-start__submit-button"
           class:quick-start__submit-button--disabled={!continueReady}

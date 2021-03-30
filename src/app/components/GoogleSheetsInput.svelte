@@ -1,4 +1,5 @@
 <script>
+  import { _ } from "svelte-i18n";
   import { mapDecToColLetters } from "../logic/upload-advanced-settings";
 
   import worker from "../spawn-worker";
@@ -48,7 +49,7 @@
         readGoogleSheet(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
       .catch((e) => {
-        error = `Error: Could not connect to Google Sheets: ${e}`;
+        error = `${$_("common.error")}: ${$_("input.connection_error")}: ${e}`;
       });
   }
 
@@ -79,7 +80,7 @@
       };
       worker.readGoogleSheet(spreadsheetId, values, settings);
     } catch (err) {
-      error = "Error: " + err.message;
+      error = `${$_("common.error")}: ` + err.message;
       return;
     }
   }
@@ -95,7 +96,9 @@
     if (googleSheetRegExp.test(googleSheetsURL)) {
       return googleSheetsURL.split("/")[5];
     } else {
-      error = `Error: The url ${googleSheetsURL} is not a valid Google Sheets URl. Please paste a valid one.`;
+      error = `${$_("common.error")}: ${googleSheetsURL} ${$_(
+        "input.invalid_google_sheets_url"
+      )}`;
     }
   }
 </script>
@@ -126,12 +129,12 @@
     <p class:error>{error}</p>
   {/if}
   <InputField
-    label="Google Sheets URL"
+    label={`${$_('common.google_sheets')} URL`}
     id="googleSheetsURL"
     bind:inputValue={googleSheetsURL}
     fullWidth={true} />
   <button
     class="button button--primary button--shadow quick-start__submit"
     type="button"
-    on:click={handleClientLoad}>Read Values</button>
+    on:click={handleClientLoad}>{$_('input.read_values')}</button>
 </div>

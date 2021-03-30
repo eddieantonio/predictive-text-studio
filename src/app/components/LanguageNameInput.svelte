@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
   import AutoComplete from "simple-svelte-autocomplete";
 
@@ -76,7 +77,6 @@
     bind:selectedItem={selectedLanguage}
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
-    BCP47Tag:
-    {selectedLanguage?.bcp47Tag ?? ''}
+    {`${$_('common.bcp47_tag')}: ${selectedLanguage?.bcp47Tag ?? ''}`}
   </p>
 </div>
