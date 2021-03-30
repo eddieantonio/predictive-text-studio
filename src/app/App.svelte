@@ -4,7 +4,7 @@
   import Privacy from "./pages/Privacy.svelte";
   import Team from "./pages/Team.svelte";
   import Help from "./pages/Help.svelte";
-import Customize from "./pages/Customize.svelte";
+  import Customize from "./pages/Customize.svelte";
 
   // Used for SSR. A falsy value is ignored by the Router.
   export let url = "";
