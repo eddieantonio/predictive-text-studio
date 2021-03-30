@@ -389,7 +389,7 @@
         id="project-exists-info"
         class="card card__info card__existing-project"
         data-cy="existing-project-card">
-        <form action={PAGE_URLS.languages}>
+        <form action={PAGE_URLS.customize}>
           <h3>You already have a project started!</h3>
           <p>Would you like to continue?</p>
           <button
@@ -402,7 +402,7 @@
         </form>
       </div>
     {/if}
-    <form action={PAGE_URLS.languages} data-cy="quick-start">
+    <form action={PAGE_URLS.customize} data-cy="quick-start">
       <fieldset class="quick-start__step">
         <LanguageNameInput
           bind:selectedLanguage
