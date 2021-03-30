@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import InputField from "./InputField.svelte";
   import * as bcp47 from "bcp-47";
   import worker from "../spawn-worker";
@@ -22,7 +23,7 @@
         status: false,
       });
     } else {
-      errorMessage = "Invalid BCP 47 Tag";
+      errorMessage = $_("input.invalid_bcp47_tag");
       dispatch("langauge", {
         status: false,
       });
@@ -35,6 +36,6 @@
   id="tag-input"
   size="large"
   cyData="tag-input"
-  label="Step 1: Enter your languages"
+  label={$_('page.main.step_one')}
   error={errorMessage}
-  placeholder={'Enter the BCP 47 Tag'} />
+  placeholder={$_('input.enter_bcp47_tag')} />

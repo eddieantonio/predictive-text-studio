@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
 
   import InputField from "./InputField.svelte";
@@ -93,26 +94,26 @@
 <div class="language__info">
   <div class="language__info-left">
     <LanguageNameInput
-      label="Language"
+      label={$_('input.language')}
       cyData="input-language-name"
       bind:selectedLanguage={languageInfo} />
     <InputField
-      label="Author or Organization"
-      subtext="Shortcode"
+      label={$_('input.author_or_organization')}
+      subtext={$_('input.shortcode')}
       id="authorName"
       cyData="input-author-name"
       bind:inputValue={authorName}
       on:message={onBlurListener} />
     <InputField
-      label="Dictionary Name"
-      subtext="Model ID"
+      label={$_('input.dictionary_name')}
+      subtext={$_('input.model_id')}
       id="dictionaryName"
       cyData="input-dictionary-name"
       bind:inputValue={dictionaryName}
       on:message={onBlurListener} />
     <InputField
       on:message={onBlurListener}
-      label="Copyright"
+      label={$_('input.copyright')}
       id="copyright"
       bind:inputValue={copyright}
       cyData="input-copyright"
@@ -120,7 +121,9 @@
   </div>
 
   <div class="language__info-right">
-    <p class="label">Keyboard Preview</p>
-    <img src="assets/iOS-10-Keyboard.jpg" alt="An iOS keyboard in english" />
+    <p class="label">{$_('input.keyboard_preview')}</p>
+    <img
+      src="assets/iOS-10-Keyboard.jpg"
+      alt={$_('input.keyboard_preview_alt')} />
   </div>
 </div>

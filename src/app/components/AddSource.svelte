@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
@@ -22,7 +23,7 @@
     {
       color: "blue",
       size: "medium",
-      text: "Upload",
+      text: $_("common.upload"),
       isOutlined: false,
       hasDropShadow: false,
       dataCy: "add-sources-splitbtn-upload",
@@ -32,7 +33,7 @@
     {
       color: "grey",
       size: "medium",
-      text: "Direct entry",
+      text: $_("common.direct_entry"),
       isOutlined: false,
       hasDropShadow: false,
       dataCy: "add-sources-splitbtn-direct-entry",
@@ -42,7 +43,7 @@
   ];
   // Manual Entry
   let manualEntry: boolean = false;
-  let initialWordlist: WordList = [["", 0]];
+  let initialWordlist: WordList = [];
   let tableData: WordListSource = {
     name: "",
     wordlist: initialWordlist,
@@ -66,7 +67,10 @@
 </div>
 
 {#if manualEntry}
-  <ManualEntry {getLanguageSources} {tableData} />
+  <ManualEntry
+    {getLanguageSources}
+    {tableData}
+    closeTable={uploadSourcesFromFile} />
 {:else}
   <Upload {getLanguageSources} />
 {/if}

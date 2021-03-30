@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import {
     addAllFilesToCurrentProject,
     filesFromDragEvent,
@@ -25,6 +26,8 @@
 
   /**
    * Re-calculate word count
+   *
+   * Note: A default behavior set to "no action" since no re-calculation is required on landing page.
    */
   export let getLanguageSources: Function = () => {};
 
@@ -132,9 +135,11 @@
         alt="file uploaded successfully" />
     </div>
   {/each}
-  <span>Drag and drop an Excel .xlsx or TSV file here!</span>
-  <span>or</span>
-  <label for={UPLOAD_INPUT_ID} class="upload-btn">Browse file</label>
+  <span>{$_('input.drag_and_drop')}</span>
+  <span>{$_('common.or')}</span>
+  <label
+    for={UPLOAD_INPUT_ID}
+    class="upload-btn">{$_('input.browse_file')}</label>
   <input
     id={UPLOAD_INPUT_ID}
     type="file"

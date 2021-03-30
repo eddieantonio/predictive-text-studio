@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
   import type { WordListSource } from "@common/types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
@@ -56,7 +57,7 @@
    * Handles the click when the download language button is pressed. downloads a .kmp file.
    * @return {void}
    */
-  const handleDownload = async () => {
+  const handleDownload = async (): Promise<void> => {
     let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
 
     if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
@@ -161,16 +162,16 @@
     <div class="languages__container">
       <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
-          Go back to main page
+          {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
       <header class="languages__container--header">
         <div>
-          <h1>Predictive Text Studio</h1>
+          <h1>{$_('common.name')}</h1>
           <p>designed for
-          <img
-          src="/assets/keyman-logo.svg"
-          alt="Keyman" />
+            <img
+            src="/assets/keyman-logo.svg"
+            alt="Keyman" />
           </p>
         </div>
       </header>
@@ -180,20 +181,20 @@
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
           dataCy="languages-information-btn"
-        >Information</Button>
+        >{$_('page.lang.information')}</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           onClick={()=> handleClick('sources')}
           dataCy="languages-sources-btn"
-        >Sources</Button>
+        >{$_('page.lang.sources')}</Button>
         <Button
           color="blue"
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
           dataCy="languages-download-btn"
           enabled={downloadReady}
-        >Download</Button>
+        >{$_('page.lang.download')}</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
@@ -201,7 +202,7 @@
         {:else if selectedButton === 'sources'}
           <LanguageSources
             bind:sources={languageInformation.sources}
-            getLanguageSources={getLanguageSources}
+            {getLanguageSources}
           />
         {/if}
       </div>
