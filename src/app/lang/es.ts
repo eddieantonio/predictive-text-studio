@@ -82,22 +82,22 @@ export default {
       autocorrect: "autocorrección",
       to_your_language: "para tu idioma",
       get_started: "Empezamos",
-      step_one: "Primero: Escóge tu idioma",
-      step_two: "Segudo: Agrega una lista de palabras",
+      step_one: "Primero: elige tu idioma",
+      step_two: "Segundo: Agrega una lista de palabras",
       customize: "Configurar",
       privacy_policy: "Política de privacidad",
       about_the_team: "Sobre el equipo",
     },
     lang: {
-      go_back_to_main_page: "A la página principal",
+      go_back_to_main_page: "Regresa a la página principal",
       information: "Información",
-      sources: "Fuentes",
+      sources: "Fuentes de diccionario",
       download: "Descarga",
     },
     privacy: {
       title: "Predictive Text Studio Privacy Policy",
-      effective_as_of: "Effective as of",
-      date: "December 8, 2020",
+      effective_as_of: "Desde",
+      date: "el 8 de Diciembre 8 de 2020",
       introduction: {
         title: "Introduction",
         head: {
