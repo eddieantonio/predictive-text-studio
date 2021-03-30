@@ -3,6 +3,7 @@
 
   import InputField from "./InputField.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
+  import Button from "./Button.svelte";
   import worker from "../spawn-worker";
 
   import type { KeyboardMetadata } from "@common/types";
@@ -47,6 +48,10 @@
     let { key, value } = event.detail;
     updateMetadata(key, value);
   }
+
+  function addCopyrightSymbol() {
+    copyright += "©";
+  }
 </script>
 
 <style>
@@ -76,6 +81,14 @@
     height: 200px;
   }
 
+  .copyright-field {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 26px;
+    margin-left: 30px;
+    min-width: 100px;
+  }
+
   @media (max-width: 768px) {
     .language__info {
       display: block;
@@ -86,6 +99,9 @@
     img {
       width: 100%;
       height: auto;
+    }
+    .copyright-field {
+      margin-left: 0;
     }
   }
 </style>
@@ -118,7 +134,15 @@
       cyData="input-copyright"
       subtext="" />
   </div>
-
+  <div class="copyright-field">
+    <Button
+      size="small"
+      color="blue"
+      isOutlined={true}
+      onClick={addCopyrightSymbol}>
+      add ©
+    </Button>
+  </div>
   <div class="language__info-right">
     <p class="label">Keyboard Preview</p>
     <img src="assets/iOS-10-Keyboard.jpg" alt="An iOS keyboard in english" />
