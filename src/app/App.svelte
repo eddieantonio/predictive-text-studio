@@ -7,14 +7,12 @@
   import Team from "./pages/Team.svelte";
   import Help from "./pages/Help.svelte";
 
-  import { locales } from "./lang";
-
-  const [initialLocale] = window.navigator.languages;
+  import { locales, determinePreferredLocale, FALLBACK_LOCALE } from "./lang";
 
   dictionary.set(locales);
   init({
-    fallbackLocale: "en",
-    initialLocale,
+    fallbackLocale: FALLBACK_LOCALE, // hint: it's English
+    initialLocale: determinePreferredLocale(),
   });
 
   // Used for SSR. A falsy value is ignored by the Router.
