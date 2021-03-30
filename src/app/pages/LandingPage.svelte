@@ -404,7 +404,10 @@
     {/if}
     <form action={PAGE_URLS.languages} data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <LanguageNameInput bind:selectedLanguage={selectedLanguage} label={$_('page.main.step_one')} bold={false} />
+        <LanguageNameInput
+          bind:selectedLanguage
+          label={$_('page.main.step_one')}
+          bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
