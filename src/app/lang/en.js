@@ -47,23 +47,23 @@ export default {
       date: "December 8, 2020",
       introduction: {
         title: "Introduction",
-        head: [
-          "This Privacy Policy (“Privacy Policy”) applies to the use of the website and products provided by Predictive Text Studio (hereinafter also referred as “we” or “us”).",
-          "This Privacy Policy applies and has effect in respect of all services and other products, software, made available by us, as well as any other online features relating to the website and its content (the “Service(s)”).",
-          "If you have any questions or comments about this Privacy Policy, please contact us at",
-          "We are committed to protecting and respecting your privacy. The Privacy Policy explains the basis on which personal information we collect from you will be processed by us or on our behalf. Where we decide the purpose or means for which personal data you supply through these Services is processed, we are the “controller”. Where you decide the purpose or means for which personal data you supply through these Services is processed, you are the “controller”. We will comply with proper and applicable data protection laws, including the General Data Protection Regulation 2016/679.",
-          "We encourage you to read this Privacy Policy carefully as it contains important information about the following",
-        ],
-        policies: [
-          "What information we may collect about you;",
-          "How we will use the information we collect about you;",
-          "Whether we will disclose your details to anyone else; and",
-          "Your choices and rights regarding the personal information you have provided to us.",
-        ],
-        foot: [
-          "The Services may contain links to services owned and operated by third parties. We may also use some third-parties software or products to provide you with the Service properly. If we do so and provide third-parties of any personal data you can be sure the transfer is legal and secured. These third-party services may have their own privacy policies and we recommend that you review them. They will govern the use of personal information that you submit or which is collected by cookies and other tracking technologies whilst using these services. We do not accept any responsibility or liability for the privacy practices of such third party services and your use of these is at your own risk.",
-          "We may make changes to this Privacy Policy in the future. You should check this page from time to time to ensure you are aware of any changes. Where appropriate we may notify you of such changes.",
-        ],
+        head: {
+          0: "This Privacy Policy (“Privacy Policy”) applies to the use of the website and products provided by Predictive Text Studio (hereinafter also referred as “we” or “us”).",
+          1: "This Privacy Policy applies and has effect in respect of all services and other products, software, made available by us, as well as any other online features relating to the website and its content (the “Service(s)”).",
+          2: "If you have any questions or comments about this Privacy Policy, please contact us at",
+          3: "We are committed to protecting and respecting your privacy. The Privacy Policy explains the basis on which personal information we collect from you will be processed by us or on our behalf. Where we decide the purpose or means for which personal data you supply through these Services is processed, we are the “controller”. Where you decide the purpose or means for which personal data you supply through these Services is processed, you are the “controller”. We will comply with proper and applicable data protection laws, including the General Data Protection Regulation 2016/679.",
+          4: "We encourage you to read this Privacy Policy carefully as it contains important information about the following",
+        },
+        policy: {
+          0: "What information we may collect about you;",
+          1: "How we will use the information we collect about you;",
+          2: "Whether we will disclose your details to anyone else; and",
+          3: "Your choices and rights regarding the personal information you have provided to us.",
+        },
+        foot: {
+          0: "The Services may contain links to services owned and operated by third parties. We may also use some third-parties software or products to provide you with the Service properly. If we do so and provide third-parties of any personal data you can be sure the transfer is legal and secured. These third-party services may have their own privacy policies and we recommend that you review them. They will govern the use of personal information that you submit or which is collected by cookies and other tracking technologies whilst using these services. We do not accept any responsibility or liability for the privacy practices of such third party services and your use of these is at your own risk.",
+          1: "We may make changes to this Privacy Policy in the future. You should check this page from time to time to ensure you are aware of any changes. Where appropriate we may notify you of such changes.",
+        },
       },
       information: {
         title: "Information we may collect about you",
@@ -92,6 +92,13 @@ export default {
         main:
           "We do not collect personal information from anyone including those under the age of 18. We encourage parents and legal guardians to monitor their children’s Internet usage and to help enforce this Policy by instructing their children never to provide personal information through the websites or Services.",
       },
+      data_sharing: {
+        title: "Data sharing",
+        main: {
+          0: "We do not share your data with any third parties.",
+          1: "Required by law: We may disclose information to the extent that we are required to do so by law (which may include to government bodies and law enforcement agencies); in connection with any legal proceedings or prospective legal proceedings; and in order to establish, exercise or defend our legal rights.",
+        },
+      },
       data_transmission: {
         title: "Data transmission",
         main: "We do not transmit you data.",
@@ -101,14 +108,14 @@ export default {
         main:
           "You have the following rights over the way your personal data are processed.",
         request: "To make a request, please let us know by sending an email to",
-        rights: [
-          "You have the right to request a copy of the personal information we process about you and to have any inaccuracies corrected.",
-          "You can ask for supplying, correcting or deleting personal information held about you.",
-          "You can ask us to restrict, stop processing, or to delete your personal data.",
-          "You can withdraw your consent for data processing.",
-          "Obtain a copy of your personal data, which you can use with another service provider.",
-          "Make a complaint to a Supervisory Authority.",
-        ],
+        rights: {
+          0: "You have the right to request a copy of the personal information we process about you and to have any inaccuracies corrected.",
+          1: "You can ask for supplying, correcting or deleting personal information held about you.",
+          2: "You can ask us to restrict, stop processing, or to delete your personal data.",
+          3: "You can withdraw your consent for data processing.",
+          4: "Obtain a copy of your personal data, which you can use with another service provider.",
+          5: "Make a complaint to a Supervisory Authority.",
+        },
       },
       changes_to_policy: {
         title: "Changes to this privacy policy",
