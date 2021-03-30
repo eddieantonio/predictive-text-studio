@@ -98,7 +98,7 @@ export class PredictiveTextStudioDexie extends Dexie {
           });
       });
 
-    /* Version 6: Conver the `langName` property to `language` in the project table */
+    /* Version 6: Convert the `langName` property to `language` in the project table */
     this.version(6)
       .stores({
         projectData:
