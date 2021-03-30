@@ -390,14 +390,14 @@
         class="card card__info card__existing-project"
         data-cy="existing-project-card">
         <form action={PAGE_URLS.customize}>
-          <h3>You already have a project started!</h3>
-          <p>Would you like to continue?</p>
+          <h3>{$_('input.existing_project_warning')}</h3>
+          <p>{$_('input.existing_project_continue_prompt')}</p>
           <button
             class="button button--primary quick-start__submit-button"
             class:quick-start__submit-button--disabled={!continueReady}
             type="submit"
             data-cy="existing-project-continue-button">
-            Continue
+            {$_('input.continue')}
           </button>
         </form>
       </div>
