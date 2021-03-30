@@ -70,6 +70,7 @@
     "googleapis": "^61.0.0",
     "jszip": "^3.6.0",
     "simple-svelte-autocomplete": "^1.2.4",
+    "svelte-i18n": "^3.3.7",
     "svelte-routing": "^1.4.2",
     "tslib": "^2.0.1"
   },
