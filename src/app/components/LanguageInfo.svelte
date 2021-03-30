@@ -24,7 +24,7 @@
 
     authorName = storedProjectData.authorName;
     languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
-    languageInfo.language = storedProjectData.langName;
+    languageInfo.language = storedProjectData.language;
     copyright = storedProjectData.copyright || "";
     dictionaryName = storedProjectData.dictionaryName || "";
 

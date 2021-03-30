@@ -9,10 +9,23 @@
   import { currentDownloadURL } from "../stores";
   import type { KeyboardMetadata } from "@common/types";
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
+  import { onMount } from "svelte";
+  import { PAGE_URLS } from "./page-urls";
 
   let selectedLanguage: KeyboardMetadata | undefined = undefined;
   let continueReady: boolean = false;
   let uploadFile: boolean = true;
+  let isProjectInProgress: boolean = false;
+
+  onMount(async () => {
+    if (await worker.doesProjectExist()) {
+      selectedLanguage = await worker.fetchAllCurrentProjectMetadata();
+      isProjectInProgress = selectedLanguage !== undefined;
+      // TODO: Boolean($currentDownloadURL) will always be false here
+      // Ideally we want to see if $currentDownloadURL is available here when
+      // determining if the project is complete
+    }
+  });
 
   $: continueReady =
     selectedLanguage !== undefined && Boolean($currentDownloadURL);
@@ -193,6 +206,19 @@
     min-width: 200px;
   }
 
+  .card {
+    border-radius: 0.5em;
+    padding: 1.5rem;
+  }
+
+  .card__info {
+    background-color: #e3f3ff;
+  }
+
+  .card__existing-project {
+    margin-bottom: var(--s);
+  }
+
   .quick-start {
     margin: 9rem auto;
     padding: 1.5rem;
@@ -358,10 +384,30 @@
   </section>
 
   <section id="get-started" class="quick-start">
-    <!-- TODO: should not use hard coded URL! -->
-    <form action="/languages" data-cy="quick-start" >
+    {#if isProjectInProgress && continueReady}
+      <div
+        id="project-exists-info"
+        class="card card__info card__existing-project"
+        data-cy="existing-project-card">
+        <form action={PAGE_URLS.languages}>
+          <h3>You already have a project started!</h3>
+          <p>Would you like to continue?</p>
+          <button
+            class="button button--primary quick-start__submit-button"
+            class:quick-start__submit-button--disabled={!continueReady}
+            type="submit"
+            data-cy="existing-project-continue-button">
+            Continue
+          </button>
+        </form>
+      </div>
+    {/if}
+    <form action={PAGE_URLS.languages} data-cy="quick-start">
       <fieldset class="quick-start__step">
-        <LanguageNameInput bind:selectedLanguage={selectedLanguage} label={$_('page.main.step_one')} bold={false} />
+        <LanguageNameInput
+          bind:selectedLanguage
+          label={$_('page.main.step_one')}
+          bold={false} />
       </fieldset>
 
       <fieldset class="quick-start__step">
@@ -375,12 +421,13 @@
         <SplitButton {splitBtns} />
       </div>
       {#if uploadFile}
-        <Upload/>
+        <Upload />
       {:else}
         <GoogleSheetsInput />
       {/if}
-      <div class="quick-start__submit-wrapper"
-           class:quick-start__submit-wrapper--disabled={!continueReady}>
+      <div
+        class="quick-start__submit-wrapper"
+        class:quick-start__submit-wrapper--disabled={!continueReady}>
         <DownloadKMP downloadURL={$currentDownloadURL} />
         <p>{$_('common.or')}</p>
         <button
@@ -390,7 +437,7 @@
           data-cy="landing-page-continue-button">
           {$_('page.main.customize')}
         </button>
-    </div>
+      </div>
     </form>
   </section>
 </main>
@@ -398,15 +445,16 @@
 <footer class="footer">
   <p class="footer__copyright">
     <small>
-      <a href="/privacy">{$_('page.main.privacy_policy')}</a>
+      <a href={PAGE_URLS.privacy}>{$_('page.main.privacy_policy')}</a>
       <br />
       <a
-        href="/team"
+        href={PAGE_URLS.team}
         data-cy="team-page-link">{$_('page.main.about_the_team')}</a>
       <br />
       © 2020–{new Date().getFullYear()}
       <a
         href="https://nrc.canada.ca/en/research-development/research-collaboration/programs/canadian-indigenous-languages-technology-project">
-        National Research Council Canada</a>.</small>
+        National Research Council Canada</a>.
+    </small>
   </p>
 </footer>

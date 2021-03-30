@@ -8,6 +8,7 @@
   import worker from "../spawn-worker";
   import { compileSuccess, currentDownloadURL } from "../stores";
   import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
+  import { PAGE_URLS } from "./page-urls";
 
   export let selectedButton: string = "information";
 
@@ -159,7 +160,7 @@
 <main>
   <div class="languages">
     <div class="languages__container">
-      <a href="/">
+      <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
           {$_('page.lang.go_back_to_main_page')}
         </span>

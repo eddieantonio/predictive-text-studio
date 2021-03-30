@@ -54,7 +54,7 @@ export const wordlistCustomColumnsResult: WordList = [
 
 export const testStoredProjectData = {
   id: 1,
-  langName: "English",
+  language: "English",
   bcp47Tag: "en",
   authorName: "UnknownAuthor",
 } as StoredProjectData;

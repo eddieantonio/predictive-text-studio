@@ -84,7 +84,7 @@ export class PredictiveTextStudioDexie extends Dexie {
       KMPFileData: "++id, package",
     });
 
-    /* Version 5: Add "size"  property to file table: */
+    /* Version 5: Add "size" property to file table: */
     this.version(5)
       .stores({
         files: "++id, name, wordlist, size",
@@ -95,6 +95,22 @@ export class PredictiveTextStudioDexie extends Dexie {
           .toCollection()
           .modify((file: StoredWordList) => {
             file.size = file.wordlist.length;
+          });
+      });
+
+    /* Version 6: Convert the `langName` property to `language` in the project table */
+    this.version(6)
+      .stores({
+        projectData:
+          "++id, language, bcp47Tag, authorName, modelID, copyright, dictionaryName, version",
+      })
+      .upgrade((transaction) => {
+        return transaction
+          .table("projectData")
+          .toCollection()
+          .modify((project) => {
+            project.language = project.langName;
+            delete project.langName;
           });
       });
 
@@ -152,7 +168,7 @@ export default class Storage {
     return this.db.transaction("readwrite", this.db.projectData, async () => {
       const currentData = (await this.db.projectData.get({
         id: PACKAGE_ID,
-      })) || { langName: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
+      })) || { language: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
       currentData.bcp47Tag = bcp47Tag;
       await this.db.projectData.put(currentData);
     });
@@ -172,6 +188,17 @@ export default class Storage {
       );
       await this.db.projectData.put(updatedMetadata);
     });
+  }
+
+  /**
+   * Checks if a project currently exists
+   */
+  async doesProjectExist(): Promise<boolean> {
+    const projectData = await this.db.projectData
+      .where(":id")
+      .equals(PACKAGE_ID)
+      .first();
+    return projectData !== undefined;
   }
 
   /**
@@ -257,6 +284,6 @@ function createInitialProjectData(): StoredProjectData {
     // See: https://www.w3.org/International/questions/qa-no-language#undetermined
     // See: https://tools.ietf.org/html/bcp47#section-3.4.1
     bcp47Tag: "",
-    langName: "Unknown Language",
+    language: "Unknown Language",
   };
 }
