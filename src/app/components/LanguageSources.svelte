@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import AddSource from "./AddSource.svelte";
   import type { WordListSource } from "@common/types";
   import { removeDictionaryFromProject } from "../logic/delete";
@@ -121,10 +122,10 @@
     <table class="mt-l">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Size</th>
-          <th>Type</th>
-          <th>Actions</th>
+          <th>{$_('common.name')}</th>
+          <th>{$_('common.size')}</th>
+          <th>{$_('common.type')}</th>
+          <th>{$_('common.actions')}</th>
         </tr>
       </thead>
 
@@ -155,7 +156,7 @@
     {/if}
   </div>
   <details data-cy="language-sources-add-sources">
-    <summary>Add Source</summary>
+    <summary>{$_('input.add_source')}</summary>
     <AddSource {getLanguageSources} />
   </details>
 </div>

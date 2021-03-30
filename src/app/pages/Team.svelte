@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import TeamMemberProfile from "../components/TeamMemberProfile.svelte";
 
   const coreMaintainerGithubUserNames: string[] = ["eddieantonio"];
@@ -31,14 +32,14 @@
 <main>
   <article class="team-page">
     <nav style="text-align: center">
-      <a href="/" class="button button--blue">Back</a>
+      <a href="/" class="button button--blue">{$_('common.back')}</a>
     </nav>
     <header class="masthead">
-      <h2>Team</h2>
-      <p>These are people who have contributed to the project</p>
+      <h2>{$_('page.team.title')}</h2>
+      <p>{$_('page.team.intro')}</p>
     </header>
     <section class="explanation" id="explanation">
-      <h2>Core Maintainers</h2>
+      <h2>{$_('page.team.core_maintainers')}</h2>
       <div class="profile-container">
         {#each coreMaintainerGithubUserNames as githubUserName}
           <TeamMemberProfile {githubUserName} />
@@ -47,7 +48,7 @@
     </section>
 
     <section class="quick-start" id="get-started">
-      <h2>Team Members</h2>
+      <h2>{$_('page.team.team_members')}</h2>
       <div class="profile-container">
         {#each teamMemberGithubUserNames as githubUserName}
           <TeamMemberProfile {githubUserName} />
