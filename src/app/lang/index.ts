@@ -1,10 +1,11 @@
 import en from "./en";
+import es from "./es";
 import ko from "./ko";
 
 /**
  * Available locales (translations).
  */
-export const locales = { en, ko };
+export const locales = { en, es, ko };
 
 /**
  * Which locale to use if none of the others work out.

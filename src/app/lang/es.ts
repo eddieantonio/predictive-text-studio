@@ -1,6 +1,8 @@
+import type Localization from "./localization";
+
 export default {
   common: {
-    name: "Predictive Text Studio",
+    app_name: "Predictive Text Studio",
     back: "Atrás",
     help: "Ayuda",
     excel: "Excel",
@@ -26,7 +28,7 @@ export default {
   input: {
     enter_bcp47_tag: "Enter the BCP 47 Tag",
     invalid_bcp47_tag: "Código de idioma no valido",
-    download_kmp_package: "Descara paquete KMP",
+    download_kmp_package: "Descara archivo KMP",
     read_values: "Lee valors",
     connection_error: "No se pudo conectar a Hojas de Cálculo de Google",
     invalid_google_sheets_url:
@@ -73,7 +75,7 @@ export default {
     },
     main: {
       title: "Le damos la bienvenida a Predictive Text Studio",
-      designed_for: "desiñado para",
+      designed_for: "diseñado para",
       add: "Agrega",
       prediction: "sugerencias",
       and: "y",
@@ -182,4 +184,4 @@ export default {
       team_members: "Miembros de equipo",
     },
   },
-};
+} as Localization;
