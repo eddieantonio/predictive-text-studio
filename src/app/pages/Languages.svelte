@@ -167,8 +167,8 @@
       </a>
       <header class="languages__container--header">
         <div>
-          <h1>{$_('common.name')}</h1>
-          <p>designed for
+          <h1>{$_('common.app_name')}</h1>
+          <p>{$_('page.main.designed_for')}
             <img
             src="/assets/keyman-logo.svg"
             alt="Keyman" />
