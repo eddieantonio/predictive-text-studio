@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PAGE_URLS } from "./page-urls";
   import { _ } from "svelte-i18n";
 </script>
 
@@ -27,7 +28,7 @@
 
 <main>
   <nav class="nav-back">
-    <a href="/" class="button button--blue">{$_('common.back')}</a>
+    <a href={PAGE_URLS.home} class="button button--blue">{$_('common.back')}</a>
   </nav>
   <article class="help-page">
     <header>

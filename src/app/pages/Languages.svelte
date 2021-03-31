@@ -8,6 +8,7 @@
   import worker from "../spawn-worker";
   import { compileSuccess, currentDownloadURL } from "../stores";
   import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
+  import { PAGE_URLS } from "./page-urls";
 
   export let selectedButton: string = "information";
 
@@ -159,7 +160,7 @@
 <main>
   <div class="languages">
     <div class="languages__container">
-      <a href="/">
+      <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
           {$_('page.lang.go_back_to_main_page')}
         </span>
@@ -167,7 +168,7 @@
       <header class="languages__container--header">
         <div>
           <h1>{$_('common.app_name')}</h1>
-          <p>designed for
+          <p>{$_('page.main.designed_for')}
             <img
             src="/assets/keyman-logo.svg"
             alt="Keyman" />
