@@ -6,6 +6,7 @@
   import Privacy from "./pages/Privacy.svelte";
   import Team from "./pages/Team.svelte";
   import Help from "./pages/Help.svelte";
+  import Footer from "./components/Footer.svelte";
 
   import { locales, determinePreferredLocale, FALLBACK_LOCALE } from "./lang";
 
@@ -25,4 +26,5 @@
   <Route path="privacy" component={Privacy} />
   <Route path="team" component={Team} />
   <Route path="help" component={Help} />
+  <Footer />
 </Router>

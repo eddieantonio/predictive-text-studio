@@ -6,6 +6,7 @@
   --red-light: #de929c;
   --orange: #f18407;
   --orange-light: #fbc88f;
+  --lite-gray: #bdbdbd;
   --gray: #888888;
   --gray-secondary-text: #515154;
   --gray-hover: #c5c5c5;
@@ -13,9 +14,11 @@
   --gray-light: #d6d6d6;
   --gray-highlight: #e0e0e0;
   --gray-dark: #454545;
+  --lite-black: #2f2f2f;
+  --black: #000;
   --lite-white: #f1f1f1;
   --white: #ffffff;
-  --primary-blue: #0077cc;
+  --primary-blue: #0099ff;
   --dark-blue: #054b7a;
   --error-bg-color: #f8d7db;
   --error-fg-color: #400000;

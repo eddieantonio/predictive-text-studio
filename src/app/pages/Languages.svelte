@@ -93,6 +93,28 @@
     font-family: Cabin, sans-serif;
   }
 
+  .languages__sidebar {
+    background-color: var(--gray-dark);
+  }
+
+  .languages__sidebar--project {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+
+    background: var(--lite-gray);
+    border-radius: 50%;
+    font-size: 1.25rem;
+    margin: 2rem 1rem;
+  }
+
+  .languages__sidebar--project.selected {
+    background: var(--primary-blue);
+    color: var(--white);
+  }
+
   .languages__container {
     margin: auto var(--margin);
     width: calc(100vw - var(--gap));
@@ -159,6 +181,13 @@
  -->
 <main>
   <div class="languages">
+    <div class="languages__sidebar">
+      <div class="languages__sidebar--project selected">A</div>
+      <div class="languages__sidebar--project">K</div>
+      <div class="languages__sidebar--project">H</div>
+      <div class="languages__sidebar--project">L</div>
+      <div class="languages__sidebar--project">+</div>
+    </div>
     <div class="languages__container">
       <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
