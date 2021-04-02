@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
   import type { WordListSource } from "@common/types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
@@ -7,6 +8,7 @@
   import worker from "../spawn-worker";
   import { compileSuccess, currentDownloadURL } from "../stores";
   import { setupAutomaticCompilationAndDownloadURL } from "../logic/automatic-compilation";
+  import { PAGE_URLS } from "./page-urls";
 
   export let selectedButton: string = "information";
 
@@ -158,18 +160,18 @@
 <main>
   <div class="languages">
     <div class="languages__container">
-      <a href="/">
+      <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
-          Go back to main page
+          {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
       <header class="languages__container--header">
         <div>
-          <h1>Predictive Text Studio</h1>
-          <p>designed for
-          <img
-          src="/assets/keyman-logo.svg"
-          alt="Keyman" />
+          <h1>{$_('common.app_name')}</h1>
+          <p>{$_('page.main.designed_for')}
+            <img
+            src="/assets/keyman-logo.svg"
+            alt="Keyman" />
           </p>
         </div>
       </header>
@@ -179,20 +181,20 @@
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
           dataCy="languages-information-btn"
-        >Information</Button>
+        >{$_('page.lang.information')}</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           onClick={()=> handleClick('sources')}
           dataCy="languages-sources-btn"
-        >Sources</Button>
+        >{$_('page.lang.sources')}</Button>
         <Button
           color="blue"
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
           dataCy="languages-download-btn"
           enabled={downloadReady}
-        >Download</Button>
+        >{$_('page.lang.download')}</Button>
       </div>
       <div class="languages__container--content">
         {#if selectedButton === 'information'}
