@@ -37,6 +37,8 @@
     ]);
   }
 
+  $: copyrightButtonEnabled = copyright !== "" && copyright.charAt(0) !== "©";
+
   function updateMetadata(key: any, value: any) {
     worker.setProjectData({ [key]: value });
   }
@@ -50,7 +52,10 @@
   }
 
   function addCopyrightSymbol() {
-    copyright += "©";
+    if (copyright.charAt(0) !== "©") {
+      copyright = "© " + copyright;
+      updateMetadata("copyright", copyright);
+    }
   }
 </script>
 
@@ -135,13 +140,15 @@
       subtext="" />
   </div>
   <div class="copyright-field">
-    <Button
-      size="small"
-      color="blue"
-      isOutlined={true}
-      onClick={addCopyrightSymbol}>
-      add ©
-    </Button>
+    {#if copyrightButtonEnabled}
+      <Button
+        size="small"
+        color="blue"
+        isOutlined={true}
+        onClick={addCopyrightSymbol}>
+        add ©
+      </Button>
+    {/if}
   </div>
   <div class="language__info-right">
     <p class="label">Keyboard Preview</p>
