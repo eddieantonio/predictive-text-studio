@@ -48,8 +48,6 @@ describe("Changing metadata in the language info page", function () {
 
     cy.data("language-sources-add-sources").contains("Add Source").click();
 
-
-
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
     cy.readFile(downloadedFilePath).should("not.exist");
@@ -62,8 +60,7 @@ describe("Changing metadata in the language info page", function () {
       );
       const event = { dataTransfer: { files: [testFile] } };
 
-      cy.data("upload-dropzone")
-        .trigger("dragenter", event);
+      cy.data("upload-dropzone").trigger("dragenter", event);
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
