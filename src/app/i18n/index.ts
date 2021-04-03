@@ -1,6 +1,6 @@
-import en from "../locales/en";
-import es from "../locales/es";
-import ko from "../locales/ko";
+import en from "../locales/en.json";
+import es from "../locales/es.json";
+import ko from "../locales/ko.json";
 import type { LocaleDictionary } from "./localization";
 
 /**
