@@ -73,7 +73,7 @@
   }
 
   .language__info-right {
-    margin-left: 300px;
+    margin-left: 18.75rem;
   }
 
   .label {
@@ -90,9 +90,9 @@
   .copyright-field {
     display: flex;
     align-items: flex-end;
-    margin-bottom: 26px;
-    margin-left: 30px;
-    min-width: 100px;
+    margin-bottom: 1.5rem;
+    margin-left: 2rem;
+    min-width: 6.25rem;
   }
 
   @media (max-width: 768px) {
@@ -147,7 +147,7 @@
         color="blue"
         isOutlined={true}
         onClick={addCopyrightSymbol}>
-        add ©
+        {$_('common.add') + ' ©'}
       </Button>
     {/if}
   </div>
