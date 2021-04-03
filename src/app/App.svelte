@@ -7,7 +7,7 @@
   import Team from "./pages/Team.svelte";
   import Help from "./pages/Help.svelte";
 
-  import { locales, determinePreferredLocale, FALLBACK_LOCALE } from "./lang";
+  import { locales, determinePreferredLocale, FALLBACK_LOCALE } from "./i18n";
 
   dictionary.set(locales);
   init({
