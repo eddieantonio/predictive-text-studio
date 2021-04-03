@@ -90,7 +90,6 @@ export default {
     privacy: {
       title: "Predictive Text Studio 개인 정보 정책",
       effective_as_of: "유효",
-      date: "2020년 12월 8일",
       introduction: {
         title: "소개",
         head: {
