@@ -95,9 +95,8 @@ export default {
       download: "Descarga",
     },
     privacy: {
-      title: "Predictive Text Studio Privacy Policy",
-      effective_as_of: "Desde",
-      date: "el 8 de Diciembre 8 de 2020",
+      title: "Política de Privacidada de Predictive Text Studio",
+      effective_as_of: "A partir de",
       introduction: {
         title: "Introduction",
         head: {
