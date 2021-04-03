@@ -1,6 +1,6 @@
-import en from "./en";
-import es from "./es";
-import ko from "./ko";
+import en from "../locales/en";
+import es from "../locales/es";
+import ko from "../locales/ko";
 
 /**
  * Available locales (translations).

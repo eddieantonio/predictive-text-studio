@@ -1,4 +1,4 @@
-import type Localization from "./localization";
+import type Localization from "../i18n/localization";
 
 export default {
   common: {
