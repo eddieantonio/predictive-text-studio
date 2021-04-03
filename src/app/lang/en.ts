@@ -89,7 +89,6 @@ export default {
     privacy: {
       title: "Predictive Text Studio Privacy Policy",
       effective_as_of: "Effective as of",
-      date: "December 8, 2020",
       introduction: {
         title: "Introduction",
         head: {
