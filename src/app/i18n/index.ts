@@ -19,7 +19,9 @@ type RegistrationFunction = (locale: string, dict: LocaleDictionary) => unknown;
 /**
  * Registers all known locales.
  */
-export function registerAllLocalizationsUsing(register: RegistrationFunction) {
+export function registerAllLocalizationsUsing(
+  register: RegistrationFunction
+): void {
   for (const [tag, dict] of Object.entries(locales)) {
     register(tag, dict);
   }
