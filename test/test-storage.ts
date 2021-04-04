@@ -378,7 +378,7 @@ test("exporting project data", async (t) => {
   await storage.saveFile(fileData);
 
   const storedProjectData = {
-    langName: "English",
+    language: "English",
     bcp47Tag: "en",
     authorName: "example",
     modelID: "unknownAuthor.en.example",
@@ -401,7 +401,7 @@ test("importing project data", async (t) => {
   const { storage } = t.context;
 
   const fileString =
-    '{"projectData":{"id":0,"authorName":"example","bcp47Tag":"en","langName":"English","modelID":"unknownAuthor.en.example","copyright":"©","version":"1.0.0"},"files":[{"name":"ExampleWordlist.xlsx","wordlist":[["TŦE",13644],["E",9134],["SEN",4816],["Ȼ",3479],["SW̱",2621],["NIȽ",2314],["U¸",2298],["I¸",1988],["ȻSE",1925],["I",1884]],"size":10,"type":"xlsx","id":1}]}';
+    '{"projectData":{"id":0,"authorName":"example","bcp47Tag":"en","language":"English","modelID":"unknownAuthor.en.example","copyright":"©","version":"1.0.0"},"files":[{"name":"ExampleWordlist.xlsx","wordlist":[["TŦE",13644],["E",9134],["SEN",4816],["Ȼ",3479],["SW̱",2621],["NIȽ",2314],["U¸",2298],["I¸",1988],["ȻSE",1925],["I",1884]],"size":10,"type":"xlsx","id":1}]}';
 
   await storage.importProjectData(fileString);
 
@@ -414,8 +414,8 @@ test("importing project data", async (t) => {
   t.deepEqual(file.wordlist, exampleWordlist);
 
   const projectData = await storage.fetchProjectData();
-  const langName = projectData.langName;
-  t.is(langName, "English");
+  const language = projectData.language;
+  t.is(language, "English");
   const bcp47Tag = projectData.bcp47Tag;
   t.is(bcp47Tag, "en");
   const authorName = projectData.authorName;
