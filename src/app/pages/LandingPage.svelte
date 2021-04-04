@@ -399,19 +399,12 @@
         <ButtonBar>
           <SplitButton
             color="blue"
-            size="small"
-            isOutlined={false}
-            hasDropShadow={false}
             dataCy="landing-splitbtn-upload"
             onClick={uploadFromFile}
             type="button">
             Upload File
           </SplitButton>
           <SplitButton
-            color="grey"
-            size="small"
-            isOutlined={false}
-            hasDropShadow={false}
             dataCy="landing-splitbtn-google-sheets"
             onClick={UploadFromGoogleSheets}
             type="button">
