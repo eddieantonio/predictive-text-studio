@@ -2,7 +2,6 @@
   This component provides styling for any component <button>s, but otherwise
   provides no additional functionality.
 -->
-
 <style>
   .split-button-layout {
     display: flex;

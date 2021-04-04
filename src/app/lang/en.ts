@@ -80,6 +80,8 @@ export default {
       get_started: "Get started",
       step_one: "Step 1: Enter your language",
       step_two: "Step 2: Add a word list",
+      upload_tab_label: "Upload File",
+      google_sheets_tab_label: "Google Sheets URL",
       customize: "Customize",
       privacy_policy: "Privacy Policy",
       about_the_team: "About the Team",

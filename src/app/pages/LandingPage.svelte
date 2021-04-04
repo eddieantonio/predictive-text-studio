@@ -402,13 +402,13 @@
             dataCy="landing-splitbtn-upload"
             onClick={uploadFromFile}
             type="button">
-            Upload File
+            {$_('page.main.upload_tab_label')}
           </SplitButton>
           <SplitButton
             dataCy="landing-splitbtn-google-sheets"
             onClick={UploadFromGoogleSheets}
             type="button">
-            Google Sheets URL
+            {$_('page.main.google_sheets_tab_label')}
           </SplitButton>
         </ButtonBar>
       </div>
