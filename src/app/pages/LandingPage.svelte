@@ -6,6 +6,7 @@
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import DownloadKMP from "../components/DownloadKMP.svelte";
   import ButtonBar from "../components/ButtonBar.svelte";
+  import SplitButton from "../components/SplitButton.svelte";
   import { currentDownloadURL } from "../stores";
   import type { KeyboardMetadata } from "@common/types";
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
@@ -57,29 +58,6 @@
   const UploadFromGoogleSheets = () => {
     uploadFile = false;
   };
-
-  let splitBtns = [
-    {
-      color: "blue",
-      size: "small",
-      text: "Upload File",
-      isOutlined: false,
-      hasDropShadow: false,
-      dataCy: "landing-splitbtn-upload",
-      handleClick: uploadFromFile,
-      type: "button",
-    },
-    {
-      color: "grey",
-      size: "small",
-      text: "Google Sheets URL",
-      isOutlined: false,
-      hasDropShadow: false,
-      dataCy: "landing-splitbtn-google-sheets",
-      handleClick: UploadFromGoogleSheets,
-      type: "button",
-    },
-  ];
 </script>
 
 <style>
@@ -418,7 +396,28 @@
       </fieldset>
 
       <div class="split-container">
-        <ButtonBar {splitBtns} />
+        <ButtonBar>
+          <SplitButton
+            color="blue"
+            size="small"
+            isOutlined={false}
+            hasDropShadow={false}
+            dataCy="landing-splitbtn-upload"
+            onClick={uploadFromFile}
+            type="button">
+            Upload File
+          </SplitButton>
+          <SplitButton
+            color="grey"
+            size="small"
+            isOutlined={false}
+            hasDropShadow={false}
+            dataCy="landing-splitbtn-google-sheets"
+            onClick={UploadFromGoogleSheets}
+            type="button">
+            Google Sheets URL
+          </SplitButton>
+        </ButtonBar>
       </div>
       {#if uploadFile}
         <Upload />

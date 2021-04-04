@@ -39,16 +39,19 @@
 </style>
 
 <div class="split-button-layout">
-  {#each splitBtns as setting}
-    <SplitButton
-      color={setting.color}
-      size={setting.size}
-      type={setting.type}
-      hasDropShadow={setting.hasDropShadow}
-      isOutlined={setting.isOutlined}
-      onClick={setting.handleClick}
-      dataCy={setting.dataCy}>
-      {setting.text}
-    </SplitButton>
-  {/each}
+  {#if splitBtns}
+    {#each splitBtns as setting}
+      <SplitButton
+        color={setting.color}
+        size={setting.size}
+        type={setting.type}
+        hasDropShadow={setting.hasDropShadow}
+        isOutlined={setting.isOutlined}
+        onClick={setting.handleClick}
+        dataCy={setting.dataCy}>
+        {setting.text}
+      </SplitButton>
+    {/each}
+  {/if}
+  <slot />
 </div>
