@@ -1,4 +1,6 @@
 <script lang="ts">
+  import SplitButton from "./SplitButton.svelte";
+
   type ClickFnType = () => void;
 
   interface BtnAttributes {
@@ -20,16 +22,17 @@
     display: flex;
     padding: 3%;
   }
-  button {
+
+  .split-button-layout > :global(button) {
     flex: 1;
     margin: 0;
     border-radius: 0;
   }
-  button:first-child {
+  .split-button-layout > :global(button):first-child {
     border-top-left-radius: 0.625em;
     border-bottom-left-radius: 0.625em;
   }
-  button:last-child {
+  .split-button-layout > :global(button):last-child {
     border-top-right-radius: 0.625em;
     border-bottom-right-radius: 0.625em;
   }
@@ -37,12 +40,15 @@
 
 <div class="split-button-layout">
   {#each splitBtns as setting}
-    <button
-      class="button button--{setting.color} button--{setting.size}"
-      class:button--shadow={setting.hasDropShadow}
-      class:button--outline={setting.isOutlined}
-      on:click={setting.handleClick}
+    <SplitButton
+      color={setting.color}
+      size={setting.size}
       type={setting.type}
-      data-cy={setting.dataCy}>{setting.text}</button>
+      hasDropShadow={setting.hasDropShadow}
+      isOutlined={setting.isOutlined}
+      onClick={setting.handleClick}
+      dataCy={setting.dataCy}>
+      {setting.text}
+    </SplitButton>
   {/each}
 </div>
