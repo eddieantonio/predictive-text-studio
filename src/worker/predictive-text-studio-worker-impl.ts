@@ -138,7 +138,23 @@ export class PredictiveTextStudioWorkerImpl
     wordlist: WordList
   ): Promise<number> {
     await this.storage.saveFile({
-      name: name,
+      name,
+      wordlist,
+      size: wordlist.length,
+      type: "direct-entry",
+    });
+    this.generateKMPFromStorage();
+    return wordlist.length;
+  }
+
+  async updateManualEntryDictionaryToProject(
+    id: number,
+    name: string,
+    wordlist: WordList
+  ): Promise<number> {
+    await this.storage.saveFile({
+      id,
+      name,
       wordlist,
       size: wordlist.length,
       type: "direct-entry",
@@ -178,6 +194,10 @@ export class PredictiveTextStudioWorkerImpl
     return result;
   }
 
+  async doesProjectExist(): Promise<boolean> {
+    return this.storage.doesProjectExist();
+  }
+
   private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
     return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
   }
@@ -200,7 +220,7 @@ function toStorageFormat(
 ): { [key: string]: string } {
   const data = Object.assign({}, metadata as { [key: string]: string });
   if (metadata.languages) {
-    data.langName = metadata.languages[0].name;
+    data.language = metadata.languages[0].name;
     data.bcp47Tag = metadata.languages[0].id;
     delete data.languages;
   }

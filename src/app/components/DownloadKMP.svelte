@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   export let downloadURL: string;
 </script>
 
@@ -28,6 +29,6 @@
     class:download-component__link--disabled={downloadURL == ''}
     data-cy="download-kmp"
     data-download-state={downloadURL ? 'ready' : 'disabled'}>
-    Download KMP Package
+    {$_('input.download_kmp_package')}
   </a>
 </div>

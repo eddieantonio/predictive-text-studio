@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import InputField from "./InputField.svelte";
   import {
     mapDecToColLetters,
@@ -28,22 +29,20 @@
 
 <div class="mb-s">
   <details data-cy="upload-advance-settings">
-    <summary>Advanced options</summary>
-    <p id="settings-disclaimer">
-      *Only works with .xlsx files and Google Sheets
-    </p>
+    <summary>{$_('input.advanced_options')}</summary>
+    <p id="settings-disclaimer">{$_('input.only_works_with')}</p>
     <InputField
-      label="Spreadsheet Word Column"
+      label={$_('input.spreadsheet_word_column')}
       id="wordColumnIndexInput"
       placeholder={mapDecToColLetters(wordColInd)}
-      error={wordColLetters ? '' : `No custom word column specified! Defaulting to ${mapDecToColLetters(wordColInd)}`}
+      error={wordColLetters ? '' : `${$_('input.no_custom_word_column')} ${mapDecToColLetters(wordColInd)}`}
       bind:inputValue={wordColLetters}
       fullWidth={true} />
     <InputField
-      label="Spreadsheet Count Column"
+      label={$_('input.spreadsheet_count_column')}
       id="countColumnIndexInput"
       placeholder={mapDecToColLetters(countColInd)}
-      error={countColLetters ? '' : `No custom count column specified! Defaulting to ${mapDecToColLetters(countColInd)}`}
+      error={countColLetters ? '' : `${$_('input.no_custom_count_column')} ${mapDecToColLetters(countColInd)}`}
       bind:inputValue={countColLetters}
       fullWidth={true} />
   </details>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
+  import { onMount } from "svelte";
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
   import type { WordAndCount, WordList, WordListSource } from "@common/types";
@@ -7,17 +9,16 @@
   export let tableData: WordListSource;
 
   /**
+   * Close table
+   */
+  export let closeTable: Function;
+
+  /**
    * Re-calculate word count
    */
   export let getLanguageSources: Function;
 
-  /**
-   * Disables being able to edit the title
-   * We no longer need this conditional if we work with IndexedDB IDs
-   */
-  export let isEditingSource: boolean = false;
-
-  $: rowDataFromManualEntry = tableData.wordlist;
+  $: wordlist = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
   $: if (validateTableData(tableData.name, tableData.wordlist)) {
     saveTableData();
@@ -34,7 +35,6 @@
 
   const validateTableData = (name: string, wordlist: WordList): boolean => {
     const validTitle = validInput(name);
-
     const validRows = wordlist.every((wordAndCount: WordAndCount) => {
       return validInput(wordAndCount[WordAndCountInd.WORD]);
     });
@@ -42,25 +42,40 @@
   };
 
   const deleteRow = (i: number): void => {
-    rowDataFromManualEntry.splice(i, 1);
-    rowDataFromManualEntry = rowDataFromManualEntry;
+    wordlist.splice(i, 1);
+    wordlist = wordlist;
   };
 
-  const addNewRow = (): void => {
+  const addRow = (): void => {
     const newEntry: WordAndCount = ["", 0];
-    rowDataFromManualEntry.push(newEntry);
-    rowDataFromManualEntry = rowDataFromManualEntry;
+    wordlist.push(newEntry);
+    wordlist = wordlist;
+  };
+
+  const handleInput = (i: number, col: number) => (e: any) => {
+    wordlist[i][col] = e.target.value;
+    if (i === wordlist.length - 1) addRow();
   };
 
   const saveTableData = async () => {
     if (validDictionary) {
-      await worker.addManualEntryDictionaryToProject(
-        tableData.name,
-        tableData.wordlist
-      );
+      if (tableData.id) {
+        await worker.updateManualEntryDictionaryToProject(
+          tableData.id,
+          tableData.name,
+          tableData.wordlist
+        );
+      } else {
+        await worker.addManualEntryDictionaryToProject(
+          tableData.name,
+          tableData.wordlist
+        );
+      }
       getLanguageSources();
     }
   };
+
+  onMount(addRow);
 </script>
 
 <style>
@@ -86,7 +101,6 @@
 
   table {
     border-collapse: collapse;
-    width: 1400px;
     margin-top: 1.875rem;
     margin-bottom: 3.125rem;
     box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.1);
@@ -94,7 +108,7 @@
 
   th {
     vertical-align: middle;
-    padding: 1.25rem 0 1.25rem 1.25rem;
+    padding: 1.25rem;
     background-color: var(--lite-white);
     text-align: center;
   }
@@ -129,6 +143,7 @@
     padding: 0;
     border: 0;
     background-color: transparent;
+    cursor: pointer;
     font-size: 1em;
   }
 
@@ -144,6 +159,7 @@
 
   input:focus {
     background-color: var(--lite-white);
+    border-color: var(--primary-blue);
   }
 
   .save-zone {
@@ -153,32 +169,35 @@
     justify-content: center;
     padding: 1%;
   }
+
+  img {
+    width: var(--s);
+  }
 </style>
 
 <form class="language__sources-manual-entry" on:submit|preventDefault>
   <div class="language__sources-manual-entry-tablename">
-    <h4>Table Name</h4>
+    <h4>{$_('common.table_name')}</h4>
     <input
       type="text"
       bind:value={tableData.name}
-      disabled={isEditingSource}
       required
       data-cy="manual-entry-input-tablename" />
   </div>
 
   <table id="manual-entry-table">
     <thead>
-      <th>Word</th>
-      <th>Count</th>
-      <th>Action</th>
+      <th>{$_('common.word')}</th>
+      <th>{$_('common.count')}</th>
+      <th>{$_('common.actions')}</th>
     </thead>
-
-    {#each rowDataFromManualEntry as row, i (i)}
+    {#each wordlist as row, i (i)}
       <tr>
         <td>
           <input
             type="text"
-            bind:value={row[WordAndCountInd.WORD]}
+            on:input={handleInput(i, WordAndCountInd.WORD)}
+            value={row[WordAndCountInd.WORD]}
             required
             data-cy="manual-entry-input-word" />
         </td>
@@ -186,15 +205,18 @@
           <input
             type="number"
             min="0"
-            placeholder="Optional"
-            bind:value={row[WordAndCountInd.COUNT]}
+            placeholder={$_('common.optional')}
+            on:input={handleInput(i, WordAndCountInd.COUNT)}
+            value={row[WordAndCountInd.COUNT]}
             data-cy="manual-entry-input-count" />
         </td>
         <td>
           <button
             class="btn--inline"
             on:click={() => deleteRow(i)}
-            data-cy="manual-entry-delete">Delete</button>
+            data-cy="manual-entry-delete">
+            <img src="/icons/delete.svg" alt="delete" />
+          </button>
         </td>
       </tr>
     {/each}
@@ -202,8 +224,8 @@
       <td colspan="3">
         <button
           class="btn--inline"
-          on:click={addNewRow}
-          data-cy="manual-entry-add-row">Add Row</button>
+          on:click={addRow}
+          data-cy="manual-entry-add-row">{$_('input.add_row')}</button>
       </td>
     </tr>
   </table>
@@ -216,7 +238,16 @@
       size="large"
       onClick={saveTableData}
       dataCy="add-sources-save-btn">
-      Save
+      {$_('common.save')}
+    </Button>
+    <Button
+      type="submit"
+      color="grey"
+      isOutlined
+      size="large"
+      onClick={() => closeTable()}
+      dataCy="add-sources-close-btn">
+      {$_('common.close')}
     </Button>
   </div>
 </form>

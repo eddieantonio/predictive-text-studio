@@ -54,6 +54,18 @@ export interface PredictiveTextStudioWorker {
     wordlist: WordList
   ): Promise<number>;
 
+  /**
+   * Update the manual entry data into the database
+   * @param id the ID of the dictionary source
+   * @param name the name of the dictionary source
+   * @param wordlist Manual entry data
+   */
+  updateManualEntryDictionaryToProject(
+    id: number | undefined,
+    name: string,
+    wordlist: WordList
+  ): Promise<number>;
+
   ///////////////////////////// Event handlers /////////////////////////////
 
   /**
@@ -92,6 +104,11 @@ export interface PredictiveTextStudioWorker {
    * Returns all of the current project's metadata.
    */
   fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata>;
+
+  /**
+   * Returns whether or not a project currently exists
+   */
+  doesProjectExist(): Promise<boolean>;
 
   ///////////////////////////////// Caches /////////////////////////////////
 
