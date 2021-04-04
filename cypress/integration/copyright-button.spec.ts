@@ -6,6 +6,9 @@ describe("Adding © to the copyright field", function () {
 
     cy.data("input-copyright").scrollIntoView();
 
+    // HACK: it has to wait for the existing project to load
+    cy.wait(1000);
+
     copyrightInput().clear().type(copyright).blur();
 
     copyrightInput().its("value").should("be", copyright);
