@@ -5,7 +5,7 @@
   import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import DownloadKMP from "../components/DownloadKMP.svelte";
-  import SplitButton from "../components/SplitButton.svelte";
+  import ButtonBar from "../components/ButtonBar.svelte";
   import { currentDownloadURL } from "../stores";
   import type { KeyboardMetadata } from "@common/types";
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
@@ -418,7 +418,7 @@
       </fieldset>
 
       <div class="split-container">
-        <SplitButton {splitBtns} />
+        <ButtonBar {splitBtns} />
       </div>
       {#if uploadFile}
         <Upload />

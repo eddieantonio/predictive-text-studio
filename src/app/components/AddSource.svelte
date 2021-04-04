@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import SplitButton from "./SplitButton.svelte";
+  import ButtonBar from "./ButtonBar.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
   import type { WordList, WordListSource } from "@common/types";
@@ -63,7 +63,7 @@
 </style>
 
 <div class="top-button-zone" data-cy="add-source-options">
-  <SplitButton {splitBtns} />
+  <ButtonBar {splitBtns} />
 </div>
 
 {#if manualEntry}
