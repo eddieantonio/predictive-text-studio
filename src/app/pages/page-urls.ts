@@ -1,6 +1,6 @@
 export enum PAGE_URLS {
   home = "/",
-  languages = "/languages",
+  customize = "/customize",
   team = "/team",
   privacy = "/privacy",
 }

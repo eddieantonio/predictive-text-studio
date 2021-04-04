@@ -52,6 +52,9 @@ export default {
     spreadsheet_count_column: "Spreadsheet Count Column",
     no_custom_word_column: "No custom word column specified! Defaulting to",
     no_custom_count_column: "No custom count column specified! Defaulting to",
+    existing_project_warning: "You already have a project started!",
+    existing_project_continue_prompt: "Would you like to continue?",
+    continue: "Continue",
   },
   page: {
     help: {

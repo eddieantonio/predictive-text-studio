@@ -128,7 +128,7 @@
     min-height: 100vh;
   }
 
-  .languages {
+  .customize {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -136,41 +136,41 @@
     font-family: Cabin, sans-serif;
   }
 
-  .languages__container {
+  .customize__container {
     margin: auto var(--margin);
     width: calc(100vw - var(--gap));
   }
 
-  .languages__container--header {
+  .customize__container--header {
     margin-top: 50px;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
   }
 
-  .languages__container--footer {
+  .customize__container--footer {
     display: flex;
     flex-direction: row;
     margin-bottom: 50px;
     margin-top: 50px;
   }
 
-  .languages__container--header div {
+  .customize__container--header div {
     vertical-align: middle;
   }
 
-  .languages__container--header h1 {
+  .customize__container--header h1 {
     font-family: Cabin, sans-serif;
     font-weight: bold;
     font-size: 30px;
   }
 
-  .languages__container--header p {
+  .customize__container--header p {
     font-family: Cabin, sans-serif;
     font-size: var(--l);
   }
 
-  .languages__container--header img {
+  .customize__container--header img {
     height: 1rem;
     width: auto;
     vertical-align: center;
@@ -180,17 +180,17 @@
     color: var(--black, #111);
   }
 
-  .languages__container--actions {
+  .customize__container--actions {
     display: flex;
     flex-direction: row;
   }
 
-  .languages__container--content {
+  .customize__container--content {
     margin: 2rem auto;
   }
 
   @media (max-width: 768px) {
-    .languages__container--actions {
+    .customize__container--actions {
       display: block;
     }
   }
@@ -208,14 +208,14 @@
   2. Use variable names for colors and fonts
  -->
 <main>
-  <div class="languages">
-    <div class="languages__container">
+  <div class="customize">
+    <div class="customize__container">
       <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
           {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
-      <header class="languages__container--header">
+      <header class="customize__container--header">
         <div>
           <h1>{$_('common.app_name')}</h1>
           <p>{$_('page.main.designed_for')}
@@ -225,28 +225,28 @@
           </p>
         </div>
       </header>
-      <div class="languages__container--actions">
+      <div class="customize__container--actions">
         <Button
           color="grey"
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
-          dataCy="languages-information-btn"
+          dataCy="customize-information-btn"
         >{$_('page.lang.information')}</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           onClick={()=> handleClick('sources')}
-          dataCy="languages-sources-btn"
+          dataCy="customize-sources-btn"
         >{$_('page.lang.sources')}</Button>
         <Button
           color="blue"
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
-          dataCy="languages-download-btn"
+          dataCy="customize-download-btn"
           enabled={downloadReady}
         >{$_('page.lang.download')}</Button>
       </div>
-      <div class="languages__container--content">
+      <div class="customize__container--content">
         {#if selectedButton === 'information'}
           <LanguageInfo bind:this={languageInfo} />
         {:else if selectedButton === 'sources'}
@@ -256,7 +256,7 @@
           />
         {/if}
       </div>
-      <div class="languages__container--footer">
+      <div class="customize__container--footer">
         <Button onClick={handleImport}>Import Project Data</Button>
         <Button onClick={handleExport}>Export Project Data</Button>
       </div>
