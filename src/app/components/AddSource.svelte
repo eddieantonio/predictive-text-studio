@@ -44,13 +44,14 @@
 <div class="top-button-zone" data-cy="add-source-options">
   <ButtonBar>
     <SplitButton
-      color="blue"
+      color={!manualEntry ? 'blue' : 'grey'}
       onClick={uploadSourcesFromFile}
       dataCy="add-sources-splitbtn-upload"
       size="medium">
       {$_('common.upload')}
     </SplitButton>
     <SplitButton
+      color={manualEntry ? 'blue' : 'grey'}
       onClick={directEntrySources}
       dataCy="add-sources-splitbtn-direct-entry"
       size="medium">
