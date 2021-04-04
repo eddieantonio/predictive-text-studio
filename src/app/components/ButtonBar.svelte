@@ -1,21 +1,7 @@
-<script lang="ts">
-  import SplitButton from "./SplitButton.svelte";
-
-  type ClickFnType = () => void;
-
-  interface BtnAttributes {
-    color: string;
-    size: string;
-    text: string;
-    isOutlined: boolean;
-    hasDropShadow: boolean;
-    dataCy: string;
-    handleClick: ClickFnType;
-    type: string;
-  }
-
-  export let splitBtns: BtnAttributes[];
-</script>
+<!--
+  This component provides styling for any component <button>s, but otherwise
+  provides no additional functionality.
+-->
 
 <style>
   .split-button-layout {
@@ -39,19 +25,5 @@
 </style>
 
 <div class="split-button-layout">
-  {#if splitBtns}
-    {#each splitBtns as setting}
-      <SplitButton
-        color={setting.color}
-        size={setting.size}
-        type={setting.type}
-        hasDropShadow={setting.hasDropShadow}
-        isOutlined={setting.isOutlined}
-        onClick={setting.handleClick}
-        dataCy={setting.dataCy}>
-        {setting.text}
-      </SplitButton>
-    {/each}
-  {/if}
   <slot />
 </div>
