@@ -1,6 +1,8 @@
+import type Localization from "./localization";
+
 export default {
   common: {
-    name: "Predictive Text Studio",
+    app_name: "Predictive Text Studio",
     back: "Back",
     help: "Help",
     excel: "Excel",
@@ -22,6 +24,7 @@ export default {
     save: "Save",
     close: "Close",
     or: "or",
+    add: "Add",
   },
   input: {
     enter_bcp47_tag: "Enter the BCP 47 Tag",
@@ -68,6 +71,7 @@ export default {
     },
     main: {
       title: "Welcome to Predictive Text Studio",
+      designed_for: "Designed for",
       add: "Add",
       prediction: "prediction",
       and: "and",
@@ -176,4 +180,4 @@ export default {
       team_members: "Team Members",
     },
   },
-};
+} as Localization;

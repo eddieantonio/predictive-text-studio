@@ -336,7 +336,7 @@
           Predictive Text Studio
         </h1>
         <p class="masthead__branding">
-          designed for
+          {$_('page.main.designed_for')}
           <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
         </p>
         <p class="masthead__description">

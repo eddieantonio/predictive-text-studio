@@ -12,6 +12,13 @@
 
   export let selectedButton: string = "information";
 
+  interface LanguageInfoComponent extends LanguageInfo {
+    getMetadata(): Promise<void>;
+  }
+
+  // reference to child component so it may be updated
+  let languageInfo: undefined | LanguageInfoComponent;
+
   let downloadReady: boolean = true;
 
   // Mock language data object - this would be read from localstorage/db
@@ -54,23 +61,59 @@
   };
 
   /**
+   * Creates an anchor to download a file programmatically
+   * @param href link to Blob or File
+   * @param download Title of the download
+   *
+   */
+  const createAnchor = (href: string, download: string): void => {
+    const anchor = document.createElement("a");
+    anchor.href = href;
+    anchor.target = "_blank";
+    anchor.download = download;
+    // Auto click on a element, trigger the file download
+    anchor.click();
+    anchor.remove();
+  };
+
+  /**
    * Handles the click when the download language button is pressed. downloads a .kmp file.
-   * @return {void}
    */
   const handleDownload = async (): Promise<void> => {
     let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
-
     if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
+    createAnchor($currentDownloadURL, `${dictionaryName}.kmp`);
+  };
 
-    const anchor = document.createElement("a");
-    anchor.href = $currentDownloadURL;
-    anchor.target = "_blank";
-    anchor.download = `${dictionaryName}.kmp`;
+  /**
+   * Handles downloading the files and metadata stored in IndexedDB
+   */
+  const handleExport = async (): Promise<void> => {
+    const dataString = await worker.exportProjectData();
+    const file = new Blob([dataString], { type: "application/json" });
+    const url = URL.createObjectURL(file);
+    createAnchor(url, "Predictive-Text-Studio-Project.json");
+  };
 
-    // Auto click on a element, trigger the file download
-    anchor.click();
+  /**
+   * Programmatically triggering a file upload and importing project
+   */
+  const handleImport = (): void => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", ".json");
 
-    anchor.remove();
+    input.addEventListener("change", async () => {
+      const files = input.files;
+      if (!files || files.length < 1) return;
+      const fileString = await files[0].text();
+      await worker.importProjectData(fileString);
+      // load in the new metaData if languageInfo is in focus
+      if (languageInfo) languageInfo.getMetadata();
+      getLanguageSources();
+      input.remove();
+    });
+    input.click();
   };
 </script>
 
@@ -103,6 +146,13 @@
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
+  }
+
+  .customize__container--footer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 50px;
+    margin-top: 50px;
   }
 
   .customize__container--header div {
@@ -167,8 +217,8 @@
       </a>
       <header class="customize__container--header">
         <div>
-          <h1>{$_('common.name')}</h1>
-          <p>designed for
+          <h1>{$_('common.app_name')}</h1>
+          <p>{$_('page.main.designed_for')}
             <img
             src="/assets/keyman-logo.svg"
             alt="Keyman" />
@@ -198,7 +248,7 @@
       </div>
       <div class="customize__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo />
+          <LanguageInfo bind:this={languageInfo} />
         {:else if selectedButton === 'sources'}
           <LanguageSources
             bind:sources={languageInformation.sources}
@@ -206,6 +256,11 @@
           />
         {/if}
       </div>
+      <div class="customize__container--footer">
+        <Button onClick={handleImport}>Import Project Data</Button>
+        <Button onClick={handleExport}>Export Project Data</Button>
+      </div>
     </div>
+
   </div>
 </main>

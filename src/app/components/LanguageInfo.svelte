@@ -4,6 +4,7 @@
 
   import InputField from "./InputField.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
+  import Button from "./Button.svelte";
   import worker from "../spawn-worker";
 
   import type { KeyboardMetadata } from "@common/types";
@@ -17,10 +18,12 @@
   let dictionaryName: string = "";
 
   // prevent triggering compilation twice
-  let listenForMetaDataChanges: boolean = false;
+  let listenForLanguageInfoChanges: boolean = false;
 
-  onMount(async () => {
+  export async function getMetadata() {
     const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
+
+    listenForLanguageInfoChanges = false;
 
     authorName = storedProjectData.authorName;
     languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
@@ -28,14 +31,18 @@
     copyright = storedProjectData.copyright || "";
     dictionaryName = storedProjectData.dictionaryName || "";
 
-    listenForMetaDataChanges = true;
-  });
+    listenForLanguageInfoChanges = true;
+  }
 
-  $: if (languageInfo && listenForMetaDataChanges) {
+  onMount(getMetadata);
+
+  $: if (languageInfo && listenForLanguageInfoChanges) {
     updateMetadata("languages", [
       { name: languageInfo.language, id: languageInfo.bcp47Tag },
     ]);
   }
+
+  $: copyrightButtonEnabled = copyright !== "" && copyright.charAt(0) !== "©";
 
   function updateMetadata(key: any, value: any) {
     worker.setProjectData({ [key]: value });
@@ -47,6 +54,13 @@
   function onBlurListener(event: CustomEvent) {
     let { key, value } = event.detail;
     updateMetadata(key, value);
+  }
+
+  function addCopyrightSymbol() {
+    if (copyright.charAt(0) !== "©") {
+      copyright = "© " + copyright;
+      updateMetadata("copyright", copyright);
+    }
   }
 </script>
 
@@ -63,7 +77,7 @@
   }
 
   .language__info-right {
-    margin-left: 300px;
+    margin-left: 18.75rem;
   }
 
   .label {
@@ -77,6 +91,14 @@
     height: 200px;
   }
 
+  .copyright-field {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    margin-left: 2rem;
+    min-width: 6.25rem;
+  }
+
   @media (max-width: 768px) {
     .language__info {
       display: block;
@@ -87,6 +109,9 @@
     img {
       width: 100%;
       height: auto;
+    }
+    .copyright-field {
+      margin-left: 0;
     }
   }
 </style>
@@ -119,7 +144,17 @@
       cyData="input-copyright"
       subtext="" />
   </div>
-
+  <div class="copyright-field">
+    {#if copyrightButtonEnabled}
+      <Button
+        size="small"
+        color="blue"
+        isOutlined={true}
+        onClick={addCopyrightSymbol}>
+        {$_('common.add') + ' ©'}
+      </Button>
+    {/if}
+  </div>
   <div class="language__info-right">
     <p class="label">{$_('input.keyboard_preview')}</p>
     <img
