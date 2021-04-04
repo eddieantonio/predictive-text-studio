@@ -151,7 +151,7 @@
         color="blue"
         isOutlined={true}
         onClick={addCopyrightSymbol}>
-        {$_('common.add') + ' ©'}
+        {$_('page.lang.add_copyright_symbol')}
       </Button>
     {/if}
   </div>
