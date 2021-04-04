@@ -51,6 +51,8 @@
   }
 
   // Split Button
+  // TODO: this is some bad naming 🙃
+  // TODO: change "upload file" to... tab mode or something.
   const uploadFromFile = () => {
     uploadFile = true;
   };
@@ -398,13 +400,14 @@
       <div class="split-container">
         <ButtonBar>
           <SplitButton
-            color="blue"
+            color={uploadFile ? 'blue' : 'grey'}
             dataCy="landing-splitbtn-upload"
             onClick={uploadFromFile}
             type="button">
             {$_('page.main.upload_tab_label')}
           </SplitButton>
           <SplitButton
+            color={!uploadFile ? 'blue' : 'grey'}
             dataCy="landing-splitbtn-google-sheets"
             onClick={UploadFromGoogleSheets}
             type="button">
