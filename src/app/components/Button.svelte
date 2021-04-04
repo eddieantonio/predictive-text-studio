@@ -9,6 +9,10 @@
   export let dataCy: string = ""; // optional
   export let enabled: boolean = true; // optional
   export let onClick: (ev: MouseEvent) => void;
+
+  function whenButtonDepressed(event) {
+    if (enabled) onClick(event);
+  }
 </script>
 
 <style>
@@ -23,9 +27,14 @@
     flex-direction: column;
     align-items: center;
   }
+
   .button--disabled {
-    background: var(--gray-disabled);
-    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .button--disabled.button--outline {
+    color: var(--gray-disabled);
+    border-color: var(--gray-disabled);
   }
 
   @media (max-width: 768px) {
@@ -43,7 +52,7 @@
     class:button--outline={isOutlined}
     class:button--disabled={!enabled}
     {type}
-    on:click={onClick}
+    on:click={whenButtonDepressed}
     data-cy={dataCy}><slot /></button>
   {#if subtext}
     <p class="subtext mt-xs">{subtext}</p>

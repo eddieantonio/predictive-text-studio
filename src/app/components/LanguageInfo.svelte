@@ -42,7 +42,7 @@
     ]);
   }
 
-  $: copyrightButtonEnabled = copyright !== "" && copyright.charAt(0) !== "©";
+  $: copyrightButtonEnabled = copyright.charAt(0) !== "©";
 
   function updateMetadata(key: any, value: any) {
     worker.setProjectData({ [key]: value });
@@ -145,15 +145,14 @@
       subtext="" />
   </div>
   <div class="copyright-field">
-    {#if copyrightButtonEnabled}
-      <Button
-        size="small"
-        color="blue"
-        isOutlined={true}
-        onClick={addCopyrightSymbol}>
-        {$_('page.lang.add_copyright_symbol')}
-      </Button>
-    {/if}
+    <Button
+      size="small"
+      enabled={copyrightButtonEnabled}
+      color="blue"
+      isOutlined={true}
+      onClick={addCopyrightSymbol}>
+      {$_('page.lang.add_copyright_symbol')}
+    </Button>
   </div>
   <div class="language__info-right">
     <p class="label">{$_('input.keyboard_preview')}</p>
