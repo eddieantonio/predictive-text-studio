@@ -1,6 +1,7 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import ButtonBar from "./ButtonBar.svelte";
+  import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
   import type { WordList, WordListSource } from "@common/types";
@@ -19,28 +20,6 @@
     manualEntry = true;
   };
 
-  let splitBtns = [
-    {
-      color: "blue",
-      size: "medium",
-      text: $_("common.upload"),
-      isOutlined: false,
-      hasDropShadow: false,
-      dataCy: "add-sources-splitbtn-upload",
-      handleClick: uploadSourcesFromFile,
-      type: "submit",
-    },
-    {
-      color: "grey",
-      size: "medium",
-      text: $_("common.direct_entry"),
-      isOutlined: false,
-      hasDropShadow: false,
-      dataCy: "add-sources-splitbtn-direct-entry",
-      handleClick: directEntrySources,
-      type: "submit",
-    },
-  ];
   // Manual Entry
   let manualEntry: boolean = false;
   let initialWordlist: WordList = [];
@@ -63,7 +42,17 @@
 </style>
 
 <div class="top-button-zone" data-cy="add-source-options">
-  <ButtonBar {splitBtns} />
+  <ButtonBar>
+    <!-- TODO: should these be submit buttons??? -->
+    <SplitButton color="blue" onClick={uploadSourcesFromFile} dataCy="add-sources-splitbtn-upload" size="medium" type="submit">{$_("common.upload")}</SplitButton>
+    <SplitButton
+      onClick={directEntrySources}
+      dataCy="add-sources-splitbtn-direct-entry"
+      size="medium"
+      type="submit">
+      {$_('common.direct_entry')}
+    </SplitButton>
+  </ButtonBar>
 </div>
 
 {#if manualEntry}
