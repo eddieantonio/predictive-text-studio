@@ -24,6 +24,7 @@ export default {
     save: "Save",
     close: "Close",
     or: "or",
+    add: "Add",
   },
   input: {
     enter_bcp47_tag: "Enter the BCP 47 Tag",
