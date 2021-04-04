@@ -89,6 +89,7 @@ export default {
       information: "Information",
       sources: "Sources",
       download: "Download",
+      add_copyright_symbol: "Add ©",
     },
     privacy: {
       title: "Predictive Text Studio Privacy Policy",
