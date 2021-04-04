@@ -54,7 +54,7 @@ export default {
     no_custom_count_column: "No custom count column specified! Defaulting to",
     existing_project_warning: "You already have a project started!",
     existing_project_continue_prompt: "Would you like to continue?",
-    continue: "Continue"
+    continue: "Continue",
   },
   page: {
     help: {
