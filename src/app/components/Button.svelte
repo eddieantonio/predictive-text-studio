@@ -13,6 +13,16 @@
   function whenButtonDepressed(event) {
     if (enabled) onClick(event);
   }
+
+  /**
+   * Whether the data-disabled=" prop should appear on the element.
+   * Note: this is only updated when PASSED enabled!
+   */
+  function dataDisabledState(isEnabled) {
+    // exclude the prop entirely by setting the value to 'null'
+    // See: https://svelte.dev/docs#Attributes_and_props:~:text=All%20other%20attributes%20are%20included%20unless,%3Cinput
+    return !isEnabled ? "disabled" : null;
+  }
 </script>
 
 <style>
@@ -53,7 +63,8 @@
     class:button--disabled={!enabled}
     {type}
     on:click={whenButtonDepressed}
-    data-cy={dataCy}><slot /></button>
+    data-cy={dataCy}
+    data-disabled={dataDisabledState(enabled)}><slot /></button>
   {#if subtext}
     <p class="subtext mt-xs">{subtext}</p>
   {/if}
