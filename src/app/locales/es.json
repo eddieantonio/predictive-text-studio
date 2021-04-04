@@ -15,19 +15,17 @@
     "size": "Tamaño",
     "type": "Tipo",
     "actions": "Accions",
-    "table_name": "Nombre de tabla",
     "word": "Palabra",
-    "count": "Ocurencias",
     "optional": "Opcionál",
     "save": "Guardar",
     "close": "Cerrar",
-    "or": "o"
+    "or": "o",
+    "count": "Recuento",
+    "table_name": "Nombre de la tabla"
   },
   "input": {
-    "enter_bcp47_tag": "Enter the BCP 47 Tag",
-    "invalid_bcp47_tag": "Código de idioma no valido",
+    "invalid_bcp47_tag": "Código de idioma inválido",
     "download_kmp_package": "Descara archivo KMP",
-    "read_values": "Lee valors",
     "connection_error": "No se pudo conectar a Hojas de Cálculo de Google",
     "invalid_google_sheets_url": "no es un URL valído de Hojas de Cálculo de Google. Por favor, trata de nuevo.",
     "language": "Idioma",
@@ -44,19 +42,21 @@
     "browse_file": "carga archivo",
     "advanced_options": "Opciones avacadas",
     "only_works_with": "*Sólo funcciona con archivos Excel .xlsx y Hojas de Cálculo de Google",
-    "spreadsheet_word_column": "la columna que contiene palabras",
-    "spreadsheet_count_column": "la columna que contiene occurencias",
     "no_custom_word_column": "¡No has escojído la columna que contiene las palabras! Usando columna",
-    "no_custom_count_column": "¡No has escojído la columna que contiene las occurencias! Usando columna"
+    "no_custom_count_column": "¡No has escojído la columna que contiene las occurencias! Usando columna",
+    "enter_bcp47_tag": "Ingrese el código de idioma (BCP-47)",
+    "read_values": "Leer valores",
+    "spreadsheet_count_column": "Columna que contiene recuentos",
+    "spreadsheet_word_column": "Columna que contiene palabras"
   },
   "page": {
     "help": {
-      "title": "¿Qué tengo que cargar?",
-      "intro": "Predictive Text Studio usa la hoja de cálculo que cargas en el diccionario de tu teclado. La columna “palabras” contiene palabras de tu idioma cuales quieres sugirir en tu tecaldo predictivo. La columna “occurrencias” opcionalmente da las veces que ocurre la palabra en tu idioma.",
-      "excel_instruction": "Create an Excel file with \"Word\" in the A column and \"Count\" in the B column. You may upload the Excel file directly to the Upload Area.",
-      "google_sheets_instruction": "Create a Google Sheets spreadsheet with \"Word\" in the A column and \"Count\" in the B column. When you have completed the spreadsheet press the \"Share\" button in the top right corner of the Google Sheets interface and copy a link which \"Anyone on the internet with this link can view\". You may now paste this link in the Google Sheets URL input.",
-      "tsv_instruction": "TSV (en inglés: Tab Separated Values) es un archivo que contiene valores separados por tabulaciones. Así como Excel o Hojas de Cálculo de Google, create a text file with \"Word\" in the first column and \"Count\" in the second column. Segurate que tu archivo tiene la extencion “.tsv” y cargala en la area de cargas. Para detalles técnicas sobre el formato .TSV, por favor hecha un vistazo al",
-      "keyman": "sito web de Keyman"
+      "title": "¿Qué hay que cargar?",
+      "intro": "Predictive Text Studio utiliza la hoja de cálculo que cargas para personalizar las palabras sugeridas de tu teclado para tu idioma.\nLa columna “Palabra” contiene palabras en tu idioma que quieres agregar a la lista de sugerencias. \nLa columna “Recuento” indica la cantidad de ocurrencias o la frecuencia con la que aparece una palabra en su idioma.",
+      "keyman": "sito web de Keyman (inglés)",
+      "excel_instruction": "Cree un archivo de Excel con “Word” en la primer columna y “Recuento” en la segunda columna. Cada fila en la hoja debe tener una palabra el la columna primera, y, opcionalmente, su recuento en la segunda columna.\nPuede cargar el archivo de Excel directamente en el área de carga.",
+      "google_sheets_instruction": "Cree una hoja de cálculo de Google con \"Word\" en la columna primera y \"Count\" en la columna segunda. \nCuando haya completado la hoja de cálculo, presione el botón \"Compartir\" en la esquina superior derecha de la interfaz de Hojas de cálculo de Google y copie el vínculo que permite que cualquiera usario en el Internet puede ver los elementos. \nAhora puede pegar este vínculoa en la entrada de URL de Hojas de cálculo de Google.",
+      "tsv_instruction": "TSV (de Tab Separated Values en inglés) es un variante de texto sin formato en que valores se separan por tabulaciones. \nAsí como en Excel o Hojas de Cálculo de Google, cree un archivo de texto con ”Word” en la primera columna y “Count” en la segunda columna. \nAsegúrese de que su archivo tenga la extensión .tsv y cárguelo en la área de carga. \nPara obtener detalles exhaustivos sobre el formato TSV que usa Keyman, visite el"
     },
     "main": {
       "title": "Le damos la bienvenida a Predictive Text Studio",
@@ -67,8 +67,8 @@
       "autocorrect": "autocorrección",
       "to_your_language": "para tu idioma",
       "get_started": "Empezamos",
-      "step_one": "Primero: elige tu idioma",
-      "step_two": "Segundo: Agrega una lista de palabras",
+      "step_one": "Primero, elige tu idioma",
+      "step_two": "Segundo, agrega una lista de palabras",
       "customize": "Configurar",
       "privacy_policy": "Política de privacidad",
       "about_the_team": "Sobre el equipo"
