@@ -10,7 +10,7 @@
   export let enabled: boolean = true; // optional
   export let onClick: (ev: MouseEvent) => void;
 
-  function whenButtonDepressed(event) {
+  function whenButtonDepressed(event: MouseEvent): void {
     if (enabled) onClick(event);
   }
 
@@ -18,7 +18,7 @@
    * Whether the data-disabled=" prop should appear on the element.
    * Note: this is only updated when PASSED enabled!
    */
-  function dataDisabledState(isEnabled) {
+  function dataDisabledState(isEnabled: boolean): "disabled" | null {
     // exclude the prop entirely by setting the value to 'null'
     // See: https://svelte.dev/docs#Attributes_and_props:~:text=All%20other%20attributes%20are%20included%20unless,%3Cinput
     return !isEnabled ? "disabled" : null;
