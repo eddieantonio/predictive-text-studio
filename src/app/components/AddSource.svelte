@@ -43,13 +43,17 @@
 
 <div class="top-button-zone" data-cy="add-source-options">
   <ButtonBar>
-    <!-- TODO: should these be submit buttons??? -->
-    <SplitButton color="blue" onClick={uploadSourcesFromFile} dataCy="add-sources-splitbtn-upload" size="medium" type="submit">{$_("common.upload")}</SplitButton>
+    <SplitButton
+      color="blue"
+      onClick={uploadSourcesFromFile}
+      dataCy="add-sources-splitbtn-upload"
+      size="medium">
+      {$_('common.upload')}
+    </SplitButton>
     <SplitButton
       onClick={directEntrySources}
       dataCy="add-sources-splitbtn-direct-entry"
-      size="medium"
-      type="submit">
+      size="medium">
       {$_('common.direct_entry')}
     </SplitButton>
   </ButtonBar>
