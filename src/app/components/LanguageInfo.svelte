@@ -18,10 +18,12 @@
   let dictionaryName: string = "";
 
   // prevent triggering compilation twice
-  let listenForMetaDataChanges: boolean = false;
+  let listenForLanguageInfoChanges: boolean = false;
 
-  onMount(async () => {
+  export async function getMetadata() {
     const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
+
+    listenForLanguageInfoChanges = false;
 
     authorName = storedProjectData.authorName;
     languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
@@ -29,10 +31,12 @@
     copyright = storedProjectData.copyright || "";
     dictionaryName = storedProjectData.dictionaryName || "";
 
-    listenForMetaDataChanges = true;
-  });
+    listenForLanguageInfoChanges = true;
+  }
 
-  $: if (languageInfo && listenForMetaDataChanges) {
+  onMount(getMetadata);
+
+  $: if (languageInfo && listenForLanguageInfoChanges) {
     updateMetadata("languages", [
       { name: languageInfo.language, id: languageInfo.bcp47Tag },
     ]);
