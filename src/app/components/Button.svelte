@@ -16,7 +16,8 @@
 
   /**
    * Whether the data-disabled=" prop should appear on the element.
-   * Note: this is only updated when PASSED enabled!
+   * Note: this is not automatically called when `enabled` is changed;
+   * you must explicitly pass `enabled` for this function to be called :/
    */
   function dataDisabledState(isEnabled: boolean): "disabled" | null {
     // exclude the prop entirely by setting the value to 'null'
