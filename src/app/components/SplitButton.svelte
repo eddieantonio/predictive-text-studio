@@ -1,48 +1,17 @@
-<script lang="ts">
-  type ClickFnType = () => void;
-
-  interface BtnAttributes {
-    color: string;
-    size: string;
-    text: string;
-    isOutlined: boolean;
-    hasDropShadow: boolean;
-    dataCy: string;
-    handleClick: ClickFnType;
-    type: string;
-  }
-
-  export let splitBtns: BtnAttributes[];
+<script type="ts">
+  export let color: string = "grey";
+  export let size: string = "small";
+  export let hasDropShadow: boolean = false;
+  export let isOutlined: boolean = false;
+  export let type: "button" | "submit" | "dialog" = "button";
+  export let onClick: () => void;
+  export let dataCy: string | undefined;
 </script>
 
-<style>
-  .split-button-layout {
-    display: flex;
-    padding: 3%;
-  }
-  button {
-    flex: 1;
-    margin: 0;
-    border-radius: 0;
-  }
-  button:first-child {
-    border-top-left-radius: 0.625em;
-    border-bottom-left-radius: 0.625em;
-  }
-  button:last-child {
-    border-top-right-radius: 0.625em;
-    border-bottom-right-radius: 0.625em;
-  }
-</style>
-
-<div class="split-button-layout">
-  {#each splitBtns as setting}
-    <button
-      class="button button--{setting.color} button--{setting.size}"
-      class:button--shadow={setting.hasDropShadow}
-      class:button--outline={setting.isOutlined}
-      on:click={setting.handleClick}
-      type={setting.type}
-      data-cy={setting.dataCy}>{setting.text}</button>
-  {/each}
-</div>
+<button
+  {type}
+  class="button button--{color} button--{size}"
+  class:button--shadow={hasDropShadow}
+  class:button--outline={isOutlined}
+  on:click={onClick}
+  data-cy={dataCy}><slot /></button>

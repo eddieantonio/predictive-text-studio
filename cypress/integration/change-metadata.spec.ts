@@ -8,7 +8,7 @@ describe("Changing metadata in the language info page", function () {
   const copyright = "© 2018 My Cool Organization";
 
   beforeEach(() => {
-    cy.visit("/languages");
+    cy.visit("/customize");
     languageInput().clear().type(languageName).blur();
     cy.data("input-author-name").clear().type(authorName);
     cy.data("input-copyright").clear().type(copyright);
@@ -22,7 +22,7 @@ describe("Changing metadata in the language info page", function () {
     // Navigate away page...
     cy.visit("about:blank");
     // ...and then come back
-    cy.visit("/languages");
+    cy.visit("/customize");
 
     // Wait for the page to load completely
     // TODO: can we avoid waiting here?

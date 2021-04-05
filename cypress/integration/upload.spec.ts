@@ -58,7 +58,7 @@ describe("Upload from the the landing page and Download KMP", function () {
   });
 
   it("should download kmp file from languages download button", function () {
-    cy.visit("/languages");
+    cy.visit("/customize");
 
     const downloadedFilePath = path.join(
       downloadFolder,
@@ -67,9 +67,9 @@ describe("Upload from the the landing page and Download KMP", function () {
 
     cy.readFile(downloadedFilePath).should("not.exist");
 
-    cy.data("languages-download-btn").scrollIntoView().should("be.visible");
+    cy.data("customize-download-btn").scrollIntoView().should("be.visible");
 
-    cy.data("languages-download-btn")
+    cy.data("customize-download-btn")
       .should("not.have.class", "button--disabled")
       .click();
 

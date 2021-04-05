@@ -1,6 +1,8 @@
+import type Localization from "./localization";
+
 export default {
   common: {
-    name: "Predictive Text Studio",
+    app_name: "Predictive Text Studio",
     back: "Back",
     help: "Help",
     excel: "Excel",
@@ -22,6 +24,7 @@ export default {
     save: "Save",
     close: "Close",
     or: "or",
+    add: "Add",
   },
   input: {
     enter_bcp47_tag: "Enter the BCP 47 Tag",
@@ -49,6 +52,9 @@ export default {
     spreadsheet_count_column: "Spreadsheet Count Column",
     no_custom_word_column: "No custom word column specified! Defaulting to",
     no_custom_count_column: "No custom count column specified! Defaulting to",
+    existing_project_warning: "You already have a project started!",
+    existing_project_continue_prompt: "Would you like to continue?",
+    continue: "Continue",
   },
   page: {
     help: {
@@ -65,6 +71,7 @@ export default {
     },
     main: {
       title: "Welcome to Predictive Text Studio",
+      designed_for: "Designed for",
       add: "Add",
       prediction: "prediction",
       and: "and",
@@ -73,6 +80,8 @@ export default {
       get_started: "Get started",
       step_one: "Step 1: Enter your language",
       step_two: "Step 2: Add a word list",
+      upload_tab_label: "Upload File",
+      google_sheets_tab_label: "Google Sheets URL",
       customize: "Customize",
       privacy_policy: "Privacy Policy",
       about_the_team: "About the Team",
@@ -82,6 +91,7 @@ export default {
       information: "Information",
       sources: "Sources",
       download: "Download",
+      add_copyright_symbol: "Add ©",
     },
     privacy: {
       title: "Predictive Text Studio Privacy Policy",
@@ -173,4 +183,4 @@ export default {
       team_members: "Team Members",
     },
   },
-};
+} as Localization;

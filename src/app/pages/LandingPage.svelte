@@ -5,6 +5,7 @@
   import GoogleSheetsInput from "../components/GoogleSheetsInput.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
   import DownloadKMP from "../components/DownloadKMP.svelte";
+  import ButtonBar from "../components/ButtonBar.svelte";
   import SplitButton from "../components/SplitButton.svelte";
   import { currentDownloadURL } from "../stores";
   import type { KeyboardMetadata } from "@common/types";
@@ -50,6 +51,8 @@
   }
 
   // Split Button
+  // TODO: this is some bad naming 🙃
+  // TODO: change "upload file" to... tab mode or something.
   const uploadFromFile = () => {
     uploadFile = true;
   };
@@ -57,29 +60,6 @@
   const UploadFromGoogleSheets = () => {
     uploadFile = false;
   };
-
-  let splitBtns = [
-    {
-      color: "blue",
-      size: "small",
-      text: "Upload File",
-      isOutlined: false,
-      hasDropShadow: false,
-      dataCy: "landing-splitbtn-upload",
-      handleClick: uploadFromFile,
-      type: "button",
-    },
-    {
-      color: "grey",
-      size: "small",
-      text: "Google Sheets URL",
-      isOutlined: false,
-      hasDropShadow: false,
-      dataCy: "landing-splitbtn-google-sheets",
-      handleClick: UploadFromGoogleSheets,
-      type: "button",
-    },
-  ];
 </script>
 
 <style>
@@ -336,7 +316,7 @@
           Predictive Text Studio
         </h1>
         <p class="masthead__branding">
-          designed for
+          {$_('page.main.designed_for')}
           <img class="masthead__brand" alt="Keyman" src="/assets/keyman-logo.svg">
         </p>
         <p class="masthead__description">
@@ -389,20 +369,20 @@
         id="project-exists-info"
         class="card card__info card__existing-project"
         data-cy="existing-project-card">
-        <form action={PAGE_URLS.languages}>
-          <h3>You already have a project started!</h3>
-          <p>Would you like to continue?</p>
+        <form action={PAGE_URLS.customize}>
+          <h3>{$_('input.existing_project_warning')}</h3>
+          <p>{$_('input.existing_project_continue_prompt')}</p>
           <button
             class="button button--primary quick-start__submit-button"
             class:quick-start__submit-button--disabled={!continueReady}
             type="submit"
             data-cy="existing-project-continue-button">
-            Continue
+            {$_('input.continue')}
           </button>
         </form>
       </div>
     {/if}
-    <form action={PAGE_URLS.languages} data-cy="quick-start">
+    <form action={PAGE_URLS.customize} data-cy="quick-start">
       <fieldset class="quick-start__step">
         <LanguageNameInput
           bind:selectedLanguage
@@ -418,7 +398,22 @@
       </fieldset>
 
       <div class="split-container">
-        <SplitButton {splitBtns} />
+        <ButtonBar>
+          <SplitButton
+            color={uploadFile ? 'blue' : 'grey'}
+            dataCy="landing-splitbtn-upload"
+            onClick={uploadFromFile}
+            type="button">
+            {$_('page.main.upload_tab_label')}
+          </SplitButton>
+          <SplitButton
+            color={!uploadFile ? 'blue' : 'grey'}
+            dataCy="landing-splitbtn-google-sheets"
+            onClick={UploadFromGoogleSheets}
+            type="button">
+            {$_('page.main.google_sheets_tab_label')}
+          </SplitButton>
+        </ButtonBar>
       </div>
       {#if uploadFile}
         <Upload />

@@ -4,6 +4,7 @@ import {
   StoredProjectData,
   KeyboardDataWithTime,
   KMPPackageData,
+  ExportedProjectData,
 } from "./storage-models";
 const DB_NAME = "dictionary_sources";
 
@@ -272,6 +273,33 @@ export default class Storage {
     }
     return kmpFile.package;
   }
+
+  /**
+   * Export projectData and Files as a json string
+   */
+  async exportProjectData(): Promise<string> {
+    const projectData: StoredProjectData = await this.fetchProjectData();
+    const files: StoredWordList[] = await this.fetchAllFiles();
+    return JSON.stringify({ projectData, files });
+  }
+
+  /**
+   * Import projectData and Files that have previously been exported
+   * @param data json string of format: ExportedProjectData
+   */
+  async importProjectData(data: string): Promise<void> {
+    const { projectData, files }: ExportedProjectData = JSON.parse(data);
+    if (projectData) {
+      await this.db.transaction("readwrite", this.db.projectData, async () => {
+        await this.db.projectData.put(projectData);
+      });
+    }
+    if (files) {
+      await this.db.transaction("readwrite", this.db.files, async () => {
+        await this.db.files.bulkPut(files);
+      });
+    }
+  }
 }
 
 function createInitialProjectData(): StoredProjectData {
@@ -280,7 +308,7 @@ function createInitialProjectData(): StoredProjectData {
 
     authorName: "Unknown Author",
 
-    // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
+    // An empty string indicates "language unknown" in XML/HTML as in <html lang="">
     // See: https://www.w3.org/International/questions/qa-no-language#undetermined
     // See: https://tools.ietf.org/html/bcp47#section-3.4.1
     bcp47Tag: "",
