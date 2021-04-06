@@ -194,11 +194,13 @@ export default class Storage {
    * Checks if a project currently exists
    */
   async doesProjectExist(): Promise<boolean> {
-    const projectData = await this.db.projectData
-      .where(":id")
-      .equals(PACKAGE_ID)
-      .first();
-    return projectData !== undefined;
+    try {
+      const projectData = await this.fetchProjectData();
+      return projectData !== undefined;
+    } catch (err) {
+      // No project data found
+      return false;
+    }
   }
 
   /**
@@ -277,9 +279,7 @@ export default class Storage {
 function createInitialProjectData(): StoredProjectData {
   return {
     id: PACKAGE_ID,
-
     authorName: "Unknown Author",
-
     // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
     // See: https://www.w3.org/International/questions/qa-no-language#undetermined
     // See: https://tools.ietf.org/html/bcp47#section-3.4.1
