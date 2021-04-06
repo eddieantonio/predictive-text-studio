@@ -26,14 +26,14 @@ export async function generateKmp(
   modelID: string,
   authorName: string | undefined,
   copyright: string | undefined,
-  dictionaryName: string | undefined,
+  dictionaryName: string | undefined
 ): Promise<ArrayBuffer> {
   const kmpJsonFile = generateKmpJson({
     languages: [{ name: langName, id: bcp47Tag }],
     modelID: modelID,
     authorName: authorName,
     copyright: copyright,
-    modelUserReadableName: dictionaryName
+    modelUserReadableName: dictionaryName,
   });
   const modelFile = compileModelFromLexicalModelSource({
     format: "trie-1.0",
