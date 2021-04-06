@@ -10,7 +10,7 @@ describe("Changing metadata in the language info page", function () {
 
   beforeEach(() => {
     cy.visit("/customize");
-    cy.wait(1000); // TODO: Can avoid doing this by fixing the language input. Language input will have no languages on first load, and they will not show until refresh.
+    cy.wait(3000); // TODO: Can avoid doing this by fixing the language input. Language input will have no languages on first load, and they will not show until refresh.
     cy.reload();
     languageInput()
       .clear()
