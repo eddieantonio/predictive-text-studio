@@ -16,8 +16,7 @@ describe("Adding © to the copyright field", function () {
     button().should("not.have.attr", "data-disabled");
     button().click();
 
-    copyrightInput()
-      .should("have.value", "© " + copyright);
+    copyrightInput().should("have.value", "© " + copyright);
 
     button().should("have.attr", "data-disabled");
   });
