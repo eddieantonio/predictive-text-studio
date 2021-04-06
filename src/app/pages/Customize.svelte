@@ -12,6 +12,13 @@
 
   export let selectedButton: string = "information";
 
+  interface LanguageInfoComponent extends LanguageInfo {
+    getMetadata(): Promise<void>;
+  }
+
+  // reference to child component so it may be updated
+  let languageInfo: undefined | LanguageInfoComponent;
+
   let downloadReady: boolean = true;
 
   // Mock language data object - this would be read from localstorage/db
@@ -54,23 +61,59 @@
   };
 
   /**
+   * Creates an anchor to download a file programmatically
+   * @param href link to Blob or File
+   * @param download Title of the download
+   *
+   */
+  const createAnchor = (href: string, download: string): void => {
+    const anchor = document.createElement("a");
+    anchor.href = href;
+    anchor.target = "_blank";
+    anchor.download = download;
+    // Auto click on a element, trigger the file download
+    anchor.click();
+    anchor.remove();
+  };
+
+  /**
    * Handles the click when the download language button is pressed. downloads a .kmp file.
-   * @return {void}
    */
   const handleDownload = async (): Promise<void> => {
     let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
-
     if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
+    createAnchor($currentDownloadURL, `${dictionaryName}.kmp`);
+  };
 
-    const anchor = document.createElement("a");
-    anchor.href = $currentDownloadURL;
-    anchor.target = "_blank";
-    anchor.download = `${dictionaryName}.kmp`;
+  /**
+   * Handles downloading the files and metadata stored in IndexedDB
+   */
+  const handleExport = async (): Promise<void> => {
+    const dataString = await worker.exportProjectData();
+    const file = new Blob([dataString], { type: "application/json" });
+    const url = URL.createObjectURL(file);
+    createAnchor(url, "Predictive-Text-Studio-Project.json");
+  };
 
-    // Auto click on a element, trigger the file download
-    anchor.click();
+  /**
+   * Programmatically triggering a file upload and importing project
+   */
+  const handleImport = (): void => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", ".json");
 
-    anchor.remove();
+    input.addEventListener("change", async () => {
+      const files = input.files;
+      if (!files || files.length < 1) return;
+      const fileString = await files[0].text();
+      await worker.importProjectData(fileString);
+      // load in the new metaData if languageInfo is in focus
+      if (languageInfo) languageInfo.getMetadata();
+      getLanguageSources();
+      input.remove();
+    });
+    input.click();
   };
 </script>
 
@@ -85,7 +128,7 @@
     min-height: 100vh;
   }
 
-  .languages {
+  .customize {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -93,11 +136,11 @@
     font-family: Cabin, sans-serif;
   }
 
-  .languages__sidebar {
+  .customize__sidebar {
     background-color: var(--gray-dark);
   }
 
-  .languages__sidebar--project {
+  .customize__sidebar--project {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,39 +153,46 @@
     margin: 2rem 1rem;
   }
 
-  .languages__sidebar--project.selected {
+  .customize__sidebar--project.selected {
     background: var(--primary-blue);
     color: var(--white);
   }
 
-  .languages__container {
+  .customize__container {
     margin: auto var(--margin);
     width: calc(100vw - var(--gap));
   }
 
-  .languages__container--header {
+  .customize__container--header {
     margin-top: 50px;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
   }
 
-  .languages__container--header div {
+  .customize__container--footer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 50px;
+    margin-top: 50px;
+  }
+
+  .customize__container--header div {
     vertical-align: middle;
   }
 
-  .languages__container--header h1 {
+  .customize__container--header h1 {
     font-family: Cabin, sans-serif;
     font-weight: bold;
     font-size: 30px;
   }
 
-  .languages__container--header p {
+  .customize__container--header p {
     font-family: Cabin, sans-serif;
     font-size: var(--l);
   }
 
-  .languages__container--header img {
+  .customize__container--header img {
     height: 1rem;
     width: auto;
     vertical-align: center;
@@ -152,17 +202,17 @@
     color: var(--black, #111);
   }
 
-  .languages__container--actions {
+  .customize__container--actions {
     display: flex;
     flex-direction: row;
   }
 
-  .languages__container--content {
+  .customize__container--content {
     margin: 2rem auto;
   }
 
   @media (max-width: 768px) {
-    .languages__container--actions {
+    .customize__container--actions {
       display: block;
     }
   }
@@ -180,21 +230,21 @@
   2. Use variable names for colors and fonts
  -->
 <main>
-  <div class="languages">
-    <div class="languages__sidebar">
-      <div class="languages__sidebar--project selected">A</div>
-      <div class="languages__sidebar--project">K</div>
-      <div class="languages__sidebar--project">H</div>
-      <div class="languages__sidebar--project">L</div>
-      <div class="languages__sidebar--project">+</div>
+  <div class="customize">
+    <div class="customize__sidebar">
+      <div class="customize__sidebar--project selected">A</div>
+      <div class="customize__sidebar--project">K</div>
+      <div class="customize__sidebar--project">H</div>
+      <div class="customize__sidebar--project">L</div>
+      <div class="customize__sidebar--project">+</div>
     </div>
-    <div class="languages__container">
+    <div class="customize__container">
       <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
           {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
-      <header class="languages__container--header">
+      <header class="customize__container--header">
         <div>
           <h1>{$_('common.app_name')}</h1>
           <p>{$_('page.main.designed_for')}
@@ -204,36 +254,40 @@
           </p>
         </div>
       </header>
-      <div class="languages__container--actions">
+      <div class="customize__container--actions">
         <Button
           color="grey"
           isOutlined={(selectedButton === 'information')}
           onClick={() => handleClick('information')}
-          dataCy="languages-information-btn"
+          dataCy="customize-information-btn"
         >{$_('page.lang.information')}</Button>
         <Button
           color="grey"
           isOutlined={(selectedButton === 'sources')}
           onClick={()=> handleClick('sources')}
-          dataCy="languages-sources-btn"
+          dataCy="customize-sources-btn"
         >{$_('page.lang.sources')}</Button>
         <Button
           color="blue"
           onClick={handleDownload}
           subtext={languageInformation.wordCount.toString() + " words"}
-          dataCy="languages-download-btn"
+          dataCy="customize-download-btn"
           enabled={downloadReady}
         >{$_('page.lang.download')}</Button>
       </div>
-      <div class="languages__container--content">
+      <div class="customize__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo />
+          <LanguageInfo bind:this={languageInfo} />
         {:else if selectedButton === 'sources'}
           <LanguageSources
             bind:sources={languageInformation.sources}
             {getLanguageSources}
           />
         {/if}
+      </div>
+      <div class="customize__container--footer">
+        <Button onClick={handleImport}>Import Project Data</Button>
+        <Button onClick={handleExport}>Export Project Data</Button>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 describe("Adding sources by direct entry", function () {
   beforeEach(() => {
-    cy.visit("/languages");
-    cy.data("languages-sources-btn").contains("Sources").click();
+    cy.visit("/customize");
+    cy.data("customize-sources-btn").contains("Sources").click();
   });
 
   it("should create and delete a manual entry source", function () {
@@ -42,7 +42,7 @@ describe("Adding sources by direct entry", function () {
     cy.wait(500);
 
     // edit the entry
-    cy.data("languages-sources-btn").contains("Sources").click();
+    cy.data("customize-sources-btn").contains("Sources").click();
     cy.data("language-source-edit").first().click();
 
     cy.data("manual-entry-input-word").first().type("World");

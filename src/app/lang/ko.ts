@@ -53,6 +53,9 @@ export default {
     no_custom_word_column:
       "사용자 지정 단어 열이 지정되지 않았습니다! 기본값은",
     no_custom_count_column: "사용자 지정 수 열이 지정되지 않았습니다! 기본값은",
+    existing_project_warning: "이미 프로젝트가 시작되었습니다!",
+    existing_project_continue_prompt: "계속 하시겠습니까?",
+    continue: "계속하다",
   },
   page: {
     help: {
@@ -90,7 +93,6 @@ export default {
     privacy: {
       title: "Predictive Text Studio 개인 정보 정책",
       effective_as_of: "유효",
-      date: "2020년 12월 8일",
       introduction: {
         title: "소개",
         head: {
