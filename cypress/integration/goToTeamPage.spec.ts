@@ -1,7 +1,7 @@
 describe("Go to the team page", function () {
   beforeEach(() => {
     cy.intercept("https://api.github.com/users/*", {
-      fixture: "response-github-clo1.json",
+      fixture: "response-github.json",
     });
   });
 
@@ -14,6 +14,6 @@ describe("Go to the team page", function () {
   it("should see loaded profiles on the team page", function () {
     cy.visit("/team");
     cy.wait(500);
-    expect(cy.data("contributor-handle-ChrisChrisLoLo")).to.exist;
+    expect(cy.data("contributor-handle-GithubPerson")).to.exist;
   });
 });
