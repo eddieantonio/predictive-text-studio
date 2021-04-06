@@ -3,15 +3,20 @@ import "cypress-file-upload";
 import path = require("path");
 
 describe("Changing metadata in the language info page", function () {
-  const languageName = "Makah";
+  const languageName = "Abua";
   const authorName = "Eddie";
   const copyright = "© 2018 My Cool Organization";
+  const dictionaryName = "My Name";
 
   beforeEach(() => {
     cy.visit("/customize");
-    languageInput().clear().type(languageName).blur();
+    languageInput()
+      .clear()
+      .type(languageName + "{enter}")
+      .blur();
     cy.data("input-author-name").clear().type(authorName);
     cy.data("input-copyright").clear().type(copyright);
+    cy.data("input-dictionary-name").clear().type(dictionaryName);
 
     // Wait for the settings to change in the database
     // TODO: can we avoid waiting here?
@@ -31,6 +36,7 @@ describe("Changing metadata in the language info page", function () {
     languageInput().its("value").should("be", languageName);
     cy.data("input-author-name").its("value").should("be", authorName);
     cy.data("input-copyright").its("value").should("be", copyright);
+    cy.data("input-dictionary-name").its("value").should("be", dictionaryName);
   });
 
   it("should recompile KMP on metadata change", function () {
@@ -38,7 +44,10 @@ describe("Changing metadata in the language info page", function () {
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
     // upload a file
-    cy.data("languages-sources-btn").contains("Sources").click();
+    cy.data("customize-sources-btn")
+      .scrollIntoView()
+      .contains("Sources")
+      .click();
 
     // Add source component should show after clicking the details element
     cy.data("language-sources-add-sources").click().scrollIntoView();
@@ -46,9 +55,7 @@ describe("Changing metadata in the language info page", function () {
     cy.data("add-sources-splitbtn-upload").contains("Upload").click();
     cy.data("upload-dropzone").contains("label", "Browse file");
 
-    cy.data("language-sources-add-sources").contains("Add Source").click();
-
-    const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
+    const downloadedFilePath = path.join(downloadFolder, "My Name.kmp");
 
     cy.readFile(downloadedFilePath).should("not.exist");
 
@@ -61,19 +68,79 @@ describe("Changing metadata in the language info page", function () {
       const event = { dataTransfer: { files: [testFile] } };
 
       cy.data("upload-dropzone").trigger("dragenter", event);
-      cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
+      cy.data("upload-dropzone").trigger("drop", event);
     });
 
     // wait for compilation
     cy.wait(200);
 
-    cy.data("languages-download-btn")
+    cy.data("customize-download-btn")
       .should("not.have.class", "button--disabled")
       .click();
 
-    cy.readZip(downloadedFilePath).then((zip) => {
+    const expectedLexicalModels = [
+      {
+        name: "Abua dictionary",
+        id: "Eddie.abn.example",
+        languages: [{ name: "Abua", id: "abn" }],
+      },
+    ];
+
+    cy.wait(100);
+
+    //TODO: Figure out how to await instead
+    cy.readZip(downloadedFilePath).then(async (zip) => {
       expect(zip.file("kmp.json")).to.not.be.null;
       expect(zip.file(/[.]js$/)).to.have.lengthOf(1);
+      const asString = await zip.file("kmp.json").async("string");
+      const kmpFile = JSON.parse(asString);
+      const kmpInfo = kmpFile.info;
+      expect(kmpInfo.copyright.description).to.deep.equal(copyright);
+      expect(kmpInfo.name.description).to.deep.equal(dictionaryName);
+      expect(kmpInfo.author.description).to.deep.equal(authorName);
+      expect(kmpFile.lexicalModels).to.deep.equal(expectedLexicalModels);
+
+      // change inputs and expect kmp to change
+      cy.data("customize-information-btn").scrollIntoView().click();
+
+      cy.data("input-author-name")
+        .clear()
+        .type("new " + authorName);
+      cy.data("input-dictionary-name")
+        .clear()
+        .type("new " + dictionaryName);
+      cy.data("input-copyright")
+        .clear()
+        .type("new " + copyright)
+        .blur();
+
+      cy.wait(200); // wait for compilation
+
+      const newDownloadedFilePath = path.join(
+        downloadFolder,
+        "new My Name.kmp"
+      );
+
+      cy.data("customize-download-btn")
+        .should("not.have.class", "button--disabled")
+        .click();
+
+      cy.readZip(newDownloadedFilePath).then(async (newZip) => {
+        expect(newZip.file("kmp.json")).to.not.be.null;
+        expect(newZip.file(/[.]js$/)).to.have.lengthOf(1);
+        const asStringNew = await newZip.file("kmp.json").async("string");
+        const kmpFileNew = JSON.parse(asStringNew);
+        const kmpInfoNew = kmpFileNew.info;
+        expect(kmpInfoNew.copyright.description).to.deep.equal(
+          "new " + copyright
+        );
+        expect(kmpInfoNew.name.description).to.deep.equal(
+          "new " + dictionaryName
+        );
+        expect(kmpInfoNew.author.description).to.deep.equal(
+          "new " + authorName
+        );
+      });
     });
   });
 
