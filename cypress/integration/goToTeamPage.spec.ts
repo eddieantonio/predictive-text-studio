@@ -1,8 +1,6 @@
 describe("Go to the team page", function () {
   it("should reach the team page via a link on the landing page", function () {
     cy.visit("/");
-    // Prevent bug with click() by disabling smooth scroll
-    cy.disableSmoothScroll();
     cy.data("team-page-link").contains("About the Team").click();
     cy.url().should("include", "/team");
   });

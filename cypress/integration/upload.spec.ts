@@ -13,7 +13,6 @@ describe("Upload from the the landing page and Download KMP", function () {
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
     cy.visit("/");
-    cy.disableSmoothScroll();
   });
 
   it("should find a button to press to upload a file", function () {

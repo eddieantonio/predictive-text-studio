@@ -11,14 +11,13 @@ describe("Adding © to the copyright field", function () {
 
     copyrightInput().clear().type(copyright).blur();
 
-    copyrightInput().its("value").should("be", copyright);
+    copyrightInput().should("have.value", copyright);
 
     button().should("not.have.attr", "data-disabled");
     button().click();
 
     copyrightInput()
-      .its("value")
-      .should("be", "© " + copyright);
+      .should("have.value", "© " + copyright);
 
     button().should("have.attr", "data-disabled");
   });
