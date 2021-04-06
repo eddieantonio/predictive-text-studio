@@ -13,7 +13,6 @@ describe("Upload from the the landing page", () => {
     cy.visit("/");
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
-    cy.disableSmoothScroll();
   });
 
   // TODO: Removed due to bug #280. Should be re-introduced once bug #280 is resolved

@@ -1,4 +1,11 @@
+
 describe("Go to the team page", function () {
+
+  beforeEach(()=>{
+    cy.intercept('https://api.github.com/users/*', { fixture: 'response-github-clo1.json' });
+  });
+
+
   it("should reach the team page via a link on the landing page", function () {
     cy.visit("/");
     cy.data("team-page-link").contains("About the Team").click();
