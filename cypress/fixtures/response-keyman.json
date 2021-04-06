@@ -1,0 +1,22 @@
+{
+  "countries": [],
+  "keyboards": [],
+  "languages": [
+    {
+      "id": "alu",
+      "name": "’Are’are",
+      "keyboards": [
+        "sil_areare"
+      ]
+    },
+    {
+      "id": "str",
+      "name": "Salish, Straits",
+      "keyboards": [
+          "fv_sencoten",
+          "salish",
+          "sencoten_u"
+      ]
+    }
+  ]
+}

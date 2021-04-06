@@ -10,7 +10,17 @@ describe("Upload from the the landing page", () => {
   });
 
   beforeEach(() => {
+    cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
+      fixture: "response-keyman.json",
+    });
+    cy.clearLocalData();
+    // make keyman request
     cy.visit("/");
+    cy.wait(500);
+    // get requested data to appear in dropdown
+    // TODO: We should have Svelte update the dropdown as soon as the languages are loaded
+    cy.visit("/");
+    cy.wait(500);
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
   });

@@ -67,3 +67,12 @@ Cypress.Commands.add("readZip", (filename) => {
     return JSZip.loadAsync(contents);
   });
 });
+
+/**
+ * Clear local data on page. This includes localStorage, as well as the indexed db
+ */
+Cypress.Commands.add("clearLocalData", () => {
+  return window.indexedDB.databases().then((r) => {
+    for (var i = 0; i < r.length; i++) window.indexedDB.deleteDatabase(r[i].name);
+  });
+});
