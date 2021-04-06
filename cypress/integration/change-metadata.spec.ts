@@ -140,6 +140,7 @@ describe("Changing metadata in the language info page", function () {
         expect(kmpInfoNew.author.description).to.deep.equal(
           "new " + authorName
         );
+        cy.data("input-dictionary-name").clear().blur(); // clear dictionary name to avoid affecting other tests
       });
     });
   });
