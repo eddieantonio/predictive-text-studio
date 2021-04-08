@@ -1,11 +1,18 @@
 describe("Changing metadata in the language info page", function () {
+  beforeEach(() => {
+    cy.clearLocalData();
+    cy.generateProject();
+  });
+
   it.skip("should find a button to press to add source by uploading file", function () {
-    const languageName = "Makah";
+    const languageName = "’Are’are";
     const authorName = "Eddie";
     const copyright = "© 2018 My Cool Organization";
 
     cy.visit("/customize");
 
+    // Wait for the languages to load
+    cy.wait(1000);
     languageInput().clear().type(languageName).blur();
     cy.data("input-author-name").clear().type(authorName);
     cy.data("input-copyright").clear().type(copyright);

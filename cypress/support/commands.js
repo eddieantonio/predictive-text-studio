@@ -1,4 +1,5 @@
 const JSZip = require("jszip");
+const path = require("path");
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -60,7 +61,55 @@ Cypress.Commands.add("readZip", (filename) => {
  * Clear local data on page. This includes localStorage, as well as the indexed db
  */
 Cypress.Commands.add("clearLocalData", () => {
+  localStorage.clear();
   return window.indexedDB.databases().then((r) => {
     for (var i = 0; i < r.length; i++) window.indexedDB.deleteDatabase(r[i].name);
   });
+});
+
+/**
+ * Generate a new project manually. The incentive of doing this manually
+ * over loading a DB fixture is so that the tests don't need to be updated
+ * if the DB schema updates.
+ * 
+ * TODO: Can we find a way to cache the DB that we generated so that we only
+ * do this once?
+ */
+Cypress.Commands.add("generateProject", () => {
+  cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
+      fixture: "response-keyman.json",
+    });
+  cy.clearLocalData();
+  cy.wait(500);
+  // make keyman request
+  cy.visit("/");
+  cy.wait(500);
+  // get requested data to appear in dropdown
+  // TODO: We should have Svelte update the dropdown as soon as the languages are loaded
+  cy.visit("/");
+  cy.wait(500);
+
+  cy.data("landing-page-continue-button").should(
+    "have.class",
+    "quick-start__submit-button--disabled"
+  );
+
+  // Select the first option (should be Straits Salish)
+  cy.data("autocomplete-label").type("straits").type("{enter}");
+
+  const filename = "sencoten-top-10.xlsx";
+  cy.fixture(filename, "base64").then((fixture) => {
+    const testFile = new File(
+      [Cypress.Blob.base64StringToBlob(fixture)],
+      filename
+    );
+    const event = { dataTransfer: { files: [testFile] } };
+
+    cy.data("upload-dropzone")
+      .trigger("dragenter", event);
+
+    cy.data("upload-dropzone").trigger("drop", event);
+  });
+  // wait for upload
+  cy.wait(500);
 });
