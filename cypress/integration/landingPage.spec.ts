@@ -14,6 +14,7 @@ describe("Upload from the the landing page", () => {
       fixture: "response-keyman.json",
     });
     cy.clearLocalData();
+    cy.wait(500);
     // make keyman request
     cy.visit("/");
     cy.wait(500);
