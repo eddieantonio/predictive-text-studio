@@ -18,3 +18,13 @@ import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Ignore certain exceptions
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // TODO: Once #280 is resolved, this should be removed
+  if (err.message.includes('No project data has been stored')) {
+    return false
+  }
+  // we still want to ensure there are no other unexpected
+  // errors, so we let them fail the test
+})
