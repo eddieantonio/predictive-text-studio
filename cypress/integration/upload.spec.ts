@@ -85,7 +85,7 @@ describe("Upload from the the landing page and Download KMP", function () {
     cy.data("customize-download-btn")
       .should("not.have.class", "button--disabled")
       .click();
-    
+
     cy.wait(1000);
     cy.readFile(downloadedFilePath).should("exist");
   });
