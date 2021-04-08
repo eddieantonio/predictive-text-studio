@@ -20,7 +20,6 @@ describe("Upload from the the landing page and Download KMP", function () {
     cy.visit("/");
     cy.wait(500);
 
-
     cy.data("download-kmp")
       .as("download-kmp")
       .should("have.attr", "data-download-state", "disabled");
