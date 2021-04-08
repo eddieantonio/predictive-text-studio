@@ -16,7 +16,6 @@ describe("Upload from the the landing page and Download KMP", function () {
   });
 
   it("should find a button to press to upload a file", function () {
-
     cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
       fixture: "response-keyman.json",
     });
