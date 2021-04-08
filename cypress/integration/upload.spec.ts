@@ -11,11 +11,17 @@ describe("Upload from the the landing page and Download KMP", function () {
 
   beforeEach(() => {
     cy.clearLocalData();
-    cy.generateProject();
-
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
+    cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
+      fixture: "response-keyman.json",
+    });
+    // Load languages
     cy.visit("/");
+    cy.wait(500);
+    // Render obtained languages
+    cy.visit("/");
+    cy.wait(500);
   });
 
   it("should find a button to press to upload a file", function () {
@@ -48,7 +54,8 @@ describe("Upload from the the landing page and Download KMP", function () {
         .trigger("dragenter", event);
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
-
+    
+    cy.wait(500);
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
       .click();
@@ -60,7 +67,9 @@ describe("Upload from the the landing page and Download KMP", function () {
   });
 
   it("should download kmp file from languages download button", function () {
+    cy.generateProject();
     cy.visit("/customize");
+    cy.wait(500);
 
     const downloadedFilePath = path.join(
       downloadFolder,
