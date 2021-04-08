@@ -58,7 +58,8 @@ Cypress.Commands.add("readZip", (filename) => {
 });
 
 /**
- * Clear local data on page. This includes localStorage, as well as the indexed db
+ * Clear local data on page. This includes localStorage, as well as the indexed db.
+ * Should be called before every relevant test.
  */
 Cypress.Commands.add("clearLocalData", () => {
   localStorage.clear();

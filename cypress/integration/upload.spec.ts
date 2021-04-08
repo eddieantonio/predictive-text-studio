@@ -10,6 +10,9 @@ describe("Upload from the the landing page and Download KMP", function () {
   });
 
   beforeEach(() => {
+    cy.clearLocalData();
+    cy.generateProject();
+
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
     cy.visit("/");
