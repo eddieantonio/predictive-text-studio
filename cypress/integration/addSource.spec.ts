@@ -1,8 +1,8 @@
 describe("Add source feature in LanguageSource page", function () {
-  beforeEach(()=>{
+  beforeEach(() => {
     cy.clearLocalData();
     cy.generateProject();
-  })
+  });
 
   it("should find a button to press to add source by uploading file", function () {
     cy.visit("/customize");
