@@ -21,10 +21,10 @@ describe("Upload from the the landing page and Download KMP", function () {
     });
     // Load languages
     cy.visit("/");
-    cy.wait(500);
+    cy.wait(1000);
     // Render obtained languages
     cy.visit("/");
-    cy.wait(500);
+    cy.wait(1000);
 
     cy.data("download-kmp")
       .as("download-kmp")
@@ -69,9 +69,9 @@ describe("Upload from the the landing page and Download KMP", function () {
 
   it("should download kmp file from languages download button", function () {
     cy.generateProject();
-    cy.wait(500);
+    cy.wait(1000);
     cy.visit("/customize");
-    cy.wait(500);
+    cy.wait(1000);
 
     const downloadedFilePath = path.join(
       downloadFolder,
@@ -85,7 +85,8 @@ describe("Upload from the the landing page and Download KMP", function () {
     cy.data("customize-download-btn")
       .should("not.have.class", "button--disabled")
       .click();
-
+    
+    cy.wait(1000);
     cy.readFile(downloadedFilePath).should("exist");
   });
 });
