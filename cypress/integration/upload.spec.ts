@@ -54,7 +54,7 @@ describe("Upload from the the landing page and Download KMP", function () {
         .trigger("dragenter", event);
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
-    
+
     cy.wait(500);
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
