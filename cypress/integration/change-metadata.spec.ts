@@ -1,5 +1,5 @@
 describe("Changing metadata in the language info page", function () {
-  it("should find a button to press to add source by uploading file", function () {
+  it.skip("should find a button to press to add source by uploading file", function () {
     const languageName = "Makah";
     const authorName = "Eddie";
     const copyright = "© 2018 My Cool Organization";
