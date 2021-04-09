@@ -13,10 +13,9 @@ describe("Changing metadata in the language info page", function () {
 
     // Wait for the languages to load
     cy.wait(1000);
-    languageInput().clear().type(languageName).blur();
+    languageInput().clear().type(languageName).type("{enter}");
     cy.data("input-author-name").clear().type(authorName);
-    cy.data("input-copyright").clear().type(copyright);
-
+    cy.data("input-copyright").clear().type(copyright).blur();
     // Wait for the settings to change in the database
     // TODO: can we avoid waiting here?
     cy.wait(1000);
