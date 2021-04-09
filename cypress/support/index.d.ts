@@ -14,17 +14,14 @@ declare namespace Cypress {
     allowUnlimitedDownloadsToFolder(downloadFolder: string): void;
 
     /**
-     * Clear localdata
+     * Clear localData as well as the IndexedDB
      */
     clearLocalData(): void;
 
     /**
-     * Disable CSS smooth scroll to avoid using "{ force:true }" in .type.
-     * See https://github.com/cypress-io/cypress/issues/3200
-     * @example
-     * cy.disableSmoothScroll()
+     * Generate a project
      */
-    disableSmoothScroll(): void;
+    generateProject(): void;
 
     /**
      * Gets an element by its [data-cy] attribute.
