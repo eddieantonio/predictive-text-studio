@@ -70,9 +70,9 @@ Cypress.Commands.add("clearLocalDataExceptKeyboards", () => {
         if (databases[i].name === "dictionary_sources") {
           new Dexie(databases[i].name).open().then(function (db) {
             db.tables.forEach(function (table) {
-              console.log("Found table: " + table.name);
+              // console.log("Found table: " + table.name);
               if (table.name !== "keyboardData") {
-                console.log(table.name);
+                // console.log(table.name);
                 table.clear();
               }
             });
