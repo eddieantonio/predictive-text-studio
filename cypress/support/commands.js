@@ -1,5 +1,6 @@
 const JSZip = require("jszip");
 const path = require("path");
+const Dexie = require("dexie").default;
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -65,8 +66,19 @@ Cypress.Commands.add("clearLocalDataExceptKeyboards", () => {
   localStorage.clear();
   cy.window().then((window) => {
     return window.indexedDB.databases().then((databases) => {
-      for (var i = 0; i < databases.length; i++){
-        if (databases[i].name !== "keyboardData"){
+      for (var i = 0; i < databases.length; i++) {
+        if (databases[i].name === "dictionary_sources") {
+          new Dexie(databases[i].name).open().then(function (db) {
+            db.tables.forEach(function (table) {
+              console.log("Found table: " + table.name);
+              if (table.name !== "keyboardData") {
+                console.log(table.name);
+                table.clear();
+              }
+            });
+          });
+        }
+        else {
           window.indexedDB.deleteDatabase(databases[i].name);
         }
       };
