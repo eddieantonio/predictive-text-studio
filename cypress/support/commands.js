@@ -61,10 +61,16 @@ Cypress.Commands.add("readZip", (filename) => {
  * Clear local data on page. This includes localStorage, as well as the indexed db.
  * Should be called before every relevant test.
  */
-Cypress.Commands.add("clearLocalData", () => {
+Cypress.Commands.add("clearLocalDataExceptKeyboards", () => {
   localStorage.clear();
-  return window.indexedDB.databases().then((r) => {
-    for (var i = 0; i < r.length; i++) window.indexedDB.deleteDatabase(r[i].name);
+  cy.window().then((window) => {
+    return window.indexedDB.databases().then((databases) => {
+      for (var i = 0; i < databases.length; i++){
+        if (databases[i].name !== "keyboardData"){
+          window.indexedDB.deleteDatabase(databases[i].name);
+        }
+      };
+    });
   });
 });
 
@@ -78,9 +84,9 @@ Cypress.Commands.add("clearLocalData", () => {
  */
 Cypress.Commands.add("generateProject", () => {
   cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
-      fixture: "response-keyman.json",
-    });
-  cy.clearLocalData();
+    fixture: "response-keyman.json",
+  });
+  cy.clearLocalDataExceptKeyboards();
   cy.wait(500);
   // make keyman request
   cy.visit("/");

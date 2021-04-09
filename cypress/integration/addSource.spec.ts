@@ -1,6 +1,6 @@
 describe("Add source feature in LanguageSource page", function () {
   beforeEach(() => {
-    cy.clearLocalData();
+    cy.clearLocalDataExceptKeyboards();
     cy.generateProject();
   });
 

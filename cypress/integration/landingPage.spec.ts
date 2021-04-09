@@ -13,7 +13,7 @@ describe("Upload from the the landing page", () => {
     cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
       fixture: "response-keyman.json",
     });
-    cy.clearLocalData();
+    cy.clearLocalDataExceptKeyboards();
     cy.wait(500);
     // make keyman request
     cy.visit("/");

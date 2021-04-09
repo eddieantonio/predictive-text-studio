@@ -1,6 +1,6 @@
 describe("Changing metadata in the language info page", function () {
   beforeEach(() => {
-    cy.clearLocalData();
+    cy.clearLocalDataExceptKeyboards();
     cy.generateProject();
   });
 
