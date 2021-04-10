@@ -117,6 +117,7 @@ describe("Upload from the the landing page", () => {
   });
 
   it("should have the 'customize' button enabled after uploading a file and selecting a language", function () {
+    cy.wait(500);
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
