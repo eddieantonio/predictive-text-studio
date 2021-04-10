@@ -64,7 +64,7 @@ Cypress.Commands.add("readZip", (filename) => {
  */
 Cypress.Commands.add("clearLocalDataExceptKeyboards", () => {
   localStorage.clear();
-  cy.window().then((window) => {
+  return cy.window().then((window) => {
     return window.indexedDB.databases().then((databases) => {
       for (var i = 0; i < databases.length; i++) {
         if (databases[i].name === "dictionary_sources") {
@@ -130,5 +130,5 @@ Cypress.Commands.add("generateProject", () => {
     cy.data("upload-dropzone").trigger("drop", event);
   });
   // wait for upload
-  cy.wait(500);
+  return cy.wait(500);
 });
