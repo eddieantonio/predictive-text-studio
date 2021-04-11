@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
-  import type { WordListSource } from "@common/types";
+  import type { ProjectMetadata, WordListSource } from "@common/types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
@@ -18,8 +18,9 @@
 
   // reference to child component so it may be updated
   let languageInfo: undefined | LanguageInfoComponent;
-
   let downloadReady: boolean = true;
+  let projectData: ProjectMetadata[] = [];
+  let projectId: number = 0;
 
   // Mock language data object - this would be read from localstorage/db
   interface DictionaryInformation {
@@ -41,10 +42,15 @@
     languageInformation.sources = await worker.getFilesFromStorage();
   }
 
+  async function getProjectData() {
+    projectData = await worker.getProjectDataFromStorage();
+  }
+
   // listen to changes to the package compilation and enable download button accordingly
   $: downloadReady = $compileSuccess;
 
   onMount(() => {
+    getProjectData();
     getLanguageSources();
     setupAutomaticCompilationAndDownloadURL();
   });
@@ -58,6 +64,15 @@
    */
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
+  };
+
+  /**
+   * Handles the selection of the current project data
+   * @param href
+   * @param download
+   */
+  const selectProject = (id: number) => {
+    projectId = id;
   };
 
   /**
@@ -144,12 +159,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 2.5rem;
+    height: 2.5rem;
 
     background: var(--lite-gray);
     border-radius: 50%;
-    font-size: 1.25rem;
+    font-size: 1rem;
     margin: 2rem 1rem;
   }
 
@@ -232,10 +247,11 @@
 <main>
   <div class="customize">
     <div class="customize__sidebar">
-      <div class="customize__sidebar--project selected">A</div>
-      <div class="customize__sidebar--project">K</div>
-      <div class="customize__sidebar--project">H</div>
-      <div class="customize__sidebar--project">L</div>
+      {#each projectData as project}
+        <div class="customize__sidebar--project" class:selected={project.id === projectId} on:click={() => selectProject(project.id)}>
+          {(project.dictionaryName || "?")[0]}
+        </div>
+      {/each}
       <div class="customize__sidebar--project">+</div>
     </div>
     <div class="customize__container">

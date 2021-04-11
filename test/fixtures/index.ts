@@ -1,9 +1,9 @@
-import {
-  KeyboardDataWithTime,
+import { KeyboardDataWithTime, StoredWordList } from "@worker/storage-models";
+import type {
+  UploadSettings,
+  WordList,
   StoredProjectData,
-  StoredWordList,
-} from "@worker/storage-models";
-import type { UploadSettings, WordList } from "@common/types";
+} from "@common/types";
 
 /**
  * Top 10 words from Timothy Montler's SENĆOŦEN wordlist.

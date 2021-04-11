@@ -5,6 +5,7 @@
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
   KeyboardDataWithTime,
+  StoredProjectData,
   ProjectMetadata,
   WordListSource,
   WordList,
@@ -122,6 +123,11 @@ export interface PredictiveTextStudioWorker {
    * Retrieving File data from the IndexedDB storage
    */
   getFilesFromStorage(): Promise<WordListSource[]>;
+
+  /**
+   * Retrieving Project data from the IndexedDB storage
+   */
+  getProjectDataFromStorage(): Promise<StoredProjectData[]>;
 
   /**
    * Generates a JSON string of the current IndexedDB

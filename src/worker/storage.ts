@@ -1,7 +1,7 @@
 import Dexie, { DexieOptions } from "dexie";
+import { StoredProjectData } from "@common/types";
 import {
   StoredWordList,
-  StoredProjectData,
   KeyboardDataWithTime,
   KMPPackageData,
   ExportedProjectData,
@@ -115,6 +115,10 @@ export class PredictiveTextStudioDexie extends Dexie {
           });
       });
 
+    this.version(7).stores({
+      files: "++id, name, wordlist, size, project -> projectData.id",
+    });
+
     /* The assignments are not required by the runtime, however, they are
      * necessary for proper type-checking. */
     this.files = this.table("files");
@@ -159,7 +163,7 @@ export default class Storage {
    * objects. Sorts the files by name.
    */
   fetchAllFiles(): Promise<StoredWordList[]> {
-    return this.db.files.orderBy("name").toArray();
+    return this.db.files.where("project").equals(0).sortBy("name");
   }
 
   /**
@@ -202,6 +206,13 @@ export default class Storage {
       // No project data found
       return false;
     }
+  }
+
+  /**
+   * Retrieves all project data.
+   */
+  async fetchAllProjectData(): Promise<StoredProjectData[]> {
+    return this.db.projectData.toArray();
   }
 
   /**

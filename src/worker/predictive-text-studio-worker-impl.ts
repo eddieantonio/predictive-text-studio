@@ -2,6 +2,7 @@ import type { PredictiveTextStudioWorker } from "@common/predictive-text-studio-
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
   DictionarySourceType,
+  StoredProjectData,
   ProjectMetadata,
   UploadSettings,
   WordList,
@@ -47,6 +48,10 @@ export class PredictiveTextStudioWorkerImpl
 
   async getFilesFromStorage(): Promise<WordListSource[]> {
     return this.storage.fetchAllFiles();
+  }
+
+  async getProjectDataFromStorage(): Promise<StoredProjectData[]> {
+    return this.storage.fetchAllProjectData();
   }
 
   async getLanguageData(): Promise<void> {

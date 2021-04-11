@@ -117,3 +117,24 @@ export interface UploadSettings {
    */
   countColInd: number;
 }
+
+/**
+ * The information needed to create a KMP file
+ */
+export interface StoredProjectData extends ProjectMetadata {
+  /**
+   * Primary key. For now, there is only one project, with PACKAGE_ID as its
+   * primary key.
+   */
+  id?: number;
+
+  /**
+   * A custom model ID string.
+   */
+  modelID?: string;
+
+  /**
+   * The version number of the model.
+   */
+  version?: string;
+}
