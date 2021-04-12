@@ -130,9 +130,11 @@
   };
 
   const deleteProjectData = async () => {
-    await worker.deleteProjectData(id);
-    projects = await worker.getProjectDataFromStorage();
-    if (projects.length) id = projects[0].id;
+    if (id) {
+      await worker.deleteProjectData(id);
+      projects = await worker.getProjectDataFromStorage();
+      if (projects.length) id = projects[0].id;
+    }
   };
 </script>
 

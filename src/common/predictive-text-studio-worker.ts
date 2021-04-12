@@ -83,7 +83,7 @@ export interface PredictiveTextStudioWorker {
    * Deletes project data with given project ID.
    * @param project project ID
    */
-  deleteProjectData(project: number | undefined): Promise<void>;
+  deleteProjectData(project: number): Promise<void>;
 
   /**
    * Sets optional and required metadata such as BCP-47, language name, author
