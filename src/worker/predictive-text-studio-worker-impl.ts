@@ -136,9 +136,11 @@ export class PredictiveTextStudioWorkerImpl
     return wordlist.length;
   }
 
-  async removeDictionaryFromProject(name: string): Promise<number> {
-    await this.storage.deleteFile(name);
-    return 1;
+  async removeDictionaryFromProject(
+    name: string,
+    project: number
+  ): Promise<void> {
+    return this.storage.deleteFile(name, project);
   }
 
   async putDirectEntry(source: StoredWordList): Promise<number> {
@@ -161,6 +163,15 @@ export class PredictiveTextStudioWorkerImpl
 
   onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void {
     this._emitPackageCompileSuccess = callback;
+  }
+
+  async createProjectData(): Promise<number> {
+    const id = await this.storage.createProjectData();
+    return id;
+  }
+
+  async deleteProjectData(project: number): Promise<void> {
+    return this.storage.deleteProjectData(project);
   }
 
   async putProjectData(

@@ -17,6 +17,7 @@
     bcp47Tag: "",
   };
 
+  export let getProjectData: Function;
   export let id: number | undefined;
 
   // prevent triggering compilation twice
@@ -33,27 +34,24 @@
     listenForLanguageInfoChanges = true;
   }
 
-  $: if (id) getMetadata();
-
-  $: if (languageInfo && listenForLanguageInfoChanges) {
-    worker.putProjectData({ languages }, id);
-  }
-
   $: languages = [{ name: languageInfo.language, id: languageInfo.bcp47Tag }];
   $: copyrightButtonEnabled = copyright.charAt(0) !== "©";
-
-  /**
-   * Triggered by onBlur event from InputField
-   */
-  function onBlurListener(event: CustomEvent) {
-    let { key, value } = event.detail;
-    worker.putProjectData({ [key]: value }, id);
+  $: if (id) getMetadata();
+  $: if (listenForLanguageInfoChanges) {
+    if (languageInfo || authorName || dictionaryName || copyright) {
+      worker.putProjectData(
+        { languages, authorName, dictionaryName, copyright },
+        id
+      );
+      getProjectData();
+    }
   }
 
   function addCopyrightSymbol() {
     if (copyright.charAt(0) !== "©") {
       copyright = "© " + copyright;
       worker.putProjectData({ copyright }, id);
+      getProjectData();
     }
   }
 </script>
@@ -121,17 +119,14 @@
       subtext={$_('input.shortcode')}
       id="authorName"
       cyData="input-author-name"
-      bind:inputValue={authorName}
-      on:message={onBlurListener} />
+      bind:inputValue={authorName} />
     <InputField
       label={$_('input.dictionary_name')}
       subtext={$_('input.model_id')}
       id="dictionaryName"
       cyData="input-dictionary-name"
-      bind:inputValue={dictionaryName}
-      on:message={onBlurListener} />
+      bind:inputValue={dictionaryName} />
     <InputField
-      on:message={onBlurListener}
       label={$_('input.copyright')}
       id="copyright"
       bind:inputValue={copyright}

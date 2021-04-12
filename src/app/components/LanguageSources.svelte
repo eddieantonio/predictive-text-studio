@@ -30,7 +30,7 @@
    * @return {void}
    */
   async function handleDelete(sourceToDelete: StoredWordList): Promise<void> {
-    await removeDictionaryFromProject(sourceToDelete.name);
+    await removeDictionaryFromProject(sourceToDelete.name, project);
     sources = sources.filter((source) => source.name != sourceToDelete.name);
   }
 

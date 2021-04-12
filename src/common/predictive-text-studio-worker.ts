@@ -44,7 +44,7 @@ export interface PredictiveTextStudioWorker {
    * Remove a dictionary within the IndexedDB
    * @param name the name of the wordlist to remove
    */
-  removeDictionaryFromProject(name: string): Promise<number>;
+  removeDictionaryFromProject(name: string, project: number): Promise<void>;
 
   /**
    * Store the manual entry data into the database
@@ -73,6 +73,17 @@ export interface PredictiveTextStudioWorker {
   onPackageCompileSuccess(callback: (kmp: ArrayBuffer) => void): void;
 
   ////////////////////// Manipulate project metadata ///////////////////////
+
+  /**
+   * Creates new project data.
+   */
+  createProjectData(): Promise<number>;
+
+  /**
+   * Deletes project data with given project ID.
+   * @param project project ID
+   */
+  deleteProjectData(project: number): Promise<void>;
 
   /**
    * Sets optional and required metadata such as BCP-47, language name, author

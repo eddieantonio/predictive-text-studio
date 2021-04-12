@@ -72,7 +72,7 @@ test("deleting a file", async (t) => {
   t.is(await db.files.count(), 1);
 
   // Delete it
-  await storage.deleteFile("ExampleWordlist.xlsx");
+  await storage.deleteFile("ExampleWordlist.xlsx", project);
 
   // There should be no file remaining
   t.is(await db.files.count(), 0);

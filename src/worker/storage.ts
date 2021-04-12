@@ -151,9 +151,9 @@ export default class Storage {
   /**
    * Deletes a wordlist source file from storage.
    */
-  deleteFile(name: string): Promise<void> {
+  deleteFile(name: string, project: number): Promise<void> {
     return this.db.transaction("readwrite", this.db.files, async () => {
-      await this.db.files.where("name").equals(name).delete();
+      await this.db.files.where({ name, project }).delete();
     });
   }
 

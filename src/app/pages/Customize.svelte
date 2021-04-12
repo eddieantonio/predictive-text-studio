@@ -42,13 +42,17 @@
     languageInformation.sources = await worker.getFilesFromStorage(id);
   }
 
+  async function getProjectData() {
+    projects = await worker.getProjectDataFromStorage();
+  }
+
   // listen to changes to the package compilation and enable download button accordingly
   $: downloadReady = $compileSuccess;
 
   $: if (id) getLanguageSources();
 
   onMount(async () => {
-    projects = await worker.getProjectDataFromStorage();
+    await getProjectData();
     if (projects.length) id = projects[0].id;
     setupAutomaticCompilationAndDownloadURL();
   });
@@ -119,6 +123,17 @@
     });
     input.click();
   };
+
+  const createProjectData = async (): Promise<void> => {
+    await worker.createProjectData();
+    projects = await worker.getProjectDataFromStorage();
+  };
+
+  const deleteProjectData = async () => {
+    await worker.deleteProjectData(id);
+    projects = await worker.getProjectDataFromStorage();
+    if (projects.length) id = projects[0].id;
+  };
 </script>
 
 <style>
@@ -163,6 +178,11 @@
   .customize__sidebar--project.selected {
     background: var(--primary-blue);
     color: var(--white);
+  }
+
+  .customize__sidebar--project.add {
+    font-size: 1.5rem;
+    line-height: 1rem;
   }
 
   .customize__container {
@@ -241,10 +261,10 @@
     <div class="customize__sidebar">
       {#each projects as project}
         <div class="customize__sidebar--project" class:selected={project.id === id} on:click={() => id = project.id}>
-          {(project.dictionaryName || "?")[0]}
+          {(project.dictionaryName || "?").substring(0, 1)}
         </div>
       {/each}
-      <div class="customize__sidebar--project">+</div>
+      <div class="customize__sidebar--project add" on:click={createProjectData}>+</div>
     </div>
     <div class="customize__container">
       <a href={PAGE_URLS.home}>
@@ -252,6 +272,9 @@
           {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
+      <span class="button button--red mt-xxl" on:click={deleteProjectData}>
+        Delete Project
+      </span>
       <header class="customize__container--header">
         <div>
           <h1>{$_('common.app_name')}</h1>
@@ -285,7 +308,7 @@
       </div>
       <div class="customize__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo bind:this={languageInfo} {id} />
+          <LanguageInfo bind:this={languageInfo} {id} {getProjectData} />
         {:else if selectedButton === 'sources'}
           <LanguageSources
             project={id || 1}

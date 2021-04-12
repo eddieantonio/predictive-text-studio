@@ -22,6 +22,8 @@
   --dark-blue: #054b7a;
   --error-bg-color: #f8d7db;
   --error-fg-color: #400000;
+  --danger-bg-color: #fff4f3;
+  --danger-fg-color: #f85149;
 
   --default-text-color: #000;
 
@@ -98,6 +100,16 @@ samp {
 a.button:focus {
   outline: .5rem auto var(--primary-blue);
   outline-color: -webkit-focus-ring-color;
+}
+
+.button--red {
+  background-color: var(--white);
+  border-color: var(--danger-fg-color);
+  color: var(--danger-fg-color);
+}
+
+.button--red:hover {
+  background-color: var(--danger-bg-color);
 }
 
 .button--grey:hover {
