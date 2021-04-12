@@ -16,6 +16,10 @@
    * Whether the label should be bold or not.
    */
   export let bold: boolean = true;
+  /**
+   * [data-cy] label (for Cypress tests)
+   */
+  export let cyData = "autocomplete-label";
 
   /**
    * The language selected by this element.
@@ -62,7 +66,7 @@
   }
 </style>
 
-<div>
+<div data-cy={cyData}>
   {#if label !== ''}
     <p class="autocomplete__label" class:bold>{label}</p>
   {/if}
