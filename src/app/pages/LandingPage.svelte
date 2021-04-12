@@ -31,36 +31,14 @@
 
   onMount(async () => {
     projectInProgress = await worker.doesProjectExist();
-    // if (await worker.doesProjectExist()) {
-    //   languageInfo = await worker.fetchAllCurrentProjectMetadata();
-    //   // isProjectInProgress = languageInfo !== undefined;
-    //   // TODO: Boolean($currentDownloadURL) will always be false here
-    //   // Ideally we want to see if $currentDownloadURL is available here when
-    //   // determining if the project is complete
-    // }
+    // TODO: Boolean($currentDownloadURL) will always be false here
+    // Ideally we want to see if $currentDownloadURL is available here when
+    // determining if the project is complete
   });
 
   $: readyToGenerateKMP = files.length || googleSheetsConfig;
   $: readyToContinue =
     languageInfo !== undefined && Boolean($currentDownloadURL);
-
-  // $: if (files) {
-  //   languageInfo = languageInfo ?? {
-  //     language: "Undefined Language",
-  //     bcp47Tag: "und",
-  //   };
-  //   console.log(files, "ready to create project");
-  //   createProjectData();
-  // }
-
-  $: console.log(
-    readyToContinue,
-    languageInfo,
-    Boolean($currentDownloadURL),
-    googleSheetsConfig
-  );
-
-  // $: if (languageInfo !== undefined) setLanguage();
 
   // Split Button
   // TODO: this is some bad naming 🙃
@@ -92,7 +70,7 @@
   async function uploadAllFilesOrDisplayError(): Promise<void> {
     if (filesToSave.length === 0) return;
 
-    // error = null;
+    error = null;
     try {
       await addAllFilesToCurrentProject(project, filesToSave, {
         wordColInd,
@@ -100,7 +78,7 @@
       });
       filesToSave = [];
     } catch (e) {
-      // error = e;
+      error = e;
     }
   }
 

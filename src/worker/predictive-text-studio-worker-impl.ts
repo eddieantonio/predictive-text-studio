@@ -147,23 +147,6 @@ export class PredictiveTextStudioWorkerImpl
     return source.size;
   }
 
-  // async updateManualEntryDictionaryToProject(
-  //   id: number,
-  //   name: string,
-  //   wordlist: WordList
-  // ): Promise<number> {
-  //   await this.storage.saveFile({
-  //     id,
-  //     name,
-  //     wordlist,
-  //     size: wordlist.length,
-  //     type: "direct-entry",
-  //     project: 0,
-  //   });
-  //   this.generateKMPFromStorage();
-  //   return wordlist.length;
-  // }
-
   private _emitPackageCompileStart: () => void = doNothing;
   private _emitPackageCompileError: (err: Error) => void = doNothing;
   private _emitPackageCompileSuccess: (kmp: ArrayBuffer) => void = doNothing;

@@ -53,18 +53,6 @@ export interface PredictiveTextStudioWorker {
    */
   putDirectEntry(source: StoredWordList): Promise<number>;
 
-  // /**
-  //  * Update the manual entry data into the database
-  //  * @param id the ID of the dictionary source
-  //  * @param name the name of the dictionary source
-  //  * @param wordlist Manual entry data
-  //  */
-  // updateManualEntryDictionaryToProject(
-  //   id: number | undefined,
-  //   name: string,
-  //   wordlist: WordList
-  // ): Promise<number>;
-
   ///////////////////////////// Event handlers /////////////////////////////
 
   /**

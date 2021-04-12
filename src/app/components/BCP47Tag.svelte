@@ -2,7 +2,7 @@
   import { _ } from "svelte-i18n";
   import InputField from "./InputField.svelte";
   import * as bcp47 from "bcp-47";
-  // import worker from "../spawn-worker";
+  import worker from "../spawn-worker";
   import { createEventDispatcher } from "svelte";
 
   let errorMessage: string = "";
@@ -13,7 +13,7 @@
     const schema = bcp47.parse(inputValue);
     if (inputValue.length > 0 && schema.language !== null) {
       errorMessage = "";
-      // worker.putProjectData({ languages: [{ name: "", id: inputValue }] });
+      worker.setProjectData({ languages: [{ name: "", id: inputValue }] });
       dispatch("langauge", {
         status: true,
       });

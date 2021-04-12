@@ -17,18 +17,10 @@
   export let uploadFile: (filesToSave: File[]) => void = () => {};
 
   let dragEnterCounter = 0;
-  // let error: Error | null = null;
 
   // The state that determines what columns are to be used on upload
   let wordColInd: number = 0;
   let countColInd: number = 1;
-
-  /**
-   * Re-calculate word count
-   *
-   * Note: A default behavior set to "no action" since no re-calculation is required on landing page.
-   */
-  // export let getLanguageSources: Function = () => {};
 
   function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
@@ -40,24 +32,6 @@
     const filesUploaded = filesFromInputElement(event.target);
     uploadFile(filesUploaded);
   }
-
-  // async function uploadAllFilesOrDisplayError(
-  //   filesToSave: File[]
-  // ): Promise<void> {
-  //   if (filesToSave.length === 0) return;
-
-  //   error = null;
-  //   try {
-  //     // await addAllFilesToCurrentProject(filesToSave, {
-  //     //   wordColInd,
-  //     //   countColInd,
-  //     // });
-  //     files = [...files, ...filesToSave];
-  //     // getLanguageSources();
-  //   } catch (e) {
-  //     error = e;
-  //   }
-  // }
 </script>
 
 <style>
