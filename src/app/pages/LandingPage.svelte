@@ -12,54 +12,119 @@
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
   import { onMount } from "svelte";
   import { PAGE_URLS } from "./page-urls";
+  import { addAllFilesToCurrentProject } from "../logic/upload";
 
-  let selectedLanguage: KeyboardMetadata | undefined = undefined;
-  let continueReady: boolean = false;
-  let uploadFile: boolean = true;
-  let isProjectInProgress: boolean = false;
+  let languageInfo: KeyboardMetadata | undefined = undefined;
+  let readyToContinue: boolean = false;
+  let error: Error | null = null;
+  let fromLocal: boolean = true;
+  let filesToSave: File[] = [];
+  let files: File[] = [];
+  let project: number;
+  let projectInProgress: boolean = false;
+  let googleSheetsConfig: any;
+  let googleSheetsURL: string;
+
+  // The state that determines what columns are to be used on upload
+  let wordColInd: number = 0;
+  let countColInd: number = 1;
 
   onMount(async () => {
-    if (await worker.doesProjectExist()) {
-      selectedLanguage = await worker.fetchAllCurrentProjectMetadata();
-      isProjectInProgress = selectedLanguage !== undefined;
-      // TODO: Boolean($currentDownloadURL) will always be false here
-      // Ideally we want to see if $currentDownloadURL is available here when
-      // determining if the project is complete
-    }
+    projectInProgress = await worker.doesProjectExist();
+    // if (await worker.doesProjectExist()) {
+    //   languageInfo = await worker.fetchAllCurrentProjectMetadata();
+    //   // isProjectInProgress = languageInfo !== undefined;
+    //   // TODO: Boolean($currentDownloadURL) will always be false here
+    //   // Ideally we want to see if $currentDownloadURL is available here when
+    //   // determining if the project is complete
+    // }
   });
 
-  $: continueReady =
-    selectedLanguage !== undefined && Boolean($currentDownloadURL);
+  $: readyToGenerateKMP = files.length || googleSheetsConfig;
+  $: readyToContinue =
+    languageInfo !== undefined && Boolean($currentDownloadURL);
 
-  $: if (Boolean($currentDownloadURL)) {
-    if (selectedLanguage === undefined) {
-      selectedLanguage = { language: "Undefined Language", bcp47Tag: "und" };
-    }
-  }
+  // $: if (files) {
+  //   languageInfo = languageInfo ?? {
+  //     language: "Undefined Language",
+  //     bcp47Tag: "und",
+  //   };
+  //   console.log(files, "ready to create project");
+  //   createProjectData();
+  // }
 
-  $: if (selectedLanguage !== undefined) updateLanguage();
+  $: console.log(
+    readyToContinue,
+    languageInfo,
+    Boolean($currentDownloadURL),
+    googleSheetsConfig
+  );
 
-  function updateLanguage(): void {
-    if (selectedLanguage !== undefined) {
-      const options: Partial<Readonly<RelevantKmpOptions>> = {
-        languages: [
-          { name: selectedLanguage.language, id: selectedLanguage.bcp47Tag },
-        ],
-      };
-      worker.setProjectData(options);
-    }
-  }
+  // $: if (languageInfo !== undefined) setLanguage();
 
   // Split Button
   // TODO: this is some bad naming 🙃
   // TODO: change "upload file" to... tab mode or something.
   const uploadFromFile = () => {
-    uploadFile = true;
+    fromLocal = true;
   };
 
   const UploadFromGoogleSheets = () => {
-    uploadFile = false;
+    fromLocal = false;
   };
+
+  const uploadFile = (filesUploaded: File[]) => {
+    files = [...files, ...filesUploaded];
+    filesToSave = [...filesToSave, ...filesUploaded];
+  };
+
+  async function setLanguage(): Promise<void> {
+    languageInfo = languageInfo ?? {
+      language: "Undefined Language",
+      bcp47Tag: "und",
+    };
+    const options: Partial<Readonly<RelevantKmpOptions>> = {
+      languages: [{ name: languageInfo.language, id: languageInfo.bcp47Tag }],
+    };
+    project = await worker.setProjectData(options, project);
+  }
+
+  async function uploadAllFilesOrDisplayError(): Promise<void> {
+    if (filesToSave.length === 0) return;
+
+    // error = null;
+    try {
+      await addAllFilesToCurrentProject(project, filesToSave, {
+        wordColInd,
+        countColInd,
+      });
+      filesToSave = [];
+      // files = [...files, ...filesToSave];
+      // getLanguageSources();
+    } catch (e) {
+      // error = e;
+    }
+  }
+
+  function saveGoogleSheet() {
+    const { spreadsheetId, values, settings } = googleSheetsConfig;
+    console.log(project);
+    worker.saveGoogleSheet(project, spreadsheetId, values, settings);
+  }
+
+  async function createProjectData(): Promise<void> {
+    await setLanguage();
+    await uploadAllFilesOrDisplayError();
+    await saveGoogleSheet();
+  }
+
+  async function generateKMP() {
+    languageInfo = languageInfo ?? {
+      language: "Undefined Language",
+      bcp47Tag: "und",
+    };
+    createProjectData();
+  }
 </script>
 
 <style>
@@ -197,6 +262,11 @@
 
   .card__existing-project {
     margin-bottom: var(--s);
+  }
+
+  .error {
+    background-color: var(--error-bg-color);
+    color: var(--error-fg-color);
   }
 
   .quick-start {
@@ -342,28 +412,25 @@
   </section>
 
   <section id="get-started" class="quick-start">
-    {#if isProjectInProgress && continueReady}
-      <div
-        id="project-exists-info"
-        class="card card__info card__existing-project"
-        data-cy="existing-project-card">
-        <form action={PAGE_URLS.customize}>
+    <form action={PAGE_URLS.customize} data-cy="quick-start">
+      {#if projectInProgress}
+        <div
+          id="project-exists-info"
+          class="card card__info card__existing-project"
+          data-cy="existing-project-card">
           <h3>{$_('input.existing_project_warning')}</h3>
           <p>{$_('input.existing_project_continue_prompt')}</p>
           <button
             class="button button--primary quick-start__submit-button"
-            class:quick-start__submit-button--disabled={!continueReady}
             type="submit"
             data-cy="existing-project-continue-button">
             {$_('input.continue')}
           </button>
-        </form>
-      </div>
-    {/if}
-    <form action={PAGE_URLS.customize} data-cy="quick-start">
+        </div>
+      {/if}
       <fieldset class="quick-start__step">
         <LanguageNameInput
-          bind:selectedLanguage
+          bind:languageInfo
           label={$_('page.main.step_one')}
           bold={false} />
       </fieldset>
@@ -378,14 +445,14 @@
       <div class="split-container">
         <ButtonBar>
           <SplitButton
-            color={uploadFile ? 'blue' : 'grey'}
+            color={fromLocal ? 'blue' : 'grey'}
             dataCy="landing-splitbtn-upload"
             onClick={uploadFromFile}
             type="button">
             {$_('page.main.upload_tab_label')}
           </SplitButton>
           <SplitButton
-            color={!uploadFile ? 'blue' : 'grey'}
+            color={!fromLocal ? 'blue' : 'grey'}
             dataCy="landing-splitbtn-google-sheets"
             onClick={UploadFromGoogleSheets}
             type="button">
@@ -393,19 +460,29 @@
           </SplitButton>
         </ButtonBar>
       </div>
-      {#if uploadFile}
-        <Upload />
-      {:else}
-        <GoogleSheetsInput />
+      {#if error}
+        <p class:error>{error}</p>
       {/if}
+      {#if fromLocal}
+        <Upload {files} {uploadFile} />
+      {:else}
+        <GoogleSheetsInput bind:googleSheetsConfig bind:googleSheetsURL />
+      {/if}
+      <button
+        on:click={generateKMP}
+        type="button"
+        class="button button--primary button--shadow quick-start__submit-button"
+        class:quick-start__submit-button--disabled={!readyToGenerateKMP}>
+        Generate KMP Package
+      </button>
       <div
         class="quick-start__submit-wrapper"
-        class:quick-start__submit-wrapper--disabled={!continueReady}>
+        class:quick-start__submit-wrapper--disabled={!readyToContinue}>
         <DownloadKMP downloadURL={$currentDownloadURL} />
         <p>{$_('common.or')}</p>
         <button
           class="button button--primary button--shadow quick-start__submit-button"
-          class:quick-start__submit-button--disabled={!continueReady}
+          class:quick-start__submit-button--disabled={!readyToContinue}
           type="submit"
           data-cy="landing-page-continue-button">
           {$_('page.main.customize')}

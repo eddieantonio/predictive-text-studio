@@ -7,6 +7,7 @@ import type {
   UploadSettings,
   WordList,
   WordListSource,
+  StoredWordList,
 } from "@common/types";
 
 import Storage from "./storage";
@@ -46,8 +47,8 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.fetchKeyboardData();
   }
 
-  async getFilesFromStorage(): Promise<WordListSource[]> {
-    return this.storage.fetchAllFiles();
+  async getFilesFromStorage(project?: number): Promise<StoredWordList[]> {
+    return this.storage.fetchAllFiles(project);
   }
 
   async getProjectDataFromStorage(): Promise<StoredProjectData[]> {
@@ -69,33 +70,35 @@ export class PredictiveTextStudioWorkerImpl
     }
   }
 
-  async readGoogleSheet(
+  async saveGoogleSheet(
+    project: number,
     name: string,
     rows: string[][],
     settings: UploadSettings
   ): Promise<void> {
-    const source = await readGoogleSheet(name, rows, settings);
-    this.storage.saveFile(source);
-    this.generateKMPFromStorage();
+    const source = await readGoogleSheet(project, name, rows, settings);
+    await this.storage.saveFile(source);
+    this.generateKMPFromStorage(project);
   }
 
-  private async generateKMPFromStorage(): Promise<void> {
+  private async generateKMPFromStorage(project = 1): Promise<void> {
     // TODO: Parse multiple dictionary sources, right now just reading the first file
     this._emitPackageCompileStart();
 
-    const storedFiles = await this.storage.fetchAllFiles();
+    const storedFiles = await this.storage.fetchAllFiles(project);
     if (storedFiles.length < 1) {
       this._emitPackageCompileError(
         new Error("Cannot find any files in the IndexedDB")
       );
     } else {
-      const kmpArrayBuffer = await linkStorageToKmp(this.storage);
+      const kmpArrayBuffer = await linkStorageToKmp(project, this.storage);
       this.saveKMPPackage(kmpArrayBuffer);
       this._emitPackageCompileSuccess(kmpArrayBuffer);
     }
   }
 
   async addDictionarySourceToProject(
+    project: number,
     name: string,
     contents: File,
     settings: UploadSettings
@@ -128,8 +131,9 @@ export class PredictiveTextStudioWorkerImpl
       wordlist,
       size: wordlist.length,
       type,
+      project,
     });
-    this.generateKMPFromStorage();
+    this.generateKMPFromStorage(project);
     return wordlist.length;
   }
 
@@ -138,35 +142,30 @@ export class PredictiveTextStudioWorkerImpl
     return 1;
   }
 
-  async addManualEntryDictionaryToProject(
-    name: string,
-    wordlist: WordList
+  async putDirectEntry(
+    source: StoredWordList
   ): Promise<number> {
-    await this.storage.saveFile({
-      name,
-      wordlist,
-      size: wordlist.length,
-      type: "direct-entry",
-    });
-    this.generateKMPFromStorage();
-    return wordlist.length;
+    await this.storage.saveFile(source);
+    this.generateKMPFromStorage(source.project);
+    return source.size;
   }
 
-  async updateManualEntryDictionaryToProject(
-    id: number,
-    name: string,
-    wordlist: WordList
-  ): Promise<number> {
-    await this.storage.saveFile({
-      id,
-      name,
-      wordlist,
-      size: wordlist.length,
-      type: "direct-entry",
-    });
-    this.generateKMPFromStorage();
-    return wordlist.length;
-  }
+  // async updateManualEntryDictionaryToProject(
+  //   id: number,
+  //   name: string,
+  //   wordlist: WordList
+  // ): Promise<number> {
+  //   await this.storage.saveFile({
+  //     id,
+  //     name,
+  //     wordlist,
+  //     size: wordlist.length,
+  //     type: "direct-entry",
+  //     project: 0,
+  //   });
+  //   this.generateKMPFromStorage();
+  //   return wordlist.length;
+  // }
 
   private _emitPackageCompileStart: () => void = doNothing;
   private _emitPackageCompileError: (err: Error) => void = doNothing;
@@ -185,15 +184,17 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   async setProjectData(
-    metadata: Partial<Readonly<RelevantKmpOptions>>
-  ): Promise<void> {
+    metadata: Partial<Readonly<RelevantKmpOptions>>,
+    project?: number
+  ): Promise<number> {
     const data = toStorageFormat(metadata);
-    await this.storage.updateProjectData(data);
-    return this.generateKMPFromStorage();
+    const id = await this.storage.setProjectData(data, project);
+    await this.generateKMPFromStorage();
+    return id;
   }
 
-  async fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata> {
-    const result = await this.storage.fetchProjectData();
+  async fetchAllCurrentProjectMetadata(project = 1): Promise<ProjectMetadata> {
+    const result = await this.storage.fetchProjectData(project);
     // ProjectMetadata does not have this, so remove the property!
     delete result.id;
     return result;

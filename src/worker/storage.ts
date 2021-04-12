@@ -1,7 +1,6 @@
-import Dexie, { DexieOptions } from "dexie";
-import { StoredProjectData } from "@common/types";
+import Dexie, { DexieOptions, PromiseExtended } from "dexie";
+import { StoredProjectData, StoredWordList } from "@common/types";
 import {
-  StoredWordList,
   KeyboardDataWithTime,
   KMPPackageData,
   ExportedProjectData,
@@ -116,7 +115,7 @@ export class PredictiveTextStudioDexie extends Dexie {
       });
 
     this.version(7).stores({
-      files: "++id, name, wordlist, size, project -> projectData.id",
+      files: "++id, name, wordlist, size, project",
     });
 
     /* The assignments are not required by the runtime, however, they are
@@ -162,36 +161,61 @@ export default class Storage {
    * Retrieves every file in the database as a list of {name, contents}
    * objects. Sorts the files by name.
    */
-  fetchAllFiles(): Promise<StoredWordList[]> {
-    return this.db.files.where("project").equals(0).sortBy("name");
+  fetchAllFiles(project = 1): Promise<StoredWordList[]> {
+    return this.db.files.where("project").equals(project).sortBy("name");
   }
 
   /**
    * Update BCP-47 tag to database
    */
-  updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    return this.db.transaction("readwrite", this.db.projectData, async () => {
-      const currentData = (await this.db.projectData.get({
-        id: PACKAGE_ID,
-      })) || { language: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
-      currentData.bcp47Tag = bcp47Tag;
-      await this.db.projectData.put(currentData);
+  updateBCP47Tag(bcp47Tag: string): Promise<number> {
+    // return this.db.transaction("readwrite", this.db.projectData, async () => {
+    //   // const currentData = (await this.db.projectData.get({
+    //   //   id: PACKAGE_ID,
+    //   // })) || { language: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
+    //   // currentData.bcp47Tag = bcp47Tag;
+    //   // const projectData = (await this.fetchProjectData()) || {};
+    //   // projectData = { ...projectData, ...metadata };
+    //   await this.db.projectData.put(projectData);
+    // });
+    return this.setProjectData({ bcp47Tag });
+  }
+
+  createProjectData(): PromiseExtended<number> {
+    return this.db.projectData.put({
+      // id: PACKAGE_ID,
+      authorName: "Unknown Author",
+      // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
+      // See: https://www.w3.org/International/questions/qa-no-language#undetermined
+      // See: https://tools.ietf.org/html/bcp47#section-3.4.1
+      bcp47Tag: "",
+      language: "Unknown Language",
     });
   }
 
   /**
    * Update required and some optional metadata to database
    */
-  updateProjectData(metadata: { [key: string]: string }): Promise<void> {
+  setProjectData(
+    metadata: { [key: string]: string },
+    project?: number
+  ): Promise<number> {
     return this.db.transaction("readwrite", this.db.projectData, async () => {
-      const existingMetadata:
-        | StoredProjectData
-        | undefined = await this.db.projectData.get(PACKAGE_ID);
-      const updatedMetadata = Object.assign(
-        existingMetadata || createInitialProjectData(),
-        metadata
-      );
-      await this.db.projectData.put(updatedMetadata);
+      const projectId = project ?? (await this.createProjectData());
+      const projectData = await this.fetchProjectData(projectId);
+      await this.db.projectData.put({
+        ...projectData,
+        ...metadata,
+      } as StoredProjectData);
+      return projectId;
+      // const existingMetadata:
+      //   | StoredProjectData
+      //   | undefined = await this.db.projectData.get(PACKAGE_ID);
+      // const updatedMetadata = Object.assign(
+      //   existingMetadata || createProjectData(),
+      //   metadata
+      // );
+      // await this.db.projectData.put(updatedMetadata);
     });
   }
 
@@ -200,8 +224,8 @@ export default class Storage {
    */
   async doesProjectExist(): Promise<boolean> {
     try {
-      const projectData = await this.fetchProjectData();
-      return projectData !== undefined;
+      const count = await this.db.projectData.count();
+      return count > 0;
     } catch (err) {
       // No project data found
       return false;
@@ -218,11 +242,8 @@ export default class Storage {
   /**
    * Retrieves the current project data.
    */
-  async fetchProjectData(): Promise<StoredProjectData> {
-    const projectData = await this.db.projectData
-      .where(":id")
-      .equals(PACKAGE_ID)
-      .first();
+  async fetchProjectData(project = 1): Promise<StoredProjectData> {
+    const projectData = await this.db.projectData.get(project);
 
     if (projectData == undefined) {
       throw new Error("No project data has been stored");
@@ -313,16 +334,4 @@ export default class Storage {
       });
     }
   }
-}
-
-function createInitialProjectData(): StoredProjectData {
-  return {
-    id: PACKAGE_ID,
-    authorName: "Unknown Author",
-    // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
-    // See: https://www.w3.org/International/questions/qa-no-language#undetermined
-    // See: https://tools.ietf.org/html/bcp47#section-3.4.1
-    bcp47Tag: "",
-    language: "Unknown Language",
-  };
 }

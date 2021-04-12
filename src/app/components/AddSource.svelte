@@ -4,12 +4,18 @@
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
-  import type { WordList, WordListSource } from "@common/types";
+  import type { WordList, StoredWordList } from "@common/types";
+  import { addAllFilesToCurrentProject } from "../logic/upload";
 
   /**
    * Re-calculate word count
    */
   export let getLanguageSources: Function;
+  export let project: number;
+
+  // The state that determines what columns are to be used on upload
+  let wordColInd: number = 0;
+  let countColInd: number = 1;
 
   // Split Button
   const uploadSourcesFromFile = () => {
@@ -20,14 +26,30 @@
     manualEntry = true;
   };
 
+  const uploadFile = async (filesUploaded: File[]) => {
+    if (filesUploaded.length === 0) return;
+
+    // error = null;
+    try {
+      await addAllFilesToCurrentProject(project, filesUploaded, {
+        wordColInd,
+        countColInd,
+      });
+      // files = [...files, ...filesToSave];
+      getLanguageSources();
+    } catch (e) {
+      // error = e;
+    }
+  };
+
   // Manual Entry
   let manualEntry: boolean = false;
-  let initialWordlist: WordList = [];
-  let tableData: WordListSource = {
+  let tableData: StoredWordList = {
     name: "",
-    wordlist: initialWordlist,
+    wordlist: [],
     size: 0,
     type: "direct-entry",
+    project,
   };
 </script>
 
@@ -66,5 +88,5 @@
     {tableData}
     closeTable={uploadSourcesFromFile} />
 {:else}
-  <Upload {getLanguageSources} />
+  <Upload {uploadFile} />
 {/if}

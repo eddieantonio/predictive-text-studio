@@ -13,7 +13,7 @@
     const schema = bcp47.parse(inputValue);
     if (inputValue.length > 0 && schema.language !== null) {
       errorMessage = "";
-      worker.setProjectData({ languages: [{ name: "", id: inputValue }] });
+      // worker.setProjectData({ languages: [{ name: "", id: inputValue }] });
       dispatch("langauge", {
         status: true,
       });

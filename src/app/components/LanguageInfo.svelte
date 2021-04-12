@@ -7,59 +7,57 @@
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
 
-  import type { KeyboardMetadata } from "@common/types";
+  import type { KeyboardMetadata, KmpJsonFileLanguage } from "@common/types";
+  // import { KmpJsonFileLanguage } from "@common/types";
 
+  let authorName: string = "";
+  let copyright: string = "";
+  let dictionaryName: string = "";
+  let languages: KmpJsonFileLanguage[] = [];
   let languageInfo: KeyboardMetadata = {
     language: "",
     bcp47Tag: "",
   };
-  let authorName: string = "";
-  let copyright: string = "";
-  let dictionaryName: string = "";
+
+  export let id: number | undefined;
 
   // prevent triggering compilation twice
   let listenForLanguageInfoChanges: boolean = false;
 
   export async function getMetadata() {
-    const storedProjectData = await worker.fetchAllCurrentProjectMetadata();
-
+    const storedProjectData = await worker.fetchAllCurrentProjectMetadata(id);
     listenForLanguageInfoChanges = false;
-
     authorName = storedProjectData.authorName;
     languageInfo.bcp47Tag = storedProjectData.bcp47Tag;
     languageInfo.language = storedProjectData.language;
     copyright = storedProjectData.copyright || "";
     dictionaryName = storedProjectData.dictionaryName || "";
-
     listenForLanguageInfoChanges = true;
   }
 
-  onMount(getMetadata);
+  // onMount(getMetadata);
+
+  $: if (id) getMetadata();
 
   $: if (languageInfo && listenForLanguageInfoChanges) {
-    updateMetadata("languages", [
-      { name: languageInfo.language, id: languageInfo.bcp47Tag },
-    ]);
+    worker.setProjectData({ languages }, id);
   }
 
+  $: languages = [{ name: languageInfo.language, id: languageInfo.bcp47Tag }];
   $: copyrightButtonEnabled = copyright.charAt(0) !== "©";
-
-  function updateMetadata(key: any, value: any) {
-    worker.setProjectData({ [key]: value });
-  }
 
   /**
    * Triggered by onBlur event from InputField
    */
   function onBlurListener(event: CustomEvent) {
     let { key, value } = event.detail;
-    updateMetadata(key, value);
+    worker.setProjectData({ [key]: value }, id);
   }
 
   function addCopyrightSymbol() {
     if (copyright.charAt(0) !== "©") {
       copyright = "© " + copyright;
-      updateMetadata("copyright", copyright);
+      worker.setProjectData({ copyright }, id);
     }
   }
 </script>
@@ -121,7 +119,7 @@
     <LanguageNameInput
       label={$_('input.language')}
       cyData="input-language-name"
-      bind:selectedLanguage={languageInfo} />
+      bind:languageInfo />
     <InputField
       label={$_('input.author_or_organization')}
       subtext={$_('input.shortcode')}

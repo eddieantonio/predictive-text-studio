@@ -1,7 +1,12 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
-  import type { ProjectMetadata, WordListSource } from "@common/types";
+  import type {
+    ProjectMetadata,
+    WordListSource,
+    StoredProjectData,
+    StoredWordList,
+  } from "@common/types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
@@ -19,19 +24,19 @@
   // reference to child component so it may be updated
   let languageInfo: undefined | LanguageInfoComponent;
   let downloadReady: boolean = true;
-  let projectData: ProjectMetadata[] = [];
-  let projectId: number = 0;
+  let projects: StoredProjectData[] = [];
+  let id: number | undefined;
 
   // Mock language data object - this would be read from localstorage/db
   interface DictionaryInformation {
     readonly wordCount: number;
-    sources: WordListSource[];
+    sources: StoredWordList[];
   }
 
   export let languageInformation: DictionaryInformation = {
     get wordCount(): number {
       return languageInformation.sources.reduce(
-        (sum, source: WordListSource) => sum + Number(source.size || 0),
+        (sum, source: StoredWordList) => sum + Number(source.size || 0),
         0
       );
     },
@@ -39,19 +44,17 @@
   };
 
   async function getLanguageSources() {
-    languageInformation.sources = await worker.getFilesFromStorage();
-  }
-
-  async function getProjectData() {
-    projectData = await worker.getProjectDataFromStorage();
+    languageInformation.sources = await worker.getFilesFromStorage(id);
   }
 
   // listen to changes to the package compilation and enable download button accordingly
   $: downloadReady = $compileSuccess;
 
-  onMount(() => {
-    getProjectData();
-    getLanguageSources();
+  $: if (id) getLanguageSources();
+
+  onMount(async () => {
+    projects = await worker.getProjectDataFromStorage();
+    if (projects.length) id = projects[0].id;
     setupAutomaticCompilationAndDownloadURL();
   });
 
@@ -64,15 +67,6 @@
    */
   const handleClick = (buttonName: string): void => {
     selectedButton = buttonName;
-  };
-
-  /**
-   * Handles the selection of the current project data
-   * @param href
-   * @param download
-   */
-  const selectProject = (id: number) => {
-    projectId = id;
   };
 
   /**
@@ -166,8 +160,11 @@
     border-radius: 50%;
     font-size: 1rem;
     margin: 2rem 1rem;
+
+    cursor: pointer;
   }
 
+  .customize__sidebar--project:hover,
   .customize__sidebar--project.selected {
     background: var(--primary-blue);
     color: var(--white);
@@ -247,8 +244,8 @@
 <main>
   <div class="customize">
     <div class="customize__sidebar">
-      {#each projectData as project}
-        <div class="customize__sidebar--project" class:selected={project.id === projectId} on:click={() => selectProject(project.id)}>
+      {#each projects as project}
+        <div class="customize__sidebar--project" class:selected={project.id === id} on:click={() => id = project.id}>
           {(project.dictionaryName || "?")[0]}
         </div>
       {/each}
@@ -293,9 +290,10 @@
       </div>
       <div class="customize__container--content">
         {#if selectedButton === 'information'}
-          <LanguageInfo bind:this={languageInfo} />
+          <LanguageInfo bind:this={languageInfo} {id} />
         {:else if selectedButton === 'sources'}
           <LanguageSources
+            project={id || 1}
             bind:sources={languageInformation.sources}
             {getLanguageSources}
           />

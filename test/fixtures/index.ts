@@ -1,8 +1,9 @@
-import { KeyboardDataWithTime, StoredWordList } from "@worker/storage-models";
+import { KeyboardDataWithTime } from "@worker/storage-models";
 import type {
   UploadSettings,
   WordList,
   StoredProjectData,
+  StoredWordList,
 } from "@common/types";
 
 /**

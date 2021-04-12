@@ -6,8 +6,10 @@
   import InputField from "./InputField.svelte";
   import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
 
+  export let googleSheetsConfig;
+  export let googleSheetsURL = "";
   let error = null;
-  let googleSheetsURL = "";
+  // let googleSheetsURL = "";
 
   // The state that determines what columns are to be used on upload
   let wordColInd = 0;
@@ -22,6 +24,10 @@
   // included, separated by spaces.
   const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
+  // Regex pattern for valid Google Sheets URL
+  const googleSheetRegExp = RegExp(
+    "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
+  );
   /**
    *  On load, called to load the auth2 library and API client library.
    */
@@ -44,9 +50,9 @@
       })
       .then(() => {
         // Listen for sign-in state changes.
-        gapi.auth2.getAuthInstance().isSignedIn.listen(readGoogleSheet);
+        gapi.auth2.getAuthInstance().isSignedIn.listen(saveGoogleSheet);
         // Handle the initial sign-in state.
-        readGoogleSheet(gapi.auth2.getAuthInstance().isSignedIn.get());
+        saveGoogleSheet(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
       .catch((e) => {
         error = `${$_("common.error")}: ${$_("input.connection_error")}: ${e}`;
@@ -57,7 +63,7 @@
    *  Called when the signed in status changes, to update the UI
    *  appropriately. After a sign-in, the API is called.
    */
-  async function readGoogleSheet(isSignedIn) {
+  async function saveGoogleSheet(isSignedIn) {
     if (!isSignedIn) {
       gapi.auth2.getAuthInstance().signIn();
     }
@@ -67,18 +73,16 @@
         Math.min(wordColInd, countColInd)
       )}1:${mapDecToColLetters(Math.max(wordColInd, countColInd))}`;
 
-      const spreadsheetId = getSpreadsheetId(googleSheetsURL) || "";
+      const spreadsheetId = getSpreadsheetId() || "";
       const {
         result: { values },
       } = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
         range: spreadsheetRange,
       });
-      const settings = {
-        wordColInd,
-        countColInd,
-      };
-      worker.readGoogleSheet(spreadsheetId, values, settings);
+      const settings = { wordColInd, countColInd };
+      googleSheetsConfig = { spreadsheetId, values, settings };
+      // worker.saveGoogleSheet(project, spreadsheetId, values, settings);
     } catch (err) {
       error = `${$_("common.error")}: ` + err.message;
       return;
@@ -89,10 +93,6 @@
    * Gets the unique spreadsheet ID from a Google Sheet URL
    */
   function getSpreadsheetId() {
-    const googleSheetRegExp = RegExp(
-      "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
-    );
-
     if (googleSheetRegExp.test(googleSheetsURL)) {
       return googleSheetsURL.split("/")[5];
     } else {

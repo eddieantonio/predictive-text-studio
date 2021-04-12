@@ -3,10 +3,10 @@
   import { onMount } from "svelte";
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
-  import type { WordAndCount, WordList, WordListSource } from "@common/types";
+  import type { WordAndCount, WordList, StoredWordList } from "@common/types";
   import { WordAndCountInd } from "@common/types";
 
-  export let tableData: WordListSource;
+  export let tableData: StoredWordList;
 
   /**
    * Close table
@@ -59,18 +59,17 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      if (tableData.id) {
-        await worker.updateManualEntryDictionaryToProject(
-          tableData.id,
-          tableData.name,
-          tableData.wordlist
-        );
-      } else {
-        await worker.addManualEntryDictionaryToProject(
-          tableData.name,
-          tableData.wordlist
-        );
-      }
+      tableData.size = wordlist.length;
+      // if (tableData.id) {
+      //   await worker.updateManualEntryDictionaryToProject(
+      //     tableData.id,
+      //     tableData.name,
+      //     tableData.wordlist
+      //   );
+      // } else {
+      //   await worker.putDirectEntry(tableData);
+      // }
+      await worker.putDirectEntry(tableData);
       getLanguageSources();
     }
   };

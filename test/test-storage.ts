@@ -4,8 +4,8 @@ import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
-import { ExportedProjectData, StoredWordList } from "@worker/storage-models";
-import { WordListSource } from "@common/types";
+import { ExportedProjectData } from "@worker/storage-models";
+import { WordListSource, StoredWordList } from "@common/types";
 
 import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
@@ -213,7 +213,7 @@ test("update the project data to database", async (t) => {
     version: "1.0.0",
   };
 
-  await storage.updateProjectData(storedProjectData);
+  await storage.setProjectData(storedProjectData);
   // Now there's one package info record in the DB!
   t.is(await db.projectData.count(), 1);
 });
@@ -228,7 +228,7 @@ test("retrieve project data from the database", async (t) => {
     copyright: "©",
     version: "1.0.0",
   };
-  await storage.updateProjectData(storedProjectData);
+  await storage.setProjectData(storedProjectData);
 
   const projectData = await storage.fetchProjectData();
   const language = projectData.language;
@@ -261,7 +261,7 @@ test("retrieve if project exists in database", async (t) => {
     copyright: "©",
     version: "1.0.0",
   };
-  await storage.updateProjectData(storedProjectData);
+  await storage.setProjectData(storedProjectData);
 
   doesProjectExist = await storage.doesProjectExist();
   t.is(doesProjectExist, true);
@@ -276,7 +276,7 @@ test("update project data multiple times ", async (t) => {
   const copyright = "2018 National Research Council Canada";
 
   /* Store the initial data */
-  await storage.updateProjectData({
+  await storage.setProjectData({
     language: languageName,
     bcp47Tag: languageCode,
   });
@@ -288,7 +288,7 @@ test("update project data multiple times ", async (t) => {
   t.not(initialProject.copyright, copyright);
 
   /* Update the data, but JUST the author! */
-  await storage.updateProjectData({ authorName: author });
+  await storage.setProjectData({ authorName: author });
 
   const changedProject = await storage.fetchProjectData();
   t.notDeepEqual(changedProject, initialProject);
@@ -299,7 +299,7 @@ test("update project data multiple times ", async (t) => {
   t.not(changedProject.copyright, copyright);
 
   /* Now update the copyright */
-  await storage.updateProjectData({ copyright: copyright });
+  await storage.setProjectData({ copyright: copyright });
 
   /* The final update should have all fields updated. */
   const finalProject = await storage.fetchProjectData();
@@ -385,7 +385,7 @@ test("exporting project data", async (t) => {
     copyright: "©",
     version: "1.0.0",
   };
-  await storage.updateProjectData(storedProjectData);
+  await storage.setProjectData(storedProjectData);
 
   const data = await storage.exportProjectData();
 
