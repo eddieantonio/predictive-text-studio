@@ -208,7 +208,7 @@ export default class Storage {
   /**
    * Delete project data
    */
-  deleteProjectData(project: number): PromiseExtended<void> {
+  deleteProjectData(project: number | undefined): PromiseExtended<void> {
     return this.db.projectData.delete(project);
   }
 

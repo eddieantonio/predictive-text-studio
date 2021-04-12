@@ -25,6 +25,10 @@ export interface RelevantKmpOptions {
    */
   authorEmail?: string;
   /**
+   * The name of the Dictionary and Model ID
+   */
+  dictionaryName?: string;
+  /**
    * The name shown to users.
    */
   modelUserReadableName?: string;

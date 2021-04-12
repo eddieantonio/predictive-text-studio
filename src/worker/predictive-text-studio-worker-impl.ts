@@ -170,7 +170,7 @@ export class PredictiveTextStudioWorkerImpl
     return id;
   }
 
-  async deleteProjectData(project: number): Promise<void> {
+  async deleteProjectData(project: number | undefined): Promise<void> {
     return this.storage.deleteProjectData(project);
   }
 
