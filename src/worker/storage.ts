@@ -157,33 +157,27 @@ export default class Storage {
     });
   }
 
+  fetchAllFiles(): Promise<StoredWordList[]> {
+    return this.db.files.toArray();
+  }
+
   /**
    * Retrieves every file in the database as a list of {name, contents}
    * objects. Sorts the files by name.
    */
-  fetchAllFiles(project = 1): Promise<StoredWordList[]> {
+  fetchFiles(project = 1): Promise<StoredWordList[]> {
     return this.db.files.where("project").equals(project).sortBy("name");
   }
 
   /**
    * Update BCP-47 tag to database
    */
-  updateBCP47Tag(bcp47Tag: string): Promise<number> {
-    // return this.db.transaction("readwrite", this.db.projectData, async () => {
-    //   // const currentData = (await this.db.projectData.get({
-    //   //   id: PACKAGE_ID,
-    //   // })) || { language: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
-    //   // currentData.bcp47Tag = bcp47Tag;
-    //   // const projectData = (await this.fetchProjectData()) || {};
-    //   // projectData = { ...projectData, ...metadata };
-    //   await this.db.projectData.put(projectData);
-    // });
-    return this.setProjectData({ bcp47Tag });
+  updateBCP47Tag(bcp47Tag: string, project?: number): Promise<number> {
+    return this.putProjectData({ bcp47Tag }, project);
   }
 
   createProjectData(): PromiseExtended<number> {
     return this.db.projectData.put({
-      // id: PACKAGE_ID,
       authorName: "Unknown Author",
       // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
       // See: https://www.w3.org/International/questions/qa-no-language#undetermined
@@ -196,7 +190,7 @@ export default class Storage {
   /**
    * Update required and some optional metadata to database
    */
-  setProjectData(
+  putProjectData(
     metadata: { [key: string]: string },
     project?: number
   ): Promise<number> {
@@ -208,15 +202,14 @@ export default class Storage {
         ...metadata,
       } as StoredProjectData);
       return projectId;
-      // const existingMetadata:
-      //   | StoredProjectData
-      //   | undefined = await this.db.projectData.get(PACKAGE_ID);
-      // const updatedMetadata = Object.assign(
-      //   existingMetadata || createProjectData(),
-      //   metadata
-      // );
-      // await this.db.projectData.put(updatedMetadata);
     });
+  }
+
+  /**
+   * Delete project data
+   */
+  deleteProjectData(project: number): PromiseExtended<void> {
+    return this.db.projectData.delete(project);
   }
 
   /**
@@ -312,7 +305,7 @@ export default class Storage {
    * Export projectData and Files as a json string
    */
   async exportProjectData(): Promise<string> {
-    const projectData: StoredProjectData = await this.fetchProjectData();
+    const projectData: StoredProjectData[] = await this.fetchAllProjectData();
     const files: StoredWordList[] = await this.fetchAllFiles();
     return JSON.stringify({ projectData, files });
   }
@@ -325,7 +318,7 @@ export default class Storage {
     const { projectData, files }: ExportedProjectData = JSON.parse(data);
     if (projectData) {
       await this.db.transaction("readwrite", this.db.projectData, async () => {
-        await this.db.projectData.put(projectData);
+        await this.db.projectData.bulkPut(projectData);
       });
     }
     if (files) {

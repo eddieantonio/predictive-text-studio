@@ -1,6 +1,5 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import { onMount } from "svelte";
 
   import InputField from "./InputField.svelte";
   import LanguageNameInput from "../components/LanguageNameInput.svelte";
@@ -8,7 +7,6 @@
   import worker from "../spawn-worker";
 
   import type { KeyboardMetadata, KmpJsonFileLanguage } from "@common/types";
-  // import { KmpJsonFileLanguage } from "@common/types";
 
   let authorName: string = "";
   let copyright: string = "";
@@ -35,12 +33,10 @@
     listenForLanguageInfoChanges = true;
   }
 
-  // onMount(getMetadata);
-
   $: if (id) getMetadata();
 
   $: if (languageInfo && listenForLanguageInfoChanges) {
-    worker.setProjectData({ languages }, id);
+    worker.putProjectData({ languages }, id);
   }
 
   $: languages = [{ name: languageInfo.language, id: languageInfo.bcp47Tag }];
@@ -51,13 +47,13 @@
    */
   function onBlurListener(event: CustomEvent) {
     let { key, value } = event.detail;
-    worker.setProjectData({ [key]: value }, id);
+    worker.putProjectData({ [key]: value }, id);
   }
 
   function addCopyrightSymbol() {
     if (copyright.charAt(0) !== "©") {
       copyright = "© " + copyright;
-      worker.setProjectData({ copyright }, id);
+      worker.putProjectData({ copyright }, id);
     }
   }
 </script>

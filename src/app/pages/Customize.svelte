@@ -1,12 +1,7 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
-  import type {
-    ProjectMetadata,
-    WordListSource,
-    StoredProjectData,
-    StoredWordList,
-  } from "@common/types";
+  import type { StoredProjectData, StoredWordList } from "@common/types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";

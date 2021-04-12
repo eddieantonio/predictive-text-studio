@@ -2,14 +2,12 @@
   import { _ } from "svelte-i18n";
   import { mapDecToColLetters } from "../logic/upload-advanced-settings";
 
-  import worker from "../spawn-worker";
   import InputField from "./InputField.svelte";
   import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
 
   export let googleSheetsConfig;
   export let googleSheetsURL = "";
   let error = null;
-  // let googleSheetsURL = "";
 
   // The state that determines what columns are to be used on upload
   let wordColInd = 0;
@@ -82,7 +80,6 @@
       });
       const settings = { wordColInd, countColInd };
       googleSheetsConfig = { spreadsheetId, values, settings };
-      // worker.saveGoogleSheet(project, spreadsheetId, values, settings);
     } catch (err) {
       error = `${$_("common.error")}: ` + err.message;
       return;

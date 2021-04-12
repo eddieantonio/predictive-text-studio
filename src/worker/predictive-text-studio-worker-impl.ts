@@ -5,9 +5,8 @@ import type {
   StoredProjectData,
   ProjectMetadata,
   UploadSettings,
-  WordList,
-  WordListSource,
   StoredWordList,
+  WordList,
 } from "@common/types";
 
 import Storage from "./storage";
@@ -48,7 +47,7 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   async getFilesFromStorage(project?: number): Promise<StoredWordList[]> {
-    return this.storage.fetchAllFiles(project);
+    return this.storage.fetchFiles(project);
   }
 
   async getProjectDataFromStorage(): Promise<StoredProjectData[]> {
@@ -85,13 +84,13 @@ export class PredictiveTextStudioWorkerImpl
     // TODO: Parse multiple dictionary sources, right now just reading the first file
     this._emitPackageCompileStart();
 
-    const storedFiles = await this.storage.fetchAllFiles(project);
+    const storedFiles = await this.storage.fetchFiles(project);
     if (storedFiles.length < 1) {
       this._emitPackageCompileError(
         new Error("Cannot find any files in the IndexedDB")
       );
     } else {
-      const kmpArrayBuffer = await linkStorageToKmp(project, this.storage);
+      const kmpArrayBuffer = await linkStorageToKmp(this.storage, project);
       this.saveKMPPackage(kmpArrayBuffer);
       this._emitPackageCompileSuccess(kmpArrayBuffer);
     }
@@ -142,9 +141,7 @@ export class PredictiveTextStudioWorkerImpl
     return 1;
   }
 
-  async putDirectEntry(
-    source: StoredWordList
-  ): Promise<number> {
+  async putDirectEntry(source: StoredWordList): Promise<number> {
     await this.storage.saveFile(source);
     this.generateKMPFromStorage(source.project);
     return source.size;
@@ -183,12 +180,12 @@ export class PredictiveTextStudioWorkerImpl
     this._emitPackageCompileSuccess = callback;
   }
 
-  async setProjectData(
+  async putProjectData(
     metadata: Partial<Readonly<RelevantKmpOptions>>,
     project?: number
   ): Promise<number> {
     const data = toStorageFormat(metadata);
-    const id = await this.storage.setProjectData(data, project);
+    const id = await this.storage.putProjectData(data, project);
     await this.generateKMPFromStorage();
     return id;
   }

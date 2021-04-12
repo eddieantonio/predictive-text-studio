@@ -20,9 +20,7 @@
 
   $: wordlist = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
-  $: if (validateTableData(tableData.name, tableData.wordlist)) {
-    saveTableData();
-  }
+  $: if (validDictionary) saveTableData();
 
   const validInput = (input: string): boolean => {
     return (
@@ -60,17 +58,8 @@
   const saveTableData = async () => {
     if (validDictionary) {
       tableData.size = wordlist.length;
-      // if (tableData.id) {
-      //   await worker.updateManualEntryDictionaryToProject(
-      //     tableData.id,
-      //     tableData.name,
-      //     tableData.wordlist
-      //   );
-      // } else {
-      //   await worker.putDirectEntry(tableData);
-      // }
       await worker.putDirectEntry(tableData);
-      getLanguageSources();
+      await getLanguageSources();
     }
   };
 

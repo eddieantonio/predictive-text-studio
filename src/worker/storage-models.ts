@@ -34,6 +34,6 @@ export interface KMPPackageData {
 }
 
 export interface ExportedProjectData {
-  projectData: StoredProjectData;
+  projectData: StoredProjectData[];
   files: StoredWordList[];
 }

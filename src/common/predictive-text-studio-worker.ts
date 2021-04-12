@@ -8,8 +8,6 @@ import type {
   StoredProjectData,
   StoredWordList,
   ProjectMetadata,
-  WordListSource,
-  WordList,
   UploadSettings,
 } from "@common/types";
 
@@ -97,7 +95,7 @@ export interface PredictiveTextStudioWorker {
    *
    * @see RelevantKmpOptions
    */
-  setProjectData(
+  putProjectData(
     metadata: Partial<Readonly<RelevantKmpOptions>>,
     project?: number
   ): Promise<number>;

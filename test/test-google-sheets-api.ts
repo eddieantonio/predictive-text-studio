@@ -124,6 +124,7 @@ test.cb("it should fetch wordlist from Google Sheets API", (t) => {
 
             t.not(rows.length, 0);
             const { name, wordlist, size, type } = await readGoogleSheet(
+              0, // placeholder project ID
               spreadsheetId,
               rows,
               defaultUploadSettings

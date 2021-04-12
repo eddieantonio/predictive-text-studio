@@ -4,7 +4,7 @@
   import SplitButton from "./SplitButton.svelte";
   import ManualEntry from "./ManualEntry.svelte";
   import Upload from "./Upload.svelte";
-  import type { WordList, StoredWordList } from "@common/types";
+  import type { StoredWordList } from "@common/types";
   import { addAllFilesToCurrentProject } from "../logic/upload";
 
   /**

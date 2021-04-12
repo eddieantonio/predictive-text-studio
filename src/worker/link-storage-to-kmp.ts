@@ -4,10 +4,10 @@ import { generateSourcesFromStorage } from "./generate-sources-from-storage";
 import { ProjectMetadata } from "@common/types";
 
 export async function linkStorageToKmp(
-  project = 1,
-  storage: Storage
+  storage: Storage,
+  project = 1
 ): Promise<ArrayBuffer> {
-  const sources = await generateSourcesFromStorage(storage);
+  const sources = await generateSourcesFromStorage(storage, project);
 
   let projectData: ProjectMetadata;
   try {

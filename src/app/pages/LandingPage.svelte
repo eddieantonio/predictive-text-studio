@@ -86,7 +86,7 @@
     const options: Partial<Readonly<RelevantKmpOptions>> = {
       languages: [{ name: languageInfo.language, id: languageInfo.bcp47Tag }],
     };
-    project = await worker.setProjectData(options, project);
+    project = await worker.putProjectData(options, project);
   }
 
   async function uploadAllFilesOrDisplayError(): Promise<void> {
@@ -99,8 +99,6 @@
         countColInd,
       });
       filesToSave = [];
-      // files = [...files, ...filesToSave];
-      // getLanguageSources();
     } catch (e) {
       // error = e;
     }
@@ -108,14 +106,13 @@
 
   function saveGoogleSheet() {
     const { spreadsheetId, values, settings } = googleSheetsConfig;
-    console.log(project);
     worker.saveGoogleSheet(project, spreadsheetId, values, settings);
   }
 
   async function createProjectData(): Promise<void> {
     await setLanguage();
     await uploadAllFilesOrDisplayError();
-    await saveGoogleSheet();
+    saveGoogleSheet();
   }
 
   async function generateKMP() {
@@ -471,6 +468,7 @@
       <button
         on:click={generateKMP}
         type="button"
+        data-cy="landing-page-generate-kmp-button"
         class="button button--primary button--shadow quick-start__submit-button"
         class:quick-start__submit-button--disabled={!readyToGenerateKMP}>
         Generate KMP Package

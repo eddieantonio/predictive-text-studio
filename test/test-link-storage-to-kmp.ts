@@ -11,9 +11,9 @@ test("a function link the storage file to generate the kmp package", async (t) =
   });
   const storage = new Storage(db);
   // make sure the packageInfo is defined
-  await storage.updateBCP47Tag("en");
+  const project = await storage.updateBCP47Tag("en");
 
-  const kmpFile = await linkStorageToKmp(storage);
+  const kmpFile = await linkStorageToKmp(storage, project);
 
   t.assert(kmpFile != null);
 });

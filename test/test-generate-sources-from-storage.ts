@@ -10,6 +10,7 @@ test("it should generate an array whose type is WordListFromArray from given sto
     IDBKeyRange,
   });
   const storage = new Storage(db);
-  const sources = await generateSourcesFromStorage(storage);
+  const project = await storage.createProjectData();
+  const sources = await generateSourcesFromStorage(storage, project);
   t.assert(sources != null);
 });
