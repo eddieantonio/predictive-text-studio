@@ -1,4 +1,6 @@
 const JSZip = require("jszip");
+const path = require("path");
+const Dexie = require("dexie").default;
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -40,18 +42,6 @@ Cypress.Commands.add("allowUnlimitedDownloadsToFolder", (folderName) => {
   }
 });
 
-Cypress.Commands.add("disableSmoothScroll", () => {
-  /**
-   * Disable css smooth scroll to avoid using "{ force:true }" in .type.
-   * See https://github.com/cypress-io/cypress/issues/3200
-   */
-  cy.document().then((document) => {
-    const node = document.createElement("style");
-    node.innerHTML = "html { scroll-behavior: inherit !important; }";
-    document.body.appendChild(node);
-  });
-});
-
 /**
  * Shortcut for cy.get("[data=NAME]")
  */
@@ -60,10 +50,83 @@ Cypress.Commands.add("data", (dataCy) => {
 });
 
 /**
- * Shortcut for cy.get("[data=NAME]")
+ * Promises the contents of a Zip file (e.g., a .kmp package).
  */
 Cypress.Commands.add("readZip", (filename) => {
   return cy.readFile(filename, "binary").then((contents) => {
     return JSZip.loadAsync(contents);
   });
+});
+
+/**
+ * Clear local data on page. This includes localStorage, as well as the indexed db.
+ * Should be called before every relevant test.
+ */
+Cypress.Commands.add("clearLocalDataExceptKeyboards", () => {
+  localStorage.clear();
+  return cy.window().then((window) => {
+    return window.indexedDB.databases().then((databases) => {
+      for (var i = 0; i < databases.length; i++) {
+        if (databases[i].name === "dictionary_sources") {
+          new Dexie(databases[i].name).open().then(function (db) {
+            db.tables.forEach(function (table) {
+              if (table.name !== "keyboardData") {
+                table.clear();
+              }
+            });
+          });
+        }
+        else {
+          window.indexedDB.deleteDatabase(databases[i].name);
+        }
+      };
+    });
+  });
+});
+
+/**
+ * Generate a new project manually. The incentive of doing this manually
+ * over loading a DB fixture is so that the tests don't need to be updated
+ * if the DB schema updates.
+ * 
+ * TODO: Can we find a way to cache the DB that we generated so that we only
+ * do this once?
+ */
+Cypress.Commands.add("generateProject", () => {
+  cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
+    fixture: "response-keyman.json",
+  });
+  cy.clearLocalDataExceptKeyboards();
+  cy.wait(500);
+  // make keyman request
+  cy.visit("/");
+  cy.wait(500);
+  // get requested data to appear in dropdown
+  // TODO: We should have Svelte update the dropdown as soon as the languages are loaded
+  cy.visit("/");
+  cy.wait(500);
+
+  cy.data("landing-page-continue-button").should(
+    "have.class",
+    "quick-start__submit-button--disabled"
+  );
+
+  // Select the first option (should be Straits Salish)
+  cy.data("autocomplete-label").type("straits").type("{enter}");
+
+  const filename = "sencoten-top-10.xlsx";
+  cy.fixture(filename, "base64").then((fixture) => {
+    const testFile = new File(
+      [Cypress.Blob.base64StringToBlob(fixture)],
+      filename
+    );
+    const event = { dataTransfer: { files: [testFile] } };
+
+    cy.data("upload-dropzone")
+      .trigger("dragenter", event);
+
+    cy.data("upload-dropzone").trigger("drop", event);
+  });
+  // wait for upload
+  return cy.wait(500);
 });

@@ -2,30 +2,32 @@ import "cypress-file-upload";
 
 import path = require("path");
 
+const languageName = "Abua";
+const authorName = "Eddie";
+const copyright = "© 2018 My Cool Organization";
+const dictionaryName = "My Name";
+
 describe("Changing metadata in the language info page", function () {
-  const languageName = "Abua";
-  const authorName = "Eddie";
-  const copyright = "© 2018 My Cool Organization";
-  const dictionaryName = "My Name";
-
   beforeEach(() => {
-    cy.visit("/customize");
-    cy.wait(3000); // TODO: Can avoid doing this by fixing the language input. Language input will have no languages on first load, and they will not show until refresh.
-    cy.reload();
-    languageInput()
-      .clear()
-      .type(languageName + "{enter}")
-      .blur();
-    cy.data("input-author-name").clear().type(authorName);
-    cy.data("input-copyright").clear().type(copyright);
-    cy.data("input-dictionary-name").clear().type(dictionaryName);
-
-    // Wait for the settings to change in the database
-    // TODO: can we avoid waiting here?
-    cy.wait(1000);
+    cy.clearLocalDataExceptKeyboards();
+    cy.generateProject();
   });
 
   it("should find a button to press to add source by uploading file", function () {
+
+
+    cy.visit("/customize");
+
+    // Wait for the languages to load
+    cy.wait(2000);
+    languageInput().clear().type(languageName).type("{enter}");
+    cy.data("input-author-name").clear().type(authorName);
+    cy.data("input-dictionary-name").clear().type(dictionaryName);
+    cy.data("input-copyright").clear().type(copyright).blur();
+    // Wait for the settings to change in the database
+    // TODO: can we avoid waiting here?
+    cy.wait(2000);
+
     // Navigate away page...
     cy.visit("about:blank");
     // ...and then come back
@@ -33,12 +35,11 @@ describe("Changing metadata in the language info page", function () {
 
     // Wait for the page to load completely
     // TODO: can we avoid waiting here?
-    cy.wait(1000);
+    cy.wait(2000);
 
-    languageInput().its("value").should("be", languageName);
-    cy.data("input-author-name").its("value").should("be", authorName);
-    cy.data("input-copyright").its("value").should("be", copyright);
-    cy.data("input-dictionary-name").its("value").should("be", dictionaryName);
+    languageInput().should("have.value", languageName);
+    cy.data("input-author-name").should("have.value", authorName);
+    cy.data("input-copyright").should("have.value", copyright);
   });
 
   it("should recompile KMP on metadata change", function () {

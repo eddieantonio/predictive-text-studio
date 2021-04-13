@@ -1,5 +1,7 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
+
+  import LocalizedDate from "../components/LocalizedDate.svelte";
 </script>
 
 <style>
@@ -30,7 +32,7 @@
     <h2>{$_('page.privacy.title')}</h2>
     <p>
       <strong>{$_('page.privacy.effective_as_of')}:</strong>
-      <time datetime="2020-12-08">{$_('page.privacy.date')}</time>
+      <LocalizedDate isodate="2020-12-08" />
     </p>
     <h3>{$_('page.privacy.introduction.title')}</h3>
     <p>{$_('page.privacy.introduction.head.0')}</p>

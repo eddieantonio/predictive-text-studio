@@ -10,10 +10,20 @@ describe("Upload from the the landing page", () => {
   });
 
   beforeEach(() => {
+    cy.intercept("https://cache.predictivetext.studio/cached-keyman-api.json", {
+      fixture: "response-keyman.json",
+    });
+    cy.clearLocalDataExceptKeyboards();
+    cy.wait(500);
+    // make keyman request
     cy.visit("/");
+    cy.wait(500);
+    // get requested data to appear in dropdown
+    // TODO: We should have Svelte update the dropdown as soon as the languages are loaded
+    cy.visit("/");
+    cy.wait(500);
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
-    cy.disableSmoothScroll();
   });
 
   // TODO: Removed due to bug #280. Should be re-introduced once bug #280 is resolved
@@ -107,6 +117,7 @@ describe("Upload from the the landing page", () => {
   });
 
   it("should have the 'customize' button enabled after uploading a file and selecting a language", function () {
+    cy.wait(500);
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
