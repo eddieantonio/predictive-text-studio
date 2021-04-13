@@ -11,7 +11,9 @@ describe("Changing metadata in the language info page", function () {
   beforeEach(() => {
     cy.clearLocalDataExceptKeyboards();
     cy.generateProject();
+  });
 
+  it("should find a button to press to add source by uploading file", function () {
     cy.visit("/customize");
 
     // Wait for the languages to load
@@ -23,9 +25,7 @@ describe("Changing metadata in the language info page", function () {
     // Wait for the settings to change in the database
     // TODO: can we avoid waiting here?
     cy.wait(2000);
-  });
 
-  it("should find a button to press to add source by uploading file", function () {
     // Navigate away page...
     cy.visit("about:blank");
     // ...and then come back
@@ -41,39 +41,23 @@ describe("Changing metadata in the language info page", function () {
   });
 
   it("should recompile KMP on metadata change", function () {
+    cy.visit("/customize");
+
+    // Wait for the languages to load
+    cy.wait(2000);
+    languageInput().clear().type(languageName).type("{enter}");
+    cy.data("input-author-name").clear().type(authorName);
+    cy.data("input-dictionary-name").clear().type(dictionaryName);
+    cy.data("input-copyright").clear().type(copyright).blur();
+    // Wait for compilation
+    // TODO: can we avoid waiting here?
+    cy.wait(2000);
+
     const downloadFolder = Cypress.env("downloadFolder");
     cy.task("clearDownloads");
     cy.allowUnlimitedDownloadsToFolder(downloadFolder);
-    // upload a file
-    cy.data("customize-sources-btn")
-      .scrollIntoView()
-      .contains("Sources")
-      .click();
-
-    // Add source component should show after clicking the details element
-    cy.data("language-sources-add-sources").click().scrollIntoView();
-
-    cy.data("add-sources-splitbtn-upload").contains("Upload").click();
-    cy.data("upload-dropzone").contains("label", "Browse file");
 
     const downloadedFilePath = path.join(downloadFolder, "My Name.kmp");
-
-    cy.readFile(downloadedFilePath).should("not.exist");
-
-    const filename = "sencoten-top-10.xlsx";
-    cy.fixture(filename, "base64").then((fixture) => {
-      const testFile = new File(
-        [Cypress.Blob.base64StringToBlob(fixture)],
-        filename
-      );
-      const event = { dataTransfer: { files: [testFile] } };
-
-      cy.data("upload-dropzone").trigger("dragenter", event);
-      cy.data("upload-dropzone").trigger("drop", event);
-    });
-
-    // wait for compilation
-    cy.wait(200);
 
     cy.data("customize-download-btn")
       .should("not.have.class", "button--disabled")
