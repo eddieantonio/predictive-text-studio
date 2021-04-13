@@ -12,13 +12,13 @@ describe("Changing metadata in the language info page", function () {
     cy.visit("/customize");
 
     // Wait for the languages to load
-    cy.wait(1500);
+    cy.wait(2000);
     languageInput().clear().type(languageName).type("{enter}");
     cy.data("input-author-name").clear().type(authorName);
     cy.data("input-copyright").clear().type(copyright).blur();
     // Wait for the settings to change in the database
     // TODO: can we avoid waiting here?
-    cy.wait(1500);
+    cy.wait(2000);
 
     // Navigate away page...
     cy.visit("about:blank");
@@ -27,7 +27,7 @@ describe("Changing metadata in the language info page", function () {
 
     // Wait for the page to load completely
     // TODO: can we avoid waiting here?
-    cy.wait(1000);
+    cy.wait(2000);
 
     languageInput().should("have.value", languageName);
     cy.data("input-author-name").should("have.value", authorName);
