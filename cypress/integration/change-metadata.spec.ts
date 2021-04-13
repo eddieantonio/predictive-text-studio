@@ -2,7 +2,7 @@ import "cypress-file-upload";
 
 import path = require("path");
 
-const languageName = "Abua";
+const languageName = "’Are’are";
 const authorName = "Eddie";
 const copyright = "© 2018 My Cool Organization";
 const dictionaryName = "My Name";
@@ -11,10 +11,6 @@ describe("Changing metadata in the language info page", function () {
   beforeEach(() => {
     cy.clearLocalDataExceptKeyboards();
     cy.generateProject();
-  });
-
-  it("should find a button to press to add source by uploading file", function () {
-
 
     cy.visit("/customize");
 
@@ -27,7 +23,9 @@ describe("Changing metadata in the language info page", function () {
     // Wait for the settings to change in the database
     // TODO: can we avoid waiting here?
     cy.wait(2000);
+  });
 
+  it("should find a button to press to add source by uploading file", function () {
     // Navigate away page...
     cy.visit("about:blank");
     // ...and then come back
@@ -83,15 +81,15 @@ describe("Changing metadata in the language info page", function () {
 
     const expectedLexicalModels = [
       {
-        name: "Abua dictionary",
-        id: "Eddie.abn.example",
-        languages: [{ name: "Abua", id: "abn" }],
+        name: "’Are’are dictionary",
+        id: "Eddie.alu.example",
+        languages: [{ name: "’Are’are", id: "alu" }],
       },
     ];
 
     cy.wait(100);
 
-    //TODO: Figure out how to await instead
+    //TODO: await instead
     cy.readZip(downloadedFilePath).then(async (zip) => {
       expect(zip.file("kmp.json")).to.not.be.null;
       expect(zip.file(/[.]js$/)).to.have.lengthOf(1);
