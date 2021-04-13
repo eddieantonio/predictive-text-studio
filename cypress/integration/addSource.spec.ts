@@ -1,3 +1,6 @@
+// TODO: do not use { force: true } option
+// This option was added as a workaround for test scenarios failing due to "the center of this element is hidden from view"
+// Related discussion on repo: https://github.com/eddieantonio/predictive-text-studio/pull/293#issuecomment-817975467
 describe("Add source feature in LanguageSource page", function () {
   it("should find a button to press to add source by uploading file", function () {
     cy.visit("/customize");
