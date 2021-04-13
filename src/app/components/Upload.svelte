@@ -11,7 +11,6 @@
   // This problem can also be solved by listening for dragOver
   // However, as of right now, doing so on Chrome when dragging over nested element
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
-  // export let project: number;
   export let files: File[] = [];
   export let saveFile: (filesToSave: File[]) => void = () => {};
 

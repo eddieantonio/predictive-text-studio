@@ -166,8 +166,7 @@ export class PredictiveTextStudioWorkerImpl
   }
 
   async createProjectData(): Promise<number> {
-    const id = await this.storage.createProjectData();
-    return id;
+    return this.storage.createProjectData();
   }
 
   async deleteProjectData(project: number): Promise<void> {
@@ -180,7 +179,7 @@ export class PredictiveTextStudioWorkerImpl
   ): Promise<number> {
     const data = toStorageFormat(metadata);
     const id = await this.storage.putProjectData(data, project);
-    await this.generateKMPFromStorage();
+    await this.generateKMPFromStorage(project);
     return id;
   }
 
