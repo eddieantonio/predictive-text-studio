@@ -4,28 +4,23 @@ describe("Adding © to the copyright field", function () {
 
     cy.visit("/customize");
 
-    cy.data("input-copyright").scrollIntoView();
+    cy.get("#input-copyright").as("copyright").scrollIntoView();
 
     // HACK: it has to wait for the existing project to load
     cy.wait(1000);
 
-    copyrightInput().clear().type(copyright).blur();
+    cy.get("@copyright").clear().type(copyright).blur();
 
-    copyrightInput().should("have.value", copyright);
+    cy.get("@copyright").should("have.value", copyright);
 
-    button().should("not.have.attr", "data-disabled");
-    button().click();
+    cy.get(".copyright-field")
+      .find("button")
+      .as("button")
+      .should("not.have.attr", "data-disabled");
+    cy.get("@button").click();
 
-    copyrightInput().should("have.value", "© " + copyright);
+    cy.get("@copyright").should("have.value", "© " + copyright);
 
-    button().should("have.attr", "data-disabled");
+    cy.get("@button").should("have.attr", "data-disabled");
   });
-
-  function copyrightInput() {
-    return cy.data("input-copyright");
-  }
-
-  function button() {
-    return cy.get(".copyright-field").find("button");
-  }
 });
