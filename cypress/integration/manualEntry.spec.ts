@@ -1,5 +1,8 @@
 describe("Adding sources by direct entry", function () {
   beforeEach(() => {
+    cy.clearLocalDataExceptKeyboards();
+    cy.generateProject();
+
     cy.visit("/customize");
     cy.data("customize-sources-btn").contains("Sources").click();
   });
