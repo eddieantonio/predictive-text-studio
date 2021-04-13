@@ -11,6 +11,7 @@ describe("Changing metadata in the language info page", function () {
   beforeEach(() => {
     cy.clearLocalDataExceptKeyboards();
     cy.generateProject();
+    cy.task("clearDownloads");
   });
 
   it("should find a button to press to add source by uploading file", function () {
@@ -62,6 +63,8 @@ describe("Changing metadata in the language info page", function () {
     cy.data("customize-download-btn")
       .should("not.have.class", "button--disabled")
       .click();
+
+    cy.wait(100);
 
     //TODO: await instead
     cy.readZip(downloadedFilePath).then(async (zip) => {
