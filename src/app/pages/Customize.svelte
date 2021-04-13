@@ -53,7 +53,7 @@
 
   onMount(async () => {
     await getProjectData();
-    if (projects.length) id = projects[0].id;
+    id = projects[0]?.id;
     setupAutomaticCompilationAndDownloadURL();
   });
 
@@ -133,7 +133,7 @@
     if (id) {
       await worker.deleteProjectData(id);
       projects = await worker.getProjectDataFromStorage();
-      if (projects.length) id = projects[0].id;
+      id = projects[0]?.id;
     }
   };
 </script>
@@ -146,14 +146,13 @@
   }
   main {
     max-width: var(--laptop);
-    min-height: 100vh;
   }
 
   .customize {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     font-family: Cabin, sans-serif;
   }
 
@@ -274,9 +273,11 @@
           {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
-      <span class="button button--red mt-xxl" on:click={deleteProjectData}>
-        Delete Project
-      </span>
+      {#if id}
+        <span class="button button--red mt-xxl" on:click={deleteProjectData}>
+          {$_('page.lang.delete_project')}
+        </span>
+      {/if}
       <header class="customize__container--header">
         <div>
           <h1>{$_('common.app_name')}</h1>
@@ -287,41 +288,49 @@
           </p>
         </div>
       </header>
-      <div class="customize__container--actions">
-        <Button
-          color="grey"
-          isOutlined={(selectedButton === 'information')}
-          onClick={() => handleClick('information')}
-          dataCy="customize-information-btn"
-        >{$_('page.lang.information')}</Button>
-        <Button
-          color="grey"
-          isOutlined={(selectedButton === 'sources')}
-          onClick={()=> handleClick('sources')}
-          dataCy="customize-sources-btn"
-        >{$_('page.lang.sources')}</Button>
-        <Button
-          color="blue"
-          onClick={handleDownload}
-          subtext={languageInformation.wordCount.toString() + " words"}
-          dataCy="customize-download-btn"
-          enabled={downloadReady}
-        >{$_('page.lang.download')}</Button>
-      </div>
-      <div class="customize__container--content">
-        {#if selectedButton === 'information'}
-          <LanguageInfo bind:this={languageInfo} {id} {getProjectData} />
-        {:else if selectedButton === 'sources'}
-          <LanguageSources
-            project={id || 1}
-            bind:sources={languageInformation.sources}
-            {getLanguageSources}
-          />
-        {/if}
-      </div>
+      {#if id}
+        <div class="customize__container--actions">
+          <Button
+            color="grey"
+            isOutlined={(selectedButton === 'information')}
+            onClick={() => handleClick('information')}
+            dataCy="customize-information-btn"
+          >{$_('page.lang.information')}</Button>
+          <Button
+            color="grey"
+            isOutlined={(selectedButton === 'sources')}
+            onClick={()=> handleClick('sources')}
+            dataCy="customize-sources-btn"
+          >{$_('page.lang.sources')}</Button>
+          <Button
+            color="blue"
+            onClick={handleDownload}
+            subtext={languageInformation.wordCount.toString() + " words"}
+            dataCy="customize-download-btn"
+            enabled={downloadReady}
+          >{$_('page.lang.download')}</Button>
+        </div>
+        <div class="customize__container--content">
+          {#if selectedButton === 'information'}
+            <LanguageInfo bind:this={languageInfo} {id} {getProjectData} />
+          {:else if selectedButton === 'sources'}
+            <LanguageSources
+              project={id || 1}
+              bind:sources={languageInformation.sources}
+              {getLanguageSources}
+            />
+          {/if}
+        </div>
+      {:else}
+        <div
+          style="text-align: center; padding: 10px; background: var(--lite-white); margin-bottom: 100px;">
+          <h3>{$_('page.lang.no_project')}</h3>
+          <p>{$_('page.lang.no_project_subtitle')}</p>
+        </div>
+      {/if}
       <div class="customize__container--footer">
-        <Button onClick={handleImport}>Import Project Data</Button>
-        <Button onClick={handleExport}>Export Project Data</Button>
+        <Button onClick={handleImport}>{$_('page.lang.import_project_data')}</Button>
+        <Button onClick={handleExport}>{$_('page.lang.export_project_data')}</Button>
       </div>
     </div>
   </div>

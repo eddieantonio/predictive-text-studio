@@ -82,6 +82,7 @@ export default {
       step_two: "Step 2: Add a word list",
       upload_tab_label: "Upload File",
       google_sheets_tab_label: "Google Sheets URL",
+      generate_kmp_package: "Generate KMP Package",
       customize: "Customize",
       privacy_policy: "Privacy Policy",
       about_the_team: "About the Team",
@@ -92,6 +93,15 @@ export default {
       sources: "Sources",
       download: "Download",
       add_copyright_symbol: "Add ©",
+      delete_project: "Delete Project",
+      no_project: "No project has been selected",
+      no_project_subtitle:
+        "Create a new project or start working on existing projects",
+      no_source: "There is no source",
+      no_source_subtitle:
+        "Enter sources by uploading Excel, TSV files or direct entry",
+      import_project_data: "Import Project Data",
+      export_project_data: "Export Project Data",
     },
     privacy: {
       title: "Predictive Text Studio Privacy Policy",

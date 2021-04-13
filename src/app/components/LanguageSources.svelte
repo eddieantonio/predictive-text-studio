@@ -155,8 +155,8 @@
     {:else}
       <div
         style="text-align: center; padding: 10px; background: var(--lite-white); margin-bottom: 100px;">
-        <h3>There is no source</h3>
-        <p>Enter sources by uploading Excel, TSV files or direct entry</p>
+        <h3>{$_('page.lang.no_source')}</h3>
+        <p>{$_('page.lang.no_source_subtitle')}</p>
       </div>
     {/if}
     {#if selected !== null}

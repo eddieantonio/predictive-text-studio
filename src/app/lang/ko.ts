@@ -80,6 +80,9 @@ export default {
       get_started: "시작 하기",
       step_one: "1단계: 언어를 입력하세요",
       step_two: "2단계: 단어 목록을 추가하세요",
+      upload_tab_label: "파일 업로드",
+      google_sheets_tab_label: "Google 스프레드시트 URL",
+      generate_kmp_package: "KMP 패키지 생성하기",
       customize: "맞춤 설정",
       privacy_policy: "개인 정보 정책",
       about_the_team: "개발팀 정보",
@@ -89,6 +92,15 @@ export default {
       information: "정보",
       sources: "소스",
       download: "다운로드",
+      delete_project: "프로젝트 삭제",
+      no_project: "선택한 프로젝트가 없습니다",
+      no_project_subtitle:
+        "새 프로젝트를 만들거나 기존 프로젝트에서 작업을 시작하세요",
+      no_source: "소스가 없습니다",
+      no_source_subtitle:
+        "Excel, TSV 파일을 업로드 하거나 소스를 직접 입력하세요",
+      import_project_data: "프로젝트 데이터 가져오기",
+      export_project_data: "프로젝트 데이터 내보내기",
     },
     privacy: {
       title: "Predictive Text Studio 개인 정보 정책",

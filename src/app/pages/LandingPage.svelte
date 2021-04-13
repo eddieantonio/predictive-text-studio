@@ -449,7 +449,7 @@
         data-cy="landing-page-generate-kmp-button"
         class="button button--primary button--shadow quick-start__submit-button"
         class:quick-start__submit-button--disabled={!readyToGenerateKMP}>
-        Generate KMP Package
+        {$_('page.main.generate_kmp_package')}
       </button>
       <div
         class="quick-start__submit-wrapper"
