@@ -66,7 +66,7 @@ describe("Upload from the the landing page", () => {
     cy.data("landing-page-continue-button")
       .scrollIntoView()
       .should("be.visible");
-    cy.data("autocomplete-label").type("zh");
+    cy.get(".autocomplete-input").first().type("zh", { force: true });
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
@@ -94,9 +94,11 @@ describe("Upload from the the landing page", () => {
 
       cy.get("@quick-start")
         .data("upload-dropzone")
-        .trigger("dragenter", event);
+        .trigger("dragenter", event, { force: true });
 
-      cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
+      cy.get("@quick-start")
+        .data("upload-dropzone")
+        .trigger("drop", event, { force: true });
     });
 
     cy.data("landing-page-continue-button").should(
@@ -105,14 +107,17 @@ describe("Upload from the the landing page", () => {
     );
   });
 
-  it("should have the 'customize' button enabled after uploading a file and selecting a language", function () {
+  it("should have the 'generate KMP' button enabled after uploading a file and selecting a language", function () {
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
     );
 
     // Select the first option (should be Straits Salish)
-    cy.data("autocomplete-label").type("straits").type("{enter}");
+    cy.get(".autocomplete-input")
+      .first()
+      .type("straits", { force: true })
+      .type("{enter}");
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
@@ -137,7 +142,7 @@ describe("Upload from the the landing page", () => {
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
-    cy.data("landing-page-continue-button")
+    cy.data("landing-page-generate-kmp-button")
       .should("not.have.class", "quick-start__submit-button--disabled")
       .click();
   });

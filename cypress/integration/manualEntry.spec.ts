@@ -13,11 +13,17 @@ describe("Adding sources by direct entry", function () {
 
     cy.data("add-sources-splitbtn-direct-entry")
       .contains("Direct entry")
-      .click()
+      .click({ force: true })
       .scrollIntoView();
-    cy.data("manual-entry-input-tablename").type("Common Greetings");
+    cy.data("manual-entry-input-tablename").type("Common Greetings", {
+      force: true,
+    });
     cy.data("manual-entry-input-word").first().type("Hello");
     cy.data("manual-entry-input-count").first().clear().type("112");
+    cy.data("manual-entry-delete").last().click({ force: true });
+
+    cy.wait(500);
+
     // delete the entry
     cy.data("language-source-delete").first().click();
   });
@@ -31,18 +37,20 @@ describe("Adding sources by direct entry", function () {
 
     cy.data("add-sources-splitbtn-direct-entry")
       .contains("Direct entry")
-      .click()
+      .click({ force: true })
       .scrollIntoView();
-    cy.data("manual-entry-input-tablename").type("Common Greetings");
+    cy.data("manual-entry-input-tablename").type("Common Greetings", {
+      force: true,
+    });
     cy.data("manual-entry-input-word").first().type("Hello");
     cy.data("manual-entry-input-count").first().clear().type("112");
     cy.data("manual-entry-delete").last().click();
     cy.data("add-sources-save-btn").contains("Save").click();
 
-    cy.wait(500);
+    cy.wait(1000);
 
     // edit the entry
-    cy.data("customize-sources-btn").contains("Sources").click();
+    cy.data("customize-sources-btn").contains("Sources").click({ force: true });
     cy.data("language-source-edit").first().click();
 
     cy.data("manual-entry-input-word").first().type("World");
@@ -58,15 +66,19 @@ describe("Adding sources by direct entry", function () {
 
     cy.data("add-sources-splitbtn-direct-entry")
       .contains("Direct entry")
-      .click()
+      .click({ force: true })
       .scrollIntoView();
-    cy.data("manual-entry-input-tablename").type("Common Greetings");
+    cy.data("manual-entry-input-tablename").type("Common Greetings", {
+      force: true,
+    });
     cy.data("manual-entry-input-word").first().type("Hello");
     cy.data("manual-entry-input-count").first().clear().type("112");
 
     cy.data("manual-entry-delete").first().click();
     //TODO: Current row should be deleted
 
-    cy.data("language-sources-add-sources").contains("Add Source").click();
+    cy.data("language-sources-add-sources")
+      .contains("Add Source")
+      .click({ force: true });
   });
 });

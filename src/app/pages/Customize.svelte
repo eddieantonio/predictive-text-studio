@@ -273,7 +273,7 @@
           {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
-      {#if id}
+      {#if id !== undefined}
         <span class="button button--red mt-xxl" on:click={deleteProjectData}>
           {$_('page.lang.delete_project')}
         </span>
@@ -288,7 +288,7 @@
           </p>
         </div>
       </header>
-      {#if id}
+      {#if id !== undefined}
         <div class="customize__container--actions">
           <Button
             color="grey"

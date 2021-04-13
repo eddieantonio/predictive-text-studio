@@ -68,8 +68,6 @@
   }
 
   async function uploadAllFilesOrDisplayError(): Promise<void> {
-    if (filesToSave.length === 0) return;
-
     error = null;
     try {
       await addAllFilesToCurrentProject(project, filesToSave, {
@@ -89,8 +87,8 @@
 
   async function createProjectData(): Promise<void> {
     await setLanguage();
-    await uploadAllFilesOrDisplayError();
-    saveGoogleSheet();
+    if (filesToSave.length) uploadAllFilesOrDisplayError();
+    if (googleSheetsConfig) saveGoogleSheet();
   }
 
   async function generateKMP() {

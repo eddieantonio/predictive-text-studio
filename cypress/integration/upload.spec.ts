@@ -21,7 +21,10 @@ describe("Upload from the the landing page and Download KMP", function () {
       .should("have.attr", "data-download-state", "disabled");
 
     // Select the first option (should be Straits Salish)
-    cy.data("autocomplete-label").type("straits").type("{enter}");
+    cy.get(".autocomplete-input")
+      .first()
+      .type("straits", { force: true })
+      .type("{enter}");
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
@@ -42,9 +45,13 @@ describe("Upload from the the landing page and Download KMP", function () {
 
       cy.get("@quick-start")
         .data("upload-dropzone")
-        .trigger("dragenter", event);
+        .trigger("dragenter", event, { force: true });
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
+
+    cy.data("landing-page-generate-kmp-button")
+      .should("not.have.class", "button--disabled")
+      .click();
 
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
