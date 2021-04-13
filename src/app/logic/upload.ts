@@ -1,4 +1,3 @@
-import type { UploadSettings } from "@common/types";
 import worker from "../spawn-worker";
 
 /**

@@ -221,7 +221,7 @@
   .error {
     background-color: var(--error-bg-color);
     color: var(--error-fg-color);
-    padding: 0.5rem 0.75rem;
+    padding: 0.3125rem 0.625rem;
   }
 
   .quick-start {

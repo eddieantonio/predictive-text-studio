@@ -7,11 +7,6 @@ import {
 } from "./storage-models";
 const DB_NAME = "dictionary_sources";
 
-/**
- * The key of the ONLY StoredPackageInfo record.
- */
-const PACKAGE_ID = 0;
-
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
   projectData: Dexie.Table<StoredProjectData, number>;
@@ -116,6 +111,10 @@ export class PredictiveTextStudioDexie extends Dexie {
 
     this.version(7).stores({
       files: "++id, name, wordlist, size, project",
+    });
+
+    this.version(8).stores({
+      KMPFileData: "++id, package, project",
     });
 
     /* The assignments are not required by the runtime, however, they are
@@ -286,22 +285,29 @@ export default class Storage {
    * Save the KMP package once it compiled
    * @param KMPFile
    */
-  saveCompiledKMPAsArrayBuffer(kmpFile: ArrayBuffer): Promise<void> {
-    return this.db.transaction("readwrite", this.db.KMPFileData, async () => {
-      await this.db.KMPFileData.put({
-        package: kmpFile,
-        id: PACKAGE_ID,
-      });
-    });
+  saveCompiledKMPAsArrayBuffer(
+    kmpFile: ArrayBuffer,
+    project?: number
+  ): Promise<number> {
+    return this.db.transaction(
+      "readwrite",
+      this.db.projectData,
+      this.db.KMPFileData,
+      async () => {
+        if (!project) {
+          project = await this.createProjectData();
+        }
+        await this.db.KMPFileData.put({ package: kmpFile, project });
+        return project;
+      }
+    );
   }
 
   /**
    * Retrieve the compiled KMP package from database
    */
-  async fetchCompiledKMPFile(): Promise<ArrayBuffer> {
-    const kmpFile = await this.db.KMPFileData.where(":id")
-      .equals(PACKAGE_ID)
-      .first();
+  async fetchCompiledKMPFile(project: number): Promise<ArrayBuffer> {
+    const kmpFile = await this.db.KMPFileData.where({ project }).first();
     if (kmpFile == undefined) {
       throw new Error("No KMP file has been compiled");
     }

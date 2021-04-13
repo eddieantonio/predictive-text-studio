@@ -375,9 +375,8 @@ test("store the KMP package to database", async (t) => {
 test("retrieve the KMP package from the database", async (t) => {
   const { storage } = t.context;
   const kmp = new ArrayBuffer(1);
-  await storage.saveCompiledKMPAsArrayBuffer(kmp);
-
-  const kmpRetrieved = await storage.fetchCompiledKMPFile();
+  const project = await storage.saveCompiledKMPAsArrayBuffer(kmp);
+  const kmpRetrieved = await storage.fetchCompiledKMPFile(project);
   t.assert(kmpRetrieved instanceof ArrayBuffer);
 });
 

@@ -91,7 +91,7 @@ export class PredictiveTextStudioWorkerImpl
       );
     } else {
       const kmpArrayBuffer = await linkStorageToKmp(this.storage, project);
-      this.saveKMPPackage(kmpArrayBuffer);
+      this.saveKMPPackage(kmpArrayBuffer, project);
       this._emitPackageCompileSuccess(kmpArrayBuffer);
     }
   }
@@ -195,8 +195,8 @@ export class PredictiveTextStudioWorkerImpl
     return this.storage.doesProjectExist();
   }
 
-  private saveKMPPackage(kmp: ArrayBuffer): Promise<void> {
-    return this.storage.saveCompiledKMPAsArrayBuffer(kmp);
+  private saveKMPPackage(kmp: ArrayBuffer, project: number): Promise<number> {
+    return this.storage.saveCompiledKMPAsArrayBuffer(kmp, project);
   }
 
   async exportProjectData(): Promise<string> {

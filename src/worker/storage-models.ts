@@ -25,6 +25,8 @@ export interface KMPPackageData {
   id?: number;
   /** The compiled KMP package */
   package: ArrayBuffer;
+  /** Project Id */
+  project: number;
 }
 
 export interface ExportedProjectData {
