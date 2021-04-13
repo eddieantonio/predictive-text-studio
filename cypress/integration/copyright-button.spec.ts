@@ -4,7 +4,7 @@ describe("Adding © to the copyright field", function () {
 
     cy.visit("/customize");
 
-    cy.get("#input-copyright").as("copyright").scrollIntoView();
+    cy.data("input-copyright").as("copyright").scrollIntoView();
 
     // HACK: it has to wait for the existing project to load
     cy.wait(1000);
