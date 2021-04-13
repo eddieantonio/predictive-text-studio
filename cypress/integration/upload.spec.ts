@@ -52,10 +52,6 @@ describe("Upload from the the landing page and Download KMP", function () {
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
-    cy.data("landing-page-generate-kmp-button")
-      .should("not.have.class", "button--disabled")
-      .click();
-
     cy.get("@download-kmp")
       .should("have.attr", "data-download-state", "ready")
       .click();
