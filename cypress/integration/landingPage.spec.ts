@@ -2,9 +2,6 @@ import "cypress-file-upload";
 
 const path = require("path");
 
-// TODO: do not use { force: true } option
-// This option was added as a workaround for test scenarios failing due to "the center of this element is hidden from view"
-// Related discussion on repo: https://github.com/eddieantonio/predictive-text-studio/pull/293#issuecomment-817975467
 describe("Upload from the the landing page", () => {
   let downloadFolder;
 
@@ -69,7 +66,7 @@ describe("Upload from the the landing page", () => {
     cy.data("landing-page-continue-button")
       .scrollIntoView()
       .should("be.visible");
-    cy.get(".autocomplete-input").first().type("zh", { force: true });
+    cy.data("autocomplete-label").type("zh");
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
@@ -97,11 +94,9 @@ describe("Upload from the the landing page", () => {
 
       cy.get("@quick-start")
         .data("upload-dropzone")
-        .trigger("dragenter", event, { force: true });
+        .trigger("dragenter", event);
 
-      cy.get("@quick-start")
-        .data("upload-dropzone")
-        .trigger("drop", event, { force: true });
+      cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
     cy.data("landing-page-continue-button").should(
@@ -110,17 +105,14 @@ describe("Upload from the the landing page", () => {
     );
   });
 
-  it("should have the 'generate KMP' button enabled after uploading a file and selecting a language", function () {
+  it("should have the 'customize' button enabled after uploading a file and selecting a language", function () {
     cy.data("landing-page-continue-button").should(
       "have.class",
       "quick-start__submit-button--disabled"
     );
 
     // Select the first option (should be Straits Salish)
-    cy.get(".autocomplete-input")
-      .first()
-      .type("straits", { force: true })
-      .type("{enter}");
+    cy.data("autocomplete-label").type("straits").type("{enter}");
 
     const downloadedFilePath = path.join(downloadFolder, "Example.kmp");
 
@@ -145,7 +137,7 @@ describe("Upload from the the landing page", () => {
       cy.get("@quick-start").data("upload-dropzone").trigger("drop", event);
     });
 
-    cy.data("landing-page-generate-kmp-button")
+    cy.data("landing-page-continue-button")
       .should("not.have.class", "quick-start__submit-button--disabled")
       .click();
   });

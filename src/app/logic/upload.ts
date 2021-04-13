@@ -34,7 +34,7 @@ export function filesFromInputElement(el: EventTarget | null): File[] {
 export async function addAllFilesToCurrentProject(
   project: number,
   files: FileList | File[],
-  settings: UploadSettings
+  settings = { wordColInd: 0, countColInd: 1 }
 ): Promise<void> {
   for (const file of files) {
     await worker.addDictionarySourceToProject(

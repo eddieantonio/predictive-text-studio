@@ -13,12 +13,12 @@
   import { onMount } from "svelte";
   import { PAGE_URLS } from "./page-urls";
   import { addAllFilesToCurrentProject } from "../logic/upload";
+  import UploadAdvancedInput from "../components/UploadAdvancedInput.svelte";
 
   let languageInfo: KeyboardMetadata | undefined = undefined;
   let readyToContinue: boolean = false;
-  let error: Error | null = null;
+  let error: string = "";
   let fromLocal: boolean = true;
-  let filesToSave: File[] = [];
   let files: File[] = [];
   let project: number;
   let projectInProgress: boolean = false;
@@ -36,9 +36,10 @@
     // determining if the project is complete
   });
 
-  $: readyToGenerateKMP = files.length || googleSheetsConfig;
+  $: settings = { wordColInd, countColInd };
   $: readyToContinue =
     languageInfo !== undefined && Boolean($currentDownloadURL);
+  $: if (googleSheetsConfig) saveGoogleSheet();
 
   // Split Button
   // TODO: this is some bad naming 🙃
@@ -49,11 +50,6 @@
 
   const UploadFromGoogleSheets = () => {
     fromLocal = false;
-  };
-
-  const uploadFile = (filesUploaded: File[]) => {
-    files = [...files, ...filesUploaded];
-    filesToSave = [...filesToSave, ...filesUploaded];
   };
 
   async function setLanguage(): Promise<void> {
@@ -67,36 +63,21 @@
     project = await worker.putProjectData(options, project);
   }
 
-  async function uploadAllFilesOrDisplayError(): Promise<void> {
-    error = null;
+  async function saveFile(filesUploaded: File[]) {
+    if (filesUploaded.length === 0) return;
+    await setLanguage();
+    error = "";
     try {
-      await addAllFilesToCurrentProject(project, filesToSave, {
-        wordColInd,
-        countColInd,
-      });
-      filesToSave = [];
+      await addAllFilesToCurrentProject(project, filesUploaded, settings);
+      files = [...files, ...filesUploaded];
     } catch (e) {
-      error = e;
+      error = e.message;
     }
   }
 
   function saveGoogleSheet() {
     const { spreadsheetId, values, settings } = googleSheetsConfig;
     worker.saveGoogleSheet(project, spreadsheetId, values, settings);
-  }
-
-  async function createProjectData(): Promise<void> {
-    await setLanguage();
-    if (filesToSave.length) uploadAllFilesOrDisplayError();
-    if (googleSheetsConfig) saveGoogleSheet();
-  }
-
-  async function generateKMP() {
-    languageInfo = languageInfo ?? {
-      language: "Undefined Language",
-      bcp47Tag: "und",
-    };
-    createProjectData();
   }
 </script>
 
@@ -240,6 +221,7 @@
   .error {
     background-color: var(--error-bg-color);
     color: var(--error-fg-color);
+    padding: 0.5rem 0.75rem;
   }
 
   .quick-start {
@@ -433,22 +415,20 @@
           </SplitButton>
         </ButtonBar>
       </div>
+      <UploadAdvancedInput bind:wordColInd bind:countColInd />
       {#if error}
         <p class:error>{error}</p>
       {/if}
       {#if fromLocal}
-        <Upload {files} {uploadFile} />
+        <Upload {files} {saveFile} />
       {:else}
-        <GoogleSheetsInput bind:googleSheetsConfig bind:googleSheetsURL />
+        <GoogleSheetsInput
+          bind:googleSheetsConfig
+          bind:googleSheetsURL
+          bind:error
+          {wordColInd}
+          {countColInd} />
       {/if}
-      <button
-        on:click={generateKMP}
-        type="button"
-        data-cy="landing-page-generate-kmp-button"
-        class="button button--primary button--shadow quick-start__submit-button"
-        class:quick-start__submit-button--disabled={!readyToGenerateKMP}>
-        {$_('page.main.generate_kmp_package')}
-      </button>
       <div
         class="quick-start__submit-wrapper"
         class:quick-start__submit-wrapper--disabled={!readyToContinue}>

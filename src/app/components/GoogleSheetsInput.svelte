@@ -3,15 +3,14 @@
   import { mapDecToColLetters } from "../logic/upload-advanced-settings";
 
   import InputField from "./InputField.svelte";
-  import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
 
   export let googleSheetsConfig;
   export let googleSheetsURL = "";
-  let error = null;
+  export let error = "";
 
   // The state that determines what columns are to be used on upload
-  let wordColInd = 0;
-  let countColInd = 1;
+  export let wordColInd = 0;
+  export let countColInd = 1;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -38,7 +37,7 @@
    *  listeners.
    */
   function initClient() {
-    error = null;
+    error = "";
     gapi.client
       .init({
         apiKey: API_KEY,
@@ -107,12 +106,6 @@
     justify-content: center;
     align-items: center;
   }
-
-  .error {
-    background-color: #f8d7db;
-    color: #400000;
-    padding: 0.3125rem 0.625rem;
-  }
 </style>
 
 <svelte:head>
@@ -120,11 +113,7 @@
   </script>
 </svelte:head>
 
-<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div class="google-sheets" data-cy="google-sheets-input">
-  {#if error}
-    <p class:error>{error}</p>
-  {/if}
   <InputField
     label={`${$_('common.google_sheets')} URL`}
     id="googleSheetsURL"

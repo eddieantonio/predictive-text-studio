@@ -12,10 +12,7 @@
    */
   export let getLanguageSources: Function;
   export let project: number;
-
-  // The state that determines what columns are to be used on upload
-  let wordColInd: number = 0;
-  let countColInd: number = 1;
+  let error: Error | null = null;
 
   // Split Button
   const uploadSourcesFromFile = () => {
@@ -26,19 +23,14 @@
     manualEntry = true;
   };
 
-  const uploadFile = async (filesUploaded: File[]) => {
+  const saveFile = async (filesUploaded: File[]) => {
     if (filesUploaded.length === 0) return;
-
-    // error = null;
+    error = null;
     try {
-      await addAllFilesToCurrentProject(project, filesUploaded, {
-        wordColInd,
-        countColInd,
-      });
-      // files = [...files, ...filesToSave];
+      await addAllFilesToCurrentProject(project, filesUploaded);
       getLanguageSources();
     } catch (e) {
-      // error = e;
+      error = e;
     }
   };
 
@@ -54,6 +46,10 @@
 </script>
 
 <style>
+  .error {
+    background-color: var(--error-bg-color);
+    color: var(--error-fg-color);
+  }
   .top-button-zone {
     display: flex;
     flex-direction: column;
@@ -82,11 +78,14 @@
   </ButtonBar>
 </div>
 
+{#if error}
+  <p class:error>{error}</p>
+{/if}
 {#if manualEntry}
   <ManualEntry
     {getLanguageSources}
     {tableData}
     closeTable={uploadSourcesFromFile} />
 {:else}
-  <Upload {uploadFile} />
+  <Upload {saveFile} />
 {/if}

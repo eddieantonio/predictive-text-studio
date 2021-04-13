@@ -1,7 +1,6 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import { filesFromDragEvent, filesFromInputElement } from "../logic/upload";
-  import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
   const UPLOAD_INPUT_ID = "upload-input";
 
   // Dragging over nested element in a drag-and-drop zone
@@ -14,23 +13,19 @@
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
   // export let project: number;
   export let files: File[] = [];
-  export let uploadFile: (filesToSave: File[]) => void = () => {};
+  export let saveFile: (filesToSave: File[]) => void = () => {};
 
   let dragEnterCounter = 0;
-
-  // The state that determines what columns are to be used on upload
-  let wordColInd: number = 0;
-  let countColInd: number = 1;
 
   function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
     const filesDropped = filesFromDragEvent(event);
-    uploadFile(filesDropped);
+    saveFile(filesDropped);
   }
 
   function uploadFilesFromInputElement(event: Event) {
     const filesUploaded = filesFromInputElement(event.target);
-    uploadFile(filesUploaded);
+    saveFile(filesUploaded);
   }
 </script>
 
@@ -82,7 +77,6 @@
   }
 </style>
 
-<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div
   class="upload-zone"
   class:drag-over={dragEnterCounter > 0}

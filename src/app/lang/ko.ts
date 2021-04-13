@@ -82,7 +82,6 @@ export default {
       step_two: "2단계: 단어 목록을 추가하세요",
       upload_tab_label: "파일 업로드",
       google_sheets_tab_label: "Google 스프레드시트 URL",
-      generate_kmp_package: "KMP 패키지 생성하기",
       customize: "맞춤 설정",
       privacy_policy: "개인 정보 정책",
       about_the_team: "개발팀 정보",
