@@ -86,7 +86,7 @@ test("editing a file", async (t) => {
 
   const project = await storage.createProjectData();
 
-  await storage.saveFile({
+  const id = await storage.saveFile({
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
@@ -105,6 +105,7 @@ test("editing a file", async (t) => {
     size: newWordList.length,
     type: "xlsx",
     project,
+    id,
   });
 
   // Check that the wordlist has been modified:

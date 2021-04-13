@@ -141,10 +141,9 @@ export default class Storage {
   /**
    * Saves a wordlist source file to storage.
    */
-  saveFile(file: StoredWordList): Promise<void> {
+  saveFile(file: StoredWordList): Promise<number> {
     return this.db.transaction("readwrite", this.db.files, async () => {
-      await this.db.files.where("name").equals(file.name).delete();
-      await this.db.files.put(file);
+      return this.db.files.put(file);
     });
   }
 
@@ -209,7 +208,15 @@ export default class Storage {
    * Delete project data
    */
   deleteProjectData(project: number): PromiseExtended<void> {
-    return this.db.projectData.delete(project);
+    return this.db.transaction(
+      "readwrite",
+      this.db.projectData,
+      this.db.files,
+      async () => {
+        await this.db.files.where({ project }).delete();
+        await this.db.projectData.delete(project);
+      }
+    );
   }
 
   /**

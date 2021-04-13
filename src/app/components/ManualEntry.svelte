@@ -58,6 +58,7 @@
   const saveTableData = async () => {
     if (validDictionary) {
       tableData.size = wordlist.length;
+      tableData.type = "direct-entry";
       await worker.putDirectEntry(tableData);
       await getLanguageSources();
     }
