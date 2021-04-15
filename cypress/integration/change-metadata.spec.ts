@@ -18,14 +18,14 @@ describe("Changing metadata in the language info page", function () {
     cy.visit("/customize");
 
     // Wait for the languages to load
-    cy.wait(2000);
+    cy.wait(1000);
     languageInput().clear().type(languageName).type("{enter}");
     cy.data("input-author-name").clear().type(authorName);
     cy.data("input-dictionary-name").clear().type(dictionaryName);
     cy.data("input-copyright").clear().type(copyright).blur();
     // Wait for the settings to change in the database
     // TODO: can we avoid waiting here?
-    cy.wait(2000);
+    cy.wait(200);
 
     // Navigate away page...
     cy.visit("about:blank");
@@ -34,7 +34,7 @@ describe("Changing metadata in the language info page", function () {
 
     // Wait for the page to load completely
     // TODO: can we avoid waiting here?
-    cy.wait(2000);
+    cy.wait(1000);
 
     languageInput().should("have.value", languageName);
     cy.data("input-author-name").should("have.value", authorName);
@@ -52,7 +52,7 @@ describe("Changing metadata in the language info page", function () {
     cy.data("input-copyright").clear().type(copyright).blur();
     // Wait for compilation
     // TODO: can we avoid waiting here?
-    cy.wait(500);
+    cy.wait(200);
 
     const downloadFolder = Cypress.env("downloadFolder");
     cy.task("clearDownloads");
@@ -64,9 +64,6 @@ describe("Changing metadata in the language info page", function () {
       .should("not.have.class", "button--disabled")
       .click();
 
-    cy.wait(100);
-
-    //TODO: await instead
     cy.readZip(downloadedFilePath).then(async (zip) => {
       expect(zip.file("kmp.json")).to.not.be.null;
       expect(zip.file(/[.]js$/)).to.have.lengthOf(1);
@@ -80,8 +77,6 @@ describe("Changing metadata in the language info page", function () {
       // change inputs and expect kmp to change
       cy.data("customize-information-btn").scrollIntoView().click();
 
-      languageInput().clear().type(languageName).type("{enter}").blur();
-
       cy.data("input-author-name")
         .clear()
         .type("new " + authorName);
@@ -93,15 +88,9 @@ describe("Changing metadata in the language info page", function () {
         .type("new " + copyright)
         .blur();
 
-      cy.wait(200); // wait for compilation
+      //TODO: Add in a language change as well
 
-      const expectedLexicalModels = [
-        {
-          name: "’Are’are dictionary",
-          id: "new Eddie.alu.example",
-          languages: [{ name: "’Are’are", id: "alu" }],
-        },
-      ];
+      cy.wait(100); // wait for compilation
 
       const newDownloadedFilePath = path.join(
         downloadFolder,
@@ -127,7 +116,6 @@ describe("Changing metadata in the language info page", function () {
         expect(kmpInfoNew.author.description).to.deep.equal(
           "new " + authorName
         );
-        expect(kmpFileNew.lexicalModels).to.deep.equal(expectedLexicalModels);
         cy.data("input-dictionary-name").clear().blur(); // clear dictionary name to avoid affecting other tests
       });
     });
