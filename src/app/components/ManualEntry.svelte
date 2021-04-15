@@ -156,11 +156,17 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 1%;
   }
 
   img {
     width: var(--s);
+  }
+
+  @media (max-width: 768px) {
+    .language__sources-manual-entry-tablename input {
+      width: 100%;
+      box-sizing: border-box;
+    }
   }
 </style>
 
