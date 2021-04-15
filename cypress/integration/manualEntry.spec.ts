@@ -3,6 +3,9 @@
 // Related discussion on repo: https://github.com/eddieantonio/predictive-text-studio/pull/293#issuecomment-817975467
 describe("Adding sources by direct entry", function () {
   beforeEach(() => {
+    cy.clearLocalDataExceptKeyboards();
+    cy.generateProject();
+
     cy.visit("/customize");
     cy.data("customize-sources-btn").contains("Sources").click();
   });
