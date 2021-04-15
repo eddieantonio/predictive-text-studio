@@ -14,8 +14,22 @@ export async function linkStorageToKmp(storage: Storage): Promise<ArrayBuffer> {
       "Could not fetch the package info; Did you update the package BCP-47 tag?"
     );
   }
-  const { language, bcp47Tag, authorName } = projectData;
+  const {
+    language,
+    bcp47Tag,
+    authorName,
+    copyright,
+    dictionaryName,
+  } = projectData;
   const modelID = `${authorName}.${bcp47Tag}.example`;
 
-  return generateKmp(language, bcp47Tag, sources, modelID);
+  return generateKmp(
+    language,
+    bcp47Tag,
+    sources,
+    modelID,
+    authorName,
+    copyright,
+    dictionaryName
+  );
 }
