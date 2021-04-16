@@ -1,12 +1,21 @@
 {
   "name": "predictive-text-studio",
-  "version": "2020.9.1-alpha",
+  "version": "2021.4.16",
   "description": "Create predictive text for YOUR language",
   "main": "index.js",
   "repository": "git@github.com:eddieantonio/predictive-text-studio.git",
-  "author": "Eddie Antonio Santos <easantos@ualberta.ca>",
+  "author": "Eddie Antonio Santos <Eddie.Santos@nrc-cnrc.gc.ca>",
+  "contributors": [
+    "Christian Lo",
+    "Zachary Probst",
+    "Alice Kim",
+    "Ian Sung Wok",
+    "Pranav Narang",
+    "Xuechun Qiu",
+    "Jie Ma"
+  ],
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "build": "rollup -c",
     "cy": "cypress open",
