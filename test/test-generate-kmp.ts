@@ -14,9 +14,20 @@ const sources = [
   ]),
 ];
 const modelID = "nrc.en.mtnt";
+const authorName = "Eddie";
+const copyright = "© 2018 My Cool Organization";
+const dictionaryName = "My Dictionary";
 
 test("it should generate a kmp file", async (t) => {
-  const kmp = await generateKmp(langName, bcp47Tag, sources, modelID);
+  const kmp = await generateKmp(
+    langName,
+    bcp47Tag,
+    sources,
+    modelID,
+    authorName,
+    copyright,
+    dictionaryName
+  );
   t.assert(kmp.byteLength > 0);
 
   const newZip = new JSZip();
@@ -31,7 +42,15 @@ test("it should generate a kmp file", async (t) => {
 const modelID2 = "national_research_council_canada.str.sencoten";
 
 test("The modelID should determines the filename of the model.js file in kmp archive", async (t) => {
-  const kmp = await generateKmp(langName, bcp47Tag, sources, modelID2);
+  const kmp = await generateKmp(
+    langName,
+    bcp47Tag,
+    sources,
+    modelID2,
+    authorName,
+    copyright,
+    dictionaryName
+  );
   const newZip = new JSZip();
   const zip = await newZip.loadAsync(kmp);
   const kmpFile = zip.file("kmp.json");
