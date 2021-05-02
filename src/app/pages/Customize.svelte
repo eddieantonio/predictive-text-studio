@@ -161,16 +161,17 @@
   }
 
   .customize__sidebar--project {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
 
     background: var(--lite-gray);
     border-radius: 50%;
+    border: none;
     font-size: 1rem;
-    margin: 2rem 1rem;
+    line-height: 2.5rem;
+    margin: 1rem;
+    text-align: center;
+    vertical-align: middle;
 
     cursor: pointer;
   }
@@ -182,7 +183,7 @@
   }
 
   .customize__sidebar--project.add {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     line-height: 1rem;
   }
 
@@ -259,14 +260,14 @@
  -->
 <main>
   <div class="customize">
-    <div class="customize__sidebar">
+    <nav class="customize__sidebar">
       {#each projects as project}
-        <div class="customize__sidebar--project" class:selected={project.id === id} on:click={() => id = project.id}>
-          {(project.dictionaryName || "?").substring(0, 1)}
-        </div>
+        <button class="customize__sidebar--project" class:selected={project.id === id} on:click={() => id = project.id}>
+          {[...(project.dictionaryName || "?")][0]}
+        </button>
       {/each}
-      <div class="customize__sidebar--project add" on:click={createProjectData}>+</div>
-    </div>
+      <button class="customize__sidebar--project add" on:click={createProjectData}>+</button>
+    </nav>
     <div class="customize__container">
       <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
