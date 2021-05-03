@@ -136,6 +136,11 @@
       id = projects[0]?.id;
     }
   };
+
+  const getFirstLetter = (s = "?") => {
+    s = s.normalize("NFD");
+    return Array.from(s)[0];
+  };
 </script>
 
 <style>
@@ -263,7 +268,7 @@
     <nav class="customize__sidebar">
       {#each projects as project}
         <button class="customize__sidebar--project" class:selected={project.id === id} on:click={() => id = project.id}>
-          {[...(project.dictionaryName || "?")][0]}
+          {getFirstLetter(project.dictionaryName)}
         </button>
       {/each}
       <button class="customize__sidebar--project add" on:click={createProjectData}>+</button>
