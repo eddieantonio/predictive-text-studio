@@ -88,7 +88,7 @@
    * Handles the click when the download language button is pressed. downloads a .kmp file.
    */
   const handleDownload = async (): Promise<void> => {
-    let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
+    let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata(id);
     if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
     createAnchor($currentDownloadURL, `${dictionaryName}.kmp`);
   };
