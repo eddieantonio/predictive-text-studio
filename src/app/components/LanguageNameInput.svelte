@@ -16,7 +16,6 @@
    * Whether the label should be bold or not.
    */
   export let bold: boolean = true;
-
   /**
    * [data-cy] label (for Cypress tests)
    */
@@ -25,7 +24,7 @@
   /**
    * The language selected by this element.
    */
-  export let selectedLanguage: KeyboardMetadata | undefined = undefined;
+  export let languageInfo: KeyboardMetadata | undefined = undefined;
 
   /************************** Internal variables ****************************/
 
@@ -74,9 +73,9 @@
   <AutoComplete
     items={knownLanguages}
     className="autocomplete--full-width"
-    bind:selectedItem={selectedLanguage}
+    bind:selectedItem={languageInfo}
     labelFieldName="language" />
   <p class="autocomplete__subtext" data-cy="autocomplete-subtext">
-    {`${$_('common.bcp47_tag')}: ${selectedLanguage?.bcp47Tag ?? ''}`}
+    {`${$_('common.bcp47_tag')}: ${languageInfo?.bcp47Tag ?? ''}`}
   </p>
 </div>

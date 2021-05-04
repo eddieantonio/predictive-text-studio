@@ -1,6 +1,7 @@
 import worker from "../spawn-worker";
 export async function removeDictionaryFromProject(
-  sourceName: string
+  sourceName: string,
+  project: number
 ): Promise<void> {
-  await worker.removeDictionaryFromProject(sourceName);
+  await worker.removeDictionaryFromProject(sourceName, project);
 }

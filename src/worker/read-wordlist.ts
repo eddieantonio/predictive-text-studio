@@ -1,6 +1,5 @@
 import * as Excel from "exceljs";
-import { UploadSettings, WordList } from "@common/types";
-import { StoredWordList } from "@worker/storage-models";
+import { UploadSettings, WordList, StoredWordList } from "@common/types";
 
 export async function readExcel(
   excelFile: ArrayBuffer | Uint8Array,
@@ -116,6 +115,7 @@ function shouldRowBeConvertedGoogleSheets(
 }
 
 export async function readGoogleSheet(
+  project: number,
   name: string,
   rows: string[][],
   settings: UploadSettings
@@ -137,5 +137,6 @@ export async function readGoogleSheet(
     wordlist,
     size: wordlist.length,
     type: "google-sheets",
+    project,
   };
 }

@@ -1,17 +1,11 @@
-import Dexie, { DexieOptions } from "dexie";
+import Dexie, { DexieOptions, PromiseExtended } from "dexie";
+import { StoredProjectData, StoredWordList } from "@common/types";
 import {
-  StoredWordList,
-  StoredProjectData,
   KeyboardDataWithTime,
   KMPPackageData,
   ExportedProjectData,
 } from "./storage-models";
 const DB_NAME = "dictionary_sources";
-
-/**
- * The key of the ONLY StoredPackageInfo record.
- */
-const PACKAGE_ID = 0;
 
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
@@ -115,6 +109,14 @@ export class PredictiveTextStudioDexie extends Dexie {
           });
       });
 
+    this.version(7).stores({
+      files: "++id, name, wordlist, size, project",
+    });
+
+    this.version(8).stores({
+      KMPFileData: "++id, package, project",
+    });
+
     /* The assignments are not required by the runtime, however, they are
      * necessary for proper type-checking. */
     this.files = this.table("files");
@@ -138,78 +140,109 @@ export default class Storage {
   /**
    * Saves a wordlist source file to storage.
    */
-  saveFile(file: StoredWordList): Promise<void> {
+  saveFile(file: StoredWordList): Promise<number> {
     return this.db.transaction("readwrite", this.db.files, async () => {
-      await this.db.files.where("name").equals(file.name).delete();
-      await this.db.files.put(file);
+      return this.db.files.put(file);
     });
   }
 
   /**
    * Deletes a wordlist source file from storage.
    */
-  deleteFile(name: string): Promise<void> {
+  deleteFile(name: string, project: number): Promise<void> {
     return this.db.transaction("readwrite", this.db.files, async () => {
-      await this.db.files.where("name").equals(name).delete();
+      await this.db.files.where({ name, project }).delete();
     });
+  }
+
+  fetchAllFiles(): Promise<StoredWordList[]> {
+    return this.db.files.toArray();
   }
 
   /**
    * Retrieves every file in the database as a list of {name, contents}
    * objects. Sorts the files by name.
    */
-  fetchAllFiles(): Promise<StoredWordList[]> {
-    return this.db.files.orderBy("name").toArray();
+  fetchFiles(project = 1): Promise<StoredWordList[]> {
+    return this.db.files.where("project").equals(project).sortBy("name");
   }
 
   /**
    * Update BCP-47 tag to database
    */
-  updateBCP47Tag(bcp47Tag: string): Promise<void> {
-    return this.db.transaction("readwrite", this.db.projectData, async () => {
-      const currentData = (await this.db.projectData.get({
-        id: PACKAGE_ID,
-      })) || { language: "", bcp47Tag, authorName: "", id: PACKAGE_ID };
-      currentData.bcp47Tag = bcp47Tag;
-      await this.db.projectData.put(currentData);
+  updateBCP47Tag(bcp47Tag: string, project?: number): Promise<number> {
+    return this.putProjectData({ bcp47Tag }, project);
+  }
+
+  createProjectData(): PromiseExtended<number> {
+    return this.db.projectData.put({
+      authorName: "Unknown Author",
+      // An empty string indicates "lanugage unknown" in XML/HTML as in <html lang="">
+      // See: https://www.w3.org/International/questions/qa-no-language#undetermined
+      // See: https://tools.ietf.org/html/bcp47#section-3.4.1
+      bcp47Tag: "",
+      language: "Unknown Language",
     });
   }
 
   /**
    * Update required and some optional metadata to database
    */
-  updateProjectData(metadata: { [key: string]: string }): Promise<void> {
+  putProjectData(
+    metadata: { [key: string]: string },
+    project?: number
+  ): Promise<number> {
     return this.db.transaction("readwrite", this.db.projectData, async () => {
-      const existingMetadata:
-        | StoredProjectData
-        | undefined = await this.db.projectData.get(PACKAGE_ID);
-      const updatedMetadata = Object.assign(
-        existingMetadata || createInitialProjectData(),
-        metadata
-      );
-      await this.db.projectData.put(updatedMetadata);
+      const projectId = project ?? (await this.createProjectData());
+      const projectData = await this.fetchProjectData(projectId);
+      await this.db.projectData.put({
+        ...projectData,
+        ...metadata,
+      } as StoredProjectData);
+      return projectId;
     });
+  }
+
+  /**
+   * Delete project data
+   */
+  deleteProjectData(project: number): PromiseExtended<void> {
+    return this.db.transaction(
+      "readwrite",
+      this.db.projectData,
+      this.db.files,
+      async () => {
+        await this.db.files.where({ project }).delete();
+        await this.db.projectData.delete(project);
+      }
+    );
   }
 
   /**
    * Checks if a project currently exists
    */
   async doesProjectExist(): Promise<boolean> {
-    const projectData = await this.db.projectData
-      .where(":id")
-      .equals(PACKAGE_ID)
-      .first();
-    return projectData !== undefined;
+    try {
+      const count = await this.db.projectData.count();
+      return count > 0;
+    } catch (err) {
+      // No project data found
+      return false;
+    }
+  }
+
+  /**
+   * Retrieves all project data.
+   */
+  async fetchAllProjectData(): Promise<StoredProjectData[]> {
+    return this.db.projectData.toArray();
   }
 
   /**
    * Retrieves the current project data.
    */
-  async fetchProjectData(): Promise<StoredProjectData> {
-    const projectData = await this.db.projectData
-      .where(":id")
-      .equals(PACKAGE_ID)
-      .first();
+  async fetchProjectData(project = 1): Promise<StoredProjectData> {
+    const projectData = await this.db.projectData.get(project);
 
     if (projectData == undefined) {
       throw new Error("No project data has been stored");
@@ -252,22 +285,29 @@ export default class Storage {
    * Save the KMP package once it compiled
    * @param KMPFile
    */
-  saveCompiledKMPAsArrayBuffer(kmpFile: ArrayBuffer): Promise<void> {
-    return this.db.transaction("readwrite", this.db.KMPFileData, async () => {
-      await this.db.KMPFileData.put({
-        package: kmpFile,
-        id: PACKAGE_ID,
-      });
-    });
+  saveCompiledKMPAsArrayBuffer(
+    kmpFile: ArrayBuffer,
+    project?: number
+  ): Promise<number> {
+    return this.db.transaction(
+      "readwrite",
+      this.db.projectData,
+      this.db.KMPFileData,
+      async () => {
+        if (!project) {
+          project = await this.createProjectData();
+        }
+        await this.db.KMPFileData.put({ package: kmpFile, project });
+        return project;
+      }
+    );
   }
 
   /**
    * Retrieve the compiled KMP package from database
    */
-  async fetchCompiledKMPFile(): Promise<ArrayBuffer> {
-    const kmpFile = await this.db.KMPFileData.where(":id")
-      .equals(PACKAGE_ID)
-      .first();
+  async fetchCompiledKMPFile(project: number): Promise<ArrayBuffer> {
+    const kmpFile = await this.db.KMPFileData.where({ project }).first();
     if (kmpFile == undefined) {
       throw new Error("No KMP file has been compiled");
     }
@@ -278,7 +318,7 @@ export default class Storage {
    * Export projectData and Files as a json string
    */
   async exportProjectData(): Promise<string> {
-    const projectData: StoredProjectData = await this.fetchProjectData();
+    const projectData: StoredProjectData[] = await this.fetchAllProjectData();
     const files: StoredWordList[] = await this.fetchAllFiles();
     return JSON.stringify({ projectData, files });
   }
@@ -291,7 +331,7 @@ export default class Storage {
     const { projectData, files }: ExportedProjectData = JSON.parse(data);
     if (projectData) {
       await this.db.transaction("readwrite", this.db.projectData, async () => {
-        await this.db.projectData.put(projectData);
+        await this.db.projectData.bulkPut(projectData);
       });
     }
     if (files) {
@@ -300,18 +340,4 @@ export default class Storage {
       });
     }
   }
-}
-
-function createInitialProjectData(): StoredProjectData {
-  return {
-    id: PACKAGE_ID,
-
-    authorName: "Unknown Author",
-
-    // An empty string indicates "language unknown" in XML/HTML as in <html lang="">
-    // See: https://www.w3.org/International/questions/qa-no-language#undetermined
-    // See: https://tools.ietf.org/html/bcp47#section-3.4.1
-    bcp47Tag: "",
-    language: "Unknown Language",
-  };
 }

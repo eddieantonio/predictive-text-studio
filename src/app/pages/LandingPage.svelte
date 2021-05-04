@@ -12,54 +12,73 @@
   import type { RelevantKmpOptions } from "@common/kmp-json-file";
   import { onMount } from "svelte";
   import { PAGE_URLS } from "./page-urls";
+  import { addAllFilesToCurrentProject } from "../logic/upload";
+  import UploadAdvancedInput from "../components/UploadAdvancedInput.svelte";
 
-  let selectedLanguage: KeyboardMetadata | undefined = undefined;
-  let continueReady: boolean = false;
-  let uploadFile: boolean = true;
-  let isProjectInProgress: boolean = false;
+  let languageInfo: KeyboardMetadata | undefined = undefined;
+  let readyToContinue: boolean = false;
+  let error: string = "";
+  let fromLocal: boolean = true;
+  let files: File[] = [];
+  let project: number;
+  let projectInProgress: boolean = false;
+  let googleSheetsConfig: any;
+  let googleSheetsURL: string;
+
+  // The state that determines what columns are to be used on upload
+  let wordColInd: number = 0;
+  let countColInd: number = 1;
 
   onMount(async () => {
-    if (await worker.doesProjectExist()) {
-      selectedLanguage = await worker.fetchAllCurrentProjectMetadata();
-      isProjectInProgress = selectedLanguage !== undefined;
-      // TODO: Boolean($currentDownloadURL) will always be false here
-      // Ideally we want to see if $currentDownloadURL is available here when
-      // determining if the project is complete
-    }
+    projectInProgress = await worker.doesProjectExist();
+    // TODO: Boolean($currentDownloadURL) will always be false here
+    // Ideally we want to see if $currentDownloadURL is available here when
+    // determining if the project is complete
   });
 
-  $: continueReady =
-    selectedLanguage !== undefined && Boolean($currentDownloadURL);
-
-  $: if (Boolean($currentDownloadURL)) {
-    if (selectedLanguage === undefined) {
-      selectedLanguage = { language: "Undefined Language", bcp47Tag: "und" };
-    }
-  }
-
-  $: if (selectedLanguage !== undefined) updateLanguage();
-
-  function updateLanguage(): void {
-    if (selectedLanguage !== undefined) {
-      const options: Partial<Readonly<RelevantKmpOptions>> = {
-        languages: [
-          { name: selectedLanguage.language, id: selectedLanguage.bcp47Tag },
-        ],
-      };
-      worker.setProjectData(options);
-    }
-  }
+  $: settings = { wordColInd, countColInd };
+  $: readyToContinue =
+    languageInfo !== undefined && Boolean($currentDownloadURL);
+  $: if (googleSheetsConfig) saveGoogleSheet();
 
   // Split Button
   // TODO: this is some bad naming 🙃
   // TODO: change "upload file" to... tab mode or something.
   const uploadFromFile = () => {
-    uploadFile = true;
+    fromLocal = true;
   };
 
   const UploadFromGoogleSheets = () => {
-    uploadFile = false;
+    fromLocal = false;
   };
+
+  async function setLanguage(): Promise<void> {
+    languageInfo = languageInfo ?? {
+      language: "Undefined Language",
+      bcp47Tag: "und",
+    };
+    const options: Partial<Readonly<RelevantKmpOptions>> = {
+      languages: [{ name: languageInfo.language, id: languageInfo.bcp47Tag }],
+    };
+    project = await worker.putProjectData(options, project);
+  }
+
+  async function saveFile(filesUploaded: File[]) {
+    if (filesUploaded.length === 0) return;
+    await setLanguage();
+    error = "";
+    try {
+      await addAllFilesToCurrentProject(project, filesUploaded, settings);
+      files = [...files, ...filesUploaded];
+    } catch (e) {
+      error = e.message;
+    }
+  }
+
+  function saveGoogleSheet() {
+    const { spreadsheetId, values, settings } = googleSheetsConfig;
+    worker.saveGoogleSheet(project, spreadsheetId, values, settings);
+  }
 </script>
 
 <style>
@@ -199,6 +218,12 @@
     margin-bottom: var(--s);
   }
 
+  .error {
+    background-color: var(--error-bg-color);
+    color: var(--error-fg-color);
+    padding: 0.3125rem 0.625rem;
+  }
+
   .quick-start {
     margin: 9rem auto;
     padding: 1.5rem;
@@ -225,28 +250,6 @@
   }
   .quick-start__submit-wrapper--disabled {
     cursor: not-allowed;
-  }
-
-  .footer {
-    padding: 1rem;
-
-    color: var(--white, #fff);
-    background-color: var(--gray-dark);
-  }
-
-  .footer a:link,
-  .footer a:visited,
-  .footer a:active {
-    color: inherit;
-  }
-
-  .footer a:hover {
-    color: var(--gray-light);
-  }
-
-  .footer__copyright {
-    margin: auto;
-    max-width: var(--body-max-width);
   }
 
   .block {
@@ -364,28 +367,25 @@
   </section>
 
   <section id="get-started" class="quick-start">
-    {#if isProjectInProgress && continueReady}
-      <div
-        id="project-exists-info"
-        class="card card__info card__existing-project"
-        data-cy="existing-project-card">
-        <form action={PAGE_URLS.customize}>
+    <form action={PAGE_URLS.customize} data-cy="quick-start">
+      {#if projectInProgress}
+        <div
+          id="project-exists-info"
+          class="card card__info card__existing-project"
+          data-cy="existing-project-card">
           <h3>{$_('input.existing_project_warning')}</h3>
           <p>{$_('input.existing_project_continue_prompt')}</p>
           <button
             class="button button--primary quick-start__submit-button"
-            class:quick-start__submit-button--disabled={!continueReady}
             type="submit"
             data-cy="existing-project-continue-button">
             {$_('input.continue')}
           </button>
-        </form>
-      </div>
-    {/if}
-    <form action={PAGE_URLS.customize} data-cy="quick-start">
+        </div>
+      {/if}
       <fieldset class="quick-start__step">
         <LanguageNameInput
-          bind:selectedLanguage
+          bind:languageInfo
           label={$_('page.main.step_one')}
           bold={false} />
       </fieldset>
@@ -400,14 +400,14 @@
       <div class="split-container">
         <ButtonBar>
           <SplitButton
-            color={uploadFile ? 'blue' : 'grey'}
+            color={fromLocal ? 'blue' : 'grey'}
             dataCy="landing-splitbtn-upload"
             onClick={uploadFromFile}
             type="button">
             {$_('page.main.upload_tab_label')}
           </SplitButton>
           <SplitButton
-            color={!uploadFile ? 'blue' : 'grey'}
+            color={!fromLocal ? 'blue' : 'grey'}
             dataCy="landing-splitbtn-google-sheets"
             onClick={UploadFromGoogleSheets}
             type="button">
@@ -415,19 +415,28 @@
           </SplitButton>
         </ButtonBar>
       </div>
-      {#if uploadFile}
-        <Upload />
+      <UploadAdvancedInput bind:wordColInd bind:countColInd />
+      {#if error}
+        <p class:error>{error}</p>
+      {/if}
+      {#if fromLocal}
+        <Upload {files} {saveFile} />
       {:else}
-        <GoogleSheetsInput />
+        <GoogleSheetsInput
+          bind:googleSheetsConfig
+          bind:googleSheetsURL
+          bind:error
+          {wordColInd}
+          {countColInd} />
       {/if}
       <div
         class="quick-start__submit-wrapper"
-        class:quick-start__submit-wrapper--disabled={!continueReady}>
+        class:quick-start__submit-wrapper--disabled={!readyToContinue}>
         <DownloadKMP downloadURL={$currentDownloadURL} />
         <p>{$_('common.or')}</p>
         <button
           class="button button--primary button--shadow quick-start__submit-button"
-          class:quick-start__submit-button--disabled={!continueReady}
+          class:quick-start__submit-button--disabled={!readyToContinue}
           type="submit"
           data-cy="landing-page-continue-button">
           {$_('page.main.customize')}
@@ -436,20 +445,3 @@
     </form>
   </section>
 </main>
-
-<footer class="footer">
-  <p class="footer__copyright">
-    <small>
-      <a href={PAGE_URLS.privacy}>{$_('page.main.privacy_policy')}</a>
-      <br />
-      <a
-        href={PAGE_URLS.team}
-        data-cy="team-page-link">{$_('page.main.about_the_team')}</a>
-      <br />
-      © 2020–{new Date().getFullYear()}
-      <a
-        href="https://nrc.canada.ca/en/research-development/research-collaboration/programs/canadian-indigenous-languages-technology-project">
-        National Research Council Canada</a>.
-    </small>
-  </p>
-</footer>

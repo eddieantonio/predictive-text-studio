@@ -92,6 +92,15 @@ export default {
       sources: "Sources",
       download: "Download",
       add_copyright_symbol: "Add ©",
+      delete_project: "Delete Project",
+      no_project: "No project has been selected",
+      no_project_subtitle:
+        "Create a new project or start working on existing projects",
+      no_source: "There is no source",
+      no_source_subtitle:
+        "Enter sources by uploading Excel, TSV files or direct entry",
+      import_project_data: "Import Project Data",
+      export_project_data: "Export Project Data",
     },
     privacy: {
       title: "Predictive Text Studio Privacy Policy",

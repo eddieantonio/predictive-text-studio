@@ -1,11 +1,6 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import {
-    addAllFilesToCurrentProject,
-    filesFromDragEvent,
-    filesFromInputElement,
-  } from "../logic/upload";
-  import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
+  import { filesFromDragEvent, filesFromInputElement } from "../logic/upload";
   const UPLOAD_INPUT_ID = "upload-input";
 
   // Dragging over nested element in a drag-and-drop zone
@@ -16,48 +11,20 @@
   // This problem can also be solved by listening for dragOver
   // However, as of right now, doing so on Chrome when dragging over nested element
   // will cause the drag over effect to be cancelled for a short amount of time, then resume
-  let files: File[] = [];
+  export let files: File[] = [];
+  export let saveFile: (filesToSave: File[]) => void = () => {};
+
   let dragEnterCounter = 0;
-  let error: Error | null = null;
 
-  // The state that determines what columns are to be used on upload
-  let wordColInd: number = 0;
-  let countColInd: number = 1;
-
-  /**
-   * Re-calculate word count
-   *
-   * Note: A default behavior set to "no action" since no re-calculation is required on landing page.
-   */
-  export let getLanguageSources: Function = () => {};
-
-  async function uploadFilesFromDragAndDrop(event: DragEvent) {
+  function uploadFilesFromDragAndDrop(event: DragEvent) {
     dragEnterCounter = 0;
     const filesDropped = filesFromDragEvent(event);
-    await uploadAllFilesOrDisplayError(filesDropped);
+    saveFile(filesDropped);
   }
 
-  async function uploadFilesFromInputElement(event: Event) {
+  function uploadFilesFromInputElement(event: Event) {
     const filesUploaded = filesFromInputElement(event.target);
-    await uploadAllFilesOrDisplayError(filesUploaded);
-  }
-
-  async function uploadAllFilesOrDisplayError(
-    filesToSave: File[]
-  ): Promise<void> {
-    if (filesToSave.length === 0) return;
-
-    error = null;
-    try {
-      await addAllFilesToCurrentProject(filesToSave, {
-        wordColInd,
-        countColInd,
-      });
-      files = [...files, ...filesToSave];
-      getLanguageSources();
-    } catch (e) {
-      error = e;
-    }
+    saveFile(filesUploaded);
   }
 </script>
 
@@ -107,13 +74,8 @@
     width: 1em;
     height: 1.2em;
   }
-  .error {
-    background-color: var(--error-bg-color);
-    color: var(--error-fg-color);
-  }
 </style>
 
-<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div
   class="upload-zone"
   class:drag-over={dragEnterCounter > 0}
@@ -123,9 +85,6 @@
   on:dragleave={() => void dragEnterCounter--}
   on:dragover|preventDefault={() => void (dragEnterCounter = 1)}>
   <img role="presentation" src="icons/upload-solid.svg" alt="" />
-  {#if error}
-    <p class:error>{error}</p>
-  {/if}
   {#each files as file}
     <div class="info">
       {file.name}

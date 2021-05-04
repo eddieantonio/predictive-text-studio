@@ -3,10 +3,10 @@
   import { onMount } from "svelte";
   import Button from "./Button.svelte";
   import worker from "../spawn-worker";
-  import type { WordAndCount, WordList, WordListSource } from "@common/types";
+  import type { WordAndCount, WordList, StoredWordList } from "@common/types";
   import { WordAndCountInd } from "@common/types";
 
-  export let tableData: WordListSource;
+  export let tableData: StoredWordList;
 
   /**
    * Close table
@@ -20,9 +20,7 @@
 
   $: wordlist = tableData.wordlist;
   $: validDictionary = validateTableData(tableData.name, tableData.wordlist);
-  $: if (validateTableData(tableData.name, tableData.wordlist)) {
-    saveTableData();
-  }
+  $: if (validDictionary) saveTableData();
 
   const validInput = (input: string): boolean => {
     return (
@@ -59,19 +57,10 @@
 
   const saveTableData = async () => {
     if (validDictionary) {
-      if (tableData.id) {
-        await worker.updateManualEntryDictionaryToProject(
-          tableData.id,
-          tableData.name,
-          tableData.wordlist
-        );
-      } else {
-        await worker.addManualEntryDictionaryToProject(
-          tableData.name,
-          tableData.wordlist
-        );
-      }
-      getLanguageSources();
+      tableData.size = wordlist.length;
+      tableData.type = "direct-entry";
+      await worker.putDirectEntry(tableData);
+      await getLanguageSources();
     }
   };
 
@@ -167,11 +156,17 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 1%;
   }
 
   img {
     width: var(--s);
+  }
+
+  @media (max-width: 768px) {
+    .language__sources-manual-entry-tablename input {
+      width: 100%;
+      box-sizing: border-box;
+    }
   }
 </style>
 

@@ -1,4 +1,3 @@
-import type { UploadSettings } from "@common/types";
 import worker from "../spawn-worker";
 
 /**
@@ -32,11 +31,17 @@ export function filesFromInputElement(el: EventTarget | null): File[] {
  * Uploads all the given files to the current project.
  */
 export async function addAllFilesToCurrentProject(
+  project: number,
   files: FileList | File[],
-  settings: UploadSettings
+  settings = { wordColInd: 0, countColInd: 1 }
 ): Promise<void> {
   for (const file of files) {
-    await worker.addDictionarySourceToProject(file.name, file, settings);
+    await worker.addDictionarySourceToProject(
+      project,
+      file.name,
+      file,
+      settings
+    );
   }
 }
 

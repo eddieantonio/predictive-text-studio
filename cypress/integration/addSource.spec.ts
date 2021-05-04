@@ -1,3 +1,6 @@
+// TODO: do not use { force: true } option
+// This option was added as a workaround for test scenarios failing due to "the center of this element is hidden from view"
+// Related discussion on repo: https://github.com/eddieantonio/predictive-text-studio/pull/293#issuecomment-817975467
 describe("Add source feature in LanguageSource page", function () {
   beforeEach(() => {
     cy.clearLocalDataExceptKeyboards();
@@ -11,7 +14,9 @@ describe("Add source feature in LanguageSource page", function () {
     // Add source component should show after clicking the details element
     cy.data("language-sources-add-sources").click().scrollIntoView();
 
-    cy.data("add-sources-splitbtn-upload").contains("Upload").click();
+    cy.data("add-sources-splitbtn-upload")
+      .contains("Upload")
+      .click({ force: true });
     cy.data("upload-dropzone").contains("label", "Browse file");
 
     cy.data("language-sources-add-sources").contains("Add Source").click();

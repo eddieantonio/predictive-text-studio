@@ -2,16 +2,15 @@
   import { _ } from "svelte-i18n";
   import { mapDecToColLetters } from "../logic/upload-advanced-settings";
 
-  import worker from "../spawn-worker";
   import InputField from "./InputField.svelte";
-  import UploadAdvancedInput from "./UploadAdvancedInput.svelte";
 
-  let error = null;
-  let googleSheetsURL = "";
+  export let googleSheetsConfig;
+  export let googleSheetsURL = "";
+  export let error = "";
 
   // The state that determines what columns are to be used on upload
-  let wordColInd = 0;
-  let countColInd = 1;
+  export let wordColInd = 0;
+  export let countColInd = 1;
 
   // Array of API discovery doc URLs for APIs used by the quickstart
   const DISCOVERY_DOCS = [
@@ -22,6 +21,10 @@
   // included, separated by spaces.
   const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
+  // Regex pattern for valid Google Sheets URL
+  const googleSheetRegExp = RegExp(
+    "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
+  );
   /**
    *  On load, called to load the auth2 library and API client library.
    */
@@ -34,7 +37,7 @@
    *  listeners.
    */
   function initClient() {
-    error = null;
+    error = "";
     gapi.client
       .init({
         apiKey: API_KEY,
@@ -44,9 +47,9 @@
       })
       .then(() => {
         // Listen for sign-in state changes.
-        gapi.auth2.getAuthInstance().isSignedIn.listen(readGoogleSheet);
+        gapi.auth2.getAuthInstance().isSignedIn.listen(saveGoogleSheet);
         // Handle the initial sign-in state.
-        readGoogleSheet(gapi.auth2.getAuthInstance().isSignedIn.get());
+        saveGoogleSheet(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
       .catch((e) => {
         error = `${$_("common.error")}: ${$_("input.connection_error")}: ${e}`;
@@ -57,7 +60,7 @@
    *  Called when the signed in status changes, to update the UI
    *  appropriately. After a sign-in, the API is called.
    */
-  async function readGoogleSheet(isSignedIn) {
+  async function saveGoogleSheet(isSignedIn) {
     if (!isSignedIn) {
       gapi.auth2.getAuthInstance().signIn();
     }
@@ -67,18 +70,15 @@
         Math.min(wordColInd, countColInd)
       )}1:${mapDecToColLetters(Math.max(wordColInd, countColInd))}`;
 
-      const spreadsheetId = getSpreadsheetId(googleSheetsURL) || "";
+      const spreadsheetId = getSpreadsheetId() || "";
       const {
         result: { values },
       } = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
         range: spreadsheetRange,
       });
-      const settings = {
-        wordColInd,
-        countColInd,
-      };
-      worker.readGoogleSheet(spreadsheetId, values, settings);
+      const settings = { wordColInd, countColInd };
+      googleSheetsConfig = { spreadsheetId, values, settings };
     } catch (err) {
       error = `${$_("common.error")}: ` + err.message;
       return;
@@ -89,10 +89,6 @@
    * Gets the unique spreadsheet ID from a Google Sheet URL
    */
   function getSpreadsheetId() {
-    const googleSheetRegExp = RegExp(
-      "http(s?)://docs.google.com/spreadsheets/[a-z]/[\\w-]+/[\\w#=-]+"
-    );
-
     if (googleSheetRegExp.test(googleSheetsURL)) {
       return googleSheetsURL.split("/")[5];
     } else {
@@ -110,12 +106,6 @@
     justify-content: center;
     align-items: center;
   }
-
-  .error {
-    background-color: #f8d7db;
-    color: #400000;
-    padding: 0.3125rem 0.625rem;
-  }
 </style>
 
 <svelte:head>
@@ -123,11 +113,7 @@
   </script>
 </svelte:head>
 
-<UploadAdvancedInput bind:wordColInd bind:countColInd />
 <div class="google-sheets" data-cy="google-sheets-input">
-  {#if error}
-    <p class:error>{error}</p>
-  {/if}
   <InputField
     label={`${$_('common.google_sheets')} URL`}
     id="googleSheetsURL"

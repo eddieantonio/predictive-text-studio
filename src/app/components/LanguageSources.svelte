@@ -1,17 +1,18 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import AddSource from "./AddSource.svelte";
-  import type { WordListSource } from "@common/types";
+  import type { StoredWordList } from "@common/types";
   import { removeDictionaryFromProject } from "../logic/delete";
+  import AddSource from "./AddSource.svelte";
   import ManualEntry from "./ManualEntry.svelte";
-  export let sources: WordListSource[];
+  export let sources: StoredWordList[];
 
   /**
    * Re-calculate word count
    */
   export let getLanguageSources: Function;
+  export let project: number;
 
-  let selected: WordListSource | null = null;
+  let selected: StoredWordList | null = null;
 
   /**
    * Handles the click when the edit button is pressed.
@@ -19,7 +20,7 @@
    *
    * @return {void}
    */
-  function handleEdit(sourceToEdit: WordListSource): void {
+  function handleEdit(sourceToEdit: StoredWordList): void {
     selected = sourceToEdit;
   }
 
@@ -28,8 +29,8 @@
    *
    * @return {void}
    */
-  async function handleDelete(sourceToDelete: WordListSource): Promise<void> {
-    await removeDictionaryFromProject(sourceToDelete.name);
+  async function handleDelete(sourceToDelete: StoredWordList): Promise<void> {
+    await removeDictionaryFromProject(sourceToDelete.name, project);
     sources = sources.filter((source) => source.name != sourceToDelete.name);
   }
 
@@ -119,44 +120,51 @@
 
 <div class="language__sources">
   <div class="language__sources--table">
-    <table class="mt-l">
-      <thead>
-        <tr>
-          <th>{$_('common.name')}</th>
-          <th>{$_('common.size')}</th>
-          <th>{$_('common.type')}</th>
-          <th>{$_('common.actions')}</th>
-        </tr>
-      </thead>
-
-      {#each sources as source}
-        <tr class:selected={source.id === selected?.id}>
-          <td>{source.name}</td>
-          <td>{source.size}</td>
-          <td>{englishNameOf[source.type]}</td>
-          <td class="table__row--actions actions">
-            <button
-              class="actions__action btn--inline"
-              on:click={() => handleEdit(source)}
-              data-cy="language-source-edit">
-              <img src="/icons/edit.svg" alt="edit" />
-            </button>
-            <button
-              class="actions__action btn--inline"
-              on:click={() => handleDelete(source)}
-              data-cy="language-source-delete">
-              <img src="/icons/delete.svg" alt="delete" />
-            </button>
-          </td>
-        </tr>
-      {/each}
-    </table>
+    {#if sources.length}
+      <table class="mt-l">
+        <thead>
+          <tr>
+            <th>{$_('common.name')}</th>
+            <th>{$_('common.size')}</th>
+            <th>{$_('common.type')}</th>
+            <th>{$_('common.actions')}</th>
+          </tr>
+        </thead>
+        {#each sources as source}
+          <tr class:selected={source.id === selected?.id}>
+            <td>{source.name}</td>
+            <td>{source.size}</td>
+            <td>{englishNameOf[source.type]}</td>
+            <td class="table__row--actions actions">
+              <button
+                class="actions__action btn--inline"
+                on:click={() => handleEdit(source)}
+                data-cy="language-source-edit">
+                <img src="/icons/edit.svg" alt="edit" />
+              </button>
+              <button
+                class="actions__action btn--inline"
+                on:click={() => handleDelete(source)}
+                data-cy="language-source-delete">
+                <img src="/icons/delete.svg" alt="delete" />
+              </button>
+            </td>
+          </tr>
+        {/each}
+      </table>
+    {:else}
+      <div
+        style="text-align: center; padding: 10px; background: var(--lite-white); margin-bottom: 100px;">
+        <h3>{$_('page.lang.no_source')}</h3>
+        <p>{$_('page.lang.no_source_subtitle')}</p>
+      </div>
+    {/if}
     {#if selected !== null}
       <ManualEntry tableData={selected} {getLanguageSources} {closeTable} />
     {/if}
   </div>
   <details data-cy="language-sources-add-sources">
     <summary>{$_('input.add_source')}</summary>
-    <AddSource {getLanguageSources} />
+    <AddSource {project} {getLanguageSources} />
   </details>
 </div>

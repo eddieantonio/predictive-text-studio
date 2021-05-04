@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
-  import type { WordListSource } from "@common/types";
+  import type { StoredProjectData, StoredWordList } from "@common/types";
   import LanguageInfo from "../components/LanguageInfo.svelte";
   import LanguageSources from "../components/LanguageSources.svelte";
   import Button from "../components/Button.svelte";
@@ -18,19 +18,20 @@
 
   // reference to child component so it may be updated
   let languageInfo: undefined | LanguageInfoComponent;
-
   let downloadReady: boolean = true;
+  let projects: StoredProjectData[] = [];
+  let id: number | undefined;
 
   // Mock language data object - this would be read from localstorage/db
   interface DictionaryInformation {
     readonly wordCount: number;
-    sources: WordListSource[];
+    sources: StoredWordList[];
   }
 
   export let languageInformation: DictionaryInformation = {
     get wordCount(): number {
       return languageInformation.sources.reduce(
-        (sum, source: WordListSource) => sum + Number(source.size || 0),
+        (sum, source: StoredWordList) => sum + Number(source.size || 0),
         0
       );
     },
@@ -38,14 +39,21 @@
   };
 
   async function getLanguageSources() {
-    languageInformation.sources = await worker.getFilesFromStorage();
+    languageInformation.sources = await worker.getFilesFromStorage(id);
+  }
+
+  async function getProjectData() {
+    projects = await worker.getProjectDataFromStorage();
   }
 
   // listen to changes to the package compilation and enable download button accordingly
   $: downloadReady = $compileSuccess;
 
-  onMount(() => {
-    getLanguageSources();
+  $: if (id) getLanguageSources();
+
+  onMount(async () => {
+    await getProjectData();
+    id = projects[0]?.id;
     setupAutomaticCompilationAndDownloadURL();
   });
 
@@ -80,7 +88,7 @@
    * Handles the click when the download language button is pressed. downloads a .kmp file.
    */
   const handleDownload = async (): Promise<void> => {
-    let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata();
+    let { dictionaryName } = await worker.fetchAllCurrentProjectMetadata(id);
     if (!dictionaryName) dictionaryName = "Predictive-Text-Studio-Dictionary";
     createAnchor($currentDownloadURL, `${dictionaryName}.kmp`);
   };
@@ -115,6 +123,24 @@
     });
     input.click();
   };
+
+  const createProjectData = async (): Promise<void> => {
+    await worker.createProjectData();
+    projects = await worker.getProjectDataFromStorage();
+  };
+
+  const deleteProjectData = async () => {
+    if (id) {
+      await worker.deleteProjectData(id);
+      projects = await worker.getProjectDataFromStorage();
+      id = projects[0]?.id;
+    }
+  };
+
+  const getFirstLetter = (s = "?") => {
+    s = s.normalize();
+    return Array.from(s)[0];
+  };
 </script>
 
 <style>
@@ -125,15 +151,45 @@
   }
   main {
     max-width: var(--laptop);
-    min-height: 100vh;
   }
 
   .customize {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     font-family: Cabin, sans-serif;
+  }
+
+  .customize__sidebar {
+    background-color: var(--gray-dark);
+  }
+
+  .customize__sidebar--project {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    background: var(--lite-gray);
+    border-radius: 50%;
+    border: none;
+    font-size: 1rem;
+    line-height: 2.5rem;
+    margin: 1rem;
+    text-align: center;
+    vertical-align: middle;
+
+    cursor: pointer;
+  }
+
+  .customize__sidebar--project:hover,
+  .customize__sidebar--project.selected {
+    background: var(--primary-blue);
+    color: var(--white);
+  }
+
+  .customize__sidebar--project.add {
+    font-size: 1.25rem;
+    line-height: 1rem;
   }
 
   .customize__container {
@@ -209,12 +265,25 @@
  -->
 <main>
   <div class="customize">
+    <nav class="customize__sidebar">
+      {#each projects as project}
+        <button class="customize__sidebar--project" class:selected={project.id === id} on:click={() => id = project.id}>
+          {getFirstLetter(project.dictionaryName)}
+        </button>
+      {/each}
+      <button class="customize__sidebar--project add" on:click={createProjectData}>+</button>
+    </nav>
     <div class="customize__container">
       <a href={PAGE_URLS.home}>
         <span class="button button--grey button--outline mt-xxl">
           {$_('page.lang.go_back_to_main_page')}
         </span>
       </a>
+      {#if id !== undefined}
+        <span class="button button--red mt-xxl" on:click={deleteProjectData}>
+          {$_('page.lang.delete_project')}
+        </span>
+      {/if}
       <header class="customize__container--header">
         <div>
           <h1>{$_('common.app_name')}</h1>
@@ -225,42 +294,50 @@
           </p>
         </div>
       </header>
-      <div class="customize__container--actions">
-        <Button
-          color="grey"
-          isOutlined={(selectedButton === 'information')}
-          onClick={() => handleClick('information')}
-          dataCy="customize-information-btn"
-        >{$_('page.lang.information')}</Button>
-        <Button
-          color="grey"
-          isOutlined={(selectedButton === 'sources')}
-          onClick={()=> handleClick('sources')}
-          dataCy="customize-sources-btn"
-        >{$_('page.lang.sources')}</Button>
-        <Button
-          color="blue"
-          onClick={handleDownload}
-          subtext={languageInformation.wordCount.toString() + " words"}
-          dataCy="customize-download-btn"
-          enabled={downloadReady}
-        >{$_('page.lang.download')}</Button>
-      </div>
-      <div class="customize__container--content">
-        {#if selectedButton === 'information'}
-          <LanguageInfo bind:this={languageInfo} />
-        {:else if selectedButton === 'sources'}
-          <LanguageSources
-            bind:sources={languageInformation.sources}
-            {getLanguageSources}
-          />
-        {/if}
-      </div>
+      {#if id !== undefined}
+        <div class="customize__container--actions">
+          <Button
+            color="grey"
+            isOutlined={(selectedButton === 'information')}
+            onClick={() => handleClick('information')}
+            dataCy="customize-information-btn"
+          >{$_('page.lang.information')}</Button>
+          <Button
+            color="grey"
+            isOutlined={(selectedButton === 'sources')}
+            onClick={()=> handleClick('sources')}
+            dataCy="customize-sources-btn"
+          >{$_('page.lang.sources')}</Button>
+          <Button
+            color="blue"
+            onClick={handleDownload}
+            subtext={languageInformation.wordCount.toString() + " words"}
+            dataCy="customize-download-btn"
+            enabled={downloadReady}
+          >{$_('page.lang.download')}</Button>
+        </div>
+        <div class="customize__container--content">
+          {#if selectedButton === 'information'}
+            <LanguageInfo bind:this={languageInfo} {id} {getProjectData} />
+          {:else if selectedButton === 'sources'}
+            <LanguageSources
+              project={id || 1}
+              bind:sources={languageInformation.sources}
+              {getLanguageSources}
+            />
+          {/if}
+        </div>
+      {:else}
+        <div
+          style="text-align: center; padding: 10px; background: var(--lite-white); margin-bottom: 100px;">
+          <h3>{$_('page.lang.no_project')}</h3>
+          <p>{$_('page.lang.no_project_subtitle')}</p>
+        </div>
+      {/if}
       <div class="customize__container--footer">
-        <Button onClick={handleImport}>Import Project Data</Button>
-        <Button onClick={handleExport}>Export Project Data</Button>
+        <Button onClick={handleImport}>{$_('page.lang.import_project_data')}</Button>
+        <Button onClick={handleExport}>{$_('page.lang.export_project_data')}</Button>
       </div>
     </div>
-
   </div>
 </main>

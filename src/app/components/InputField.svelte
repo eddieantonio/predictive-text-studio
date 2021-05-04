@@ -6,8 +6,8 @@
    * Size option medium (default size) or large
    * ex: size = "large"
    */
-  export let size: string | undefined = "";
   export let cyData: string | undefined = "";
+  export let size: string | undefined = "";
   export let id: string;
   export let subtext: string = "";
   export let fullWidth: boolean = false;

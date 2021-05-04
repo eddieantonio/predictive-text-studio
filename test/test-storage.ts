@@ -4,8 +4,8 @@ import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
 
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
-import { ExportedProjectData, StoredWordList } from "@worker/storage-models";
-import { WordListSource } from "@common/types";
+import { ExportedProjectData } from "@worker/storage-models";
+import { StoredWordList } from "@common/types";
 
 import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
 
@@ -25,7 +25,7 @@ const test = anyTest as TestInterface<{
 /**
  * Create a new, empty database, and configured storage for each test case.
  */
-test.beforeEach((t) => {
+test.beforeEach(async (t) => {
   const db = new PredictiveTextStudioDexie({
     indexedDB: new FDBFactory(),
     IDBKeyRange,
@@ -40,11 +40,14 @@ test("storing a file", async (t) => {
   // At first, there's nothing in the DB:
   t.is(await db.files.count(), 0);
 
+  const project = await storage.createProjectData();
+
   await storage.saveFile({
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
     type: "xlsx",
+    project,
   });
   // Now there's one file in the DB!
   t.is(await db.files.count(), 1);
@@ -56,17 +59,20 @@ test("deleting a file", async (t) => {
   // Create a file
   t.is(await db.files.count(), 0);
 
+  const project = await storage.createProjectData();
+
   await storage.saveFile({
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
     type: "xlsx",
+    project,
   });
 
   t.is(await db.files.count(), 1);
 
   // Delete it
-  await storage.deleteFile("ExampleWordlist.xlsx");
+  await storage.deleteFile("ExampleWordlist.xlsx", project);
 
   // There should be no file remaining
   t.is(await db.files.count(), 0);
@@ -78,11 +84,14 @@ test("editing a file", async (t) => {
   // Create a file
   t.is(await db.files.count(), 0);
 
-  await storage.saveFile({
+  const project = await storage.createProjectData();
+
+  const id = await storage.saveFile({
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
     type: "xlsx",
+    project,
   });
 
   t.is(await db.files.count(), 1);
@@ -95,6 +104,8 @@ test("editing a file", async (t) => {
     wordlist: newWordList,
     size: newWordList.length,
     type: "xlsx",
+    project,
+    id,
   });
 
   // Check that the wordlist has been modified:
@@ -109,6 +120,7 @@ test("editing a file", async (t) => {
 
 test("retrieving one file with .fetchAllFiles()", async (t) => {
   const { storage } = t.context;
+  const project = await storage.createProjectData();
 
   // Let's store a file that we will later try to fetch:
   const filename = "ExampleWordlist.xlsx";
@@ -117,6 +129,7 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
     type: "xlsx",
+    project,
   });
 
   // We should find that it has been stored:
@@ -130,19 +143,22 @@ test("retrieving one file with .fetchAllFiles()", async (t) => {
 
 test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
   const { storage } = t.context;
+  const project = await storage.createProjectData();
 
-  const sources: WordListSource[] = [
+  const sources: StoredWordList[] = [
     {
       name: "ExampleWordlist.xlsx",
       wordlist: exampleWordlist,
       size: exampleWordlist.length,
       type: "xlsx",
+      project,
     },
     {
       name: "[direct entry]",
       wordlist: [["ȻNEs", 12]],
       size: 1,
       type: "direct-entry",
+      project,
     },
   ];
 
@@ -157,12 +173,13 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
 
   // This weird line extracts ONLY the properties found in sources,
   // so that we can just deepEqual with sources!
-  files = files.map(({ id, name, wordlist, size, type }) => ({
+  files = files.map(({ id, name, wordlist, size, type, project }) => ({
     id,
     name,
     wordlist,
     size,
     type,
+    project,
   }));
   files.sort(byName);
 
@@ -173,9 +190,8 @@ test("retrieving mulitple files with .fetchAllFiles()", async (t) => {
   }
 });
 
-test("it should reject the promise if the database is empty", async (t) => {
+test("it should reject the promise if the project does not exist", async (t) => {
   const { storage } = t.context;
-
   await t.throwsAsync(() => storage.fetchProjectData());
 });
 
@@ -193,9 +209,10 @@ test("update the BCP-47 tag to database", async (t) => {
 
 test("retrieve BCP-47 tag from the database", async (t) => {
   const { storage } = t.context;
-  await storage.updateBCP47Tag("en");
+  const project = await storage.createProjectData();
+  await storage.updateBCP47Tag("en", project);
 
-  const projectData = await storage.fetchProjectData();
+  const projectData = await storage.fetchProjectData(project);
   const bcp47Tag = projectData.bcp47Tag;
   t.is(bcp47Tag, "en");
 });
@@ -213,7 +230,7 @@ test("update the project data to database", async (t) => {
     version: "1.0.0",
   };
 
-  await storage.updateProjectData(storedProjectData);
+  await storage.putProjectData(storedProjectData);
   // Now there's one package info record in the DB!
   t.is(await db.projectData.count(), 1);
 });
@@ -228,9 +245,10 @@ test("retrieve project data from the database", async (t) => {
     copyright: "©",
     version: "1.0.0",
   };
-  await storage.updateProjectData(storedProjectData);
+  const project = await storage.createProjectData();
+  await storage.putProjectData(storedProjectData, project);
 
-  const projectData = await storage.fetchProjectData();
+  const projectData = await storage.fetchProjectData(project);
   const language = projectData.language;
   t.is(language, "English");
   const bcp47Tag = projectData.bcp47Tag;
@@ -261,7 +279,8 @@ test("retrieve if project exists in database", async (t) => {
     copyright: "©",
     version: "1.0.0",
   };
-  await storage.updateProjectData(storedProjectData);
+  const project = await storage.createProjectData();
+  await storage.putProjectData(storedProjectData, project);
 
   doesProjectExist = await storage.doesProjectExist();
   t.is(doesProjectExist, true);
@@ -270,39 +289,36 @@ test("retrieve if project exists in database", async (t) => {
 test("update project data multiple times ", async (t) => {
   const { storage } = t.context;
 
-  const languageName = "Makah";
-  const languageCode = "myh";
-  const author = "Eddie Antonio Santos";
+  const language = "Makah";
+  const bcp47Tag = "myh";
+  const authorName = "Eddie Antonio Santos";
   const copyright = "2018 National Research Council Canada";
 
   /* Store the initial data */
-  await storage.updateProjectData({
-    language: languageName,
-    bcp47Tag: languageCode,
-  });
+  const project = await storage.putProjectData({ language, bcp47Tag });
 
-  const initialProject = await storage.fetchProjectData();
-  t.is(initialProject.language, languageName);
-  t.is(initialProject.bcp47Tag, languageCode);
-  t.not(initialProject.authorName, author);
+  const initialProject = await storage.fetchProjectData(project);
+  t.is(initialProject.language, language);
+  t.is(initialProject.bcp47Tag, bcp47Tag);
+  t.not(initialProject.authorName, authorName);
   t.not(initialProject.copyright, copyright);
 
   /* Update the data, but JUST the author! */
-  await storage.updateProjectData({ authorName: author });
+  await storage.putProjectData({ authorName }, project);
 
-  const changedProject = await storage.fetchProjectData();
+  const changedProject = await storage.fetchProjectData(project);
   t.notDeepEqual(changedProject, initialProject);
   t.is(changedProject.language, initialProject.language);
   t.is(changedProject.bcp47Tag, initialProject.bcp47Tag);
   t.not(changedProject.authorName, initialProject.authorName);
-  t.is(changedProject.authorName, author);
+  t.is(changedProject.authorName, authorName);
   t.not(changedProject.copyright, copyright);
 
   /* Now update the copyright */
-  await storage.updateProjectData({ copyright: copyright });
+  await storage.putProjectData({ copyright: copyright }, project);
 
   /* The final update should have all fields updated. */
-  const finalProject = await storage.fetchProjectData();
+  const finalProject = await storage.fetchProjectData(project);
   t.notDeepEqual(finalProject, changedProject);
   t.is(finalProject.language, changedProject.language);
   t.is(finalProject.bcp47Tag, changedProject.bcp47Tag);
@@ -359,20 +375,20 @@ test("store the KMP package to database", async (t) => {
 test("retrieve the KMP package from the database", async (t) => {
   const { storage } = t.context;
   const kmp = new ArrayBuffer(1);
-  await storage.saveCompiledKMPAsArrayBuffer(kmp);
-
-  const kmpRetrieved = await storage.fetchCompiledKMPFile();
+  const project = await storage.saveCompiledKMPAsArrayBuffer(kmp);
+  const kmpRetrieved = await storage.fetchCompiledKMPFile(project);
   t.assert(kmpRetrieved instanceof ArrayBuffer);
 });
 
 test("exporting project data", async (t) => {
   const { storage } = t.context;
-
+  const project = await storage.createProjectData();
   const fileData: StoredWordList = {
     name: "ExampleWordlist.xlsx",
     wordlist: exampleWordlist,
     size: exampleWordlist.length,
     type: "xlsx",
+    project,
   };
 
   await storage.saveFile(fileData);
@@ -385,15 +401,15 @@ test("exporting project data", async (t) => {
     copyright: "©",
     version: "1.0.0",
   };
-  await storage.updateProjectData(storedProjectData);
+  await storage.putProjectData(storedProjectData, project);
 
   const data = await storage.exportProjectData();
 
   const { projectData, files }: ExportedProjectData = JSON.parse(data);
 
-  delete projectData.id;
+  delete projectData[0].id;
 
-  t.deepEqual(projectData, storedProjectData);
+  t.deepEqual(projectData[0], storedProjectData);
   t.deepEqual(files[0], fileData);
 });
 
@@ -401,19 +417,19 @@ test("importing project data", async (t) => {
   const { storage } = t.context;
 
   const fileString =
-    '{"projectData":{"id":0,"authorName":"example","bcp47Tag":"en","language":"English","modelID":"unknownAuthor.en.example","copyright":"©","version":"1.0.0"},"files":[{"name":"ExampleWordlist.xlsx","wordlist":[["TŦE",13644],["E",9134],["SEN",4816],["Ȼ",3479],["SW̱",2621],["NIȽ",2314],["U¸",2298],["I¸",1988],["ȻSE",1925],["I",1884]],"size":10,"type":"xlsx","id":1}]}';
+    '{"projectData":[{"id":1,"authorName":"example","bcp47Tag":"en","language":"English","modelID":"unknownAuthor.en.example","copyright":"©","version":"1.0.0"}],"files":[{"name":"ExampleWordlist.xlsx","wordlist":[["TŦE",13644],["E",9134],["SEN",4816],["Ȼ",3479],["SW̱",2621],["NIȽ",2314],["U¸",2298],["I¸",1988],["ȻSE",1925],["I",1884]],"size":10,"type":"xlsx","id":1,"project":1}]}';
 
   await storage.importProjectData(fileString);
 
   // We should find that it has been stored:
-  const files = await storage.fetchAllFiles();
+  const files = await storage.fetchFiles(1);
   t.is(files.length, 1);
 
   const file = files[0];
   t.is(file.name, "ExampleWordlist.xlsx");
   t.deepEqual(file.wordlist, exampleWordlist);
 
-  const projectData = await storage.fetchProjectData();
+  const projectData = await storage.fetchProjectData(1);
   const language = projectData.language;
   t.is(language, "English");
   const bcp47Tag = projectData.bcp47Tag;

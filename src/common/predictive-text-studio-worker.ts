@@ -5,9 +5,9 @@
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
   KeyboardDataWithTime,
+  StoredProjectData,
+  StoredWordList,
   ProjectMetadata,
-  WordListSource,
-  WordList,
   UploadSettings,
 } from "@common/types";
 
@@ -17,7 +17,8 @@ export interface PredictiveTextStudioWorker {
   /**
    * Save a Google Sheet to the current project
    */
-  readGoogleSheet(
+  saveGoogleSheet(
+    project: number,
     name: string,
     rows: string[][],
     settings: UploadSettings
@@ -33,6 +34,7 @@ export interface PredictiveTextStudioWorker {
    * @return {number} how many words were added by this source
    */
   addDictionarySourceToProject(
+    project: number,
     name: string,
     contents: File,
     settings: UploadSettings
@@ -42,29 +44,14 @@ export interface PredictiveTextStudioWorker {
    * Remove a dictionary within the IndexedDB
    * @param name the name of the wordlist to remove
    */
-  removeDictionaryFromProject(name: string): Promise<number>;
+  removeDictionaryFromProject(name: string, project: number): Promise<void>;
 
   /**
    * Store the manual entry data into the database
    * @param name the name of the dictionary souce
    * @param wordlist Manual entry data
    */
-  addManualEntryDictionaryToProject(
-    name: string,
-    wordlist: WordList
-  ): Promise<number>;
-
-  /**
-   * Update the manual entry data into the database
-   * @param id the ID of the dictionary source
-   * @param name the name of the dictionary source
-   * @param wordlist Manual entry data
-   */
-  updateManualEntryDictionaryToProject(
-    id: number | undefined,
-    name: string,
-    wordlist: WordList
-  ): Promise<number>;
+  putDirectEntry(source: StoredWordList): Promise<number>;
 
   ///////////////////////////// Event handlers /////////////////////////////
 
@@ -88,6 +75,17 @@ export interface PredictiveTextStudioWorker {
   ////////////////////// Manipulate project metadata ///////////////////////
 
   /**
+   * Creates new project data.
+   */
+  createProjectData(): Promise<number>;
+
+  /**
+   * Deletes project data with given project ID.
+   * @param project project ID
+   */
+  deleteProjectData(project: number): Promise<void>;
+
+  /**
    * Sets optional and required metadata such as BCP-47, language name, author
    * name, copyright string, etc.
    *
@@ -96,14 +94,15 @@ export interface PredictiveTextStudioWorker {
    *
    * @see RelevantKmpOptions
    */
-  setProjectData(
-    metadata: Partial<Readonly<RelevantKmpOptions>>
-  ): Promise<void>;
+  putProjectData(
+    metadata: Partial<Readonly<RelevantKmpOptions>>,
+    project?: number
+  ): Promise<number>;
 
   /**
    * Returns all of the current project's metadata.
    */
-  fetchAllCurrentProjectMetadata(): Promise<ProjectMetadata>;
+  fetchAllCurrentProjectMetadata(project?: number): Promise<ProjectMetadata>;
 
   /**
    * Returns whether or not a project currently exists
@@ -121,7 +120,12 @@ export interface PredictiveTextStudioWorker {
   /**
    * Retrieving File data from the IndexedDB storage
    */
-  getFilesFromStorage(): Promise<WordListSource[]>;
+  getFilesFromStorage(project?: number): Promise<StoredWordList[]>;
+
+  /**
+   * Retrieving Project data from the IndexedDB storage
+   */
+  getProjectDataFromStorage(): Promise<StoredProjectData[]>;
 
   /**
    * Generates a JSON string of the current IndexedDB
