@@ -138,7 +138,7 @@
   };
 
   const getFirstLetter = (s = "?") => {
-    s = s.normalize("NFD");
+    s = s.normalize();
     return Array.from(s)[0];
   };
 </script>
