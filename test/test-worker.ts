@@ -15,7 +15,7 @@ test("it should set project data and update to the database", async (t) => {
   // TODO: there's WAY too much stubbing here where it really doesn't need to
   // be. Try to replace stubbing with something better...
 
-  const storageStub = storageWithStubbedKeyboardData();
+  const storageStub = fakeStorage();
   const worker = new PredictiveTextStudioWorkerImpl(storageStub);
 
   await worker.setProjectData({
@@ -33,15 +33,13 @@ test("it should set project data and update to the database", async (t) => {
   t.is(data.authorName, authorName);
 });
 
-function storageWithStubbedKeyboardData() {
+function fakeStorage() {
   const db = new PredictiveTextStudioDexie({
     indexedDB: new FDBFactory(),
     IDBKeyRange,
   });
 
-  const storage = new Storage(db);
-  sinon.stub(storage, "fetchKeyboardData").returns(Promise.resolve([]));
-  return storage;
+  return new Storage(db);
 }
 
 test.todo(

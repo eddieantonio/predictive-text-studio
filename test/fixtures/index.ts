@@ -88,14 +88,6 @@ export const storedFileStub = {
   wordlist: [["test", 1]],
 } as StoredWordList;
 
-export const keymanKeyboardDataStub: KeyboardDataWithTime[] = [
-  {
-    bcp47Tag: "AB",
-    language: "AABBCCDD",
-    timestamp: new Date(),
-  },
-];
-
 export const defaultUploadSettings: UploadSettings = {
   wordColInd: 0,
   countColInd: 1,

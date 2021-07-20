@@ -113,12 +113,6 @@ export interface PredictiveTextStudioWorker {
   ///////////////////////////////// Caches /////////////////////////////////
 
   /**
-   * Retrieves a cache of supported languages with existing Keyman keyboards,
-   * according to the Keyman API.
-   */
-  fetchCachedKeyboardLanguageList(): Promise<KeyboardDataWithTime[]>;
-
-  /**
    * Retrieving File data from the IndexedDB storage
    */
   getFilesFromStorage(): Promise<WordListSource[]>;

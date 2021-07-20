@@ -9,8 +9,6 @@ import type {
 } from "@common/types";
 
 import Storage from "./storage";
-import { KeyboardData, KeyboardDataWithTime } from "./storage-models";
-import { KeymanAPI } from "./keyman-api-service";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import { readExcel, readTSV, readGoogleSheet } from "./read-wordlist";
 
@@ -28,40 +26,11 @@ export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
   constructor(
     private storage = new Storage(),
-    private keymanAPI = new KeymanAPI()
   ) {
-    this.getLanguageData();
-  }
-
-  async fetchLanguageDataFromService(): Promise<void> {
-    this.keymanAPI.fetchLanaguageData().then((languages: KeyboardData[]) => {
-      languages.forEach(async (data) => {
-        await this.storage.addKeyboardData(data.language, data.bcp47Tag);
-      });
-    });
-  }
-
-  async fetchCachedKeyboardLanguageList(): Promise<KeyboardDataWithTime[]> {
-    return this.storage.fetchKeyboardData();
   }
 
   async getFilesFromStorage(): Promise<WordListSource[]> {
     return this.storage.fetchAllFiles();
-  }
-
-  async getLanguageData(): Promise<void> {
-    let dateDiff: number;
-    const keyboardData: KeyboardDataWithTime[] = await this.storage.fetchKeyboardData();
-    const datenow: Date = new Date();
-    if (keyboardData.length !== 0) {
-      dateDiff = datenow.getTime() - keyboardData[0].timestamp.getTime();
-      if (dateDiff > expiryThreshold) {
-        await this.storage.deleteKeyboardData();
-        this.fetchLanguageDataFromService();
-      }
-    } else {
-      this.fetchLanguageDataFromService();
-    }
   }
 
   async readGoogleSheet(

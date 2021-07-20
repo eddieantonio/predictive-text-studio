@@ -7,7 +7,7 @@ import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import { ExportedProjectData, StoredWordList } from "@worker/storage-models";
 import { WordListSource } from "@common/types";
 
-import { exampleWordlist, keymanKeyboardDataStub } from "./fixtures";
+import { exampleWordlist } from "./fixtures";
 
 /**
  * Every test will have access to:
@@ -309,41 +309,6 @@ test("update project data multiple times ", async (t) => {
   t.is(finalProject.authorName, changedProject.authorName);
   t.not(finalProject.copyright, changedProject.copyright);
   t.is(finalProject.copyright, copyright);
-});
-
-test("save Keyman keyboard data with addKeyboardData", async (t) => {
-  const { db, storage } = t.context;
-
-  t.is(await db.keyboardData.count(), 0);
-  await storage.addKeyboardData(
-    keymanKeyboardDataStub[0].language,
-    keymanKeyboardDataStub[0].bcp47Tag
-  );
-
-  t.is(await db.keyboardData.count(), 1);
-});
-
-test("retrieve Keyman keyboard data with addKeyboardData", async (t) => {
-  const { storage } = t.context;
-  await storage.addKeyboardData(
-    keymanKeyboardDataStub[0].language,
-    keymanKeyboardDataStub[0].bcp47Tag
-  );
-  await storage.fetchKeyboardData().then((data) => {
-    t.is(data.length, 1);
-  });
-});
-
-test("delete all Keyman keyboard data with deleteKeyboardData", async (t) => {
-  const { storage } = t.context;
-  await storage.addKeyboardData(
-    keymanKeyboardDataStub[0].language,
-    keymanKeyboardDataStub[0].bcp47Tag
-  );
-  await storage.deleteKeyboardData();
-  await storage.fetchKeyboardData().then((data) => {
-    t.is(data.length, 0);
-  });
 });
 
 test("store the KMP package to database", async (t) => {
