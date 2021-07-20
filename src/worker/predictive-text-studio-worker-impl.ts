@@ -12,22 +12,13 @@ import Storage from "./storage";
 import { linkStorageToKmp } from "./link-storage-to-kmp";
 import { readExcel, readTSV, readGoogleSheet } from "./read-wordlist";
 
-/**
- * expiryThreshold is used to decide if keyboard data is too old
- * currently it is set to seven days in millisecond
- */
-const expiryThreshold = 604800000;
-
 function doNothing() {
   // intentionally empty
 }
 
 export class PredictiveTextStudioWorkerImpl
   implements PredictiveTextStudioWorker {
-  constructor(
-    private storage = new Storage(),
-  ) {
-  }
+  constructor(private storage = new Storage()) {}
 
   async getFilesFromStorage(): Promise<WordListSource[]> {
     return this.storage.fetchAllFiles();

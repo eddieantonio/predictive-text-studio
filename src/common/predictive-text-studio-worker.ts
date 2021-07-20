@@ -4,7 +4,6 @@
 
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
-  KeyboardDataWithTime,
   ProjectMetadata,
   WordListSource,
   WordList,

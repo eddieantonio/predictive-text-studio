@@ -2,7 +2,6 @@ import Dexie, { DexieOptions } from "dexie";
 import {
   StoredWordList,
   StoredProjectData,
-  KeyboardDataWithTime,
   KMPPackageData,
   ExportedProjectData,
 } from "./storage-models";
@@ -115,8 +114,7 @@ export class PredictiveTextStudioDexie extends Dexie {
       });
 
     /* Version 7: do not store keyboard data (unnecessary) */
-    this.version(7)
-      .stores({ keyboardData: null })
+    this.version(7).stores({ keyboardData: null });
 
     /* The assignments are not required by the runtime, however, they are
      * necessary for proper type-checking. */

@@ -1,5 +1,4 @@
 import * as IDBKeyRange from "fake-indexeddb/lib/FDBKeyRange";
-import * as sinon from "sinon";
 import FDBFactory = require("fake-indexeddb/lib/FDBFactory");
 import Storage, { PredictiveTextStudioDexie } from "@worker/storage";
 import test from "ava";
