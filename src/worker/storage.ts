@@ -2,7 +2,6 @@ import Dexie, { DexieOptions } from "dexie";
 import {
   StoredWordList,
   StoredProjectData,
-  KeyboardDataWithTime,
   KMPPackageData,
   ExportedProjectData,
 } from "./storage-models";
@@ -16,7 +15,6 @@ const PACKAGE_ID = 0;
 export class PredictiveTextStudioDexie extends Dexie {
   files: Dexie.Table<StoredWordList, number>;
   projectData: Dexie.Table<StoredProjectData, number>;
-  keyboardData: Dexie.Table<KeyboardDataWithTime, number>;
   KMPFileData: Dexie.Table<KMPPackageData, number>;
 
   constructor(options?: DexieOptions) {
@@ -115,11 +113,13 @@ export class PredictiveTextStudioDexie extends Dexie {
           });
       });
 
+    /* Version 7: do not store keyboard data (unnecessary) */
+    this.version(7).stores({ keyboardData: null });
+
     /* The assignments are not required by the runtime, however, they are
      * necessary for proper type-checking. */
     this.files = this.table("files");
     this.projectData = this.table("projectData");
-    this.keyboardData = this.table("keyboardData");
     this.KMPFileData = this.table("KMPFileData");
   }
 }
@@ -216,36 +216,6 @@ export default class Storage {
     }
 
     return projectData;
-  }
-
-  /**
-   * Save all keyboard info into the database
-   */
-  addKeyboardData(language: string, bcp47: string): Promise<void> {
-    const date = new Date();
-    return this.db.transaction("readwrite", this.db.keyboardData, async () => {
-      await this.db.keyboardData.put({
-        language,
-        bcp47Tag: bcp47,
-        timestamp: date,
-      });
-    });
-  }
-
-  /**
-   * Retrieves every keyboard data in the database as a list of {language, bcp47Tag, KeyboardDataWithTime}
-   */
-  fetchKeyboardData(): Promise<KeyboardDataWithTime[]> {
-    return this.db.keyboardData.toArray();
-  }
-
-  /**
-   * Delete all keyboard data in the database as a list of {language, bcp47Tag, KeyboardDataWithTime}
-   */
-  deleteKeyboardData(): Promise<void> {
-    return this.db.transaction("readwrite", this.db.keyboardData, async () => {
-      await this.db.keyboardData.clear();
-    });
   }
 
   /**

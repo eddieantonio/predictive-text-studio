@@ -4,7 +4,6 @@
 
 import type { RelevantKmpOptions } from "@common/kmp-json-file";
 import type {
-  KeyboardDataWithTime,
   ProjectMetadata,
   WordListSource,
   WordList,
@@ -111,12 +110,6 @@ export interface PredictiveTextStudioWorker {
   doesProjectExist(): Promise<boolean>;
 
   ///////////////////////////////// Caches /////////////////////////////////
-
-  /**
-   * Retrieves a cache of supported languages with existing Keyman keyboards,
-   * according to the Keyman API.
-   */
-  fetchCachedKeyboardLanguageList(): Promise<KeyboardDataWithTime[]>;
 
   /**
    * Retrieving File data from the IndexedDB storage
