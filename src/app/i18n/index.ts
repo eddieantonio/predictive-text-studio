@@ -1,6 +1,7 @@
-import en from "./en";
-import es from "./es";
-import ko from "./ko";
+import en from "../locales/en.json";
+import es from "../locales/es.json";
+import ko from "../locales/ko.json";
+import type { LocaleDictionary } from "./localization";
 
 /**
  * Available locales (translations).
@@ -12,6 +13,19 @@ export const locales = { en, es, ko };
  * (spoilers: it's the generic English locale).
  */
 export const FALLBACK_LOCALE = "en";
+
+type RegistrationFunction = (locale: string, dict: LocaleDictionary) => unknown;
+
+/**
+ * Registers all known locales.
+ */
+export function registerAllLocalizationsUsing(
+  register: RegistrationFunction
+): void {
+  for (const [tag, dict] of Object.entries(locales)) {
+    register(tag, dict);
+  }
+}
 
 /**
  * Returns the first locale that we have translations for.

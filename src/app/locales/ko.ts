@@ -1,4 +1,4 @@
-import type Localization from "./localization";
+import type { LocaleDictionary } from "../i18n/localization";
 
 export default {
   common: {
@@ -176,4 +176,4 @@ export default {
       team_members: "개발팀",
     },
   },
-} as Localization;
+} as LocaleDictionary;
