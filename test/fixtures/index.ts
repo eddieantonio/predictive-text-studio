@@ -1,4 +1,3 @@
-import { StoredProjectData, StoredWordList } from "@worker/storage-models";
 import type { UploadSettings, WordList } from "@common/types";
 
 /**
@@ -47,42 +46,6 @@ export const wordlistCustomColumnsResult: WordList = [
   ["коала", 1],
   ["考拉", 2],
 ];
-
-export const testStoredProjectData = {
-  id: 1,
-  language: "English",
-  bcp47Tag: "en",
-  authorName: "UnknownAuthor",
-} as StoredProjectData;
-
-export const responseBody = {
-  languages: [
-    {
-      id: "km",
-      name: "Khmer (Battambang Khmer)",
-      keyboards: [
-        "basic_kbdkhmr",
-        "basic_kbdkni",
-        "kbdkhmr",
-        "khmer10",
-        "khmer_angkor",
-        "sil_khmer",
-      ],
-    },
-    {
-      id: "kxm",
-      name: "Khmer, Northern (Khmer Lue)",
-      keyboards: ["sil_khmer"],
-    },
-    { id: "kdt", name: "Kuay (Old Khmer)", keyboards: ["sil_khmer"] },
-  ],
-};
-
-export const storedFileStub = {
-  id: 1,
-  name: "test",
-  wordlist: [["test", 1]],
-} as StoredWordList;
 
 export const defaultUploadSettings: UploadSettings = {
   wordColInd: 0,
