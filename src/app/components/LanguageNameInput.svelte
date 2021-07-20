@@ -3,7 +3,6 @@
   import { onMount } from "svelte";
   import AutoComplete from "simple-svelte-autocomplete";
 
-  import worker from "../spawn-worker";
   import type { KeyboardMetadata } from "@common/types";
 
   /**************************** External props ******************************/
@@ -34,9 +33,34 @@
    */
   let knownLanguages: KeyboardMetadata[] = [];
 
+  interface LanguageData {
+    id: string;
+    name: string;
+  }
+
+  interface CachedLanguagesResponse {
+    languages: LanguageData[];
+  }
+
   onMount(async function loadLanguageListFromWorker() {
-    knownLanguages = await worker.fetchCachedKeyboardLanguageList();
+    try {
+      knownLanguages = await fetchLanaguageList();
+    } catch {
+      knownLanguages = [];
+    }
   });
+
+  async function fetchLanaguageList(): Promise<KeyboardMetadata[]> {
+    let resp = await fetch(
+      "https://cache.predictivetext.studio/cached-languages.json"
+    );
+    let { languages } = (await resp.json()) as CachedLanguagesResponse;
+
+    return languages.map((lang) => {
+      const { id, name } = lang;
+      return { bcp47Tag: id, language: name };
+    });
+  }
 </script>
 
 <style>
