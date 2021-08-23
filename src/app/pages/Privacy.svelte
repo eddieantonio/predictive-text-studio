@@ -2,6 +2,9 @@
   import { _ } from "svelte-i18n";
 
   import LocalizedDate from "../components/LocalizedDate.svelte";
+  import MailToLink from "../components/MailToLink.svelte";
+
+  const contactEmail = "ptstudio@hello.eddieantonio.ca";
 </script>
 
 <style>
@@ -37,9 +40,10 @@
     <h3>{$_('page.privacy.introduction.title')}</h3>
     <p>{$_('page.privacy.introduction.head.0')}</p>
     <p>{$_('page.privacy.introduction.head.1')}</p>
-    <p>{$_('page.privacy.introduction.head.2')}</p>
-    <a
-      href="mailto:easantos+ptstudio@ualberta.ca">easantos+ptstudio@ualberta.ca</a>
+    <p>
+      {$_('page.privacy.introduction.head.2')}
+      <MailToLink email={contactEmail} />.
+    </p>
     <p>{$_('page.privacy.introduction.head.3')}</p>
     <p>{$_('page.privacy.introduction.head.4')}</p>
     <ul>
@@ -71,9 +75,10 @@
     <p>{$_('page.privacy.data_transmission.main')}</p>
     <h3>{$_('page.privacy.your_rights.title')}</h3>
     <p>{$_('page.privacy.your_rights.main')}</p>
-    <p>{$_('page.privacy.your_rights.request')}</p>
-    <a
-      href="mailto:easantos+ptstudio@ualberta.ca">easantos+ptstudio@ualberta.ca</a>.
+    <p>
+      {$_('page.privacy.your_rights.request')}
+      <MailToLink email={contactEmail} />.
+    </p>
 
     <ol type="a">
       <li>{$_('page.privacy.your_rights.rights.0')}</li>
