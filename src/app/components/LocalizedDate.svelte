@@ -11,7 +11,7 @@
       throw new Error(`Invalid ISO date: ${isodate} (expecting yyyy-mm-dd)`);
     }
 
-    const [_, year, month, day] = match;
+    const [, year, month, day] = match;
     /*
      * Although you COULD use the Date constructor to parse the ISO date, it's
      * STONGLY DISCOURAGED, since different browser implememt different
