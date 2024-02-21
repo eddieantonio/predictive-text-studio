@@ -10,13 +10,13 @@ describe("Go to the team page", function () {
     cy.data("team-page-link").contains("About the Team").click();
     // wait for the requests to complete
     // `intercept` will break otherwise
-    cy.wait(2000);
+    cy.wait(1500);
     cy.url().should("include", "/team");
   });
 
   it("should see loaded profiles on the team page", function () {
     cy.visit("/team");
-    cy.wait(2000);
+    cy.wait(1500);
     expect(cy.data("contributor-handle-GithubPerson")).to.exist;
   });
 });
